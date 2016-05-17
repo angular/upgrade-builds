@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v2.0.0-7bb5167
+ * @license AngularJS v2.0.0-db82906
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -69,7 +69,7 @@
     var NG1_PARSE = '$parse';
     var NG1_TEMPLATE_CACHE = '$templateCache';
     var NG1_TESTABILITY = '$$testability';
-    var REQUIRE_INJECTOR = '^' + NG2_INJECTOR;
+    var REQUIRE_INJECTOR = '?^' + NG2_INJECTOR;
     var INITIAL_VALUE = {
         __UNINITIALIZED__: true
     };
@@ -97,7 +97,7 @@
             var childInjector = _angular_core.ReflectiveInjector.resolveAndCreate([_angular_core.provide(NG1_SCOPE, { useValue: this.componentScope })], this.parentInjector);
             this.contentInsertionPoint = document.createComment('ng1 insertion point');
             this.componentRef =
-                this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], '#' + this.id);
+                this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
             this.changeDetector = this.componentRef.changeDetectorRef;
             this.component = this.componentRef.instance;
         };
@@ -1039,8 +1039,8 @@
         return UpgradeAdapter;
     }());
     function ng1ComponentDirective(info, idPrefix) {
-        directiveFactory.$inject = [NG2_COMPONENT_FACTORY_REF_MAP, NG1_PARSE];
-        function directiveFactory(componentFactoryRefMap, parse) {
+        directiveFactory.$inject = [NG1_INJECTOR, NG2_COMPONENT_FACTORY_REF_MAP, NG1_PARSE];
+        function directiveFactory(ng1Injector, componentFactoryRefMap, parse) {
             var componentFactory = componentFactoryRefMap[info.selector];
             if (!componentFactory)
                 throw new Error('Expecting ComponentFactory for: ' + info.selector);
@@ -1051,6 +1051,9 @@
                 link: {
                     post: function (scope, element, attrs, parentInjector, transclude) {
                         var domElement = element[0];
+                        if (parentInjector === null) {
+                            parentInjector = ng1Injector.get(NG2_INJECTOR);
+                        }
                         var facade = new DowngradeNg2ComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, parentInjector, parse, componentFactory);
                         facade.setupInputs();
                         facade.bootstrapNg2();

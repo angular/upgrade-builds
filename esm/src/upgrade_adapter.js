@@ -495,8 +495,8 @@ export class UpgradeAdapter {
     }
 }
 function ng1ComponentDirective(info, idPrefix) {
-    directiveFactory.$inject = [NG2_COMPONENT_FACTORY_REF_MAP, NG1_PARSE];
-    function directiveFactory(componentFactoryRefMap, parse) {
+    directiveFactory.$inject = [NG1_INJECTOR, NG2_COMPONENT_FACTORY_REF_MAP, NG1_PARSE];
+    function directiveFactory(ng1Injector, componentFactoryRefMap, parse) {
         var componentFactory = componentFactoryRefMap[info.selector];
         if (!componentFactory)
             throw new Error('Expecting ComponentFactory for: ' + info.selector);
@@ -507,6 +507,9 @@ function ng1ComponentDirective(info, idPrefix) {
             link: {
                 post: (scope, element, attrs, parentInjector, transclude) => {
                     var domElement = element[0];
+                    if (parentInjector === null) {
+                        parentInjector = ng1Injector.get(NG2_INJECTOR);
+                    }
                     var facade = new DowngradeNg2ComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, parentInjector, parse, componentFactory);
                     facade.setupInputs();
                     facade.bootstrapNg2();

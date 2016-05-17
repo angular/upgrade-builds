@@ -12,5 +12,5 @@ exports.NG1_INJECTOR = '$injector';
 exports.NG1_PARSE = '$parse';
 exports.NG1_TEMPLATE_CACHE = '$templateCache';
 exports.NG1_TESTABILITY = '$$testability';
-exports.REQUIRE_INJECTOR = '^' + exports.NG2_INJECTOR;
+exports.REQUIRE_INJECTOR = '?^' + exports.NG2_INJECTOR;
 //# sourceMappingURL=constants.js.map
