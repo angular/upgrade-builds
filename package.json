@@ -1,14 +1,14 @@
 {
   "name": "@angular/upgrade",
-  "version": "2.0.0-ff36b03",
+  "version": "2.0.0-ea628e3",
   "description": "",
   "main": "upgrade.js",
   "jsnext:main": "esm/upgrade.js",
   "author": "angular",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "2.0.0-ff36b03",
-    "@angular/compiler": "2.0.0-ff36b03",
-    "@angular/platform-browser": "2.0.0-ff36b03"
+    "@angular/core": "2.0.0-ea628e3",
+    "@angular/compiler": "2.0.0-ea628e3",
+    "@angular/platform-browser": "2.0.0-ea628e3"
   }
 }
