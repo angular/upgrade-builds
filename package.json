@@ -1,14 +1,18 @@
 {
   "name": "@angular/upgrade",
-  "version": "2.0.0-db82906",
+  "version": "2.0.0-a01a54c",
   "description": "",
   "main": "upgrade.js",
   "jsnext:main": "esm/upgrade.js",
   "author": "angular",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "2.0.0-db82906",
-    "@angular/compiler": "2.0.0-db82906",
-    "@angular/platform-browser": "2.0.0-db82906"
+    "@angular/core": "2.0.0-a01a54c",
+    "@angular/compiler": "2.0.0-a01a54c",
+    "@angular/platform-browser": "2.0.0-a01a54c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angular/angular.git"
   }
 }
