@@ -1,7 +1,7 @@
 "use strict";
 var core_1 = require('@angular/core');
-var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
 var platform_browser_1 = require('@angular/platform-browser');
+var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
 var metadata_1 = require('./metadata');
 var util_1 = require('./util');
 var constants_1 = require('./constants');
