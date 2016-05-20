@@ -70,10 +70,6 @@ import * as angular from './angular_js';
  * ```
  */
 export declare class UpgradeAdapter {
-    private idPrefix;
-    private upgradedComponents;
-    private downgradedComponents;
-    private providers;
     /**
      * Allows Angular v2 Component to be used from AngularJS v1.
      *
@@ -332,18 +328,15 @@ export declare class UpgradeAdapter {
      * ```
      */
     downgradeNg2Provider(token: any): Function;
-    private compileNg2Components(compiler, componentFactoryRefMap);
 }
 /**
  * Use `UgradeAdapterRef` to control a hybrid AngularJS v1 / Angular v2 application.
  */
 export declare class UpgradeAdapterRef {
-    private _readyFn;
     ng1RootScope: angular.IRootScopeService;
     ng1Injector: angular.IInjectorService;
     ng2ApplicationRef: ApplicationRef;
     ng2Injector: Injector;
-    private _bootstrapDone(applicationRef, ng1Injector);
     /**
      * Register a callback function which is notified upon successful hybrid AngularJS v1 / Angular v2
      * application has been bootstrapped.

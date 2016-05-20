@@ -1,6 +1,6 @@
 import { provide, ApplicationRef, ComponentResolver, NgZone, ReflectiveInjector, Testability } from '@angular/core';
 import { browserPlatform } from '@angular/platform-browser';
-import { BROWSER_APP_DYNAMIC_PROVIDERS } from '@angular/platform-browser-dynamic';
+import { BROWSER_APP_PROVIDERS } from '@angular/platform-browser';
 import { getComponentInfo } from './metadata';
 import { onError, controllerKey } from './util';
 import { NG1_COMPILE, NG1_INJECTOR, NG1_PARSE, NG1_ROOT_SCOPE, NG1_TESTABILITY, NG2_COMPILER, NG2_INJECTOR, NG2_COMPONENT_FACTORY_REF_MAP, NG2_ZONE, REQUIRE_INJECTOR } from './constants';
@@ -266,7 +266,7 @@ export class UpgradeAdapter {
         var ng1Injector = null;
         var platformRef = browserPlatform();
         var applicationRef = ReflectiveInjector.resolveAndCreate([
-            BROWSER_APP_DYNAMIC_PROVIDERS,
+            BROWSER_APP_PROVIDERS,
             provide(NG1_INJECTOR, { useFactory: () => ng1Injector }),
             provide(NG1_COMPILE, { useFactory: () => ng1Injector.get(NG1_COMPILE) }),
             this.providers
