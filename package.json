@@ -1,15 +1,15 @@
 {
   "name": "@angular/upgrade",
-  "version": "2.0.0-7112d00",
+  "version": "2.0.0-ebe1472",
   "description": "",
   "main": "upgrade.js",
   "jsnext:main": "esm/upgrade.js",
   "author": "angular",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "2.0.0-7112d00",
-    "@angular/compiler": "2.0.0-7112d00",
-    "@angular/platform-browser": "2.0.0-7112d00"
+    "@angular/core": "2.0.0-ebe1472",
+    "@angular/compiler": "2.0.0-ebe1472",
+    "@angular/platform-browser": "2.0.0-ebe1472"
   },
   "repository": {
     "type": "git",
