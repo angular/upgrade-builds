@@ -1,13 +1,12 @@
 "use strict";
-var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var platform_browser_2 = require('@angular/platform-browser');
-var metadata_1 = require('./metadata');
-var util_1 = require('./util');
-var constants_1 = require('./constants');
-var downgrade_ng2_adapter_1 = require('./downgrade_ng2_adapter');
-var upgrade_ng1_adapter_1 = require('./upgrade_ng1_adapter');
-var angular = require('./angular_js');
+var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
+var metadata_1 = require("./metadata");
+var util_1 = require("./util");
+var constants_1 = require("./constants");
+var downgrade_ng2_adapter_1 = require("./downgrade_ng2_adapter");
+var upgrade_ng1_adapter_1 = require("./upgrade_ng1_adapter");
+var angular = require("./angular_js");
 var upgradeCount = 0;
 /**
  * Use `UpgradeAdapter` to allow AngularJS v1 and Angular v2 to coexist in a single application.
@@ -268,7 +267,8 @@ var UpgradeAdapter = (function () {
         var ng1Injector = null;
         var platformRef = platform_browser_1.browserPlatform();
         var applicationRef = core_1.ReflectiveInjector.resolveAndCreate([
-            platform_browser_2.BROWSER_APP_PROVIDERS,
+            platform_browser_1.BROWSER_APP_PROVIDERS,
+            platform_browser_1.BROWSER_APP_COMPILER_PROVIDERS,
             core_1.provide(constants_1.NG1_INJECTOR, { useFactory: function () { return ng1Injector; } }),
             core_1.provide(constants_1.NG1_COMPILE, { useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } }),
             this.providers

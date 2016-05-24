@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Injector, ComponentFactory, ComponentRef, SimpleChange } from '@angular/core';
+import { ChangeDetectorRef, Injector, ComponentFactory, ComponentRef, SimpleChanges } from '@angular/core';
 import { ComponentInfo } from './metadata';
 import * as angular from './angular_js';
 export declare class DowngradeNg2ComponentAdapter {
@@ -12,9 +12,7 @@ export declare class DowngradeNg2ComponentAdapter {
     private componentFactory;
     component: any;
     inputChangeCount: number;
-    inputChanges: {
-        [key: string]: SimpleChange;
-    };
+    inputChanges: SimpleChanges;
     componentRef: ComponentRef<any>;
     changeDetector: ChangeDetectorRef;
     componentScope: angular.IScope;
