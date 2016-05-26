@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v2.0.0-420e83a
+ * @license AngularJS v2.0.0-cbc8d0a
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -831,7 +831,8 @@
                 .value(NG2_COMPONENT_FACTORY_REF_MAP, componentFactoryRefMap)
                 .config([
                 '$provide',
-                function (provide) {
+                '$injector',
+                function (provide, ng1Injector) {
                     provide.decorator(NG1_ROOT_SCOPE, [
                         '$delegate',
                         function (rootScopeDelegate) {
@@ -846,27 +847,29 @@
                             return rootScope = rootScopeDelegate;
                         }
                     ]);
-                    provide.decorator(NG1_TESTABILITY, [
-                        '$delegate',
-                        function (testabilityDelegate) {
-                            var _this = this;
-                            var ng2Testability = injector.get(_angular_core.Testability);
-                            var origonalWhenStable = testabilityDelegate.whenStable;
-                            var newWhenStable = function (callback) {
-                                var whenStableContext = _this;
-                                origonalWhenStable.call(_this, function () {
-                                    if (ng2Testability.isStable()) {
-                                        callback.apply(this, arguments);
-                                    }
-                                    else {
-                                        ng2Testability.whenStable(newWhenStable.bind(whenStableContext, callback));
-                                    }
-                                });
-                            };
-                            testabilityDelegate.whenStable = newWhenStable;
-                            return testabilityDelegate;
-                        }
-                    ]);
+                    if (ng1Injector.has(NG1_TESTABILITY)) {
+                        provide.decorator(NG1_TESTABILITY, [
+                            '$delegate',
+                            function (testabilityDelegate) {
+                                var _this = this;
+                                var ng2Testability = injector.get(_angular_core.Testability);
+                                var origonalWhenStable = testabilityDelegate.whenStable;
+                                var newWhenStable = function (callback) {
+                                    var whenStableContext = _this;
+                                    origonalWhenStable.call(_this, function () {
+                                        if (ng2Testability.isStable()) {
+                                            callback.apply(this, arguments);
+                                        }
+                                        else {
+                                            ng2Testability.whenStable(newWhenStable.bind(whenStableContext, callback));
+                                        }
+                                    });
+                                };
+                                testabilityDelegate.whenStable = newWhenStable;
+                                return testabilityDelegate;
+                            }
+                        ]);
+                    }
                 }
             ]);
             ng1compilePromise = new Promise(function (resolve, reject) {
