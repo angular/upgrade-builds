@@ -506,15 +506,15 @@ exports.UpgradeAdapter = UpgradeAdapter;
 function ng1ComponentDirective(info, idPrefix) {
     directiveFactory.$inject = [constants_1.NG1_INJECTOR, constants_1.NG2_COMPONENT_FACTORY_REF_MAP, constants_1.NG1_PARSE];
     function directiveFactory(ng1Injector, componentFactoryRefMap, parse) {
-        var componentFactory = componentFactoryRefMap[info.selector];
-        if (!componentFactory)
-            throw new Error('Expecting ComponentFactory for: ' + info.selector);
         var idCount = 0;
         return {
             restrict: 'E',
             require: constants_1.REQUIRE_INJECTOR,
             link: {
                 post: function (scope, element, attrs, parentInjector, transclude) {
+                    var componentFactory = componentFactoryRefMap[info.selector];
+                    if (!componentFactory)
+                        throw new Error('Expecting ComponentFactory for: ' + info.selector);
                     var domElement = element[0];
                     if (parentInjector === null) {
                         parentInjector = ng1Injector.get(constants_1.NG2_INJECTOR);
