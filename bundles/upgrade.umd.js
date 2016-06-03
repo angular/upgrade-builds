@@ -94,7 +94,7 @@
             this.childNodes = element.contents();
         }
         DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function () {
-            var childInjector = _angular_core.ReflectiveInjector.resolveAndCreate([_angular_core.provide(NG1_SCOPE, { useValue: this.componentScope })], this.parentInjector);
+            var childInjector = _angular_core.ReflectiveInjector.resolveAndCreate([{ provide: NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
             this.contentInsertionPoint = document.createComment('ng1 insertion point');
             this.componentRef =
                 this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
@@ -809,8 +809,8 @@
             var applicationRef = _angular_core.ReflectiveInjector.resolveAndCreate([
                 _angular_platformBrowser.BROWSER_APP_PROVIDERS,
                 _angular_platformBrowser.BROWSER_APP_COMPILER_PROVIDERS,
-                _angular_core.provide(NG1_INJECTOR, { useFactory: function () { return ng1Injector; } }),
-                _angular_core.provide(NG1_COMPILE, { useFactory: function () { return ng1Injector.get(NG1_COMPILE); } }),
+                { provide: NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
+                { provide: NG1_COMPILE, useFactory: function () { return ng1Injector.get(NG1_COMPILE); } },
                 this.providers
             ], platformRef.injector)
                 .get(_angular_core.ApplicationRef);
@@ -992,10 +992,11 @@
          */
         UpgradeAdapter.prototype.upgradeNg1Provider = function (name, options) {
             var token = options && options.asToken || name;
-            this.providers.push(_angular_core.provide(token, {
+            this.providers.push({
+                provide: token,
                 useFactory: function (ng1Injector) { return ng1Injector.get(name); },
                 deps: [NG1_INJECTOR]
-            }));
+            });
         };
         /**
          * Allows Angular v2 service to be accessible from AngularJS v1.

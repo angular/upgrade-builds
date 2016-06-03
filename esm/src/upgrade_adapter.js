@@ -1,4 +1,4 @@
-import { provide, ApplicationRef, ComponentResolver, NgZone, ReflectiveInjector, Testability } from "@angular/core";
+import { ApplicationRef, ComponentResolver, NgZone, ReflectiveInjector, Testability } from "@angular/core";
 import { browserPlatform, BROWSER_APP_PROVIDERS, BROWSER_APP_COMPILER_PROVIDERS } from "@angular/platform-browser";
 import { getComponentInfo } from "./metadata";
 import { onError, controllerKey } from "./util";
@@ -267,8 +267,8 @@ export class UpgradeAdapter {
         var applicationRef = ReflectiveInjector.resolveAndCreate([
             BROWSER_APP_PROVIDERS,
             BROWSER_APP_COMPILER_PROVIDERS,
-            provide(NG1_INJECTOR, { useFactory: () => ng1Injector }),
-            provide(NG1_COMPILE, { useFactory: () => ng1Injector.get(NG1_COMPILE) }),
+            { provide: NG1_INJECTOR, useFactory: () => ng1Injector },
+            { provide: NG1_COMPILE, useFactory: () => ng1Injector.get(NG1_COMPILE) },
             this.providers
         ], platformRef.injector)
             .get(ApplicationRef);
@@ -449,10 +449,11 @@ export class UpgradeAdapter {
      */
     upgradeNg1Provider(name, options) {
         var token = options && options.asToken || name;
-        this.providers.push(provide(token, {
+        this.providers.push({
+            provide: token,
             useFactory: (ng1Injector) => ng1Injector.get(name),
             deps: [NG1_INJECTOR]
-        }));
+        });
     }
     /**
      * Allows Angular v2 service to be accessible from AngularJS v1.

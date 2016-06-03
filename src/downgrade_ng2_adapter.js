@@ -25,7 +25,7 @@ var DowngradeNg2ComponentAdapter = (function () {
         this.childNodes = element.contents();
     }
     DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function () {
-        var childInjector = core_1.ReflectiveInjector.resolveAndCreate([core_1.provide(constants_1.NG1_SCOPE, { useValue: this.componentScope })], this.parentInjector);
+        var childInjector = core_1.ReflectiveInjector.resolveAndCreate([{ provide: constants_1.NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.contentInsertionPoint = document.createComment('ng1 insertion point');
         this.componentRef =
             this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);

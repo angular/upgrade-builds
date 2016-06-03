@@ -269,8 +269,8 @@ var UpgradeAdapter = (function () {
         var applicationRef = core_1.ReflectiveInjector.resolveAndCreate([
             platform_browser_1.BROWSER_APP_PROVIDERS,
             platform_browser_1.BROWSER_APP_COMPILER_PROVIDERS,
-            core_1.provide(constants_1.NG1_INJECTOR, { useFactory: function () { return ng1Injector; } }),
-            core_1.provide(constants_1.NG1_COMPILE, { useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } }),
+            { provide: constants_1.NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
+            { provide: constants_1.NG1_COMPILE, useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } },
             this.providers
         ], platformRef.injector)
             .get(core_1.ApplicationRef);
@@ -452,10 +452,11 @@ var UpgradeAdapter = (function () {
      */
     UpgradeAdapter.prototype.upgradeNg1Provider = function (name, options) {
         var token = options && options.asToken || name;
-        this.providers.push(core_1.provide(token, {
+        this.providers.push({
+            provide: token,
             useFactory: function (ng1Injector) { return ng1Injector.get(name); },
             deps: [constants_1.NG1_INJECTOR]
-        }));
+        });
     };
     /**
      * Allows Angular v2 service to be accessible from AngularJS v1.

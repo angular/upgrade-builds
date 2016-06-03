@@ -269,7 +269,7 @@ export declare class UpgradeAdapter {
      * adapter.bootstrap(document.body, ['myExample']);
      *```
      */
-    addProvider(provider: Type | Provider | any[]): void;
+    addProvider(provider: Type | Provider | any[] | any): void;
     /**
      * Allows AngularJS v1 service to be accessible from Angular v2.
      *
