@@ -104,10 +104,10 @@ export class UpgradeNg1ComponentAdapterBuilder {
     }
     compileTemplate(compile, templateCache, httpBackend) {
         if (this.directive.template !== undefined) {
-            this.linkFn = compileHtml(this.directive.template);
+            this.linkFn = compileHtml(typeof this.directive.template === 'function' ? this.directive.template() : this.directive.template);
         }
         else if (this.directive.templateUrl) {
-            var url = this.directive.templateUrl;
+            var url = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() : this.directive.templateUrl;
             var html = templateCache.get(url);
             if (html !== undefined) {
                 this.linkFn = compileHtml(html);

@@ -106,10 +106,10 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
     UpgradeNg1ComponentAdapterBuilder.prototype.compileTemplate = function (compile, templateCache, httpBackend) {
         var _this = this;
         if (this.directive.template !== undefined) {
-            this.linkFn = compileHtml(this.directive.template);
+            this.linkFn = compileHtml(typeof this.directive.template === 'function' ? this.directive.template() : this.directive.template);
         }
         else if (this.directive.templateUrl) {
-            var url = this.directive.templateUrl;
+            var url = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() : this.directive.templateUrl;
             var html = templateCache.get(url);
             if (html !== undefined) {
                 this.linkFn = compileHtml(html);
