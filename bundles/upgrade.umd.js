@@ -878,7 +878,7 @@
                     '$rootScope',
                     function (injector, rootScope) {
                         ng1Injector = injector;
-                        ngZone.onMicrotaskEmpty.subscribe({ next: function (_) { return ngZone.runOutsideAngular(function () { return rootScope.$apply(); }); } });
+                        ngZone.onMicrotaskEmpty.subscribe({ next: function (_) { return ngZone.runOutsideAngular(function () { return rootScope.$applyAsync(); }); } });
                         UpgradeNg1ComponentAdapterBuilder.resolve(_this.downgradedComponents, injector)
                             .then(resolve, reject);
                     }
