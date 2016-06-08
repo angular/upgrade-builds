@@ -202,8 +202,8 @@
                     var emitter = this.component[output.prop];
                     if (emitter) {
                         emitter.subscribe({
-                            next: assignExpr ? (function (setter) { return function (value) { return setter(_this.scope, value); }; })(setter) :
-                                (function (getter) { return function (value) { return getter(_this.scope, { $event: value }); }; })(getter)
+                            next: assignExpr ? (function (setter) { return function (v) { return setter(_this.scope, v); }; })(setter) :
+                                (function (getter) { return function (v) { return getter(_this.scope, { $event: v }); }; })(getter)
                         });
                     }
                     else {
@@ -878,7 +878,7 @@
                     '$rootScope',
                     function (injector, rootScope) {
                         ng1Injector = injector;
-                        ngZone.onMicrotaskEmpty.subscribe({ next: function (_) { return ngZone.runOutsideAngular(function () { return rootScope.$apply(); }); } });
+                        ngZone.onMicrotaskEmpty.subscribe({ next: function (_) { return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); } });
                         UpgradeNg1ComponentAdapterBuilder.resolve(_this.downgradedComponents, injector)
                             .then(resolve, reject);
                     }
