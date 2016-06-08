@@ -21,7 +21,7 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
         this.linkFn = null;
         this.directive = null;
         this.$controller = null;
-        var selector = name.replace(CAMEL_CASE, function (all, next) { return '-' + next.toLowerCase(); });
+        var selector = name.replace(CAMEL_CASE, function (all /** TODO #9100 */, next) { return '-' + next.toLowerCase(); });
         var self = this;
         this.type =
             core_1.Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
@@ -116,7 +116,7 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
             }
             else {
                 return new Promise(function (resolve, err) {
-                    httpBackend('GET', url, null, function (status, response) {
+                    httpBackend('GET', url, null, function (status /** TODO #9100 */, response /** TODO #9100 */) {
                         if (status == 200) {
                             resolve(_this.linkFn = compileHtml(templateCache.put(url, response)));
                         }
@@ -131,7 +131,7 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
             throw new Error("Directive '" + this.name + "' is not a component, it is missing template.");
         }
         return null;
-        function compileHtml(html) {
+        function compileHtml(html /** TODO #9100 */) {
             var div = document.createElement('div');
             div.innerHTML = html;
             return compile(div.childNodes);
@@ -187,7 +187,7 @@ var UpgradeNg1ComponentAdapter = (function () {
         }
         for (var j = 0; j < outputs.length; j++) {
             var emitter = this[outputs[j]] = new core_1.EventEmitter();
-            this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
+            this.setComponentProperty(outputs[j], (function (emitter /** TODO #9100 */) { return function (value /** TODO #9100 */) { return emitter.emit(value); }; })(emitter));
         }
         for (var k = 0; k < propOuts.length; k++) {
             this[propOuts[k]] = new core_1.EventEmitter();
@@ -218,7 +218,7 @@ var UpgradeNg1ComponentAdapter = (function () {
             for (var i = 0, ii = clonedElement.length; i < ii; i++) {
                 _this.element.appendChild(clonedElement[i]);
             }
-        }, { parentBoundTranscludeFn: function (scope, cloneAttach) { cloneAttach(childNodes); } });
+        }, { parentBoundTranscludeFn: function (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) { cloneAttach(childNodes); } });
         if (this.destinationObj.$onInit) {
             this.destinationObj.$onInit();
         }
@@ -253,7 +253,7 @@ var UpgradeNg1ComponentAdapter = (function () {
     UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     };
-    UpgradeNg1ComponentAdapter.prototype.buildController = function (controllerType) {
+    UpgradeNg1ComponentAdapter.prototype.buildController = function (controllerType /** TODO #9100 */) {
         var locals = { $scope: this.componentScope, $element: this.$element };
         var controller = this.$controller(controllerType, locals, null, this.directive.controllerAs);
         this.$element.data(util_1.controllerKey(this.directive.name), controller);

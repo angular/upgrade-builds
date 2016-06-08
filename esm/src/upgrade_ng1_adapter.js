@@ -20,7 +20,7 @@ export class UpgradeNg1ComponentAdapterBuilder {
         this.linkFn = null;
         this.directive = null;
         this.$controller = null;
-        var selector = name.replace(CAMEL_CASE, (all, next) => '-' + next.toLowerCase());
+        var selector = name.replace(CAMEL_CASE, (all /** TODO #9100 */, next) => '-' + next.toLowerCase());
         var self = this;
         this.type =
             Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
@@ -114,7 +114,7 @@ export class UpgradeNg1ComponentAdapterBuilder {
             }
             else {
                 return new Promise((resolve, err) => {
-                    httpBackend('GET', url, null, (status, response) => {
+                    httpBackend('GET', url, null, (status /** TODO #9100 */, response /** TODO #9100 */) => {
                         if (status == 200) {
                             resolve(this.linkFn = compileHtml(templateCache.put(url, response)));
                         }
@@ -129,7 +129,7 @@ export class UpgradeNg1ComponentAdapterBuilder {
             throw new Error(`Directive '${this.name}' is not a component, it is missing template.`);
         }
         return null;
-        function compileHtml(html) {
+        function compileHtml(html /** TODO #9100 */) {
             var div = document.createElement('div');
             div.innerHTML = html;
             return compile(div.childNodes);
@@ -183,7 +183,7 @@ class UpgradeNg1ComponentAdapter {
         }
         for (var j = 0; j < outputs.length; j++) {
             var emitter = this[outputs[j]] = new EventEmitter();
-            this.setComponentProperty(outputs[j], ((emitter) => (value) => emitter.emit(value))(emitter));
+            this.setComponentProperty(outputs[j], ((emitter /** TODO #9100 */) => (value /** TODO #9100 */) => emitter.emit(value))(emitter));
         }
         for (var k = 0; k < propOuts.length; k++) {
             this[propOuts[k]] = new EventEmitter();
@@ -213,7 +213,7 @@ class UpgradeNg1ComponentAdapter {
             for (var i = 0, ii = clonedElement.length; i < ii; i++) {
                 this.element.appendChild(clonedElement[i]);
             }
-        }, { parentBoundTranscludeFn: (scope, cloneAttach) => { cloneAttach(childNodes); } });
+        }, { parentBoundTranscludeFn: (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) => { cloneAttach(childNodes); } });
         if (this.destinationObj.$onInit) {
             this.destinationObj.$onInit();
         }
@@ -248,7 +248,7 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    buildController(controllerType) {
+    buildController(controllerType /** TODO #9100 */) {
         var locals = { $scope: this.componentScope, $element: this.$element };
         var controller = this.$controller(controllerType, locals, null, this.directive.controllerAs);
         this.$element.data(controllerKey(this.directive.name), controller);

@@ -38,9 +38,9 @@ export class DowngradeNg2ComponentAdapter {
             var input = inputs[i];
             var expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                var observeFn = ((prop) => {
+                var observeFn = ((prop /** TODO #9100 */) => {
                     var prevValue = INITIAL_VALUE;
-                    return (value) => {
+                    return (value /** TODO #9100 */) => {
                         if (this.inputChanges !== null) {
                             this.inputChangeCount++;
                             this.inputChanges[prop] =
@@ -65,7 +65,7 @@ export class DowngradeNg2ComponentAdapter {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var watchFn = ((prop) => (value, prevValue) => {
+                var watchFn = ((prop /** TODO #9100 */) => (value /** TODO #9100 */, prevValue /** TODO #9100 */) => {
                     if (this.inputChanges != null) {
                         this.inputChangeCount++;
                         this.inputChanges[prop] = new Ng1Change(prevValue, value);
@@ -130,8 +130,8 @@ export class DowngradeNg2ComponentAdapter {
                 var emitter = this.component[output.prop];
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ? ((setter) => v => setter(this.scope, v))(setter) :
-                            ((getter) => v => getter(this.scope, { $event: v }))(getter)
+                        next: assignExpr ? ((setter) => (v /** TODO #9100 */) => setter(this.scope, v))(setter) :
+                            ((getter) => (v /** TODO #9100 */) => getter(this.scope, { $event: v }))(getter)
                     });
                 }
                 else {

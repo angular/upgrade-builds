@@ -292,14 +292,14 @@ var UpgradeAdapter = (function () {
             .config([
             '$provide',
             '$injector',
-            function (provide, ng1Injector) {
+            function (provide /** TODO #???? */, ng1Injector /** TODO #???? */) {
                 provide.decorator(constants_1.NG1_ROOT_SCOPE, [
                     '$delegate',
                     function (rootScopeDelegate) {
                         rootScopePrototype = rootScopeDelegate.constructor.prototype;
                         if (rootScopePrototype.hasOwnProperty('$apply')) {
                             original$applyFn = rootScopePrototype.$apply;
-                            rootScopePrototype.$apply = function (exp) { return delayApplyExps.push(exp); };
+                            rootScopePrototype.$apply = function (exp /** TODO #???? */) { return delayApplyExps.push(exp); };
                         }
                         else {
                             throw new Error("Failed to find '$apply' on '$rootScope'!");
@@ -338,7 +338,7 @@ var UpgradeAdapter = (function () {
                 '$rootScope',
                 function (injector, rootScope) {
                     ng1Injector = injector;
-                    ngZone.onMicrotaskEmpty.subscribe({ next: function (_) { return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); } });
+                    ngZone.onMicrotaskEmpty.subscribe({ next: function (_ /** TODO #???? */) { return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); } });
                     upgrade_ng1_adapter_1.UpgradeNg1ComponentAdapterBuilder.resolve(_this.downgradedComponents, injector)
                         .then(resolve, reject);
                 }

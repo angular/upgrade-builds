@@ -290,14 +290,14 @@ export class UpgradeAdapter {
             .config([
             '$provide',
             '$injector',
-                (provide, ng1Injector) => {
+                (provide /** TODO #???? */, ng1Injector /** TODO #???? */) => {
                 provide.decorator(NG1_ROOT_SCOPE, [
                     '$delegate',
                     function (rootScopeDelegate) {
                         rootScopePrototype = rootScopeDelegate.constructor.prototype;
                         if (rootScopePrototype.hasOwnProperty('$apply')) {
                             original$applyFn = rootScopePrototype.$apply;
-                            rootScopePrototype.$apply = (exp) => delayApplyExps.push(exp);
+                            rootScopePrototype.$apply = (exp /** TODO #???? */) => delayApplyExps.push(exp);
                         }
                         else {
                             throw new Error("Failed to find '$apply' on '$rootScope'!");
@@ -335,7 +335,7 @@ export class UpgradeAdapter {
                 '$rootScope',
                     (injector, rootScope) => {
                     ng1Injector = injector;
-                    ngZone.onMicrotaskEmpty.subscribe({ next: (_) => ngZone.runOutsideAngular(() => rootScope.$evalAsync()) });
+                    ngZone.onMicrotaskEmpty.subscribe({ next: (_ /** TODO #???? */) => ngZone.runOutsideAngular(() => rootScope.$evalAsync()) });
                     UpgradeNg1ComponentAdapterBuilder.resolve(this.downgradedComponents, injector)
                         .then(resolve, reject);
                 }

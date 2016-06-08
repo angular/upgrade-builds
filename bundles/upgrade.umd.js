@@ -18,7 +18,7 @@
         if (!selector.match(COMPONENT_SELECTOR)) {
             throw new Error('Only selectors matching element names are supported, got: ' + selector);
         }
-        var selector = selector.replace(SKEWER_CASE, function (all, letter) { return letter.toUpperCase(); });
+        var selector = selector.replace(SKEWER_CASE, function (all /** TODO #9100 */, letter) { return letter.toUpperCase(); });
         return {
             type: type,
             selector: selector,
@@ -109,9 +109,9 @@
                 var input = inputs[i];
                 var expr = null;
                 if (attrs.hasOwnProperty(input.attr)) {
-                    var observeFn = (function (prop) {
+                    var observeFn = (function (prop /** TODO #9100 */) {
                         var prevValue = INITIAL_VALUE;
-                        return function (value) {
+                        return function (value /** TODO #9100 */) {
                             if (_this.inputChanges !== null) {
                                 _this.inputChangeCount++;
                                 _this.inputChanges[prop] =
@@ -136,7 +136,7 @@
                     expr = attrs[input.bracketParenAttr];
                 }
                 if (expr != null) {
-                    var watchFn = (function (prop) { return function (value, prevValue) {
+                    var watchFn = (function (prop /** TODO #9100 */) { return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
                         if (_this.inputChanges != null) {
                             _this.inputChangeCount++;
                             _this.inputChanges[prop] = new Ng1Change(prevValue, value);
@@ -202,8 +202,8 @@
                     var emitter = this.component[output.prop];
                     if (emitter) {
                         emitter.subscribe({
-                            next: assignExpr ? (function (setter) { return function (v) { return setter(_this.scope, v); }; })(setter) :
-                                (function (getter) { return function (v) { return getter(_this.scope, { $event: v }); }; })(getter)
+                            next: assignExpr ? (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
+                                (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { $event: v }); }; })(getter)
                         });
                     }
                     else {
@@ -268,7 +268,7 @@
             this.linkFn = null;
             this.directive = null;
             this.$controller = null;
-            var selector = name.replace(CAMEL_CASE, function (all, next) { return '-' + next.toLowerCase(); });
+            var selector = name.replace(CAMEL_CASE, function (all /** TODO #9100 */, next) { return '-' + next.toLowerCase(); });
             var self = this;
             this.type =
                 _angular_core.Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
@@ -363,7 +363,7 @@
                 }
                 else {
                     return new Promise(function (resolve, err) {
-                        httpBackend('GET', url, null, function (status, response) {
+                        httpBackend('GET', url, null, function (status /** TODO #9100 */, response /** TODO #9100 */) {
                             if (status == 200) {
                                 resolve(_this.linkFn = compileHtml(templateCache.put(url, response)));
                             }
@@ -378,7 +378,7 @@
                 throw new Error("Directive '" + this.name + "' is not a component, it is missing template.");
             }
             return null;
-            function compileHtml(html) {
+            function compileHtml(html /** TODO #9100 */) {
                 var div = document.createElement('div');
                 div.innerHTML = html;
                 return compile(div.childNodes);
@@ -433,7 +433,7 @@
             }
             for (var j = 0; j < outputs.length; j++) {
                 var emitter = this[outputs[j]] = new _angular_core.EventEmitter();
-                this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
+                this.setComponentProperty(outputs[j], (function (emitter /** TODO #9100 */) { return function (value /** TODO #9100 */) { return emitter.emit(value); }; })(emitter));
             }
             for (var k = 0; k < propOuts.length; k++) {
                 this[propOuts[k]] = new _angular_core.EventEmitter();
@@ -464,7 +464,7 @@
                 for (var i = 0, ii = clonedElement.length; i < ii; i++) {
                     _this.element.appendChild(clonedElement[i]);
                 }
-            }, { parentBoundTranscludeFn: function (scope, cloneAttach) { cloneAttach(childNodes); } });
+            }, { parentBoundTranscludeFn: function (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) { cloneAttach(childNodes); } });
             if (this.destinationObj.$onInit) {
                 this.destinationObj.$onInit();
             }
@@ -499,7 +499,7 @@
         UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
             this.destinationObj[this.propertyMap[name]] = value;
         };
-        UpgradeNg1ComponentAdapter.prototype.buildController = function (controllerType) {
+        UpgradeNg1ComponentAdapter.prototype.buildController = function (controllerType /** TODO #9100 */) {
             var locals = { $scope: this.componentScope, $element: this.$element };
             var controller = this.$controller(controllerType, locals, null, this.directive.controllerAs);
             this.$element.data(controllerKey(this.directive.name), controller);
@@ -832,14 +832,14 @@
                 .config([
                 '$provide',
                 '$injector',
-                function (provide, ng1Injector) {
+                function (provide /** TODO #???? */, ng1Injector /** TODO #???? */) {
                     provide.decorator(NG1_ROOT_SCOPE, [
                         '$delegate',
                         function (rootScopeDelegate) {
                             rootScopePrototype = rootScopeDelegate.constructor.prototype;
                             if (rootScopePrototype.hasOwnProperty('$apply')) {
                                 original$applyFn = rootScopePrototype.$apply;
-                                rootScopePrototype.$apply = function (exp) { return delayApplyExps.push(exp); };
+                                rootScopePrototype.$apply = function (exp /** TODO #???? */) { return delayApplyExps.push(exp); };
                             }
                             else {
                                 throw new Error("Failed to find '$apply' on '$rootScope'!");
@@ -878,7 +878,7 @@
                     '$rootScope',
                     function (injector, rootScope) {
                         ng1Injector = injector;
-                        ngZone.onMicrotaskEmpty.subscribe({ next: function (_) { return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); } });
+                        ngZone.onMicrotaskEmpty.subscribe({ next: function (_ /** TODO #???? */) { return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); } });
                         UpgradeNg1ComponentAdapterBuilder.resolve(_this.downgradedComponents, injector)
                             .then(resolve, reject);
                     }

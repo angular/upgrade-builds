@@ -40,9 +40,9 @@ var DowngradeNg2ComponentAdapter = (function () {
             var input = inputs[i];
             var expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                var observeFn = (function (prop) {
+                var observeFn = (function (prop /** TODO #9100 */) {
                     var prevValue = INITIAL_VALUE;
-                    return function (value) {
+                    return function (value /** TODO #9100 */) {
                         if (_this.inputChanges !== null) {
                             _this.inputChangeCount++;
                             _this.inputChanges[prop] =
@@ -67,7 +67,7 @@ var DowngradeNg2ComponentAdapter = (function () {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var watchFn = (function (prop) { return function (value, prevValue) {
+                var watchFn = (function (prop /** TODO #9100 */) { return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
                     if (_this.inputChanges != null) {
                         _this.inputChangeCount++;
                         _this.inputChanges[prop] = new Ng1Change(prevValue, value);
@@ -133,8 +133,8 @@ var DowngradeNg2ComponentAdapter = (function () {
                 var emitter = this.component[output.prop];
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ? (function (setter) { return function (v) { return setter(_this.scope, v); }; })(setter) :
-                            (function (getter) { return function (v) { return getter(_this.scope, { $event: v }); }; })(getter)
+                        next: assignExpr ? (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
+                            (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { $event: v }); }; })(getter)
                     });
                 }
                 else {
