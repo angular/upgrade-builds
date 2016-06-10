@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Injector, ComponentFactory, ComponentRef, SimpleChanges } from '@angular/core';
-import { ComponentInfo } from './metadata';
+import { ChangeDetectorRef, ComponentFactory, ComponentRef, Injector, SimpleChanges } from '@angular/core';
 import * as angular from './angular_js';
+import { ComponentInfo } from './metadata';
 export declare class DowngradeNg2ComponentAdapter {
     private id;
     private info;

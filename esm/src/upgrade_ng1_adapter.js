@@ -1,7 +1,7 @@
 import { Directive, ElementRef, EventEmitter, Inject } from '@angular/core';
-import { NG1_COMPILE, NG1_SCOPE, NG1_HTTP_BACKEND, NG1_TEMPLATE_CACHE, NG1_CONTROLLER } from './constants';
-import { controllerKey } from './util';
 import * as angular from './angular_js';
+import { NG1_COMPILE, NG1_CONTROLLER, NG1_HTTP_BACKEND, NG1_SCOPE, NG1_TEMPLATE_CACHE } from './constants';
+import { controllerKey } from './util';
 const CAMEL_CASE = /([A-Z])/g;
 const INITIAL_VALUE = {
     __UNINITIALIZED__: true
@@ -26,8 +26,7 @@ export class UpgradeNg1ComponentAdapterBuilder {
             Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
                 .Class({
                 constructor: [
-                    new Inject(NG1_SCOPE),
-                    ElementRef,
+                    new Inject(NG1_SCOPE), ElementRef,
                     function (scope, elementRef) {
                         return new UpgradeNg1ComponentAdapter(self.linkFn, scope, self.directive, elementRef, self.$controller, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
                     }
@@ -104,10 +103,12 @@ export class UpgradeNg1ComponentAdapterBuilder {
     }
     compileTemplate(compile, templateCache, httpBackend) {
         if (this.directive.template !== undefined) {
-            this.linkFn = compileHtml(typeof this.directive.template === 'function' ? this.directive.template() : this.directive.template);
+            this.linkFn = compileHtml(typeof this.directive.template === 'function' ? this.directive.template() :
+                this.directive.template);
         }
         else if (this.directive.templateUrl) {
-            var url = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() : this.directive.templateUrl;
+            var url = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() :
+                this.directive.templateUrl;
             var html = templateCache.get(url);
             if (html !== undefined) {
                 this.linkFn = compileHtml(html);
@@ -213,7 +214,9 @@ class UpgradeNg1ComponentAdapter {
             for (var i = 0, ii = clonedElement.length; i < ii; i++) {
                 this.element.appendChild(clonedElement[i]);
             }
-        }, { parentBoundTranscludeFn: (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) => { cloneAttach(childNodes); } });
+        }, {
+            parentBoundTranscludeFn: (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) => { cloneAttach(childNodes); }
+        });
         if (this.destinationObj.$onInit) {
             this.destinationObj.$onInit();
         }

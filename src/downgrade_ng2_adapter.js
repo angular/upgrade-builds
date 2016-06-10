@@ -27,8 +27,7 @@ var DowngradeNg2ComponentAdapter = (function () {
     DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function () {
         var childInjector = core_1.ReflectiveInjector.resolveAndCreate([{ provide: constants_1.NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.contentInsertionPoint = document.createComment('ng1 insertion point');
-        this.componentRef =
-            this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
+        this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
     };
@@ -67,13 +66,15 @@ var DowngradeNg2ComponentAdapter = (function () {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var watchFn = (function (prop /** TODO #9100 */) { return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
-                    if (_this.inputChanges != null) {
-                        _this.inputChangeCount++;
-                        _this.inputChanges[prop] = new Ng1Change(prevValue, value);
-                    }
-                    _this.component[prop] = value;
-                }; })(input.prop);
+                var watchFn = (function (prop /** TODO #9100 */) {
+                    return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
+                        if (_this.inputChanges != null) {
+                            _this.inputChangeCount++;
+                            _this.inputChanges[prop] = new Ng1Change(prevValue, value);
+                        }
+                        _this.component[prop] = value;
+                    };
+                })(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
@@ -133,8 +134,11 @@ var DowngradeNg2ComponentAdapter = (function () {
                 var emitter = this.component[output.prop];
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ? (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
-                            (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { $event: v }); }; })(getter)
+                        next: assignExpr ?
+                            (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
+                            (function (getter) { return function (v /** TODO #9100 */) {
+                                return getter(_this.scope, { $event: v });
+                            }; })(getter)
                     });
                 }
                 else {

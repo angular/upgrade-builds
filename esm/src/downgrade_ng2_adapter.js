@@ -26,8 +26,7 @@ export class DowngradeNg2ComponentAdapter {
     bootstrapNg2() {
         var childInjector = ReflectiveInjector.resolveAndCreate([{ provide: NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.contentInsertionPoint = document.createComment('ng1 insertion point');
-        this.componentRef =
-            this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
+        this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
     }
@@ -130,7 +129,8 @@ export class DowngradeNg2ComponentAdapter {
                 var emitter = this.component[output.prop];
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ? ((setter) => (v /** TODO #9100 */) => setter(this.scope, v))(setter) :
+                        next: assignExpr ?
+                            ((setter) => (v /** TODO #9100 */) => setter(this.scope, v))(setter) :
                             ((getter) => (v /** TODO #9100 */) => getter(this.scope, { $event: v }))(getter)
                     });
                 }

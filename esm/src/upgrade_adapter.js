@@ -1,11 +1,11 @@
-import { ApplicationRef, ComponentResolver, NgZone, ReflectiveInjector, Testability } from "@angular/core";
-import { browserPlatform, BROWSER_APP_PROVIDERS, BROWSER_APP_COMPILER_PROVIDERS } from "@angular/platform-browser";
-import { getComponentInfo } from "./metadata";
-import { onError, controllerKey } from "./util";
-import { NG1_COMPILE, NG1_INJECTOR, NG1_PARSE, NG1_ROOT_SCOPE, NG1_TESTABILITY, NG2_COMPILER, NG2_INJECTOR, NG2_COMPONENT_FACTORY_REF_MAP, NG2_ZONE, REQUIRE_INJECTOR } from "./constants";
-import { DowngradeNg2ComponentAdapter } from "./downgrade_ng2_adapter";
-import { UpgradeNg1ComponentAdapterBuilder } from "./upgrade_ng1_adapter";
-import * as angular from "./angular_js";
+import { ApplicationRef, ComponentResolver, NgZone, ReflectiveInjector, Testability } from '@angular/core';
+import { BROWSER_APP_COMPILER_PROVIDERS, BROWSER_APP_PROVIDERS, browserPlatform } from '@angular/platform-browser';
+import * as angular from './angular_js';
+import { NG1_COMPILE, NG1_INJECTOR, NG1_PARSE, NG1_ROOT_SCOPE, NG1_TESTABILITY, NG2_COMPILER, NG2_COMPONENT_FACTORY_REF_MAP, NG2_INJECTOR, NG2_ZONE, REQUIRE_INJECTOR } from './constants';
+import { DowngradeNg2ComponentAdapter } from './downgrade_ng2_adapter';
+import { getComponentInfo } from './metadata';
+import { UpgradeNg1ComponentAdapterBuilder } from './upgrade_ng1_adapter';
+import { controllerKey, onError } from './util';
 var upgradeCount = 0;
 /**
  * Use `UpgradeAdapter` to allow AngularJS v1 and Angular v2 to coexist in a single application.
@@ -264,9 +264,9 @@ export class UpgradeAdapter {
         var upgrade = new UpgradeAdapterRef();
         var ng1Injector = null;
         var platformRef = browserPlatform();
-        var applicationRef = ReflectiveInjector.resolveAndCreate([
-            BROWSER_APP_PROVIDERS,
-            BROWSER_APP_COMPILER_PROVIDERS,
+        var applicationRef = ReflectiveInjector
+            .resolveAndCreate([
+            BROWSER_APP_PROVIDERS, BROWSER_APP_COMPILER_PROVIDERS,
             { provide: NG1_INJECTOR, useFactory: () => ng1Injector },
             { provide: NG1_COMPILE, useFactory: () => ng1Injector.get(NG1_COMPILE) },
             this.providers
@@ -288,8 +288,7 @@ export class UpgradeAdapter {
             .value(NG2_COMPILER, compiler)
             .value(NG2_COMPONENT_FACTORY_REF_MAP, componentFactoryRefMap)
             .config([
-            '$provide',
-            '$injector',
+            '$provide', '$injector',
                 (provide /** TODO #???? */, ng1Injector /** TODO #???? */) => {
                 provide.decorator(NG1_ROOT_SCOPE, [
                     '$delegate',
@@ -300,7 +299,7 @@ export class UpgradeAdapter {
                             rootScopePrototype.$apply = (exp /** TODO #???? */) => delayApplyExps.push(exp);
                         }
                         else {
-                            throw new Error("Failed to find '$apply' on '$rootScope'!");
+                            throw new Error('Failed to find \'$apply\' on \'$rootScope\'!');
                         }
                         return rootScope = rootScopeDelegate;
                     }
@@ -331,11 +330,12 @@ export class UpgradeAdapter {
         ]);
         ng1compilePromise = new Promise((resolve, reject) => {
             ng1Module.run([
-                '$injector',
-                '$rootScope',
+                '$injector', '$rootScope',
                     (injector, rootScope) => {
                     ng1Injector = injector;
-                    ngZone.onMicrotaskEmpty.subscribe({ next: (_ /** TODO #???? */) => ngZone.runOutsideAngular(() => rootScope.$evalAsync()) });
+                    ngZone.onMicrotaskEmpty.subscribe({
+                        next: (_ /** TODO #???? */) => ngZone.runOutsideAngular(() => rootScope.$evalAsync())
+                    });
                     UpgradeNg1ComponentAdapterBuilder.resolve(this.downgradedComponents, injector)
                         .then(resolve, reject);
                 }
@@ -359,9 +359,9 @@ export class UpgradeAdapter {
                 resolve();
             }
         });
-        Promise.all([
-            this.compileNg2Components(compiler, componentFactoryRefMap),
-            ng1BootstrapPromise,
+        Promise
+            .all([
+            this.compileNg2Components(compiler, componentFactoryRefMap), ng1BootstrapPromise,
             ng1compilePromise
         ])
             .then(() => {

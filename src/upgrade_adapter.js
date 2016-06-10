@@ -1,12 +1,12 @@
 "use strict";
-var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var metadata_1 = require("./metadata");
-var util_1 = require("./util");
-var constants_1 = require("./constants");
-var downgrade_ng2_adapter_1 = require("./downgrade_ng2_adapter");
-var upgrade_ng1_adapter_1 = require("./upgrade_ng1_adapter");
-var angular = require("./angular_js");
+var core_1 = require('@angular/core');
+var platform_browser_1 = require('@angular/platform-browser');
+var angular = require('./angular_js');
+var constants_1 = require('./constants');
+var downgrade_ng2_adapter_1 = require('./downgrade_ng2_adapter');
+var metadata_1 = require('./metadata');
+var upgrade_ng1_adapter_1 = require('./upgrade_ng1_adapter');
+var util_1 = require('./util');
 var upgradeCount = 0;
 /**
  * Use `UpgradeAdapter` to allow AngularJS v1 and Angular v2 to coexist in a single application.
@@ -266,9 +266,9 @@ var UpgradeAdapter = (function () {
         var upgrade = new UpgradeAdapterRef();
         var ng1Injector = null;
         var platformRef = platform_browser_1.browserPlatform();
-        var applicationRef = core_1.ReflectiveInjector.resolveAndCreate([
-            platform_browser_1.BROWSER_APP_PROVIDERS,
-            platform_browser_1.BROWSER_APP_COMPILER_PROVIDERS,
+        var applicationRef = core_1.ReflectiveInjector
+            .resolveAndCreate([
+            platform_browser_1.BROWSER_APP_PROVIDERS, platform_browser_1.BROWSER_APP_COMPILER_PROVIDERS,
             { provide: constants_1.NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
             { provide: constants_1.NG1_COMPILE, useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } },
             this.providers
@@ -290,8 +290,7 @@ var UpgradeAdapter = (function () {
             .value(constants_1.NG2_COMPILER, compiler)
             .value(constants_1.NG2_COMPONENT_FACTORY_REF_MAP, componentFactoryRefMap)
             .config([
-            '$provide',
-            '$injector',
+            '$provide', '$injector',
             function (provide /** TODO #???? */, ng1Injector /** TODO #???? */) {
                 provide.decorator(constants_1.NG1_ROOT_SCOPE, [
                     '$delegate',
@@ -299,10 +298,12 @@ var UpgradeAdapter = (function () {
                         rootScopePrototype = rootScopeDelegate.constructor.prototype;
                         if (rootScopePrototype.hasOwnProperty('$apply')) {
                             original$applyFn = rootScopePrototype.$apply;
-                            rootScopePrototype.$apply = function (exp /** TODO #???? */) { return delayApplyExps.push(exp); };
+                            rootScopePrototype.$apply = function (exp /** TODO #???? */) {
+                                return delayApplyExps.push(exp);
+                            };
                         }
                         else {
-                            throw new Error("Failed to find '$apply' on '$rootScope'!");
+                            throw new Error('Failed to find \'$apply\' on \'$rootScope\'!');
                         }
                         return rootScope = rootScopeDelegate;
                     }
@@ -334,11 +335,14 @@ var UpgradeAdapter = (function () {
         ]);
         ng1compilePromise = new Promise(function (resolve, reject) {
             ng1Module.run([
-                '$injector',
-                '$rootScope',
+                '$injector', '$rootScope',
                 function (injector, rootScope) {
                     ng1Injector = injector;
-                    ngZone.onMicrotaskEmpty.subscribe({ next: function (_ /** TODO #???? */) { return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); } });
+                    ngZone.onMicrotaskEmpty.subscribe({
+                        next: function (_ /** TODO #???? */) {
+                            return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); });
+                        }
+                    });
                     upgrade_ng1_adapter_1.UpgradeNg1ComponentAdapterBuilder.resolve(_this.downgradedComponents, injector)
                         .then(resolve, reject);
                 }
@@ -362,9 +366,9 @@ var UpgradeAdapter = (function () {
                 resolve();
             }
         });
-        Promise.all([
-            this.compileNg2Components(compiler, componentFactoryRefMap),
-            ng1BootstrapPromise,
+        Promise
+            .all([
+            this.compileNg2Components(compiler, componentFactoryRefMap), ng1BootstrapPromise,
             ng1compilePromise
         ])
             .then(function () {

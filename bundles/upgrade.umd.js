@@ -9,53 +9,27 @@
             (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}), global.ng.core, global.ng.platformBrowser, global.ng.compiler));
 }(this, function (exports, _angular_core, _angular_platformBrowser, _angular_compiler) {
     'use strict';
-    var COMPONENT_SELECTOR = /^[\w|-]*$/;
-    var SKEWER_CASE = /-(\w)/g;
-    var directiveResolver = new _angular_compiler.DirectiveResolver();
-    function getComponentInfo(type) {
-        var resolvedMetadata = directiveResolver.resolve(type);
-        var selector = resolvedMetadata.selector;
-        if (!selector.match(COMPONENT_SELECTOR)) {
-            throw new Error('Only selectors matching element names are supported, got: ' + selector);
+    function noNg() {
+        throw new Error('AngularJS v1.x is not loaded!');
+    }
+    var angular = {
+        bootstrap: noNg,
+        module: noNg,
+        element: noNg,
+        version: noNg,
+        resumeBootstrap: noNg,
+        getTestability: noNg
+    };
+    try {
+        if (window.hasOwnProperty('angular')) {
+            angular = window.angular;
         }
-        var selector = selector.replace(SKEWER_CASE, function (all /** TODO #9100 */, letter) { return letter.toUpperCase(); });
-        return {
-            type: type,
-            selector: selector,
-            inputs: parseFields(resolvedMetadata.inputs),
-            outputs: parseFields(resolvedMetadata.outputs)
-        };
     }
-    function parseFields(names) {
-        var attrProps = [];
-        if (names) {
-            for (var i = 0; i < names.length; i++) {
-                var parts = names[i].split(':');
-                var prop = parts[0].trim();
-                var attr = (parts[1] || parts[0]).trim();
-                var capitalAttr = attr.charAt(0).toUpperCase() + attr.substr(1);
-                attrProps.push({
-                    prop: prop,
-                    attr: attr,
-                    bracketAttr: "[" + attr + "]",
-                    parenAttr: "(" + attr + ")",
-                    bracketParenAttr: "[(" + attr + ")]",
-                    onAttr: "on" + capitalAttr,
-                    bindAttr: "bind" + capitalAttr,
-                    bindonAttr: "bindon" + capitalAttr
-                });
-            }
-        }
-        return attrProps;
+    catch (e) {
     }
-    function onError(e) {
-        // TODO: (misko): We seem to not have a stack trace here!
-        console.log(e, e.stack);
-        throw e;
-    }
-    function controllerKey(name) {
-        return '$' + name + 'Controller';
-    }
+    var bootstrap = angular.bootstrap;
+    var module$1 = angular.module;
+    var element = angular.element;
     var NG2_COMPILER = 'ng2.Compiler';
     var NG2_INJECTOR = 'ng2.Injector';
     var NG2_COMPONENT_FACTORY_REF_MAP = 'ng2.ComponentFactoryRefMap';
@@ -96,8 +70,7 @@
         DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function () {
             var childInjector = _angular_core.ReflectiveInjector.resolveAndCreate([{ provide: NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
             this.contentInsertionPoint = document.createComment('ng1 insertion point');
-            this.componentRef =
-                this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
+            this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
             this.changeDetector = this.componentRef.changeDetectorRef;
             this.component = this.componentRef.instance;
         };
@@ -202,7 +175,8 @@
                     var emitter = this.component[output.prop];
                     if (emitter) {
                         emitter.subscribe({
-                            next: assignExpr ? (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
+                            next: assignExpr ?
+                                (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
                                 (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { $event: v }); }; })(getter)
                         });
                     }
@@ -229,27 +203,53 @@
         Ng1Change.prototype.isFirstChange = function () { return this.previousValue === this.currentValue; };
         return Ng1Change;
     }());
-    function noNg() {
-        throw new Error('AngularJS v1.x is not loaded!');
-    }
-    var angular = {
-        bootstrap: noNg,
-        module: noNg,
-        element: noNg,
-        version: noNg,
-        resumeBootstrap: noNg,
-        getTestability: noNg
-    };
-    try {
-        if (window.hasOwnProperty('angular')) {
-            angular = window.angular;
+    var COMPONENT_SELECTOR = /^[\w|-]*$/;
+    var SKEWER_CASE = /-(\w)/g;
+    var directiveResolver = new _angular_compiler.DirectiveResolver();
+    function getComponentInfo(type) {
+        var resolvedMetadata = directiveResolver.resolve(type);
+        var selector = resolvedMetadata.selector;
+        if (!selector.match(COMPONENT_SELECTOR)) {
+            throw new Error('Only selectors matching element names are supported, got: ' + selector);
         }
+        var selector = selector.replace(SKEWER_CASE, function (all /** TODO #9100 */, letter) { return letter.toUpperCase(); });
+        return {
+            type: type,
+            selector: selector,
+            inputs: parseFields(resolvedMetadata.inputs),
+            outputs: parseFields(resolvedMetadata.outputs)
+        };
     }
-    catch (e) {
+    function parseFields(names) {
+        var attrProps = [];
+        if (names) {
+            for (var i = 0; i < names.length; i++) {
+                var parts = names[i].split(':');
+                var prop = parts[0].trim();
+                var attr = (parts[1] || parts[0]).trim();
+                var capitalAttr = attr.charAt(0).toUpperCase() + attr.substr(1);
+                attrProps.push({
+                    prop: prop,
+                    attr: attr,
+                    bracketAttr: "[" + attr + "]",
+                    parenAttr: "(" + attr + ")",
+                    bracketParenAttr: "[(" + attr + ")]",
+                    onAttr: "on" + capitalAttr,
+                    bindAttr: "bind" + capitalAttr,
+                    bindonAttr: "bindon" + capitalAttr
+                });
+            }
+        }
+        return attrProps;
     }
-    var bootstrap = angular.bootstrap;
-    var module$1 = angular.module;
-    var element = angular.element;
+    function onError(e) {
+        // TODO: (misko): We seem to not have a stack trace here!
+        console.log(e, e.stack);
+        throw e;
+    }
+    function controllerKey(name) {
+        return '$' + name + 'Controller';
+    }
     var CAMEL_CASE = /([A-Z])/g;
     var INITIAL_VALUE$1 = {
         __UNINITIALIZED__: true
@@ -274,8 +274,7 @@
                 _angular_core.Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
                     .Class({
                     constructor: [
-                        new _angular_core.Inject(NG1_SCOPE),
-                        _angular_core.ElementRef,
+                        new _angular_core.Inject(NG1_SCOPE), _angular_core.ElementRef,
                         function (scope, elementRef) {
                             return new UpgradeNg1ComponentAdapter(self.linkFn, scope, self.directive, elementRef, self.$controller, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
                         }
@@ -353,10 +352,12 @@
         UpgradeNg1ComponentAdapterBuilder.prototype.compileTemplate = function (compile, templateCache, httpBackend) {
             var _this = this;
             if (this.directive.template !== undefined) {
-                this.linkFn = compileHtml(typeof this.directive.template === 'function' ? this.directive.template() : this.directive.template);
+                this.linkFn = compileHtml(typeof this.directive.template === 'function' ? this.directive.template() :
+                    this.directive.template);
             }
             else if (this.directive.templateUrl) {
-                var url = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() : this.directive.templateUrl;
+                var url = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() :
+                    this.directive.templateUrl;
                 var html = templateCache.get(url);
                 if (html !== undefined) {
                     this.linkFn = compileHtml(html);
@@ -464,7 +465,9 @@
                 for (var i = 0, ii = clonedElement.length; i < ii; i++) {
                     _this.element.appendChild(clonedElement[i]);
                 }
-            }, { parentBoundTranscludeFn: function (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) { cloneAttach(childNodes); } });
+            }, {
+                parentBoundTranscludeFn: function (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) { cloneAttach(childNodes); }
+            });
             if (this.destinationObj.$onInit) {
                 this.destinationObj.$onInit();
             }
@@ -806,9 +809,9 @@
             var upgrade = new UpgradeAdapterRef();
             var ng1Injector = null;
             var platformRef = _angular_platformBrowser.browserPlatform();
-            var applicationRef = _angular_core.ReflectiveInjector.resolveAndCreate([
-                _angular_platformBrowser.BROWSER_APP_PROVIDERS,
-                _angular_platformBrowser.BROWSER_APP_COMPILER_PROVIDERS,
+            var applicationRef = _angular_core.ReflectiveInjector
+                .resolveAndCreate([
+                _angular_platformBrowser.BROWSER_APP_PROVIDERS, _angular_platformBrowser.BROWSER_APP_COMPILER_PROVIDERS,
                 { provide: NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
                 { provide: NG1_COMPILE, useFactory: function () { return ng1Injector.get(NG1_COMPILE); } },
                 this.providers
@@ -830,8 +833,7 @@
                 .value(NG2_COMPILER, compiler)
                 .value(NG2_COMPONENT_FACTORY_REF_MAP, componentFactoryRefMap)
                 .config([
-                '$provide',
-                '$injector',
+                '$provide', '$injector',
                 function (provide /** TODO #???? */, ng1Injector /** TODO #???? */) {
                     provide.decorator(NG1_ROOT_SCOPE, [
                         '$delegate',
@@ -842,7 +844,7 @@
                                 rootScopePrototype.$apply = function (exp /** TODO #???? */) { return delayApplyExps.push(exp); };
                             }
                             else {
-                                throw new Error("Failed to find '$apply' on '$rootScope'!");
+                                throw new Error('Failed to find \'$apply\' on \'$rootScope\'!');
                             }
                             return rootScope = rootScopeDelegate;
                         }
@@ -874,11 +876,12 @@
             ]);
             ng1compilePromise = new Promise(function (resolve, reject) {
                 ng1Module.run([
-                    '$injector',
-                    '$rootScope',
+                    '$injector', '$rootScope',
                     function (injector, rootScope) {
                         ng1Injector = injector;
-                        ngZone.onMicrotaskEmpty.subscribe({ next: function (_ /** TODO #???? */) { return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); } });
+                        ngZone.onMicrotaskEmpty.subscribe({
+                            next: function (_ /** TODO #???? */) { return ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); }
+                        });
                         UpgradeNg1ComponentAdapterBuilder.resolve(_this.downgradedComponents, injector)
                             .then(resolve, reject);
                     }
@@ -902,9 +905,9 @@
                     resolve();
                 }
             });
-            Promise.all([
-                this.compileNg2Components(compiler, componentFactoryRefMap),
-                ng1BootstrapPromise,
+            Promise
+                .all([
+                this.compileNg2Components(compiler, componentFactoryRefMap), ng1BootstrapPromise,
                 ng1compilePromise
             ])
                 .then(function () {
