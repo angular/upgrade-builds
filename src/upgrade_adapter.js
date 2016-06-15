@@ -1,6 +1,7 @@
 "use strict";
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
+var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
 var angular = require('./angular_js');
 var constants_1 = require('./constants');
 var downgrade_ng2_adapter_1 = require('./downgrade_ng2_adapter');
@@ -268,7 +269,7 @@ var UpgradeAdapter = (function () {
         var platformRef = platform_browser_1.browserPlatform();
         var applicationRef = core_1.ReflectiveInjector
             .resolveAndCreate([
-            platform_browser_1.BROWSER_APP_PROVIDERS, platform_browser_1.BROWSER_APP_COMPILER_PROVIDERS,
+            platform_browser_1.BROWSER_APP_PROVIDERS, platform_browser_dynamic_1.BROWSER_APP_COMPILER_PROVIDERS,
             { provide: constants_1.NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
             { provide: constants_1.NG1_COMPILE, useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } },
             this.providers
