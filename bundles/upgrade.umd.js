@@ -6,7 +6,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser'), require('@angular/platform-browser-dynamic'), require('@angular/compiler')) :
         typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser', '@angular/platform-browser-dynamic', '@angular/compiler'], factory) :
-            (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}), global.ng.core, global.ng.platformBrowser, global.ng.platformBrowser.dynamic, global.ng.compiler));
+            (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}), global.ng.core, global.ng.platformBrowser, global.ng.platformBrowserDynamic, global.ng.compiler));
 }(this, function (exports, _angular_core, _angular_platformBrowser, _angular_platformBrowserDynamic, _angular_compiler) {
     'use strict';
     function noNg() {
