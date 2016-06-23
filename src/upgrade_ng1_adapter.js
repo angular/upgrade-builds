@@ -81,7 +81,10 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
                             this.outputs.push(outputName);
                             this.outputsRename.push(outputNameRenameChange);
                             this.propertyMap[outputName] = localName;
-                        // don't break; let it fall through to '@'
+                            this.inputs.push(inputName);
+                            this.inputsRename.push(inputNameRename);
+                            this.propertyMap[inputName] = localName;
+                            break;
                         case '@':
                         // handle the '<' binding of angular 1.5 components
                         case '<':
