@@ -9,6 +9,13 @@
             (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}), global.ng.core, global.ng.platformBrowser, global.ng.platformBrowserDynamic, global.ng.compiler));
 }(this, function (exports, _angular_core, _angular_platformBrowser, _angular_platformBrowserDynamic, _angular_compiler) {
     'use strict';
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
     function noNg() {
         throw new Error('AngularJS v1.x is not loaded!');
     }
@@ -30,6 +37,13 @@
     var bootstrap = angular.bootstrap;
     var module$1 = angular.module;
     var element = angular.element;
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
     var NG2_COMPILER = 'ng2.Compiler';
     var NG2_INJECTOR = 'ng2.Injector';
     var NG2_COMPONENT_FACTORY_REF_MAP = 'ng2.ComponentFactoryRefMap';
