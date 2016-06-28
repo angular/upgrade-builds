@@ -83,8 +83,6 @@ var upgradeCount = 0;
  *       "ng2[ng1[Hello World!](transclude)](project)");
  * });
  * ```
- *
- * @experimental
  */
 export class UpgradeAdapter {
     constructor() {
@@ -538,8 +536,6 @@ function ng1ComponentDirective(info, idPrefix) {
 }
 /**
  * Use `UgradeAdapterRef` to control a hybrid AngularJS v1 / Angular v2 application.
- *
- * @experimental
  */
 export class UpgradeAdapterRef {
     constructor() {

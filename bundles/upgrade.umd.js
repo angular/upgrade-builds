@@ -636,8 +636,6 @@
      *       "ng2[ng1[Hello World!](transclude)](project)");
      * });
      * ```
-     *
-     * @experimental
      */
     var UpgradeAdapter = (function () {
         function UpgradeAdapter() {
@@ -1095,8 +1093,6 @@
     }
     /**
      * Use `UgradeAdapterRef` to control a hybrid AngularJS v1 / Angular v2 application.
-     *
-     * @experimental
      */
     var UpgradeAdapterRef = (function () {
         function UpgradeAdapterRef() {
