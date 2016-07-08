@@ -275,18 +275,25 @@ var UpgradeAdapter = (function () {
         var _this = this;
         var upgrade = new UpgradeAdapterRef();
         var ng1Injector = null;
-        var platformRef = platform_browser_1.browserPlatform();
-        var applicationRef = core_1.ReflectiveInjector
-            .resolveAndCreate([
-            platform_browser_1.BROWSER_APP_PROVIDERS, platform_browser_dynamic_1.BROWSER_APP_COMPILER_PROVIDERS,
+        var platformRef = platform_browser_dynamic_1.browserDynamicPlatform();
+        var compiler = platformRef.injector.get(core_1.CompilerFactory).createCompiler();
+        var providers = [
             { provide: constants_1.NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
-            { provide: constants_1.NG1_COMPILE, useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } },
-            this.providers
-        ], platformRef.injector)
-            .get(core_1.ApplicationRef);
+            { provide: constants_1.NG1_COMPILE, useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } }, this.providers
+        ];
+        var DynamicModule = (function () {
+            function DynamicModule() {
+            }
+            /** @nocollapse */
+            DynamicModule.decorators = [
+                { type: core_1.AppModule, args: [{ providers: providers, modules: [platform_browser_1.BrowserModule] },] },
+            ];
+            return DynamicModule;
+        }());
+        var moduleRef = core_1.bootstrapModuleFactory(compiler.compileAppModuleSync(DynamicModule), platformRef);
+        var applicationRef = moduleRef.injector.get(core_1.ApplicationRef);
         var injector = applicationRef.injector;
         var ngZone = injector.get(core_1.NgZone);
-        var compiler = injector.get(core_1.ComponentResolver);
         var delayApplyExps = [];
         var original$applyFn;
         var rootScopePrototype;
@@ -505,7 +512,7 @@ var UpgradeAdapter = (function () {
         var promises = [];
         var types = this.upgradedComponents;
         for (var i = 0; i < types.length; i++) {
-            promises.push(compiler.resolveComponent(types[i]));
+            promises.push(compiler.compileComponentAsync(types[i]));
         }
         return Promise.all(promises).then(function (componentFactories) {
             var types = _this.upgradedComponents;
