@@ -828,7 +828,6 @@
             var upgrade = new UpgradeAdapterRef();
             var ng1Injector = null;
             var platformRef = _angular_platformBrowserDynamic.browserDynamicPlatform();
-            var compiler = platformRef.injector.get(_angular_core.CompilerFactory).createCompiler();
             var providers = [
                 { provide: NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
                 { provide: NG1_COMPILE, useFactory: function () { return ng1Injector.get(NG1_COMPILE); } }, this.providers
@@ -840,9 +839,11 @@
             }());
             /** @nocollapse */
             DynamicModule.decorators = [
-                { type: _angular_core.AppModule, args: [{ providers: providers, modules: [_angular_platformBrowser.BrowserModule] },] },
+                { type: _angular_core.NgModule, args: [{ providers: providers, imports: [_angular_platformBrowser.BrowserModule] },] },
             ];
-            var moduleRef = _angular_core.bootstrapModuleFactory(compiler.compileAppModuleSync(DynamicModule), platformRef);
+            var compilerFactory = platformRef.injector.get(_angular_core.CompilerFactory);
+            var moduleRef = _angular_core.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule), platformRef);
+            var boundCompiler = moduleRef.injector.get(_angular_core.Compiler);
             var applicationRef = moduleRef.injector.get(_angular_core.ApplicationRef);
             var injector = applicationRef.injector;
             var ngZone = injector.get(_angular_core.NgZone);
@@ -856,7 +857,7 @@
             var ng1compilePromise = null;
             ng1Module.value(NG2_INJECTOR, injector)
                 .value(NG2_ZONE, ngZone)
-                .value(NG2_COMPILER, compiler)
+                .value(NG2_COMPILER, boundCompiler)
                 .value(NG2_COMPONENT_FACTORY_REF_MAP, componentFactoryRefMap)
                 .config([
                 '$provide', '$injector',
@@ -932,7 +933,7 @@
                 }
             });
             Promise.all([ng1BootstrapPromise, ng1compilePromise])
-                .then(function () { return _this.compileNg2Components(compiler, componentFactoryRefMap); })
+                .then(function () { return _this.compileNg2Components(boundCompiler, componentFactoryRefMap); })
                 .then(function () {
                 ngZone.run(function () {
                     if (rootScopePrototype) {

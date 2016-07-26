@@ -276,7 +276,6 @@ var UpgradeAdapter = (function () {
         var upgrade = new UpgradeAdapterRef();
         var ng1Injector = null;
         var platformRef = platform_browser_dynamic_1.browserDynamicPlatform();
-        var compiler = platformRef.injector.get(core_1.CompilerFactory).createCompiler();
         var providers = [
             { provide: constants_1.NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
             { provide: constants_1.NG1_COMPILE, useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } }, this.providers
@@ -286,11 +285,13 @@ var UpgradeAdapter = (function () {
             }
             /** @nocollapse */
             DynamicModule.decorators = [
-                { type: core_1.AppModule, args: [{ providers: providers, modules: [platform_browser_1.BrowserModule] },] },
+                { type: core_1.NgModule, args: [{ providers: providers, imports: [platform_browser_1.BrowserModule] },] },
             ];
             return DynamicModule;
         }());
-        var moduleRef = core_1.bootstrapModuleFactory(compiler.compileAppModuleSync(DynamicModule), platformRef);
+        var compilerFactory = platformRef.injector.get(core_1.CompilerFactory);
+        var moduleRef = core_1.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule), platformRef);
+        var boundCompiler = moduleRef.injector.get(core_1.Compiler);
         var applicationRef = moduleRef.injector.get(core_1.ApplicationRef);
         var injector = applicationRef.injector;
         var ngZone = injector.get(core_1.NgZone);
@@ -304,7 +305,7 @@ var UpgradeAdapter = (function () {
         var ng1compilePromise = null;
         ng1Module.value(constants_1.NG2_INJECTOR, injector)
             .value(constants_1.NG2_ZONE, ngZone)
-            .value(constants_1.NG2_COMPILER, compiler)
+            .value(constants_1.NG2_COMPILER, boundCompiler)
             .value(constants_1.NG2_COMPONENT_FACTORY_REF_MAP, componentFactoryRefMap)
             .config([
             '$provide', '$injector',
@@ -384,7 +385,7 @@ var UpgradeAdapter = (function () {
             }
         });
         Promise.all([ng1BootstrapPromise, ng1compilePromise])
-            .then(function () { return _this.compileNg2Components(compiler, componentFactoryRefMap); })
+            .then(function () { return _this.compileNg2Components(boundCompiler, componentFactoryRefMap); })
             .then(function () {
             ngZone.run(function () {
                 if (rootScopePrototype) {

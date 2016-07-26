@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { AppModule, ApplicationRef, CompilerFactory, NgZone, Testability, bootstrapModuleFactory } from '@angular/core';
+import { ApplicationRef, Compiler, CompilerFactory, NgModule, NgZone, Testability, bootstrapModuleFactory } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { browserDynamicPlatform } from '@angular/platform-browser-dynamic';
 import * as angular from './angular_js';
@@ -274,7 +274,6 @@ export class UpgradeAdapter {
         var upgrade = new UpgradeAdapterRef();
         var ng1Injector = null;
         var platformRef = browserDynamicPlatform();
-        var compiler = platformRef.injector.get(CompilerFactory).createCompiler();
         var providers = [
             { provide: NG1_INJECTOR, useFactory: () => ng1Injector },
             { provide: NG1_COMPILE, useFactory: () => ng1Injector.get(NG1_COMPILE) }, this.providers
@@ -283,9 +282,11 @@ export class UpgradeAdapter {
         }
         /** @nocollapse */
         DynamicModule.decorators = [
-            { type: AppModule, args: [{ providers: providers, modules: [BrowserModule] },] },
+            { type: NgModule, args: [{ providers: providers, imports: [BrowserModule] },] },
         ];
-        var moduleRef = bootstrapModuleFactory(compiler.compileAppModuleSync(DynamicModule), platformRef);
+        const compilerFactory = platformRef.injector.get(CompilerFactory);
+        var moduleRef = bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule), platformRef);
+        const boundCompiler = moduleRef.injector.get(Compiler);
         var applicationRef = moduleRef.injector.get(ApplicationRef);
         var injector = applicationRef.injector;
         var ngZone = injector.get(NgZone);
@@ -299,7 +300,7 @@ export class UpgradeAdapter {
         var ng1compilePromise = null;
         ng1Module.value(NG2_INJECTOR, injector)
             .value(NG2_ZONE, ngZone)
-            .value(NG2_COMPILER, compiler)
+            .value(NG2_COMPILER, boundCompiler)
             .value(NG2_COMPONENT_FACTORY_REF_MAP, componentFactoryRefMap)
             .config([
             '$provide', '$injector',
@@ -374,7 +375,7 @@ export class UpgradeAdapter {
             }
         });
         Promise.all([ng1BootstrapPromise, ng1compilePromise])
-            .then(() => { return this.compileNg2Components(compiler, componentFactoryRefMap); })
+            .then(() => { return this.compileNg2Components(boundCompiler, componentFactoryRefMap); })
             .then(() => {
             ngZone.run(() => {
                 if (rootScopePrototype) {
