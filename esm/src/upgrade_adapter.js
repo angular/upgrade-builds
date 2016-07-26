@@ -5,9 +5,9 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { ApplicationRef, Compiler, CompilerFactory, NgModule, NgZone, Testability, bootstrapModuleFactory } from '@angular/core';
+import { ApplicationRef, Compiler, CompilerFactory, NgModule, NgZone, Testability } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { browserDynamicPlatform } from '@angular/platform-browser-dynamic';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import * as angular from './angular_js';
 import { NG1_COMPILE, NG1_INJECTOR, NG1_PARSE, NG1_ROOT_SCOPE, NG1_TESTABILITY, NG2_COMPILER, NG2_COMPONENT_FACTORY_REF_MAP, NG2_INJECTOR, NG2_ZONE, REQUIRE_INJECTOR } from './constants';
 import { DowngradeNg2ComponentAdapter } from './downgrade_ng2_adapter';
@@ -273,7 +273,7 @@ export class UpgradeAdapter {
     bootstrap(element, modules, config) {
         var upgrade = new UpgradeAdapterRef();
         var ng1Injector = null;
-        var platformRef = browserDynamicPlatform();
+        var platformRef = platformBrowserDynamic();
         var providers = [
             { provide: NG1_INJECTOR, useFactory: () => ng1Injector },
             { provide: NG1_COMPILE, useFactory: () => ng1Injector.get(NG1_COMPILE) }, this.providers
@@ -285,7 +285,7 @@ export class UpgradeAdapter {
             { type: NgModule, args: [{ providers: providers, imports: [BrowserModule] },] },
         ];
         const compilerFactory = platformRef.injector.get(CompilerFactory);
-        var moduleRef = bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule), platformRef);
+        var moduleRef = platformRef.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule));
         const boundCompiler = moduleRef.injector.get(Compiler);
         var applicationRef = moduleRef.injector.get(ApplicationRef);
         var injector = applicationRef.injector;

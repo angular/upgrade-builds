@@ -275,7 +275,7 @@ var UpgradeAdapter = (function () {
         var _this = this;
         var upgrade = new UpgradeAdapterRef();
         var ng1Injector = null;
-        var platformRef = platform_browser_dynamic_1.browserDynamicPlatform();
+        var platformRef = platform_browser_dynamic_1.platformBrowserDynamic();
         var providers = [
             { provide: constants_1.NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
             { provide: constants_1.NG1_COMPILE, useFactory: function () { return ng1Injector.get(constants_1.NG1_COMPILE); } }, this.providers
@@ -290,7 +290,7 @@ var UpgradeAdapter = (function () {
             return DynamicModule;
         }());
         var compilerFactory = platformRef.injector.get(core_1.CompilerFactory);
-        var moduleRef = core_1.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule), platformRef);
+        var moduleRef = platformRef.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule));
         var boundCompiler = moduleRef.injector.get(core_1.Compiler);
         var applicationRef = moduleRef.injector.get(core_1.ApplicationRef);
         var injector = applicationRef.injector;

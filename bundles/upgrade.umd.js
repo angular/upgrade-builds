@@ -827,7 +827,7 @@
             var _this = this;
             var upgrade = new UpgradeAdapterRef();
             var ng1Injector = null;
-            var platformRef = _angular_platformBrowserDynamic.browserDynamicPlatform();
+            var platformRef = _angular_platformBrowserDynamic.platformBrowserDynamic();
             var providers = [
                 { provide: NG1_INJECTOR, useFactory: function () { return ng1Injector; } },
                 { provide: NG1_COMPILE, useFactory: function () { return ng1Injector.get(NG1_COMPILE); } }, this.providers
@@ -842,7 +842,7 @@
                 { type: _angular_core.NgModule, args: [{ providers: providers, imports: [_angular_platformBrowser.BrowserModule] },] },
             ];
             var compilerFactory = platformRef.injector.get(_angular_core.CompilerFactory);
-            var moduleRef = _angular_core.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule), platformRef);
+            var moduleRef = platformRef.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule));
             var boundCompiler = moduleRef.injector.get(_angular_core.Compiler);
             var applicationRef = moduleRef.injector.get(_angular_core.ApplicationRef);
             var injector = applicationRef.injector;
