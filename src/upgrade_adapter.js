@@ -383,11 +383,8 @@ var UpgradeAdapter = (function () {
                 resolve();
             }
         });
-        Promise
-            .all([
-            this.compileNg2Components(compiler, componentFactoryRefMap), ng1BootstrapPromise,
-            ng1compilePromise
-        ])
+        Promise.all([ng1BootstrapPromise, ng1compilePromise])
+            .then(function () { return _this.compileNg2Components(compiler, componentFactoryRefMap); })
             .then(function () {
             ngZone.run(function () {
                 if (rootScopePrototype) {
