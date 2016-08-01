@@ -289,9 +289,15 @@ var UpgradeAdapter = (function () {
             ];
             return DynamicModule;
         }());
-        var compilerFactory = platformRef.injector.get(core_1.CompilerFactory);
-        var moduleRef = platformRef.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule));
+        platformRef.bootstrapModule(DynamicModule).then(function (moduleRef) {
+            ng1Injector = _this._afterNg2ModuleBootstrap(moduleRef, upgrade, element, modules, config);
+        });
+        return upgrade;
+    };
+    UpgradeAdapter.prototype._afterNg2ModuleBootstrap = function (moduleRef, upgrade, element, modules, config) {
+        var _this = this;
         var boundCompiler = moduleRef.injector.get(core_1.Compiler);
+        var ng1Injector = null;
         var applicationRef = moduleRef.injector.get(core_1.ApplicationRef);
         var injector = applicationRef.injector;
         var ngZone = injector.get(core_1.NgZone);
@@ -398,7 +404,7 @@ var UpgradeAdapter = (function () {
                 }
             });
         }, util_1.onError);
-        return upgrade;
+        return ng1Injector;
     };
     /**
      * Adds a provider to the top level environment of a hybrid AngularJS v1 / Angular v2 application.

@@ -242,6 +242,7 @@ export declare class UpgradeAdapter {
      * ```
      */
     bootstrap(element: Element, modules?: any[], config?: angular.IAngularBootstrapConfig): UpgradeAdapterRef;
+    private _afterNg2ModuleBootstrap(moduleRef, upgrade, element, modules?, config?);
     /**
      * Adds a provider to the top level environment of a hybrid AngularJS v1 / Angular v2 application.
      *

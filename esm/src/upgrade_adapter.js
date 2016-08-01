@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { ApplicationRef, Compiler, CompilerFactory, NgModule, NgZone, Testability } from '@angular/core';
+import { ApplicationRef, Compiler, NgModule, NgZone, Testability } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import * as angular from './angular_js';
@@ -284,9 +284,14 @@ export class UpgradeAdapter {
         DynamicModule.decorators = [
             { type: NgModule, args: [{ providers: providers, imports: [BrowserModule] },] },
         ];
-        const compilerFactory = platformRef.injector.get(CompilerFactory);
-        var moduleRef = platformRef.bootstrapModuleFactory(compilerFactory.createCompiler().compileModuleSync(DynamicModule));
+        platformRef.bootstrapModule(DynamicModule).then((moduleRef) => {
+            ng1Injector = this._afterNg2ModuleBootstrap(moduleRef, upgrade, element, modules, config);
+        });
+        return upgrade;
+    }
+    _afterNg2ModuleBootstrap(moduleRef, upgrade, element, modules, config) {
         const boundCompiler = moduleRef.injector.get(Compiler);
+        var ng1Injector = null;
         var applicationRef = moduleRef.injector.get(ApplicationRef);
         var injector = applicationRef.injector;
         var ngZone = injector.get(NgZone);
@@ -388,7 +393,7 @@ export class UpgradeAdapter {
                 }
             });
         }, onError);
-        return upgrade;
+        return ng1Injector;
     }
     /**
      * Adds a provider to the top level environment of a hybrid AngularJS v1 / Angular v2 application.
