@@ -283,6 +283,7 @@ var UpgradeAdapter = (function () {
         var DynamicModule = (function () {
             function DynamicModule() {
             }
+            DynamicModule.prototype.ngDoBootstrap = function () { };
             /** @nocollapse */
             DynamicModule.decorators = [
                 { type: core_1.NgModule, args: [{ providers: providers, imports: [platform_browser_1.BrowserModule] },] },
@@ -298,8 +299,7 @@ var UpgradeAdapter = (function () {
         var _this = this;
         var boundCompiler = moduleRef.injector.get(core_1.Compiler);
         var ng1Injector = null;
-        var applicationRef = moduleRef.injector.get(core_1.ApplicationRef);
-        var injector = applicationRef.injector;
+        var injector = moduleRef.injector;
         var ngZone = injector.get(core_1.NgZone);
         var delayApplyExps = [];
         var original$applyFn;
@@ -399,7 +399,7 @@ var UpgradeAdapter = (function () {
                     while (delayApplyExps.length) {
                         rootScope.$apply(delayApplyExps.shift());
                     }
-                    upgrade._bootstrapDone(applicationRef, ng1Injector);
+                    upgrade._bootstrapDone(moduleRef, ng1Injector);
                     rootScopePrototype = null;
                 }
             });
@@ -568,13 +568,13 @@ var UpgradeAdapterRef = (function () {
         this._readyFn = null;
         this.ng1RootScope = null;
         this.ng1Injector = null;
-        this.ng2ApplicationRef = null;
+        this.ng2ModuleRef = null;
         this.ng2Injector = null;
     }
     /* @internal */
-    UpgradeAdapterRef.prototype._bootstrapDone = function (applicationRef, ng1Injector) {
-        this.ng2ApplicationRef = applicationRef;
-        this.ng2Injector = applicationRef.injector;
+    UpgradeAdapterRef.prototype._bootstrapDone = function (ngModuleRef, ng1Injector) {
+        this.ng2ModuleRef = ngModuleRef;
+        this.ng2Injector = ngModuleRef.injector;
         this.ng1Injector = ng1Injector;
         this.ng1RootScope = ng1Injector.get(constants_1.NG1_ROOT_SCOPE);
         this._readyFn && this._readyFn(this);
@@ -592,7 +592,7 @@ var UpgradeAdapterRef = (function () {
      */
     UpgradeAdapterRef.prototype.dispose = function () {
         this.ng1Injector.get(constants_1.NG1_ROOT_SCOPE).$destroy();
-        this.ng2ApplicationRef.dispose();
+        this.ng2ModuleRef.destroy();
     };
     return UpgradeAdapterRef;
 }());

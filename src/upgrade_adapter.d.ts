@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { ApplicationRef, Injector, Provider, Type } from '@angular/core';
+import { Injector, NgModuleRef, Provider, Type } from '@angular/core';
 import * as angular from './angular_js';
 /**
  * Use `UpgradeAdapter` to allow AngularJS v1 and Angular v2 to coexist in a single application.
@@ -347,7 +347,7 @@ export declare class UpgradeAdapter {
 export declare class UpgradeAdapterRef {
     ng1RootScope: angular.IRootScopeService;
     ng1Injector: angular.IInjectorService;
-    ng2ApplicationRef: ApplicationRef;
+    ng2ModuleRef: NgModuleRef<any>;
     ng2Injector: Injector;
     /**
      * Register a callback function which is notified upon successful hybrid AngularJS v1 / Angular v2
