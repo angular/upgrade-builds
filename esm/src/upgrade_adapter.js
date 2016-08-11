@@ -473,7 +473,9 @@ export class UpgradeAdapter {
      * @deprecated Use NgModules and `new UpgradeAdapter(ng2AppModule)` to configure top-level
      *providers
      */
-    addProvider(provider) { this.providers.push(provider); }
+    addProvider(provider) {
+        this.providers.push(provider);
+    }
     /**
      * Allows AngularJS v1 service to be accessible from Angular v2.
      *

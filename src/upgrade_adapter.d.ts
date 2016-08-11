@@ -88,7 +88,7 @@ import * as angular from './angular_js';
  */
 export declare class UpgradeAdapter {
     private ng2AppModule;
-    constructor(ng2AppModule?: Type);
+    constructor(ng2AppModule?: Type<any>);
     /**
      * Allows Angular v2 Component to be used from AngularJS v1.
      *
@@ -144,7 +144,7 @@ export declare class UpgradeAdapter {
      * });
      * ```
      */
-    downgradeNg2Component(type: Type): Function;
+    downgradeNg2Component(type: Type<any>): Function;
     /**
      * Allows AngularJS v1 Component to be used from Angular v2.
      *
@@ -222,7 +222,7 @@ export declare class UpgradeAdapter {
      * });
      * ```
      */
-    upgradeNg1Component(name: string): Type;
+    upgradeNg1Component(name: string): Type<any>;
     /**
      * Bootstrap a hybrid AngularJS v1 / Angular v2 application.
      *
@@ -307,7 +307,7 @@ export declare class UpgradeAdapter {
      * @deprecated Use NgModules and `new UpgradeAdapter(ng2AppModule)` to configure top-level
      *providers
      */
-    addProvider(provider: Type | Provider | any[] | any): void;
+    addProvider(provider: Type<any> | Provider | any[] | any): void;
     /**
      * Allows AngularJS v1 service to be accessible from Angular v2.
      *
