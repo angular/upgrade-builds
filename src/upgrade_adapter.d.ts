@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { Injector, NgModuleRef, Provider, Type } from '@angular/core';
+import { Injector, NgModuleRef, Type } from '@angular/core';
 import * as angular from './angular_js';
 /**
  * Use `UpgradeAdapter` to allow AngularJS v1 and Angular v2 to coexist in a single application.
@@ -268,46 +268,6 @@ export declare class UpgradeAdapter {
      * ```
      */
     bootstrap(element: Element, modules?: any[], config?: angular.IAngularBootstrapConfig): UpgradeAdapterRef;
-    /**
-     * Adds a provider to the top level environment of a hybrid AngularJS v1 / Angular v2 application.
-     *
-     * In hybrid AngularJS v1 / Angular v2 application, there is no one root Angular v2 component,
-     * for this reason we provide an application global way of registering providers which is
-     * consistent with single global injection in AngularJS v1.
-     *
-     * ### Example
-     *
-     * ```
-     * class Greeter {
-     *   greet(name) {
-     *     alert('Hello ' + name + '!');
-     *   }
-     * }
-     *
-     * @Component({
-     *   selector: 'app',
-     *   template: ''
-     * })
-     * class App {
-     *   constructor(greeter: Greeter) {
-     *     this.greeter('World');
-     *   }
-     * }
-     *
-     * var adapter = new UpgradeAdapter();
-     * adapter.addProvider(Greeter);
-     *
-     * var module = angular.module('myExample', []);
-     * module.directive('app', adapter.downgradeNg2Component(App));
-     *
-     * document.body.innerHTML = '<app></app>'
-     * adapter.bootstrap(document.body, ['myExample']);
-     *```
-     *
-     * @deprecated Use NgModules and `new UpgradeAdapter(ng2AppModule)` to configure top-level
-     *providers
-     */
-    addProvider(provider: Type<any> | Provider | any[] | any): void;
     /**
      * Allows AngularJS v1 service to be accessible from Angular v2.
      *
