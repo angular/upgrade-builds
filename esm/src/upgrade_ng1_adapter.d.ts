@@ -9,7 +9,7 @@ import { Type } from '@angular/core';
 import * as angular from './angular_js';
 export declare class UpgradeNg1ComponentAdapterBuilder {
     name: string;
-    type: Type<any>;
+    type: Type;
     inputs: string[];
     inputsRename: string[];
     outputs: string[];
@@ -26,11 +26,8 @@ export declare class UpgradeNg1ComponentAdapterBuilder {
     extractDirective(injector: angular.IInjectorService): angular.IDirective;
     private notSupported(feature);
     extractBindings(): void;
-    compileTemplate(compile: angular.ICompileService, templateCache: angular.ITemplateCacheService, httpBackend: angular.IHttpBackendService): Promise<angular.ILinkFn>;
-    /**
-     * Upgrade ng1 components into Angular 2.
-     */
+    compileTemplate(compile: angular.ICompileService, templateCache: angular.ITemplateCacheService, httpBackend: angular.IHttpBackendService): Promise<any>;
     static resolve(exportedComponents: {
         [name: string]: UpgradeNg1ComponentAdapterBuilder;
-    }, injector: angular.IInjectorService): Promise<angular.ILinkFn[]>;
+    }, injector: angular.IInjectorService): Promise<any>;
 }

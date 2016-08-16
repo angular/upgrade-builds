@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { Injector, NgModuleRef, Type } from '@angular/core';
+import { ApplicationRef, Injector, Provider, Type } from '@angular/core';
 import * as angular from './angular_js';
 /**
  * Use `UpgradeAdapter` to allow AngularJS v1 and Angular v2 to coexist in a single application.
@@ -47,11 +47,11 @@ import * as angular from './angular_js';
  * ### Example
  *
  * ```
- * var adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
+ * var adapter = new UpgradeAdapter();
  * var module = angular.module('myExample', []);
- * module.directive('ng2Comp', adapter.downgradeNg2Component(Ng2));
+ * module.directive('ng2', adapter.downgradeNg2Component(Ng2));
  *
- * module.directive('ng1Hello', function() {
+ * module.directive('ng1', function() {
  *   return {
  *      scope: { title: '=' },
  *      template: 'ng1[Hello {{title}}!](<span ng-transclude></span>)'
@@ -60,35 +60,25 @@ import * as angular from './angular_js';
  *
  *
  * @Component({
- *   selector: 'ng2-comp',
+ *   selector: 'ng2',
  *   inputs: ['name'],
- *   template: 'ng2[<ng1-hello [title]="name">transclude</ng1-hello>](<ng-content></ng-content>)',
- *   directives:
+ *   template: 'ng2[<ng1 [title]="name">transclude</ng1>](<ng-content></ng-content>)',
+ *   directives: [adapter.upgradeNg1Component('ng1')]
  * })
- * class Ng2Component {
+ * class Ng2 {
  * }
  *
- * @NgModule({
- *   declarations: [Ng2Component, adapter.upgradeNg1Component('ng1Hello')],
- *   imports: [BrowserModule]
- * })
- * class MyNg2Module {}
- *
- *
- * document.body.innerHTML = '<ng2-comp name="World">project</ng2-comp>';
+ * document.body.innerHTML = '<ng2 name="World">project</ng2>';
  *
  * adapter.bootstrap(document.body, ['myExample']).ready(function() {
  *   expect(document.body.textContent).toEqual(
  *       "ng2[ng1[Hello World!](transclude)](project)");
  * });
- *
  * ```
  *
  * @experimental
  */
 export declare class UpgradeAdapter {
-    private ng2AppModule;
-    constructor(ng2AppModule?: Type<any>);
     /**
      * Allows Angular v2 Component to be used from AngularJS v1.
      *
@@ -117,7 +107,7 @@ export declare class UpgradeAdapter {
      * ### Example
      *
      * ```
-     * var adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
+     * var adapter = new UpgradeAdapter();
      * var module = angular.module('myExample', []);
      * module.directive('greet', adapter.downgradeNg2Component(Greeter));
      *
@@ -130,12 +120,6 @@ export declare class UpgradeAdapter {
      *   @Input() name: string;
      * }
      *
-     * @NgModule({
-     *   declarations: [Greeter],
-     *   imports: [BrowserModule]
-     * })
-     * class MyNg2Module {}
-     *
      * document.body.innerHTML =
      *   'ng1 template: <greet salutation="Hello" [name]="world">text</greet>';
      *
@@ -144,7 +128,7 @@ export declare class UpgradeAdapter {
      * });
      * ```
      */
-    downgradeNg2Component(type: Type<any>): Function;
+    downgradeNg2Component(type: Type): Function;
     /**
      * Allows AngularJS v1 Component to be used from Angular v2.
      *
@@ -190,7 +174,7 @@ export declare class UpgradeAdapter {
      * ### Example
      *
      * ```
-     * var adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
+     * var adapter = new UpgradeAdapter();
      * var module = angular.module('myExample', []);
      *
      * module.directive('greet', function() {
@@ -205,15 +189,10 @@ export declare class UpgradeAdapter {
      * @Component({
      *   selector: 'ng2',
      *   template: 'ng2 template: <greet salutation="Hello" [name]="world">text</greet>'
+     *   directives: [adapter.upgradeNg1Component('greet')]
      * })
      * class Ng2 {
      * }
-     *
-     * @NgModule({
-     *   declarations: [Ng2, adapter.upgradeNg1Component('greet')],
-     *   imports: [BrowserModule]
-     * })
-     * class MyNg2Module {}
      *
      * document.body.innerHTML = '<ng2></ng2>';
      *
@@ -222,7 +201,7 @@ export declare class UpgradeAdapter {
      * });
      * ```
      */
-    upgradeNg1Component(name: string): Type<any>;
+    upgradeNg1Component(name: string): Type;
     /**
      * Bootstrap a hybrid AngularJS v1 / Angular v2 application.
      *
@@ -248,16 +227,11 @@ export declare class UpgradeAdapter {
      * @Component({
      *   selector: 'ng2',
      *   inputs: ['name'],
-     *   template: 'ng2[<ng1 [title]="name">transclude</ng1>](<ng-content></ng-content>)'
+     *   template: 'ng2[<ng1 [title]="name">transclude</ng1>](<ng-content></ng-content>)',
+     *   directives: [adapter.upgradeNg1Component('ng1')]
      * })
      * class Ng2 {
      * }
-     *
-     * @NgModule({
-     *   declarations: [Ng2, adapter.upgradeNg1Component('ng1')],
-     *   imports: [BrowserModule]
-     * })
-     * class MyNg2Module {}
      *
      * document.body.innerHTML = '<ng2 name="World">project</ng2>';
      *
@@ -268,6 +242,43 @@ export declare class UpgradeAdapter {
      * ```
      */
     bootstrap(element: Element, modules?: any[], config?: angular.IAngularBootstrapConfig): UpgradeAdapterRef;
+    /**
+     * Adds a provider to the top level environment of a hybrid AngularJS v1 / Angular v2 application.
+     *
+     * In hybrid AngularJS v1 / Angular v2 application, there is no one root Angular v2 component,
+     * for this reason we provide an application global way of registering providers which is
+     * consistent with single global injection in AngularJS v1.
+     *
+     * ### Example
+     *
+     * ```
+     * class Greeter {
+     *   greet(name) {
+     *     alert('Hello ' + name + '!');
+     *   }
+     * }
+     *
+     * @Component({
+     *   selector: 'app',
+     *   template: ''
+     * })
+     * class App {
+     *   constructor(greeter: Greeter) {
+     *     this.greeter('World');
+     *   }
+     * }
+     *
+     * var adapter = new UpgradeAdapter();
+     * adapter.addProvider(Greeter);
+     *
+     * var module = angular.module('myExample', []);
+     * module.directive('app', adapter.downgradeNg2Component(App));
+     *
+     * document.body.innerHTML = '<app></app>'
+     * adapter.bootstrap(document.body, ['myExample']);
+     *```
+     */
+    addProvider(provider: Type | Provider | any[] | any): void;
     /**
      * Allows AngularJS v1 service to be accessible from Angular v2.
      *
@@ -328,14 +339,14 @@ export declare class UpgradeAdapter {
     downgradeNg2Provider(token: any): Function;
 }
 /**
- * Use `UpgradeAdapterRef` to control a hybrid AngularJS v1 / Angular v2 application.
+ * Use `UgradeAdapterRef` to control a hybrid AngularJS v1 / Angular v2 application.
  *
  * @experimental
  */
 export declare class UpgradeAdapterRef {
     ng1RootScope: angular.IRootScopeService;
     ng1Injector: angular.IInjectorService;
-    ng2ModuleRef: NgModuleRef<any>;
+    ng2ApplicationRef: ApplicationRef;
     ng2Injector: Injector;
     /**
      * Register a callback function which is notified upon successful hybrid AngularJS v1 / Angular v2
