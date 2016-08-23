@@ -4,10 +4,10 @@
  * License: MIT
  */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser'), require('@angular/platform-browser-dynamic'), require('@angular/compiler')) :
-        typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser', '@angular/platform-browser-dynamic', '@angular/compiler'], factory) :
-            (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}), global.ng.core, global.ng.platformBrowser, global.ng.platformBrowserDynamic, global.ng.compiler));
-}(this, function (exports, _angular_core, _angular_platformBrowser, _angular_platformBrowserDynamic, _angular_compiler) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser-dynamic'), require('@angular/compiler')) :
+        typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser-dynamic', '@angular/compiler'], factory) :
+            (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}), global.ng.core, global.ng.platformBrowserDynamic, global.ng.compiler));
+}(this, function (exports, _angular_core, _angular_platformBrowserDynamic, _angular_compiler) {
     'use strict';
     /**
      * @license
@@ -670,8 +670,8 @@
             this.ng1ComponentsToBeUpgraded = {};
             /* @internal */
             this.providers = [];
-            if (arguments.length && !ng2AppModule) {
-                throw new _angular_core.BaseException('UpgradeAdapter constructor called with undefined instead of a ng module type');
+            if (!ng2AppModule) {
+                throw new _angular_core.BaseException('UpgradeAdapter cannot be instantiated without an NgModule of the Angular 2 app.');
             }
         }
         /**
@@ -941,10 +941,18 @@
                                     { provide: NG1_COMPILE, useFactory: function () { return ng1Injector.get(NG1_COMPILE); } },
                                     _this.providers
                                 ],
-                                imports: _this.ng2AppModule ? [_this.ng2AppModule] : [_angular_platformBrowser.BrowserModule]
-                            }).Class({ constructor: function () { }, ngDoBootstrap: function () { } });
+                                imports: [_this.ng2AppModule]
+                            }).Class({
+                                constructor: function DynamicNgUpgradeModule() { },
+                                ngDoBootstrap: function () { }
+                            });
                             _angular_platformBrowserDynamic.platformBrowserDynamic()
-                                ._bootstrapModuleWithZone(DynamicNgUpgradeModule, undefined, ngZone)
+                                ._bootstrapModuleWithZone(DynamicNgUpgradeModule, undefined, ngZone, function (componentFactories) {
+                                componentFactories.forEach(function (componentFactory) {
+                                    componentFactoryRefMap[getComponentInfo(componentFactory.componentType)
+                                        .selector] = componentFactory;
+                                });
+                            })
                                 .then(function (ref) {
                                 moduleRef = ref;
                                 element(element$$).data(controllerKey(NG2_INJECTOR), moduleRef.injector);
@@ -961,7 +969,7 @@
             var windowAngular = window['angular'];
             windowAngular.resumeBootstrap = undefined;
             ngZone.run(function () { bootstrap(element$$, [_this.idPrefix], config); });
-            ng1BootstrapPromise = new Promise(function (resolve, reject) {
+            ng1BootstrapPromise = new Promise(function (resolve) {
                 if (windowAngular.resumeBootstrap) {
                     var originalResumeBootstrap = windowAngular.resumeBootstrap;
                     windowAngular.resumeBootstrap = function () {
@@ -974,11 +982,7 @@
                     resolve();
                 }
             });
-            Promise.all([ng1BootstrapPromise, ng1compilePromise])
-                .then(function () {
-                return _this.compileNg2Components(moduleRef.injector.get(_angular_core.Compiler), componentFactoryRefMap);
-            })
-                .then(function () {
+            Promise.all([ng1BootstrapPromise, ng1compilePromise]).then(function () {
                 moduleRef.injector.get(_angular_core.NgZone).run(function () {
                     if (rootScopePrototype) {
                         rootScopePrototype.$apply = original$applyFn; // restore original $apply
@@ -1058,22 +1062,6 @@
             var factory = function (injector) { return injector.get(token); };
             factory.$inject = [NG2_INJECTOR];
             return factory;
-        };
-        /* @internal */
-        UpgradeAdapter.prototype.compileNg2Components = function (compiler, componentFactoryRefMap) {
-            var _this = this;
-            var promises = [];
-            var types = this.upgradedComponents;
-            for (var i = 0; i < types.length; i++) {
-                promises.push(compiler.compileComponentAsync(types[i], this.ng2AppModule));
-            }
-            return Promise.all(promises).then(function (componentFactories) {
-                var types = _this.upgradedComponents;
-                for (var i = 0; i < componentFactories.length; i++) {
-                    componentFactoryRefMap[getComponentInfo(types[i]).selector] = componentFactories[i];
-                }
-                return componentFactoryRefMap;
-            }, onError);
         };
         return UpgradeAdapter;
     }());

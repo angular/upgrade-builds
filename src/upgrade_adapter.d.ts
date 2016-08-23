@@ -88,7 +88,7 @@ import * as angular from './angular_js';
  */
 export declare class UpgradeAdapter {
     private ng2AppModule;
-    constructor(ng2AppModule?: Type<any>);
+    constructor(ng2AppModule: Type<any>);
     /**
      * Allows Angular v2 Component to be used from AngularJS v1.
      *
