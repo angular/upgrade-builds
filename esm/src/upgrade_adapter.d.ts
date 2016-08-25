@@ -84,7 +84,7 @@ import * as angular from './angular_js';
  *
  * ```
  *
- * @experimental
+ * @stable
  */
 export declare class UpgradeAdapter {
     private ng2AppModule;
@@ -330,7 +330,7 @@ export declare class UpgradeAdapter {
 /**
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS v1 / Angular v2 application.
  *
- * @experimental
+ * @stable
  */
 export declare class UpgradeAdapterRef {
     ng1RootScope: angular.IRootScopeService;

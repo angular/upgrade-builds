@@ -91,7 +91,7 @@ var upgradeCount = 0;
  *
  * ```
  *
- * @experimental
+ * @stable
  */
 export class UpgradeAdapter {
     // the ng2AppModule param should be required once the deprecated @Component.directives prop is
@@ -535,7 +535,7 @@ function ng1ComponentDirective(info, idPrefix) {
 /**
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS v1 / Angular v2 application.
  *
- * @experimental
+ * @stable
  */
 export class UpgradeAdapterRef {
     constructor() {
