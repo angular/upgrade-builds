@@ -94,8 +94,6 @@ var upgradeCount = 0;
  * @stable
  */
 export class UpgradeAdapter {
-    // the ng2AppModule param should be required once the deprecated @Component.directives prop is
-    // removed
     constructor(ng2AppModule) {
         this.ng2AppModule = ng2AppModule;
         /* @internal */

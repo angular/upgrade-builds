@@ -651,8 +651,6 @@
      * @stable
      */
     var UpgradeAdapter = (function () {
-        // the ng2AppModule param should be required once the deprecated @Component.directives prop is
-        // removed
         function UpgradeAdapter(ng2AppModule) {
             this.ng2AppModule = ng2AppModule;
             /* @internal */
