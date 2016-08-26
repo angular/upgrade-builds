@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { BaseException, Compiler, Injector, NgModule, NgZone, Testability } from '@angular/core';
+import { Compiler, Injector, NgModule, NgZone, Testability } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import * as angular from './angular_js';
 import { NG1_COMPILE, NG1_INJECTOR, NG1_PARSE, NG1_ROOT_SCOPE, NG1_TESTABILITY, NG2_COMPILER, NG2_COMPONENT_FACTORY_REF_MAP, NG2_INJECTOR, NG2_ZONE, REQUIRE_INJECTOR } from './constants';
@@ -112,7 +112,7 @@ export class UpgradeAdapter {
         /* @internal */
         this.providers = [];
         if (!ng2AppModule) {
-            throw new BaseException('UpgradeAdapter cannot be instantiated without an NgModule of the Angular 2 app.');
+            throw new Error('UpgradeAdapter cannot be instantiated without an NgModule of the Angular 2 app.');
         }
     }
     /**

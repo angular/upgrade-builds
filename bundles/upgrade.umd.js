@@ -669,7 +669,7 @@
             /* @internal */
             this.providers = [];
             if (!ng2AppModule) {
-                throw new _angular_core.BaseException('UpgradeAdapter cannot be instantiated without an NgModule of the Angular 2 app.');
+                throw new Error('UpgradeAdapter cannot be instantiated without an NgModule of the Angular 2 app.');
             }
         }
         /**
