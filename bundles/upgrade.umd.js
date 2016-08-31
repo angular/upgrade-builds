@@ -5,10 +5,10 @@
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser-dynamic'), require('@angular/compiler')) :
-        typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser-dynamic', '@angular/compiler'], factory) :
-            (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}), global.ng.core, global.ng.platformBrowserDynamic, global.ng.compiler));
-}(this, function (exports, _angular_core, _angular_platformBrowserDynamic, _angular_compiler) {
-    'use strict';
+    typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser-dynamic', '@angular/compiler'], factory) :
+    (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}),global.ng.core,global.ng.platformBrowserDynamic,global.ng.compiler));
+}(this, function (exports,_angular_core,_angular_platformBrowserDynamic,_angular_compiler) { 'use strict';
+
     /**
      * @license
      * Copyright Google Inc. All Rights Reserved.
@@ -37,6 +37,7 @@
     var bootstrap = angular.bootstrap;
     var module$1 = angular.module;
     var element = angular.element;
+
     /**
      * @license
      * Copyright Google Inc. All Rights Reserved.
@@ -58,6 +59,7 @@
     var NG1_TEMPLATE_CACHE = '$templateCache';
     var NG1_TESTABILITY = '$$testability';
     var REQUIRE_INJECTOR = '?^' + NG2_INJECTOR;
+
     var INITIAL_VALUE = {
         __UNINITIALIZED__: true
     };
@@ -123,13 +125,15 @@
                     expr = attrs[input.bracketParenAttr];
                 }
                 if (expr != null) {
-                    var watchFn = (function (prop /** TODO #9100 */) { return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
-                        if (_this.inputChanges != null) {
-                            _this.inputChangeCount++;
-                            _this.inputChanges[prop] = new Ng1Change(prevValue, value);
-                        }
-                        _this.component[prop] = value;
-                    }; })(input.prop);
+                    var watchFn = (function (prop /** TODO #9100 */) {
+                        return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
+                            if (_this.inputChanges != null) {
+                                _this.inputChangeCount++;
+                                _this.inputChanges[prop] = new Ng1Change(prevValue, value);
+                            }
+                            _this.component[prop] = value;
+                        };
+                    })(input.prop);
                     this.componentScope.$watch(expr, watchFn);
                 }
             }
@@ -191,7 +195,9 @@
                         emitter.subscribe({
                             next: assignExpr ?
                                 (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
-                                (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { $event: v }); }; })(getter)
+                                (function (getter) { return function (v /** TODO #9100 */) {
+                                    return getter(_this.scope, { $event: v });
+                                }; })(getter)
                         });
                     }
                     else {
@@ -217,6 +223,7 @@
         Ng1Change.prototype.isFirstChange = function () { return this.previousValue === this.currentValue; };
         return Ng1Change;
     }());
+
     var COMPONENT_SELECTOR = /^[\w|-]*$/;
     var SKEWER_CASE = /-(\w)/g;
     var directiveResolver = new _angular_compiler.DirectiveResolver();
@@ -256,6 +263,7 @@
         }
         return attrProps;
     }
+
     function onError(e) {
         // TODO: (misko): We seem to not have a stack trace here!
         console.log(e, e.stack);
@@ -264,6 +272,7 @@
     function controllerKey(name) {
         return '$' + name + 'Controller';
     }
+
     var CAMEL_CASE = /([A-Z])/g;
     var INITIAL_VALUE$1 = {
         __UNINITIALIZED__: true
@@ -454,7 +463,9 @@
             }
             for (var j = 0; j < outputs.length; j++) {
                 var emitter = this[outputs[j]] = new _angular_core.EventEmitter();
-                this.setComponentProperty(outputs[j], (function (emitter /** TODO #9100 */) { return function (value /** TODO #9100 */) { return emitter.emit(value); }; })(emitter));
+                this.setComponentProperty(outputs[j], (function (emitter /** TODO #9100 */) { return function (value /** TODO #9100 */) {
+                    return emitter.emit(value);
+                }; })(emitter));
             }
             for (var k = 0; k < propOuts.length; k++) {
                 this[propOuts[k]] = new _angular_core.EventEmitter();
@@ -570,6 +581,7 @@
         };
         return UpgradeNg1ComponentAdapter;
     }());
+
     var upgradeCount = 0;
     /**
      * Use `UpgradeAdapter` to allow AngularJS v1 and Angular v2 to coexist in a single application.
@@ -1129,6 +1141,8 @@
         };
         return UpgradeAdapterRef;
     }());
+
     exports.UpgradeAdapter = UpgradeAdapter;
     exports.UpgradeAdapterRef = UpgradeAdapterRef;
+
 }));
