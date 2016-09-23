@@ -959,8 +959,11 @@
                             _angular_platformBrowserDynamic.platformBrowserDynamic()
                                 ._bootstrapModuleWithZone(DynamicNgUpgradeModule, undefined, ngZone, function (componentFactories) {
                                 componentFactories.forEach(function (componentFactory) {
-                                    componentFactoryRefMap[getComponentInfo(componentFactory.componentType)
-                                        .selector] = componentFactory;
+                                    var type = componentFactory.componentType;
+                                    if (_this.upgradedComponents.indexOf(type) !== -1) {
+                                        componentFactoryRefMap[getComponentInfo(type).selector] =
+                                            componentFactory;
+                                    }
                                 });
                             })
                                 .then(function (ref) {
