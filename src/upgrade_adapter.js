@@ -464,7 +464,6 @@ export var UpgradeAdapter = (function () {
      * var adapter = new UpgradeAdapter();
      * adapter.upgradeNg1Provider('server');
      * adapter.upgradeNg1Provider('login', {asToken: Login});
-     * adapter.addProvider(Example);
      *
      * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
      *   var example: Example = ref.ng2Injector.get(Example);
@@ -491,7 +490,6 @@ export var UpgradeAdapter = (function () {
      * }
      *
      * var adapter = new UpgradeAdapter();
-     * adapter.addProvider(Example);
      *
      * var module = angular.module('myExample', []);
      * module.factory('example', adapter.downgradeNg2Provider(Example));
