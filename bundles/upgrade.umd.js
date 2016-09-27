@@ -625,7 +625,7 @@
      * ```
      * var adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
      * var module = angular.module('myExample', []);
-     * module.directive('ng2Comp', adapter.downgradeNg2Component(Ng2));
+     * module.directive('ng2Comp', adapter.downgradeNg2Component(Ng2Component));
      *
      * module.directive('ng1Hello', function() {
      *   return {
@@ -799,17 +799,17 @@
          *   };
          * });
          *
-         * module.directive('ng2', adapter.downgradeNg2Component(Ng2));
+         * module.directive('ng2', adapter.downgradeNg2Component(Ng2Component));
          *
          * @Component({
          *   selector: 'ng2',
          *   template: 'ng2 template: <greet salutation="Hello" [name]="world">text</greet>'
          * })
-         * class Ng2 {
+         * class Ng2Component {
          * }
          *
          * @NgModule({
-         *   declarations: [Ng2, adapter.upgradeNg1Component('greet')],
+         *   declarations: [Ng2Component, adapter.upgradeNg1Component('greet')],
          *   imports: [BrowserModule]
          * })
          * class MyNg2Module {}
