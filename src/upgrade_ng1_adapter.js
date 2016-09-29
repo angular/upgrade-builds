@@ -74,7 +74,9 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
                 if (context.hasOwnProperty(name)) {
                     var localName = context[name];
                     var type = localName.charAt(0);
-                    localName = localName.substr(1) || name;
+                    var typeOptions = localName.charAt(1);
+                    localName = typeOptions === '?' ? localName.substr(2) : localName.substr(1);
+                    localName = localName || name;
                     var outputName = 'output_' + name;
                     var outputNameRename = outputName + ': ' + name;
                     var outputNameRenameChange = outputName + ': ' + name + 'Change';
