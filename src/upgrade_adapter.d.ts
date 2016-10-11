@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { CompilerOptions, Injector, NgModuleRef, Type } from '@angular/core';
+import { Injector, NgModuleRef, Type } from '@angular/core';
 import * as angular from './angular_js';
 /**
  * Use `UpgradeAdapter` to allow AngularJS v1 and Angular v2 to coexist in a single application.
@@ -47,7 +47,7 @@ import * as angular from './angular_js';
  * ### Example
  *
  * ```
- * var adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module), myCompilerOptions);
+ * var adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
  * var module = angular.module('myExample', []);
  * module.directive('ng2Comp', adapter.downgradeNg2Component(Ng2Component));
  *
@@ -88,8 +88,7 @@ import * as angular from './angular_js';
  */
 export declare class UpgradeAdapter {
     private ng2AppModule;
-    private compilerOptions;
-    constructor(ng2AppModule: Type<any>, compilerOptions?: CompilerOptions);
+    constructor(ng2AppModule: Type<any>);
     /**
      * Allows Angular v2 Component to be used from AngularJS v1.
      *
