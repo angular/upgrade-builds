@@ -54,7 +54,7 @@ var upgradeCount = 0;
  * ### Example
  *
  * ```
- * var adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
+ * var adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module), myCompilerOptions);
  * var module = angular.module('myExample', []);
  * module.directive('ng2Comp', adapter.downgradeNg2Component(Ng2Component));
  *
@@ -94,8 +94,9 @@ var upgradeCount = 0;
  * @stable
  */
 export var UpgradeAdapter = (function () {
-    function UpgradeAdapter(ng2AppModule) {
+    function UpgradeAdapter(ng2AppModule, compilerOptions) {
         this.ng2AppModule = ng2AppModule;
+        this.compilerOptions = compilerOptions;
         /* @internal */
         this.idPrefix = "NG2_UPGRADE_" + upgradeCount++ + "_";
         /* @internal */
@@ -388,7 +389,7 @@ export var UpgradeAdapter = (function () {
                             ngDoBootstrap: function () { }
                         });
                         platformBrowserDynamic()
-                            ._bootstrapModuleWithZone(DynamicNgUpgradeModule, undefined, ngZone, function (componentFactories) {
+                            ._bootstrapModuleWithZone(DynamicNgUpgradeModule, _this.compilerOptions, ngZone, function (componentFactories) {
                             componentFactories.forEach(function (componentFactory) {
                                 var type = componentFactory.componentType;
                                 if (_this.upgradedComponents.indexOf(type) !== -1) {
