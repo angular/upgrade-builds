@@ -1,0 +1,1 @@
+{"__symbolic":"module","version":1,"metadata":{},"exports":[{"from":"./aot/downgrade_component","export":["downgradeComponent"]},{"from":"./aot/downgrade_injectable","export":["downgradeInjectable"]},{"from":"./aot/upgrade_component","export":["UpgradeComponent"]},{"from":"./aot/upgrade_module","export":["UpgradeModule"]}]}
