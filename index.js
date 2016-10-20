@@ -11,5 +11,4 @@
  * Entry point for all public APIs of the upgrade package.
  */
 export * from './src/upgrade';
-export * from './src/aot';
 //# sourceMappingURL=index.js.map
