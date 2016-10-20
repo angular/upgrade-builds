@@ -9,6 +9,7 @@ export declare const NG2_COMPILER: string;
 export declare const NG2_INJECTOR: string;
 export declare const NG2_COMPONENT_FACTORY_REF_MAP: string;
 export declare const NG2_ZONE: string;
+export declare const NG1_PROVIDE: string;
 export declare const NG1_CONTROLLER: string;
 export declare const NG1_SCOPE: string;
 export declare const NG1_ROOT_SCOPE: string;
