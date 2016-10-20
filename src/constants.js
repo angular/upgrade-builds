@@ -9,6 +9,7 @@ export var NG2_COMPILER = 'ng2.Compiler';
 export var NG2_INJECTOR = 'ng2.Injector';
 export var NG2_COMPONENT_FACTORY_REF_MAP = 'ng2.ComponentFactoryRefMap';
 export var NG2_ZONE = 'ng2.NgZone';
+export var NG1_PROVIDE = '$provide';
 export var NG1_CONTROLLER = '$controller';
 export var NG1_SCOPE = '$scope';
 export var NG1_ROOT_SCOPE = '$rootScope';
