@@ -978,7 +978,8 @@
                                 });
                             })
                                 .then(resolve, reject);
-                        });
+                        })
+                            .catch(reject);
                     }
                 ]);
             });

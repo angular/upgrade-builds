@@ -406,7 +406,8 @@ export var UpgradeAdapter = (function () {
                             });
                         })
                             .then(resolve, reject);
-                    });
+                    })
+                        .catch(reject);
                 }
             ]);
         });
