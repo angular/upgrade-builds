@@ -16,6 +16,7 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
+    ;
     function noNg() {
         throw new Error('AngularJS v1.x is not loaded!');
     }
@@ -93,7 +94,7 @@
         DowngradeNg2ComponentAdapter.prototype.setupInputs = function () {
             var _this = this;
             var attrs = this.attrs;
-            var inputs = this.info.inputs;
+            var inputs = this.info.inputs || [];
             for (var i = 0; i < inputs.length; i++) {
                 var input = inputs[i];
                 var expr = null;
@@ -161,7 +162,7 @@
         DowngradeNg2ComponentAdapter.prototype.setupOutputs = function () {
             var _this = this;
             var attrs = this.attrs;
-            var outputs = this.info.outputs;
+            var outputs = this.info.outputs || [];
             for (var j = 0; j < outputs.length; j++) {
                 var output = outputs[j];
                 var expr = null;
