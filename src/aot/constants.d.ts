@@ -9,6 +9,7 @@ export declare const UPGRADE_MODULE_NAME: string;
 export declare const INJECTOR_KEY: string;
 export declare const $INJECTOR: string;
 export declare const $PARSE: string;
+export declare const $ROOT_SCOPE: string;
 export declare const $SCOPE: string;
 export declare const $COMPILE: string;
 export declare const $TEMPLATE_CACHE: string;

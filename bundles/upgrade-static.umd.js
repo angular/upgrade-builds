@@ -305,6 +305,7 @@
         return '$' + name + 'Controller';
     }
 
+    var REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
     var NOT_SUPPORTED = 'NOT_SUPPORTED';
     var INITIAL_VALUE$1 = {
         __UNINITIALIZED__: true
@@ -345,34 +346,34 @@
             // QUESTION 2: Should we make the scope accessible through `$element.scope()/isolateScope()`?
             this.$componentScope = $parentScope.$new(!!this.directive.scope);
             var controllerType = this.directive.controller;
-            // QUESTION: shouldn't we be building the controller in any case?
-            if (this.directive.bindToController) {
-                if (controllerType) {
-                    this.bindingDestination = this.controllerInstance = this.buildController(controllerType, this.$componentScope, this.$element, this.directive.controllerAs);
-                }
-                else {
-                    throw new Error("Upgraded directive '" + name + "' specifies 'bindToController' but no controller.");
-                }
+            var bindToController = this.directive.bindToController;
+            if (controllerType) {
+                this.controllerInstance = this.buildController(controllerType, this.$componentScope, this.$element, this.directive.controllerAs);
             }
-            else {
-                this.bindingDestination = this.$componentScope;
+            else if (bindToController) {
+                throw new Error("Upgraded directive '" + name + "' specifies 'bindToController' but no controller.");
             }
+            this.bindingDestination = bindToController ? this.controllerInstance : this.$componentScope;
             this.setupOutputs();
         }
         UpgradeComponent.prototype.ngOnInit = function () {
             var _this = this;
-            // QUESTION: why not just use $compile instead of reproducing parts of it
-            if (!this.directive.bindToController && this.directive.controller) {
-                this.controllerInstance = this.buildController(this.directive.controller, this.$componentScope, this.$element, this.directive.controllerAs);
-            }
             var attrs = NOT_SUPPORTED;
             var transcludeFn = NOT_SUPPORTED;
-            var linkController = this.resolveRequired(this.$element, this.directive.require);
+            var directiveRequire = this.getDirectiveRequire(this.directive);
+            var requiredControllers = this.resolveRequire(this.directive.name, this.$element, directiveRequire);
+            if (this.directive.bindToController && isMap(directiveRequire)) {
+                var requiredControllersMap_1 = requiredControllers;
+                Object.keys(requiredControllersMap_1).forEach(function (key) {
+                    _this.controllerInstance[key] = requiredControllersMap_1[key];
+                });
+            }
+            this.callLifecycleHook('$onInit', this.controllerInstance);
             var link = this.directive.link;
             var preLink = (typeof link == 'object') && link.pre;
             var postLink = (typeof link == 'object') ? link.post : link;
             if (preLink) {
-                preLink(this.$componentScope, this.$element, attrs, linkController, transcludeFn);
+                preLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
             }
             var childNodes = [];
             var childNode;
@@ -384,19 +385,15 @@
             var attachChildNodes = function (scope, cloneAttach) { return cloneAttach(childNodes); };
             this.linkFn(this.$componentScope, attachElement, { parentBoundTranscludeFn: attachChildNodes });
             if (postLink) {
-                postLink(this.$componentScope, this.$element, attrs, linkController, transcludeFn);
+                postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
             }
-            if (this.controllerInstance && this.controllerInstance.$onInit) {
-                this.controllerInstance.$onInit();
-            }
+            this.callLifecycleHook('$postLink', this.controllerInstance);
         };
         UpgradeComponent.prototype.ngOnChanges = function (changes) {
             var _this = this;
             // Forward input changes to `bindingDestination`
-            Object.keys(changes).forEach(function (propName) { _this.bindingDestination[propName] = changes[propName].currentValue; });
-            if (this.bindingDestination.$onChanges) {
-                this.bindingDestination.$onChanges(changes);
-            }
+            Object.keys(changes).forEach(function (propName) { return _this.bindingDestination[propName] = changes[propName].currentValue; });
+            this.callLifecycleHook('$onChanges', this.bindingDestination, changes);
         };
         UpgradeComponent.prototype.ngDoCheck = function () {
             var _this = this;
@@ -413,6 +410,15 @@
                     twoWayBoundLastValues[idx] = newValue;
                 }
             });
+        };
+        UpgradeComponent.prototype.ngOnDestroy = function () {
+            this.callLifecycleHook('$onDestroy', this.controllerInstance);
+            this.$componentScope.$destroy();
+        };
+        UpgradeComponent.prototype.callLifecycleHook = function (method, context, arg) {
+            if (context && typeof context[method] === 'function') {
+                context[method](arg);
+            }
         };
         UpgradeComponent.prototype.getDirective = function (name) {
             var directives = this.$injector.get(name + 'Directive');
@@ -433,6 +439,20 @@
                     this.notSupported('link.post');
             }
             return directive;
+        };
+        UpgradeComponent.prototype.getDirectiveRequire = function (directive) {
+            var require = directive.require || (directive.controller && directive.name);
+            if (isMap(require)) {
+                Object.keys(require).forEach(function (key) {
+                    var value = require[key];
+                    var match = value.match(REQUIRE_PREFIX_RE);
+                    var name = value.substring(match[0].length);
+                    if (!name) {
+                        require[key] = match[0] + key;
+                    }
+                });
+            }
+            return require;
         };
         UpgradeComponent.prototype.initializeBindings = function (directive) {
             var _this = this;
@@ -490,13 +510,45 @@
             }
         };
         UpgradeComponent.prototype.buildController = function (controllerType, $scope, $element, controllerAs) {
+            // TODO: Document that we do not pre-assign bindings on the controller instance
             var locals = { $scope: $scope, $element: $element };
             var controller = this.$controller(controllerType, locals, null, controllerAs);
             $element.data(controllerKey(this.directive.name), controller);
             return controller;
         };
-        UpgradeComponent.prototype.resolveRequired = function ($element, require) {
-            // TODO
+        UpgradeComponent.prototype.resolveRequire = function (directiveName, $element, require) {
+            var _this = this;
+            if (!require) {
+                return null;
+            }
+            else if (Array.isArray(require)) {
+                return require.map(function (req) { return _this.resolveRequire(directiveName, $element, req); });
+            }
+            else if (typeof require === 'object') {
+                var value_1 = {};
+                Object.keys(require).forEach(function (key) { return value_1[key] = _this.resolveRequire(directiveName, $element, require[key]); });
+                return value_1;
+            }
+            else if (typeof require === 'string') {
+                var match = require.match(REQUIRE_PREFIX_RE);
+                var inheritType = match[1] || match[3];
+                var name_1 = require.substring(match[0].length);
+                var isOptional = !!match[2];
+                var searchParents = !!inheritType;
+                var startOnParent = inheritType === '^^';
+                var ctrlKey = controllerKey(name_1);
+                if (startOnParent) {
+                    $element = $element.parent();
+                }
+                var value = searchParents ? $element.inheritedData(ctrlKey) : $element.data(ctrlKey);
+                if (!value && !isOptional) {
+                    throw new Error("Unable to find required '" + require + "' in upgraded directive '" + directiveName + "'.");
+                }
+                return value;
+            }
+            else {
+                throw new Error("Unrecognized require syntax on upgraded directive '" + directiveName + "': " + require);
+            }
         };
         UpgradeComponent.prototype.setupOutputs = function () {
             var _this = this;
@@ -526,6 +578,10 @@
     }());
     function getOrCall(property) {
         return typeof (property) === 'function' ? property() : property;
+    }
+    // NOTE: Only works for `typeof T !== 'object'`.
+    function isMap(value) {
+        return value && !Array.isArray(value) && typeof value === 'object';
     }
 
     /**

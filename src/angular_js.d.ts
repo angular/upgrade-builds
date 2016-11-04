@@ -10,6 +10,9 @@ export interface IAnnotatedFunction extends Function {
     $inject?: Ng1Token[];
 }
 export declare type IInjectable = (Ng1Token | Function)[] | IAnnotatedFunction;
+export declare type SingleOrListOrMap<T> = T | T[] | {
+    [key: string]: T;
+};
 export interface IModule {
     name: string;
     requires: (string | IInjectable)[];
@@ -44,6 +47,7 @@ export interface IRootScopeService {
     $apply(): any;
     $apply(exp: string): any;
     $apply(exp: Function): any;
+    $digest(): any;
     $evalAsync(): any;
     $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
     $$childTail: IScope;
@@ -80,9 +84,7 @@ export interface IDirective {
         [key: string]: string;
     };
 }
-export declare type DirectiveRequireProperty = Ng1Token[] | Ng1Token | {
-    [key: string]: Ng1Token;
-};
+export declare type DirectiveRequireProperty = SingleOrListOrMap<string>;
 export interface IDirectiveCompileFn {
     (templateElement: IAugmentedJQuery, templateAttributes: IAttributes, transclude: ITranscludeFunction): IDirectivePrePost;
 }
