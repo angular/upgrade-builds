@@ -6,12 +6,13 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { ReflectiveInjector } from '@angular/core';
-import { NG1_SCOPE } from './constants';
+import { PropertyBinding } from './component_info';
+import { $SCOPE } from './constants';
 var INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
-export var DowngradeNg2ComponentAdapter = (function () {
-    function DowngradeNg2ComponentAdapter(id, info, element, attrs, scope, parentInjector, parse, componentFactory) {
+export var DowngradeComponentAdapter = (function () {
+    function DowngradeComponentAdapter(id, info, element, attrs, scope, parentInjector, parse, componentFactory) {
         this.id = id;
         this.info = info;
         this.element = element;
@@ -30,19 +31,19 @@ export var DowngradeNg2ComponentAdapter = (function () {
         this.componentScope = scope.$new();
         this.childNodes = element.contents();
     }
-    DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function () {
-        var childInjector = ReflectiveInjector.resolveAndCreate([{ provide: NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
+    DowngradeComponentAdapter.prototype.createComponent = function () {
+        var childInjector = ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.contentInsertionPoint = document.createComment('ng1 insertion point');
         this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
     };
-    DowngradeNg2ComponentAdapter.prototype.setupInputs = function () {
+    DowngradeComponentAdapter.prototype.setupInputs = function () {
         var _this = this;
         var attrs = this.attrs;
         var inputs = this.info.inputs || [];
         for (var i = 0; i < inputs.length; i++) {
-            var input = inputs[i];
+            var input = new PropertyBinding(inputs[i]);
             var expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
                 var observeFn = (function (prop /** TODO #9100 */) {
@@ -84,7 +85,7 @@ export var DowngradeNg2ComponentAdapter = (function () {
                 this.componentScope.$watch(expr, watchFn);
             }
         }
-        var prototype = this.info.type.prototype;
+        var prototype = this.info.component.prototype;
         if (prototype && prototype.ngOnChanges) {
             // Detect: OnChanges interface
             this.inputChanges = {};
@@ -96,7 +97,7 @@ export var DowngradeNg2ComponentAdapter = (function () {
         }
         this.componentScope.$watch(function () { return _this.changeDetector && _this.changeDetector.detectChanges(); });
     };
-    DowngradeNg2ComponentAdapter.prototype.projectContent = function () {
+    DowngradeComponentAdapter.prototype.projectContent = function () {
         var childNodes = this.childNodes;
         var parent = this.contentInsertionPoint.parentNode;
         if (parent) {
@@ -105,12 +106,12 @@ export var DowngradeNg2ComponentAdapter = (function () {
             }
         }
     };
-    DowngradeNg2ComponentAdapter.prototype.setupOutputs = function () {
+    DowngradeComponentAdapter.prototype.setupOutputs = function () {
         var _this = this;
         var attrs = this.attrs;
         var outputs = this.info.outputs || [];
         for (var j = 0; j < outputs.length; j++) {
-            var output = outputs[j];
+            var output = new PropertyBinding(outputs[j]);
             var expr = null;
             var assignExpr = false;
             var bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
@@ -148,19 +149,19 @@ export var DowngradeNg2ComponentAdapter = (function () {
                     });
                 }
                 else {
-                    throw new Error("Missing emitter '" + output.prop + "' on component '" + this.info.selector + "'!");
+                    throw new Error("Missing emitter '" + output.prop + "' on component '" + this.info.component + "'!");
                 }
             }
         }
     };
-    DowngradeNg2ComponentAdapter.prototype.registerCleanup = function () {
+    DowngradeComponentAdapter.prototype.registerCleanup = function () {
         var _this = this;
         this.element.bind('$destroy', function () {
             _this.componentScope.$destroy();
             _this.componentRef.destroy();
         });
     };
-    return DowngradeNg2ComponentAdapter;
+    return DowngradeComponentAdapter;
 }());
 var Ng1Change = (function () {
     function Ng1Change(previousValue, currentValue) {
@@ -170,4 +171,4 @@ var Ng1Change = (function () {
     Ng1Change.prototype.isFirstChange = function () { return this.previousValue === this.currentValue; };
     return Ng1Change;
 }());
-//# sourceMappingURL=downgrade_ng2_adapter.js.map
+//# sourceMappingURL=downgrade_component_adapter.js.map
