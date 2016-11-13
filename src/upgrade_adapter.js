@@ -417,9 +417,9 @@ export var UpgradeAdapter = (function () {
         ngZone.run(function () { angular.bootstrap(element, [_this.idPrefix], config); });
         ng1BootstrapPromise = new Promise(function (resolve) {
             if (windowAngular.resumeBootstrap) {
-                var originalResumeBootstrap = windowAngular.resumeBootstrap;
+                var originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
                 windowAngular.resumeBootstrap = function () {
-                    windowAngular.resumeBootstrap = originalResumeBootstrap;
+                    windowAngular.resumeBootstrap = originalResumeBootstrap_1;
                     windowAngular.resumeBootstrap.apply(this, arguments);
                     resolve();
                 };
