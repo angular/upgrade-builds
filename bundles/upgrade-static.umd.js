@@ -21,6 +21,9 @@
     var $INJECTOR = '$injector';
     var $PARSE = '$parse';
     var $SCOPE = '$scope';
+    var $PROVIDE = '$provide';
+    var $DELEGATE = '$delegate';
+    var $$TESTABILITY = '$$testability';
     var $COMPILE = '$compile';
     var $TEMPLATE_CACHE = '$templateCache';
     var $HTTP_BACKEND = '$httpBackend';
@@ -646,6 +649,35 @@
             // Create an ng1 module to bootstrap
             var upgradeModule = module$1(UPGRADE_MODULE_NAME, modules)
                 .value(INJECTOR_KEY, this.injector)
+                .config([
+                $PROVIDE, $INJECTOR,
+                function ($provide, $injector) {
+                    if ($injector.has($$TESTABILITY)) {
+                        $provide.decorator($$TESTABILITY, [
+                            $DELEGATE,
+                            function (testabilityDelegate) {
+                                var originalWhenStable = testabilityDelegate.whenStable;
+                                var injector = _this.injector;
+                                // Cannot use arrow function below because we need to grab the context
+                                var newWhenStable = function (callback) {
+                                    var whenStableContext = this;
+                                    originalWhenStable.call(this, function () {
+                                        var ng2Testability = injector.get(_angular_core.Testability);
+                                        if (ng2Testability.isStable()) {
+                                            callback.apply(this, arguments);
+                                        }
+                                        else {
+                                            ng2Testability.whenStable(newWhenStable.bind(whenStableContext, callback));
+                                        }
+                                    });
+                                };
+                                testabilityDelegate.whenStable = newWhenStable;
+                                return testabilityDelegate;
+                            }
+                        ]);
+                    }
+                }
+            ])
                 .run([
                 $INJECTOR,
                 function ($injector) {
@@ -660,8 +692,22 @@
                     _this.ngZone.onMicrotaskEmpty.subscribe(function () { return _this.ngZone.runOutsideAngular(function () { return $rootScope.$evalAsync(); }); });
                 }
             ]);
+            // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
+            var windowAngular = window['angular'];
+            windowAngular.resumeBootstrap = undefined;
             // Bootstrap the angular 1 application inside our zone
             this.ngZone.run(function () { bootstrap(element$$, [upgradeModule.name], config); });
+            // Patch resumeBootstrap() to run inside the ngZone
+            if (windowAngular.resumeBootstrap) {
+                var originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
+                var ngZone_1 = this.ngZone;
+                windowAngular.resumeBootstrap = function () {
+                    var _this = this;
+                    var args = arguments;
+                    windowAngular.resumeBootstrap = originalResumeBootstrap_1;
+                    ngZone_1.run(function () { windowAngular.resumeBootstrap.apply(_this, args); });
+                };
+            }
         };
         UpgradeModule.decorators = [
             { type: _angular_core.NgModule, args: [{ providers: angular1Providers },] },
