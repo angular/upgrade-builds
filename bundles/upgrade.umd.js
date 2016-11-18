@@ -1038,17 +1038,16 @@
                       provide.decorator(NG1_TESTABILITY, [
                           '$delegate',
                           function (testabilityDelegate) {
-                              var _this = this;
                               var /** @type {?} */ originalWhenStable = testabilityDelegate.whenStable;
+                              // Cannot use arrow function below because we need the context
                               var /** @type {?} */ newWhenStable = function (callback) {
-                                  var /** @type {?} */ whenStableContext = _this;
-                                  originalWhenStable.call(_this, function () {
+                                  originalWhenStable.call(this, function () {
                                       var /** @type {?} */ ng2Testability = moduleRef.injector.get(_angular_core.Testability);
                                       if (ng2Testability.isStable()) {
                                           callback.apply(this, arguments);
                                       }
                                       else {
-                                          ng2Testability.whenStable(newWhenStable.bind(whenStableContext, callback));
+                                          ng2Testability.whenStable(newWhenStable.bind(this, callback));
                                       }
                                   });
                               };
@@ -1110,8 +1109,10 @@
               if (windowAngular.resumeBootstrap) {
                   var /** @type {?} */ originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
                   windowAngular.resumeBootstrap = function () {
+                      var _this = this;
+                      var /** @type {?} */ args = arguments;
                       windowAngular.resumeBootstrap = originalResumeBootstrap_1;
-                      windowAngular.resumeBootstrap.apply(this, arguments);
+                      ngZone.run(function () { windowAngular.resumeBootstrap.apply(_this, args); });
                       resolve();
                   };
               }

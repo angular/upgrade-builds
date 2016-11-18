@@ -1029,16 +1029,15 @@
                             function (testabilityDelegate) {
                                 var /** @type {?} */ originalWhenStable = testabilityDelegate.whenStable;
                                 var /** @type {?} */ injector = _this.injector;
-                                // Cannot use arrow function below because we need to grab the context
+                                // Cannot use arrow function below because we need the context
                                 var /** @type {?} */ newWhenStable = function (callback) {
-                                    var /** @type {?} */ whenStableContext = this;
                                     originalWhenStable.call(this, function () {
                                         var /** @type {?} */ ng2Testability = injector.get(_angular_core.Testability);
                                         if (ng2Testability.isStable()) {
                                             callback.apply(this, arguments);
                                         }
                                         else {
-                                            ng2Testability.whenStable(newWhenStable.bind(whenStableContext, callback));
+                                            ng2Testability.whenStable(newWhenStable.bind(this, callback));
                                         }
                                     });
                                 };
