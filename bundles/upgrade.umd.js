@@ -359,7 +359,8 @@
                   ],
                   ngOnInit: function () { },
                   ngOnChanges: function () { },
-                  ngDoCheck: function () { }
+                  ngDoCheck: function () { },
+                  ngOnDestroy: function () { },
               });
       }
       /**
@@ -604,18 +605,21 @@
        * @return {?}
        */
       UpgradeNg1ComponentAdapter.prototype.ngOnChanges = function (changes) {
-          for (var name_3 in changes) {
-              if (((changes)).hasOwnProperty(name_3)) {
-                  var /** @type {?} */ change = changes[name_3];
-                  this.setComponentProperty(name_3, change.currentValue);
-              }
+          var _this = this;
+          var /** @type {?} */ ng1Changes = {};
+          Object.keys(changes).forEach(function (name) {
+              var /** @type {?} */ change = changes[name];
+              _this.setComponentProperty(name, change.currentValue);
+              ng1Changes[_this.propertyMap[name]] = change;
+          });
+          if (this.destinationObj.$onChanges) {
+              this.destinationObj.$onChanges(ng1Changes);
           }
       };
       /**
        * @return {?}
        */
       UpgradeNg1ComponentAdapter.prototype.ngDoCheck = function () {
-          var /** @type {?} */ count = 0;
           var /** @type {?} */ destinationObj = this.destinationObj;
           var /** @type {?} */ lastValues = this.checkLastValues;
           var /** @type {?} */ checkProperties = this.checkProperties;
@@ -631,7 +635,17 @@
                   }
               }
           }
-          return count;
+          if (this.destinationObj.$doCheck && this.directive.controller) {
+              this.destinationObj.$doCheck();
+          }
+      };
+      /**
+       * @return {?}
+       */
+      UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () {
+          if (this.destinationObj.$onDestroy && this.directive.controller) {
+              this.destinationObj.$onDestroy();
+          }
       };
       /**
        * @param {?} name
@@ -661,23 +675,23 @@
               return undefined;
           }
           else if (typeof require == 'string') {
-              var /** @type {?} */ name_4 = (require);
+              var /** @type {?} */ name_3 = (require);
               var /** @type {?} */ isOptional = false;
               var /** @type {?} */ startParent = false;
               var /** @type {?} */ searchParents = false;
-              if (name_4.charAt(0) == '?') {
+              if (name_3.charAt(0) == '?') {
                   isOptional = true;
-                  name_4 = name_4.substr(1);
+                  name_3 = name_3.substr(1);
               }
-              if (name_4.charAt(0) == '^') {
+              if (name_3.charAt(0) == '^') {
                   searchParents = true;
-                  name_4 = name_4.substr(1);
+                  name_3 = name_3.substr(1);
               }
-              if (name_4.charAt(0) == '^') {
+              if (name_3.charAt(0) == '^') {
                   startParent = true;
-                  name_4 = name_4.substr(1);
+                  name_3 = name_3.substr(1);
               }
-              var /** @type {?} */ key = controllerKey(name_4);
+              var /** @type {?} */ key = controllerKey(name_3);
               if (startParent)
                   $element = $element.parent();
               var /** @type {?} */ dep = searchParents ? $element.inheritedData(key) : $element.data(key);
