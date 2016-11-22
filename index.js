@@ -10,5 +10,5 @@
  * @description
  * Entry point for all public APIs of the upgrade package.
  */
-export * from './src/upgrade';
+export { UpgradeAdapter, UpgradeAdapterRef } from './src/upgrade';
 //# sourceMappingURL=index.js.map
