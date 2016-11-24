@@ -6,12 +6,16 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { DirectiveResolver } from '@angular/compiler';
-var COMPONENT_SELECTOR = /^[\w|-]*$/;
-var SKEWER_CASE = /-(\w)/g;
-var directiveResolver = new DirectiveResolver();
+var /** @type {?} */ COMPONENT_SELECTOR = /^[\w|-]*$/;
+var /** @type {?} */ SKEWER_CASE = /-(\w)/g;
+var /** @type {?} */ directiveResolver = new DirectiveResolver();
+/**
+ * @param {?} type
+ * @return {?}
+ */
 export function getComponentInfo(type) {
-    var resolvedMetadata = directiveResolver.resolve(type);
-    var selector = resolvedMetadata.selector;
+    var /** @type {?} */ resolvedMetadata = directiveResolver.resolve(type);
+    var /** @type {?} */ selector = resolvedMetadata.selector;
     if (!selector.match(COMPONENT_SELECTOR)) {
         throw new Error('Only selectors matching element names are supported, got: ' + selector);
     }
@@ -23,15 +27,19 @@ export function getComponentInfo(type) {
         outputs: parseFields(resolvedMetadata.outputs)
     };
 }
+/**
+ * @param {?} names
+ * @return {?}
+ */
 export function parseFields(names) {
-    var attrProps = [];
+    var /** @type {?} */ attrProps = [];
     if (names) {
-        for (var i = 0; i < names.length; i++) {
-            var parts = names[i].split(':');
-            var prop = parts[0].trim();
-            var attr = (parts[1] || parts[0]).trim();
-            var capitalAttr = attr.charAt(0).toUpperCase() + attr.substr(1);
-            attrProps.push({
+        for (var /** @type {?} */ i = 0; i < names.length; i++) {
+            var /** @type {?} */ parts = names[i].split(':');
+            var /** @type {?} */ prop = parts[0].trim();
+            var /** @type {?} */ attr = (parts[1] || parts[0]).trim();
+            var /** @type {?} */ capitalAttr = attr.charAt(0).toUpperCase() + attr.substr(1);
+            attrProps.push(/** @type {?} */ ({
                 prop: prop,
                 attr: attr,
                 bracketAttr: "[" + attr + "]",
@@ -40,7 +48,7 @@ export function parseFields(names) {
                 onAttr: "on" + capitalAttr,
                 bindAttr: "bind" + capitalAttr,
                 bindonAttr: "bindon" + capitalAttr
-            });
+            }));
         }
     }
     return attrProps;
