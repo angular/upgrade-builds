@@ -10,4 +10,9 @@
  * @description
  * Entry point for all public APIs of the upgrade package.
  */
+import { Version } from '@angular/core';
+/**
+ * @stable
+ */
+export declare const VERSION: Version;
 export * from './src/upgrade';
