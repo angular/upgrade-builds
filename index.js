@@ -5,10 +5,10 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+import { Version } from '@angular/core';
 /**
- * @module
- * @description
- * Entry point for all public APIs of the upgrade package.
+ * @stable
  */
-export * from './src/upgrade';
+export var /** @type {?} */ VERSION = new Version('2.3.0-rc.0-c066281');
+export { UpgradeAdapter, UpgradeAdapterRef } from './src/upgrade';
 //# sourceMappingURL=index.js.map
