@@ -9,6 +9,6 @@ import { Version } from '@angular/core';
 /**
  * @stable
  */
-export var /** @type {?} */ VERSION = new Version('2.3.0-rc.0-f31c947');
+export var /** @type {?} */ VERSION = new Version('2.3.0-rc.0-2893c2c');
 export { UpgradeAdapter, UpgradeAdapterRef } from './src/upgrade';
 //# sourceMappingURL=index.js.map
