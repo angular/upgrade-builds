@@ -11,4 +11,5 @@
  * Adapter allowing AngularJS v1 and Angular v2 to run side by side in the same application.
  */
 export { UpgradeAdapter, UpgradeAdapterRef } from './upgrade_adapter';
+export { VERSION } from './version';
 //# sourceMappingURL=upgrade.js.map
