@@ -1,5 +1,5 @@
 /**
- * @license Angular v2.3.0-4c35be3
+ * @license Angular v2.3.0-7295a5e
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -1297,7 +1297,7 @@
   /**
    * @stable
    */
-  var /** @type {?} */ VERSION = new _angular_core.Version('2.3.0-4c35be3');
+  var /** @type {?} */ VERSION = new _angular_core.Version('2.3.0-7295a5e');
 
   exports.UpgradeAdapter = UpgradeAdapter;
   exports.UpgradeAdapterRef = UpgradeAdapterRef;
