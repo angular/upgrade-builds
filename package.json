@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "2.3.0-aa40366",
+  "version": "2.3.0-fd8e15b",
   "description": "Angular - the library for easing update from v1 to v2",
   "main": "bundles/upgrade.umd.js",
   "module": "index.js",
@@ -8,10 +8,10 @@
   "author": "angular",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "2.3.0-aa40366",
-    "@angular/compiler": "2.3.0-aa40366",
-    "@angular/platform-browser": "2.3.0-aa40366",
-    "@angular/platform-browser-dynamic": "2.3.0-aa40366"
+    "@angular/core": "2.3.0-fd8e15b",
+    "@angular/compiler": "2.3.0-fd8e15b",
+    "@angular/platform-browser": "2.3.0-fd8e15b",
+    "@angular/platform-browser-dynamic": "2.3.0-fd8e15b"
   },
   "repository": {
     "type": "git",
