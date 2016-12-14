@@ -22,10 +22,11 @@ export interface IModule {
     controller(name: string, type: IInjectable): IModule;
     factory(key: Ng1Token, factoryFn: IInjectable): IModule;
     value(key: Ng1Token, value: any): IModule;
+    constant(token: Ng1Token, value: any): IModule;
     run(a: IInjectable): IModule;
 }
 export interface ICompileService {
-    (element: Element | NodeList | string, transclude?: Function): ILinkFn;
+    (element: Element | NodeList | Node[] | string, transclude?: Function): ILinkFn;
 }
 export interface ILinkFn {
     (scope: IScope, cloneAttachFn?: ICloneAttachFunction, options?: ILinkFnOptions): IAugmentedJQuery;
@@ -43,6 +44,7 @@ export interface IRootScopeService {
     $parent: IScope;
     $root: IScope;
     $watch(expr: any, fn?: (a1?: any, a2?: any) => void): Function;
+    $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
     $destroy(): any;
     $apply(): any;
     $apply(exp: string): any;
@@ -126,6 +128,7 @@ export declare type IAugmentedJQuery = Node[] & {
     append?: (content: IAugmentedJQuery | string) => IAugmentedJQuery;
     controller?: (name: string) => any;
     isolateScope?: () => IScope;
+    injector?: () => IInjectorService;
 };
 export interface IProvider {
     $get: IInjectable;

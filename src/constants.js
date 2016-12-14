@@ -19,5 +19,5 @@ export var /** @type {?} */ NG1_INJECTOR = '$injector';
 export var /** @type {?} */ NG1_PARSE = '$parse';
 export var /** @type {?} */ NG1_TEMPLATE_CACHE = '$templateCache';
 export var /** @type {?} */ NG1_TESTABILITY = '$$testability';
-export var /** @type {?} */ REQUIRE_INJECTOR = '?^' + NG2_INJECTOR;
+export var /** @type {?} */ REQUIRE_INJECTOR = '?^^' + NG2_INJECTOR;
 //# sourceMappingURL=constants.js.map

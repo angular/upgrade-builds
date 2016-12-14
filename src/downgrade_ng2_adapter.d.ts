@@ -9,7 +9,6 @@ import { ChangeDetectorRef, ComponentFactory, ComponentRef, Injector, SimpleChan
 import * as angular from './angular_js';
 import { ComponentInfo } from './metadata';
 export declare class DowngradeNg2ComponentAdapter {
-    private id;
     private info;
     private element;
     private attrs;
@@ -23,12 +22,9 @@ export declare class DowngradeNg2ComponentAdapter {
     componentRef: ComponentRef<any>;
     changeDetector: ChangeDetectorRef;
     componentScope: angular.IScope;
-    childNodes: Node[];
-    contentInsertionPoint: Node;
-    constructor(id: string, info: ComponentInfo, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, parentInjector: Injector, parse: angular.IParseService, componentFactory: ComponentFactory<any>);
-    bootstrapNg2(): void;
+    constructor(info: ComponentInfo, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, parentInjector: Injector, parse: angular.IParseService, componentFactory: ComponentFactory<any>);
+    bootstrapNg2(projectableNodes: Node[][]): void;
     setupInputs(): void;
-    projectContent(): void;
     setupOutputs(): void;
     registerCleanup(): void;
 }

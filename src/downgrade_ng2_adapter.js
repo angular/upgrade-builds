@@ -12,7 +12,6 @@ var /** @type {?} */ INITIAL_VALUE = {
 };
 export var DowngradeNg2ComponentAdapter = (function () {
     /**
-     * @param {?} id
      * @param {?} info
      * @param {?} element
      * @param {?} attrs
@@ -21,8 +20,7 @@ export var DowngradeNg2ComponentAdapter = (function () {
      * @param {?} parse
      * @param {?} componentFactory
      */
-    function DowngradeNg2ComponentAdapter(id, info, element, attrs, scope, parentInjector, parse, componentFactory) {
-        this.id = id;
+    function DowngradeNg2ComponentAdapter(info, element, attrs, scope, parentInjector, parse, componentFactory) {
         this.info = info;
         this.element = element;
         this.attrs = attrs;
@@ -35,18 +33,16 @@ export var DowngradeNg2ComponentAdapter = (function () {
         this.inputChanges = null;
         this.componentRef = null;
         this.changeDetector = null;
-        this.contentInsertionPoint = null;
-        this.element[0].id = id;
         this.componentScope = scope.$new();
-        this.childNodes = element.contents();
     }
     /**
+     * @param {?} projectableNodes
      * @return {?}
      */
-    DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function () {
+    DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function (projectableNodes) {
         var /** @type {?} */ childInjector = ReflectiveInjector.resolveAndCreate([{ provide: NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
-        this.contentInsertionPoint = document.createComment('ng1 insertion point');
-        this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
+        this.componentRef =
+            this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
     };
@@ -111,18 +107,6 @@ export var DowngradeNg2ComponentAdapter = (function () {
             });
         }
         this.componentScope.$watch(function () { return _this.changeDetector && _this.changeDetector.detectChanges(); });
-    };
-    /**
-     * @return {?}
-     */
-    DowngradeNg2ComponentAdapter.prototype.projectContent = function () {
-        var /** @type {?} */ childNodes = this.childNodes;
-        var /** @type {?} */ parent = this.contentInsertionPoint.parentNode;
-        if (parent) {
-            for (var /** @type {?} */ i = 0, /** @type {?} */ ii = childNodes.length; i < ii; i++) {
-                parent.insertBefore(childNodes[i], this.contentInsertionPoint);
-            }
-        }
     };
     /**
      * @return {?}
@@ -200,12 +184,6 @@ function DowngradeNg2ComponentAdapter_tsickle_Closure_declarations() {
     DowngradeNg2ComponentAdapter.prototype.changeDetector;
     /** @type {?} */
     DowngradeNg2ComponentAdapter.prototype.componentScope;
-    /** @type {?} */
-    DowngradeNg2ComponentAdapter.prototype.childNodes;
-    /** @type {?} */
-    DowngradeNg2ComponentAdapter.prototype.contentInsertionPoint;
-    /** @type {?} */
-    DowngradeNg2ComponentAdapter.prototype.id;
     /** @type {?} */
     DowngradeNg2ComponentAdapter.prototype.info;
     /** @type {?} */

@@ -4,15 +4,6 @@
   * *
   * Use of this source code is governed by an MIT-style license that can be
   * found in the LICENSE file at https://angular.io/license
- * @param {?} obj
- * @return {?}
- */
-export function stringify(obj) {
-    if (typeof obj == 'function')
-        return obj.name || obj.toString();
-    return '' + obj;
-}
-/**
  * @param {?} e
  * @return {?}
  */
@@ -33,5 +24,39 @@ export function onError(e) {
  */
 export function controllerKey(name) {
     return '$' + name + 'Controller';
+}
+/**
+ * @param {?} node
+ * @return {?}
+ */
+export function getAttributesAsArray(node) {
+    var /** @type {?} */ attributes = node.attributes;
+    var /** @type {?} */ asArray;
+    if (attributes) {
+        var /** @type {?} */ attrLen = attributes.length;
+        asArray = new Array(attrLen);
+        for (var /** @type {?} */ i = 0; i < attrLen; i++) {
+            asArray[i] = [attributes[i].nodeName, attributes[i].nodeValue];
+        }
+    }
+    return asArray || [];
+}
+export var Deferred = (function () {
+    function Deferred() {
+        var _this = this;
+        this.promise = new Promise(function (res, rej) {
+            _this.resolve = res;
+            _this.reject = rej;
+        });
+    }
+    return Deferred;
+}());
+function Deferred_tsickle_Closure_declarations() {
+    /** @type {?} */
+    Deferred.prototype.promise;
+    /** @type {?} */
+    Deferred.prototype.resolve;
+    /** @type {?} */
+    Deferred.prototype.reject;
 }
 //# sourceMappingURL=util.js.map
