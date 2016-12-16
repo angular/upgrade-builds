@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.0-55dfa1b
+ * @license Angular v4.0.0-beta.0-c6e8939
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -1023,7 +1023,7 @@
           this.declareNg1Module(modules);
           windowNgMock.module(this.ng1Module.name);
           var /** @type {?} */ upgrade = new UpgradeAdapterRef();
-          this.ng2BootstrapDeferred.promise.then(function () { ((upgrade))._bootstrapDone(_this.moduleRef, upgrade.ng1Injector); }, onError);
+          this.ng2BootstrapDeferred.promise.then(function (ng1Injector) { ((upgrade))._bootstrapDone(_this.moduleRef, ng1Injector); }, onError);
           return upgrade;
       };
       /**
@@ -1508,7 +1508,7 @@
   /**
    * @stable
    */
-  var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.0-55dfa1b');
+  var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.0-c6e8939');
 
   exports.UpgradeAdapter = UpgradeAdapter;
   exports.UpgradeAdapterRef = UpgradeAdapterRef;
