@@ -304,7 +304,7 @@ export var UpgradeAdapter = (function () {
         this.declareNg1Module(modules);
         windowNgMock.module(this.ng1Module.name);
         var /** @type {?} */ upgrade = new UpgradeAdapterRef();
-        this.ng2BootstrapDeferred.promise.then(function (ng1Injector) { ((upgrade))._bootstrapDone(_this.moduleRef, ng1Injector); }, onError);
+        this.ng2BootstrapDeferred.promise.then(function () { ((upgrade))._bootstrapDone(_this.moduleRef, upgrade.ng1Injector); }, onError);
         return upgrade;
     };
     /**
