@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.0-9da4c25
+ * @license Angular v4.0.0-beta.0-fcd116f
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -552,11 +552,6 @@
                 });
             }
             this.callLifecycleHook('$onInit', this.controllerInstance);
-            if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
-                var /** @type {?} */ callDoCheck = function () { return _this.callLifecycleHook('$doCheck', _this.controllerInstance); };
-                this.$componentScope.$parent.$watch(callDoCheck);
-                callDoCheck();
-            }
             var /** @type {?} */ link = this.directive.link;
             var /** @type {?} */ preLink = (typeof link == 'object') && ((link)).pre;
             var /** @type {?} */ postLink = (typeof link == 'object') ? ((link)).post : link;
@@ -620,7 +615,7 @@
          * @return {?}
          */
         UpgradeComponent.prototype.callLifecycleHook = function (method, context, arg) {
-            if (context && isFunction(context[method])) {
+            if (context && typeof context[method] === 'function') {
                 context[method](arg);
             }
         };
@@ -825,14 +820,7 @@
      * @return {?}
      */
     function getOrCall(property) {
-        return isFunction(property) ? property() : property;
-    }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    function isFunction(value) {
-        return typeof value === 'function';
+        return typeof (property) === 'function' ? property() : property;
     }
     /**
      * @param {?} value
