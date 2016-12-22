@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.1-f114e40
+ * @license Angular v4.0.0-beta.1-e7ece6c
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -914,12 +914,12 @@
         * - `compile`: not supported because the host element is owned by Angular 2+, which does
         * not allow modifying DOM structure during compilation.
         * - `controller`: supported. (NOTE: injection of `$attrs` and `$transclude` is not supported.)
-        * - `controllerAs': supported.
-        * - `bindToController': supported.
-        * - `link': supported. (NOTE: only pre-link function is supported.)
-        * - `name': supported.
-        * - `priority': ignored.
-        * - `replace': not supported.
+        * - `controllerAs`: supported.
+        * - `bindToController`: supported.
+        * - `link`: supported. (NOTE: only pre-link function is supported.)
+        * - `name`: supported.
+        * - `priority`: ignored.
+        * - `replace`: not supported.
         * - `require`: supported.
         * - `restrict`: must be set to 'E'.
         * - `scope`: supported.
@@ -1508,7 +1508,7 @@
   /**
    * @stable
    */
-  var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.1-f114e40');
+  var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.1-e7ece6c');
 
   exports.UpgradeAdapter = UpgradeAdapter;
   exports.UpgradeAdapterRef = UpgradeAdapterRef;
