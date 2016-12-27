@@ -7,7 +7,7 @@
  */
 export declare function onError(e: any): void;
 export declare function controllerKey(name: string): string;
-export declare function getAttributesAsArray(node: Node): string[][];
+export declare function getAttributesAsArray(node: Node): [string, string][];
 export declare class Deferred<R> {
     promise: Promise<R>;
     resolve: (value?: R | PromiseLike<R>) => void;
