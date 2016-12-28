@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "4.0.0-beta.1-7c21064",
+  "version": "4.0.0-beta.1-7690d02",
   "description": "Angular - the library for easing update from v1 to v2",
   "main": "bundles/upgrade.umd.js",
   "module": "index.js",
@@ -8,10 +8,10 @@
   "author": "angular",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "4.0.0-beta.1-7c21064",
-    "@angular/compiler": "4.0.0-beta.1-7c21064",
-    "@angular/platform-browser": "4.0.0-beta.1-7c21064",
-    "@angular/platform-browser-dynamic": "4.0.0-beta.1-7c21064"
+    "@angular/core": "4.0.0-beta.1-7690d02",
+    "@angular/compiler": "4.0.0-beta.1-7690d02",
+    "@angular/platform-browser": "4.0.0-beta.1-7690d02",
+    "@angular/platform-browser-dynamic": "4.0.0-beta.1-7690d02"
   },
   "repository": {
     "type": "git",
