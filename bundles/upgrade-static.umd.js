@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.1-c5c53f3
+ * @license Angular v4.0.0-beta.1-465516b
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -127,8 +127,7 @@
                         return function (value /** TODO #9100 */) {
                             if (_this.inputChanges !== null) {
                                 _this.inputChangeCount++;
-                                _this.inputChanges[prop] =
-                                    new Ng1Change(value, prevValue === INITIAL_VALUE ? value : prevValue);
+                                _this.inputChanges[prop] = new _angular_core.SimpleChange(value, prevValue === INITIAL_VALUE ? value : prevValue, prevValue === INITIAL_VALUE);
                                 prevValue = value;
                             }
                             _this.component[prop] = value;
@@ -149,15 +148,13 @@
                     expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
                 }
                 if (expr != null) {
-                    var /** @type {?} */ watchFn = (function (prop /** TODO #9100 */) {
-                        return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
-                            if (_this.inputChanges != null) {
-                                _this.inputChangeCount++;
-                                _this.inputChanges[prop] = new Ng1Change(prevValue, value);
-                            }
-                            _this.component[prop] = value;
-                        };
-                    })(input.prop);
+                    var /** @type {?} */ watchFn = (function (prop /** TODO #9100 */) { return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
+                        if (_this.inputChanges != null) {
+                            _this.inputChangeCount++;
+                            _this.inputChanges[prop] = new _angular_core.SimpleChange(prevValue, value, prevValue === value);
+                        }
+                        _this.component[prop] = value;
+                    }; })(input.prop);
                     this.componentScope.$watch(expr, watchFn);
                 }
             }
@@ -247,21 +244,6 @@
             });
         };
         return DowngradeComponentAdapter;
-    }());
-    var Ng1Change = (function () {
-        /**
-         * @param {?} previousValue
-         * @param {?} currentValue
-         */
-        function Ng1Change(previousValue, currentValue) {
-            this.previousValue = previousValue;
-            this.currentValue = currentValue;
-        }
-        /**
-         * @return {?}
-         */
-        Ng1Change.prototype.isFirstChange = function () { return this.previousValue === this.currentValue; };
-        return Ng1Change;
     }());
 
     var /** @type {?} */ downgradeCount = 0;
