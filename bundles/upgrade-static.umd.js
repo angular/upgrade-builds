@@ -1,5 +1,5 @@
 /**
- * @license Angular v2.4.1-28a92b2
+ * @license Angular v2.4.1-56b4296
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -390,7 +390,6 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    ;
     /**
      * @return {?}
      */

@@ -137,11 +137,11 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
     UpgradeNg1ComponentAdapterBuilder.prototype.compileTemplate = function (compile, templateCache, httpBackend) {
         var _this = this;
         if (this.directive.template !== undefined) {
-            this.linkFn = compileHtml(typeof this.directive.template === 'function' ? this.directive.template() :
+            this.linkFn = compileHtml(isFunction(this.directive.template) ? this.directive.template() :
                 this.directive.template);
         }
         else if (this.directive.templateUrl) {
-            var /** @type {?} */ url_1 = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() :
+            var /** @type {?} */ url_1 = isFunction(this.directive.templateUrl) ? this.directive.templateUrl() :
                 this.directive.templateUrl;
             var /** @type {?} */ html = templateCache.get(url_1);
             if (html !== undefined) {
@@ -249,6 +249,7 @@ var UpgradeNg1ComponentAdapter = (function () {
         this.propOuts = propOuts;
         this.checkProperties = checkProperties;
         this.propertyMap = propertyMap;
+        this.controllerInstance = null;
         this.destinationObj = null;
         this.checkLastValues = [];
         this.$element = null;
@@ -257,7 +258,8 @@ var UpgradeNg1ComponentAdapter = (function () {
         this.$element = angular.element(this.element);
         var controllerType = directive.controller;
         if (directive.bindToController && controllerType) {
-            this.destinationObj = this.buildController(controllerType);
+            this.controllerInstance = this.buildController(controllerType);
+            this.destinationObj = this.controllerInstance;
         }
         else {
             this.destinationObj = this.componentScope;
@@ -282,7 +284,10 @@ var UpgradeNg1ComponentAdapter = (function () {
     UpgradeNg1ComponentAdapter.prototype.ngOnInit = function () {
         var _this = this;
         if (!this.directive.bindToController && this.directive.controller) {
-            this.buildController(this.directive.controller);
+            this.controllerInstance = this.buildController(this.directive.controller);
+        }
+        if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
+            this.controllerInstance.$onInit();
         }
         var /** @type {?} */ link = this.directive.link;
         if (typeof link == 'object')
@@ -306,8 +311,8 @@ var UpgradeNg1ComponentAdapter = (function () {
         }, {
             parentBoundTranscludeFn: function (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) { cloneAttach(childNodes); }
         });
-        if (this.destinationObj.$onInit) {
-            this.destinationObj.$onInit();
+        if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
+            this.controllerInstance.$postLink();
         }
     };
     /**
@@ -322,7 +327,7 @@ var UpgradeNg1ComponentAdapter = (function () {
             _this.setComponentProperty(name, change.currentValue);
             ng1Changes[_this.propertyMap[name]] = change;
         });
-        if (this.destinationObj.$onChanges) {
+        if (isFunction(this.destinationObj.$onChanges)) {
             this.destinationObj.$onChanges(ng1Changes);
         }
     };
@@ -345,16 +350,16 @@ var UpgradeNg1ComponentAdapter = (function () {
                 }
             }
         }
-        if (this.destinationObj.$doCheck && this.directive.controller) {
-            this.destinationObj.$doCheck();
+        if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
+            this.controllerInstance.$doCheck();
         }
     };
     /**
      * @return {?}
      */
     UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () {
-        if (this.destinationObj.$onDestroy && this.directive.controller) {
-            this.destinationObj.$onDestroy();
+        if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
+            this.controllerInstance.$onDestroy();
         }
     };
     /**
@@ -423,6 +428,8 @@ var UpgradeNg1ComponentAdapter = (function () {
 }());
 function UpgradeNg1ComponentAdapter_tsickle_Closure_declarations() {
     /** @type {?} */
+    UpgradeNg1ComponentAdapter.prototype.controllerInstance;
+    /** @type {?} */
     UpgradeNg1ComponentAdapter.prototype.destinationObj;
     /** @type {?} */
     UpgradeNg1ComponentAdapter.prototype.checkLastValues;
@@ -448,5 +455,12 @@ function UpgradeNg1ComponentAdapter_tsickle_Closure_declarations() {
     UpgradeNg1ComponentAdapter.prototype.checkProperties;
     /** @type {?} */
     UpgradeNg1ComponentAdapter.prototype.propertyMap;
+}
+/**
+ * @param {?} value
+ * @return {?}
+ */
+function isFunction(value) {
+    return typeof value === 'function';
 }
 //# sourceMappingURL=upgrade_ng1_adapter.js.map

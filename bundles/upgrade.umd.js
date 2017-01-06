@@ -1,5 +1,5 @@
 /**
- * @license Angular v2.4.1-28a92b2
+ * @license Angular v2.4.1-56b4296
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -16,7 +16,6 @@
    * Use of this source code is governed by an MIT-style license that can be
    * found in the LICENSE file at https://angular.io/license
    */
-  ;
   /**
    * @return {?}
    */
@@ -474,11 +473,11 @@
       UpgradeNg1ComponentAdapterBuilder.prototype.compileTemplate = function (compile, templateCache, httpBackend) {
           var _this = this;
           if (this.directive.template !== undefined) {
-              this.linkFn = compileHtml(typeof this.directive.template === 'function' ? this.directive.template() :
+              this.linkFn = compileHtml(isFunction(this.directive.template) ? this.directive.template() :
                   this.directive.template);
           }
           else if (this.directive.templateUrl) {
-              var /** @type {?} */ url_1 = typeof this.directive.templateUrl === 'function' ? this.directive.templateUrl() :
+              var /** @type {?} */ url_1 = isFunction(this.directive.templateUrl) ? this.directive.templateUrl() :
                   this.directive.templateUrl;
               var /** @type {?} */ html = templateCache.get(url_1);
               if (html !== undefined) {
@@ -560,6 +559,7 @@
           this.propOuts = propOuts;
           this.checkProperties = checkProperties;
           this.propertyMap = propertyMap;
+          this.controllerInstance = null;
           this.destinationObj = null;
           this.checkLastValues = [];
           this.$element = null;
@@ -568,7 +568,8 @@
           this.$element = element(this.element);
           var controllerType = directive.controller;
           if (directive.bindToController && controllerType) {
-              this.destinationObj = this.buildController(controllerType);
+              this.controllerInstance = this.buildController(controllerType);
+              this.destinationObj = this.controllerInstance;
           }
           else {
               this.destinationObj = this.componentScope;
@@ -593,7 +594,10 @@
       UpgradeNg1ComponentAdapter.prototype.ngOnInit = function () {
           var _this = this;
           if (!this.directive.bindToController && this.directive.controller) {
-              this.buildController(this.directive.controller);
+              this.controllerInstance = this.buildController(this.directive.controller);
+          }
+          if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
+              this.controllerInstance.$onInit();
           }
           var /** @type {?} */ link = this.directive.link;
           if (typeof link == 'object')
@@ -617,8 +621,8 @@
           }, {
               parentBoundTranscludeFn: function (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) { cloneAttach(childNodes); }
           });
-          if (this.destinationObj.$onInit) {
-              this.destinationObj.$onInit();
+          if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
+              this.controllerInstance.$postLink();
           }
       };
       /**
@@ -633,7 +637,7 @@
               _this.setComponentProperty(name, change.currentValue);
               ng1Changes[_this.propertyMap[name]] = change;
           });
-          if (this.destinationObj.$onChanges) {
+          if (isFunction(this.destinationObj.$onChanges)) {
               this.destinationObj.$onChanges(ng1Changes);
           }
       };
@@ -656,16 +660,16 @@
                   }
               }
           }
-          if (this.destinationObj.$doCheck && this.directive.controller) {
-              this.destinationObj.$doCheck();
+          if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
+              this.controllerInstance.$doCheck();
           }
       };
       /**
        * @return {?}
        */
       UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () {
-          if (this.destinationObj.$onDestroy && this.directive.controller) {
-              this.destinationObj.$onDestroy();
+          if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
+              this.controllerInstance.$onDestroy();
           }
       };
       /**
@@ -732,6 +736,13 @@
       };
       return UpgradeNg1ComponentAdapter;
   }());
+  /**
+   * @param {?} value
+   * @return {?}
+   */
+  function isFunction(value) {
+      return typeof value === 'function';
+  }
 
   var /** @type {?} */ upgradeCount = 0;
   /**
@@ -914,12 +925,12 @@
         * - `compile`: not supported because the host element is owned by Angular 2+, which does
         * not allow modifying DOM structure during compilation.
         * - `controller`: supported. (NOTE: injection of `$attrs` and `$transclude` is not supported.)
-        * - `controllerAs': supported.
-        * - `bindToController': supported.
-        * - `link': supported. (NOTE: only pre-link function is supported.)
-        * - `name': supported.
-        * - `priority': ignored.
-        * - `replace': not supported.
+        * - `controllerAs`: supported.
+        * - `bindToController`: supported.
+        * - `link`: supported. (NOTE: only pre-link function is supported.)
+        * - `name`: supported.
+        * - `priority`: ignored.
+        * - `replace`: not supported.
         * - `require`: supported.
         * - `restrict`: must be set to 'E'.
         * - `scope`: supported.
@@ -1508,7 +1519,7 @@
   /**
    * @stable
    */
-  var /** @type {?} */ VERSION = new _angular_core.Version('2.4.1-28a92b2');
+  var /** @type {?} */ VERSION = new _angular_core.Version('2.4.1-56b4296');
 
   exports.UpgradeAdapter = UpgradeAdapter;
   exports.UpgradeAdapterRef = UpgradeAdapterRef;

@@ -172,11 +172,11 @@ export interface ITestabilityService {
     setLocation(url: string): void;
     whenStable(callback: Function): void;
 }
-export declare var bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config: IAngularBootstrapConfig) => void;
-export declare var module: (prefix: string, dependencies?: string[]) => IModule;
-export declare var element: (e: Element) => IAugmentedJQuery;
-export declare var version: {
+export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config: IAngularBootstrapConfig) => void;
+export declare const module: (prefix: string, dependencies?: string[]) => IModule;
+export declare const element: (e: Element) => IAugmentedJQuery;
+export declare const version: {
     major: number;
 };
-export declare var resumeBootstrap: () => void;
-export declare var getTestability: (e: Element) => ITestabilityService;
+export declare const resumeBootstrap: () => void;
+export declare const getTestability: (e: Element) => ITestabilityService;
