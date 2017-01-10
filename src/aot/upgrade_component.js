@@ -139,6 +139,11 @@ export var UpgradeComponent = (function () {
             });
         }
         this.callLifecycleHook('$onInit', this.controllerInstance);
+        if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
+            var /** @type {?} */ callDoCheck = function () { return _this.callLifecycleHook('$doCheck', _this.controllerInstance); };
+            this.$componentScope.$parent.$watch(callDoCheck);
+            callDoCheck();
+        }
         var /** @type {?} */ link = this.directive.link;
         var /** @type {?} */ preLink = (typeof link == 'object') && ((link)).pre;
         var /** @type {?} */ postLink = (typeof link == 'object') ? ((link)).post : link;
@@ -202,7 +207,7 @@ export var UpgradeComponent = (function () {
      * @return {?}
      */
     UpgradeComponent.prototype.callLifecycleHook = function (method, context, arg) {
-        if (context && typeof context[method] === 'function') {
+        if (context && isFunction(context[method])) {
             context[method](arg);
         }
     };
@@ -441,7 +446,14 @@ function UpgradeComponent_tsickle_Closure_declarations() {
  * @return {?}
  */
 function getOrCall(property) {
-    return typeof (property) === 'function' ? property() : property;
+    return isFunction(property) ? property() : property;
+}
+/**
+ * @param {?} value
+ * @return {?}
+ */
+function isFunction(value) {
+    return typeof value === 'function';
 }
 /**
  * @param {?} value
