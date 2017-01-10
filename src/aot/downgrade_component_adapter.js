@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { ReflectiveInjector, SimpleChange } from '@angular/core';
+import { ReflectiveInjector } from '@angular/core';
 import { PropertyBinding } from './component_info';
 import { $SCOPE } from './constants';
 var /** @type {?} */ INITIAL_VALUE = {
@@ -67,7 +67,8 @@ export var DowngradeComponentAdapter = (function () {
                     return function (value /** TODO #9100 */) {
                         if (_this.inputChanges !== null) {
                             _this.inputChangeCount++;
-                            _this.inputChanges[prop] = new SimpleChange(value, prevValue === INITIAL_VALUE ? value : prevValue, prevValue === INITIAL_VALUE);
+                            _this.inputChanges[prop] =
+                                new Ng1Change(value, prevValue === INITIAL_VALUE ? value : prevValue);
                             prevValue = value;
                         }
                         _this.component[prop] = value;
@@ -88,13 +89,15 @@ export var DowngradeComponentAdapter = (function () {
                 expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
             }
             if (expr != null) {
-                var /** @type {?} */ watchFn = (function (prop /** TODO #9100 */) { return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
-                    if (_this.inputChanges != null) {
-                        _this.inputChangeCount++;
-                        _this.inputChanges[prop] = new SimpleChange(prevValue, value, prevValue === value);
-                    }
-                    _this.component[prop] = value;
-                }; })(input.prop);
+                var /** @type {?} */ watchFn = (function (prop /** TODO #9100 */) {
+                    return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
+                        if (_this.inputChanges != null) {
+                            _this.inputChangeCount++;
+                            _this.inputChanges[prop] = new Ng1Change(prevValue, value);
+                        }
+                        _this.component[prop] = value;
+                    };
+                })(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
@@ -220,5 +223,26 @@ function DowngradeComponentAdapter_tsickle_Closure_declarations() {
     DowngradeComponentAdapter.prototype.parse;
     /** @type {?} */
     DowngradeComponentAdapter.prototype.componentFactory;
+}
+var Ng1Change = (function () {
+    /**
+     * @param {?} previousValue
+     * @param {?} currentValue
+     */
+    function Ng1Change(previousValue, currentValue) {
+        this.previousValue = previousValue;
+        this.currentValue = currentValue;
+    }
+    /**
+     * @return {?}
+     */
+    Ng1Change.prototype.isFirstChange = function () { return this.previousValue === this.currentValue; };
+    return Ng1Change;
+}());
+function Ng1Change_tsickle_Closure_declarations() {
+    /** @type {?} */
+    Ng1Change.prototype.previousValue;
+    /** @type {?} */
+    Ng1Change.prototype.currentValue;
 }
 //# sourceMappingURL=downgrade_component_adapter.js.map

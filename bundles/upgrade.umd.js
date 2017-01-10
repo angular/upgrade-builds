@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.2-9aeb8c5
+ * @license Angular v2.4.2-d43e5dd
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -118,7 +118,8 @@
                       return function (value /** TODO #9100 */) {
                           if (_this.inputChanges !== null) {
                               _this.inputChangeCount++;
-                              _this.inputChanges[prop] = new _angular_core.SimpleChange(value, prevValue === INITIAL_VALUE ? value : prevValue, prevValue === INITIAL_VALUE);
+                              _this.inputChanges[prop] =
+                                  new Ng1Change(value, prevValue === INITIAL_VALUE ? value : prevValue);
                               prevValue = value;
                           }
                           _this.component[prop] = value;
@@ -139,13 +140,15 @@
                   expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
               }
               if (expr != null) {
-                  var /** @type {?} */ watchFn = (function (prop /** TODO #9100 */) { return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
-                      if (_this.inputChanges != null) {
-                          _this.inputChangeCount++;
-                          _this.inputChanges[prop] = new _angular_core.SimpleChange(prevValue, value, prevValue === value);
-                      }
-                      _this.component[prop] = value;
-                  }; })(input.prop);
+                  var /** @type {?} */ watchFn = (function (prop /** TODO #9100 */) {
+                      return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
+                          if (_this.inputChanges != null) {
+                              _this.inputChangeCount++;
+                              _this.inputChanges[prop] = new Ng1Change(prevValue, value);
+                          }
+                          _this.component[prop] = value;
+                      };
+                  })(input.prop);
                   this.componentScope.$watch(expr, watchFn);
               }
           }
@@ -223,6 +226,21 @@
           });
       };
       return DowngradeNg2ComponentAdapter;
+  }());
+  var Ng1Change = (function () {
+      /**
+       * @param {?} previousValue
+       * @param {?} currentValue
+       */
+      function Ng1Change(previousValue, currentValue) {
+          this.previousValue = previousValue;
+          this.currentValue = currentValue;
+      }
+      /**
+       * @return {?}
+       */
+      Ng1Change.prototype.isFirstChange = function () { return this.previousValue === this.currentValue; };
+      return Ng1Change;
   }());
 
   var /** @type {?} */ COMPONENT_SELECTOR = /^[\w|-]*$/;
@@ -1501,7 +1519,7 @@
   /**
    * @stable
    */
-  var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.2-9aeb8c5');
+  var /** @type {?} */ VERSION = new _angular_core.Version('2.4.2-d43e5dd');
 
   exports.UpgradeAdapter = UpgradeAdapter;
   exports.UpgradeAdapterRef = UpgradeAdapterRef;
