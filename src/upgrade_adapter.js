@@ -556,10 +556,6 @@ export var UpgradeAdapter = (function () {
                     })
                         .then(function (ref) {
                         _this.moduleRef = ref;
-                        var /** @type {?} */ subscription = _this.ngZone.onMicrotaskEmpty.subscribe({
-                            next: function (_) { return _this.ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); }
-                        });
-                        rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
                         _this.ngZone.run(function () {
                             if (rootScopePrototype) {
                                 rootScopePrototype.$apply = original$applyFn; // restore original $apply
@@ -570,7 +566,11 @@ export var UpgradeAdapter = (function () {
                             }
                         });
                     })
-                        .then(function () { return _this.ng2BootstrapDeferred.resolve(ng1Injector); }, onError);
+                        .then(function () { return _this.ng2BootstrapDeferred.resolve(ng1Injector); }, onError)
+                        .then(function () {
+                        var /** @type {?} */ subscription = _this.ngZone.onMicrotaskEmpty.subscribe({ next: function () { return rootScope.$digest(); } });
+                        rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
+                    });
                 })
                     .catch(function (e) { return _this.ng2BootstrapDeferred.reject(e); });
             }

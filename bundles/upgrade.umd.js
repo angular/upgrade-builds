@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.3-5237b1c
+ * @license Angular v4.0.0-beta.3-d169c24
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -1268,10 +1268,6 @@
                       })
                           .then(function (ref) {
                           _this.moduleRef = ref;
-                          var /** @type {?} */ subscription = _this.ngZone.onMicrotaskEmpty.subscribe({
-                              next: function (_) { return _this.ngZone.runOutsideAngular(function () { return rootScope.$evalAsync(); }); }
-                          });
-                          rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
                           _this.ngZone.run(function () {
                               if (rootScopePrototype) {
                                   rootScopePrototype.$apply = original$applyFn; // restore original $apply
@@ -1282,7 +1278,11 @@
                               }
                           });
                       })
-                          .then(function () { return _this.ng2BootstrapDeferred.resolve(ng1Injector); }, onError);
+                          .then(function () { return _this.ng2BootstrapDeferred.resolve(ng1Injector); }, onError)
+                          .then(function () {
+                          var /** @type {?} */ subscription = _this.ngZone.onMicrotaskEmpty.subscribe({ next: function () { return rootScope.$digest(); } });
+                          rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
+                      });
                   })
                       .catch(function (e) { return _this.ng2BootstrapDeferred.reject(e); });
               }
@@ -1501,7 +1501,7 @@
   /**
    * @stable
    */
-  var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.3-5237b1c');
+  var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.3-d169c24');
 
   exports.UpgradeAdapter = UpgradeAdapter;
   exports.UpgradeAdapterRef = UpgradeAdapterRef;
