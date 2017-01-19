@@ -5,10 +5,10 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { ComponentFactoryResolver } from '@angular/core/index';
+import { ComponentFactoryResolver } from '@angular/core';
 import { $INJECTOR, $PARSE, INJECTOR_KEY } from './constants';
 import { DowngradeComponentAdapter } from './downgrade_component_adapter';
-let /** @type {?} */ downgradeCount = 0;
+var /** @type {?} */ downgradeCount = 0;
 /**
  * \@whatItDoes
  *
@@ -59,22 +59,22 @@ let /** @type {?} */ downgradeCount = 0;
  * @return {?}
  */
 export function downgradeComponent(info) {
-    const /** @type {?} */ idPrefix = `NG2_UPGRADE_${downgradeCount++}_`;
-    let /** @type {?} */ idCount = 0;
-    const /** @type {?} */ directiveFactory = function ($injector, $parse) {
+    var /** @type {?} */ idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
+    var /** @type {?} */ idCount = 0;
+    var /** @type {?} */ directiveFactory = function ($injector, $parse) {
         return {
             restrict: 'E',
             require: '?^' + INJECTOR_KEY,
-            link: (scope, element, attrs, parentInjector, transclude) => {
+            link: function (scope, element, attrs, parentInjector, transclude) {
                 if (parentInjector === null) {
                     parentInjector = $injector.get(INJECTOR_KEY);
                 }
-                const /** @type {?} */ componentFactoryResolver = parentInjector.get(ComponentFactoryResolver);
-                const /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
+                var /** @type {?} */ componentFactoryResolver = parentInjector.get(ComponentFactoryResolver);
+                var /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                 if (!componentFactory) {
                     throw new Error('Expecting ComponentFactory for: ' + info.component);
                 }
-                const /** @type {?} */ facade = new DowngradeComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, parentInjector, $parse, componentFactory);
+                var /** @type {?} */ facade = new DowngradeComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, parentInjector, $parse, componentFactory);
                 facade.setupInputs();
                 facade.createComponent();
                 facade.projectContent();

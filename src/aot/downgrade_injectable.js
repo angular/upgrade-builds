@@ -51,6 +51,6 @@ import { INJECTOR_KEY } from './constants';
  * @return {?}
  */
 export function downgradeInjectable(token) {
-    return [INJECTOR_KEY, (i) => i.get(token)];
+    return [INJECTOR_KEY, function (i) { return i.get(token); }];
 }
 //# sourceMappingURL=downgrade_injectable.js.map

@@ -30,25 +30,27 @@ export function controllerKey(name) {
  * @return {?}
  */
 export function getAttributesAsArray(node) {
-    const /** @type {?} */ attributes = node.attributes;
-    let /** @type {?} */ asArray;
+    var /** @type {?} */ attributes = node.attributes;
+    var /** @type {?} */ asArray;
     if (attributes) {
-        let /** @type {?} */ attrLen = attributes.length;
+        var /** @type {?} */ attrLen = attributes.length;
         asArray = new Array(attrLen);
-        for (let /** @type {?} */ i = 0; i < attrLen; i++) {
+        for (var /** @type {?} */ i = 0; i < attrLen; i++) {
             asArray[i] = [attributes[i].nodeName, attributes[i].nodeValue];
         }
     }
     return asArray || [];
 }
-export class Deferred {
-    constructor() {
-        this.promise = new Promise((res, rej) => {
-            this.resolve = res;
-            this.reject = rej;
+export var Deferred = (function () {
+    function Deferred() {
+        var _this = this;
+        this.promise = new Promise(function (res, rej) {
+            _this.resolve = res;
+            _this.reject = rej;
         });
     }
-}
+    return Deferred;
+}());
 function Deferred_tsickle_Closure_declarations() {
     /** @type {?} */
     Deferred.prototype.promise;

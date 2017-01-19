@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { Injector, NgModule, NgZone, Testability } from '@angular/core/index';
+import { Injector, NgModule, NgZone, Testability } from '@angular/core';
 import * as angular from '../angular_js';
 import { controllerKey } from '../util';
 import { angular1Providers, setTempInjectorRef } from './angular1_providers';
@@ -123,12 +123,12 @@ import { $$TESTABILITY, $DELEGATE, $INJECTOR, $PROVIDE, INJECTOR_KEY, UPGRADE_MO
  *
  * \@experimental
  */
-export class UpgradeModule {
+export var UpgradeModule = (function () {
     /**
      * @param {?} injector
      * @param {?} ngZone
      */
-    constructor(injector, ngZone) {
+    function UpgradeModule(injector, ngZone) {
         this.injector = injector;
         this.ngZone = ngZone;
     }
@@ -139,24 +139,26 @@ export class UpgradeModule {
      * @param {?=} config
      * @return {?}
      */
-    bootstrap(element, modules = [], config /*angular.IAngularBootstrapConfig*/) {
+    UpgradeModule.prototype.bootstrap = function (element, modules, config /*angular.IAngularBootstrapConfig*/) {
+        var _this = this;
+        if (modules === void 0) { modules = []; }
         // Create an ng1 module to bootstrap
-        const /** @type {?} */ upgradeModule = angular
+        var /** @type {?} */ upgradeModule = angular
             .module(UPGRADE_MODULE_NAME, modules)
             .value(INJECTOR_KEY, this.injector)
             .config([
             $PROVIDE, $INJECTOR,
-                ($provide, $injector) => {
+            function ($provide, $injector) {
                 if ($injector.has($$TESTABILITY)) {
                     $provide.decorator($$TESTABILITY, [
                         $DELEGATE,
-                            (testabilityDelegate) => {
-                            const /** @type {?} */ originalWhenStable = testabilityDelegate.whenStable;
-                            const /** @type {?} */ injector = this.injector;
+                        function (testabilityDelegate) {
+                            var /** @type {?} */ originalWhenStable = testabilityDelegate.whenStable;
+                            var /** @type {?} */ injector = _this.injector;
                             // Cannot use arrow function below because we need the context
-                            const /** @type {?} */ newWhenStable = function (callback) {
+                            var /** @type {?} */ newWhenStable = function (callback) {
                                 originalWhenStable.call(this, function () {
-                                    const /** @type {?} */ ng2Testability = injector.get(Testability);
+                                    var /** @type {?} */ ng2Testability = injector.get(Testability);
                                     if (ng2Testability.isStable()) {
                                         callback.apply(this, arguments);
                                     }
@@ -174,43 +176,45 @@ export class UpgradeModule {
         ])
             .run([
             $INJECTOR,
-                ($injector) => {
-                this.$injector = $injector;
+            function ($injector) {
+                _this.$injector = $injector;
                 // Initialize the ng1 $injector provider
                 setTempInjectorRef($injector);
-                this.injector.get($INJECTOR);
+                _this.injector.get($INJECTOR);
                 // Put the injector on the DOM, so that it can be "required"
-                angular.element(element).data(controllerKey(INJECTOR_KEY), this.injector);
+                angular.element(element).data(controllerKey(INJECTOR_KEY), _this.injector);
                 // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles
-                const /** @type {?} */ $rootScope = $injector.get('$rootScope');
-                this.ngZone.onMicrotaskEmpty.subscribe(() => this.ngZone.runOutsideAngular(() => $rootScope.$evalAsync()));
+                var /** @type {?} */ $rootScope = $injector.get('$rootScope');
+                _this.ngZone.onMicrotaskEmpty.subscribe(function () { return _this.ngZone.runOutsideAngular(function () { return $rootScope.$evalAsync(); }); });
             }
         ]);
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
-        const /** @type {?} */ windowAngular = ((window) /** TODO #???? */)['angular'];
+        var /** @type {?} */ windowAngular = ((window) /** TODO #???? */)['angular'];
         windowAngular.resumeBootstrap = undefined;
         // Bootstrap the angular 1 application inside our zone
-        this.ngZone.run(() => { angular.bootstrap(element, [upgradeModule.name], config); });
+        this.ngZone.run(function () { angular.bootstrap(element, [upgradeModule.name], config); });
         // Patch resumeBootstrap() to run inside the ngZone
         if (windowAngular.resumeBootstrap) {
-            const /** @type {?} */ originalResumeBootstrap = windowAngular.resumeBootstrap;
-            const /** @type {?} */ ngZone = this.ngZone;
+            var /** @type {?} */ originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
+            var /** @type {?} */ ngZone_1 = this.ngZone;
             windowAngular.resumeBootstrap = function () {
-                let /** @type {?} */ args = arguments;
-                windowAngular.resumeBootstrap = originalResumeBootstrap;
-                ngZone.run(() => { windowAngular.resumeBootstrap.apply(this, args); });
+                var _this = this;
+                var /** @type {?} */ args = arguments;
+                windowAngular.resumeBootstrap = originalResumeBootstrap_1;
+                ngZone_1.run(function () { windowAngular.resumeBootstrap.apply(_this, args); });
             };
         }
-    }
-}
-UpgradeModule.decorators = [
-    { type: NgModule, args: [{ providers: angular1Providers },] },
-];
-/** @nocollapse */
-UpgradeModule.ctorParameters = () => [
-    { type: Injector, },
-    { type: NgZone, },
-];
+    };
+    UpgradeModule.decorators = [
+        { type: NgModule, args: [{ providers: angular1Providers },] },
+    ];
+    /** @nocollapse */
+    UpgradeModule.ctorParameters = function () { return [
+        { type: Injector, },
+        { type: NgZone, },
+    ]; };
+    return UpgradeModule;
+}());
 function UpgradeModule_tsickle_Closure_declarations() {
     /** @type {?} */
     UpgradeModule.decorators;

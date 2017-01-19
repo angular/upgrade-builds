@@ -5,12 +5,12 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { ReflectiveInjector, SimpleChange } from '@angular/core/index';
+import { ReflectiveInjector, SimpleChange } from '@angular/core';
 import { NG1_SCOPE } from './constants';
-const /** @type {?} */ INITIAL_VALUE = {
+var /** @type {?} */ INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
-export class DowngradeNg2ComponentAdapter {
+export var DowngradeNg2ComponentAdapter = (function () {
     /**
      * @param {?} info
      * @param {?} element
@@ -20,7 +20,7 @@ export class DowngradeNg2ComponentAdapter {
      * @param {?} parse
      * @param {?} componentFactory
      */
-    constructor(info, element, attrs, scope, parentInjector, parse, componentFactory) {
+    function DowngradeNg2ComponentAdapter(info, element, attrs, scope, parentInjector, parse, componentFactory) {
         this.info = info;
         this.element = element;
         this.attrs = attrs;
@@ -39,32 +39,33 @@ export class DowngradeNg2ComponentAdapter {
      * @param {?} projectableNodes
      * @return {?}
      */
-    bootstrapNg2(projectableNodes) {
-        const /** @type {?} */ childInjector = ReflectiveInjector.resolveAndCreate([{ provide: NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
+    DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function (projectableNodes) {
+        var /** @type {?} */ childInjector = ReflectiveInjector.resolveAndCreate([{ provide: NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
-    }
+    };
     /**
      * @return {?}
      */
-    setupInputs() {
-        const /** @type {?} */ attrs = this.attrs;
-        const /** @type {?} */ inputs = this.info.inputs || [];
-        for (let /** @type {?} */ i = 0; i < inputs.length; i++) {
-            const /** @type {?} */ input = inputs[i];
-            let /** @type {?} */ expr = null;
+    DowngradeNg2ComponentAdapter.prototype.setupInputs = function () {
+        var _this = this;
+        var /** @type {?} */ attrs = this.attrs;
+        var /** @type {?} */ inputs = this.info.inputs || [];
+        for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
+            var /** @type {?} */ input = inputs[i];
+            var /** @type {?} */ expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                const /** @type {?} */ observeFn = ((prop /** TODO #9100 */) => {
-                    let /** @type {?} */ prevValue = INITIAL_VALUE;
-                    return (value /** TODO #9100 */) => {
-                        if (this.inputChanges !== null) {
-                            this.inputChangeCount++;
-                            this.inputChanges[prop] = new SimpleChange(value, prevValue === INITIAL_VALUE ? value : prevValue, prevValue === INITIAL_VALUE);
+                var /** @type {?} */ observeFn = (function (prop /** TODO #9100 */) {
+                    var /** @type {?} */ prevValue = INITIAL_VALUE;
+                    return function (value /** TODO #9100 */) {
+                        if (_this.inputChanges !== null) {
+                            _this.inputChangeCount++;
+                            _this.inputChanges[prop] = new SimpleChange(value, prevValue === INITIAL_VALUE ? value : prevValue, prevValue === INITIAL_VALUE);
                             prevValue = value;
                         }
-                        this.component[prop] = value;
+                        _this.component[prop] = value;
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn);
@@ -82,41 +83,42 @@ export class DowngradeNg2ComponentAdapter {
                 expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
             }
             if (expr != null) {
-                const /** @type {?} */ watchFn = ((prop /** TODO #9100 */) => (value /** TODO #9100 */, prevValue /** TODO #9100 */) => {
-                    if (this.inputChanges != null) {
-                        this.inputChangeCount++;
-                        this.inputChanges[prop] = new SimpleChange(prevValue, value, prevValue === value);
+                var /** @type {?} */ watchFn = (function (prop /** TODO #9100 */) { return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
+                    if (_this.inputChanges != null) {
+                        _this.inputChangeCount++;
+                        _this.inputChanges[prop] = new SimpleChange(prevValue, value, prevValue === value);
                     }
-                    this.component[prop] = value;
-                })(input.prop);
+                    _this.component[prop] = value;
+                }; })(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
-        const /** @type {?} */ prototype = this.info.type.prototype;
+        var /** @type {?} */ prototype = this.info.type.prototype;
         if (prototype && ((prototype)).ngOnChanges) {
             // Detect: OnChanges interface
             this.inputChanges = {};
-            this.componentScope.$watch(() => this.inputChangeCount, () => {
-                const /** @type {?} */ inputChanges = this.inputChanges;
-                this.inputChanges = {};
-                ((this.component)).ngOnChanges(inputChanges);
+            this.componentScope.$watch(function () { return _this.inputChangeCount; }, function () {
+                var /** @type {?} */ inputChanges = _this.inputChanges;
+                _this.inputChanges = {};
+                ((_this.component)).ngOnChanges(inputChanges);
             });
         }
-        this.componentScope.$watch(() => this.changeDetector && this.changeDetector.detectChanges());
-    }
+        this.componentScope.$watch(function () { return _this.changeDetector && _this.changeDetector.detectChanges(); });
+    };
     /**
      * @return {?}
      */
-    setupOutputs() {
-        const /** @type {?} */ attrs = this.attrs;
-        const /** @type {?} */ outputs = this.info.outputs || [];
-        for (let /** @type {?} */ j = 0; j < outputs.length; j++) {
-            const /** @type {?} */ output = outputs[j];
-            let /** @type {?} */ expr = null;
-            let /** @type {?} */ assignExpr = false;
-            const /** @type {?} */ bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
-            const /** @type {?} */ bracketParenAttr = output.bracketParenAttr ?
-                `[(${output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8)})]` :
+    DowngradeNg2ComponentAdapter.prototype.setupOutputs = function () {
+        var _this = this;
+        var /** @type {?} */ attrs = this.attrs;
+        var /** @type {?} */ outputs = this.info.outputs || [];
+        for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
+            var /** @type {?} */ output = outputs[j];
+            var /** @type {?} */ expr = null;
+            var /** @type {?} */ assignExpr = false;
+            var /** @type {?} */ bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
+            var /** @type {?} */ bracketParenAttr = output.bracketParenAttr ?
+                "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]" :
                 null;
             if (attrs.hasOwnProperty(output.onAttr)) {
                 expr = ((attrs) /** TODO #9100 */)[output.onAttr];
@@ -133,35 +135,39 @@ export class DowngradeNg2ComponentAdapter {
                 assignExpr = true;
             }
             if (expr != null && assignExpr != null) {
-                const /** @type {?} */ getter = this.parse(expr);
-                const /** @type {?} */ setter = getter.assign;
+                var /** @type {?} */ getter = this.parse(expr);
+                var /** @type {?} */ setter = getter.assign;
                 if (assignExpr && !setter) {
-                    throw new Error(`Expression '${expr}' is not assignable!`);
+                    throw new Error("Expression '" + expr + "' is not assignable!");
                 }
-                const /** @type {?} */ emitter = (this.component[output.prop]);
+                var /** @type {?} */ emitter = (this.component[output.prop]);
                 if (emitter) {
                     emitter.subscribe({
                         next: assignExpr ?
-                            ((setter) => (v /** TODO #9100 */) => setter(this.scope, v))(setter) :
-                            ((getter) => (v /** TODO #9100 */) => getter(this.scope, { $event: v }))(getter)
+                            (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
+                            (function (getter) { return function (v /** TODO #9100 */) {
+                                return getter(_this.scope, { $event: v });
+                            }; })(getter)
                     });
                 }
                 else {
-                    throw new Error(`Missing emitter '${output.prop}' on component '${this.info.selector}'!`);
+                    throw new Error("Missing emitter '" + output.prop + "' on component '" + this.info.selector + "'!");
                 }
             }
         }
-    }
+    };
     /**
      * @return {?}
      */
-    registerCleanup() {
-        this.element.bind('$destroy', () => {
-            this.componentScope.$destroy();
-            this.componentRef.destroy();
+    DowngradeNg2ComponentAdapter.prototype.registerCleanup = function () {
+        var _this = this;
+        this.element.bind('$destroy', function () {
+            _this.componentScope.$destroy();
+            _this.componentRef.destroy();
         });
-    }
-}
+    };
+    return DowngradeNg2ComponentAdapter;
+}());
 function DowngradeNg2ComponentAdapter_tsickle_Closure_declarations() {
     /** @type {?} */
     DowngradeNg2ComponentAdapter.prototype.component;

@@ -9,7 +9,7 @@
 // We store the ng1 injector so that the provider in the module injector can access it
 // Then we "get" the ng1 injector from the module injector, which triggers the provider to read
 // the stored injector and release the reference to it.
-let /** @type {?} */ tempInjectorRef;
+var /** @type {?} */ tempInjectorRef;
 /**
  * @param {?} injector
  * @return {?}
@@ -21,7 +21,7 @@ export function setTempInjectorRef(injector) {
  * @return {?}
  */
 export function injectorFactory() {
-    const /** @type {?} */ injector = tempInjectorRef;
+    var /** @type {?} */ injector = tempInjectorRef;
     tempInjectorRef = null; // clear the value to prevent memory leaks
     return injector;
 }
@@ -46,7 +46,7 @@ export function compileFactory(i) {
 export function parseFactory(i) {
     return i.get('$parse');
 }
-export const /** @type {?} */ angular1Providers = [
+export var /** @type {?} */ angular1Providers = [
     // We must use exported named functions for the ng2 factories to keep the compiler happy:
     // > Metadata collected contains an error that will be reported at runtime:
     // >   Function calls are not supported.
