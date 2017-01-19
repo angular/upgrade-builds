@@ -5,25 +5,24 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { EventEmitter } from '@angular/core';
+import { EventEmitter } from '@angular/core/index';
 import * as angular from '../angular_js';
 import { looseIdentical } from '../facade/lang';
 import { controllerKey } from '../util';
 import { $COMPILE, $CONTROLLER, $HTTP_BACKEND, $INJECTOR, $SCOPE, $TEMPLATE_CACHE } from './constants';
-var /** @type {?} */ REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
-var /** @type {?} */ NOT_SUPPORTED = 'NOT_SUPPORTED';
-var /** @type {?} */ INITIAL_VALUE = {
+const /** @type {?} */ REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
+const /** @type {?} */ NOT_SUPPORTED = 'NOT_SUPPORTED';
+const /** @type {?} */ INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
-var Bindings = (function () {
-    function Bindings() {
+class Bindings {
+    constructor() {
         this.twoWayBoundProperties = [];
         this.twoWayBoundLastValues = [];
         this.expressionBoundProperties = [];
         this.propertyToOutputMap = {};
     }
-    return Bindings;
-}());
+}
 function Bindings_tsickle_Closure_declarations() {
     /** @type {?} */
     Bindings.prototype.twoWayBoundProperties;
@@ -74,7 +73,7 @@ function Bindings_tsickle_Closure_declarations() {
  *
  * \@experimental
  */
-export var UpgradeComponent = (function () {
+export class UpgradeComponent {
     /**
      * Create a new `UpgradeComponent` instance. You should not normally need to do this.
      * Instead you should derive a new class from this one and call the super constructor
@@ -94,7 +93,7 @@ export var UpgradeComponent = (function () {
      * @param {?} elementRef
      * @param {?} injector
      */
-    function UpgradeComponent(name, elementRef, injector) {
+    constructor(name, elementRef, injector) {
         this.name = name;
         this.elementRef = elementRef;
         this.injector = injector;
@@ -112,17 +111,17 @@ export var UpgradeComponent = (function () {
         this.linkFn = this.compileTemplate(this.directive);
         // We ask for the Angular 1 scope from the Angular 2+ injector, since
         // we will put the new component scope onto the new injector for each component
-        var $parentScope = injector.get($SCOPE);
+        const $parentScope = injector.get($SCOPE);
         // QUESTION 1: Should we create an isolated scope if the scope is only true?
         // QUESTION 2: Should we make the scope accessible through `$element.scope()/isolateScope()`?
         this.$componentScope = $parentScope.$new(!!this.directive.scope);
-        var controllerType = this.directive.controller;
-        var bindToController = this.directive.bindToController;
+        const controllerType = this.directive.controller;
+        const bindToController = this.directive.bindToController;
         if (controllerType) {
             this.controllerInstance = this.buildController(controllerType, this.$componentScope, this.$element, this.directive.controllerAs);
         }
         else if (bindToController) {
-            throw new Error("Upgraded directive '" + name + "' specifies 'bindToController' but no controller.");
+            throw new Error(`Upgraded directive '${name}' specifies 'bindToController' but no controller.`);
         }
         this.bindingDestination = bindToController ? this.controllerInstance : this.$componentScope;
         this.setupOutputs();
@@ -130,149 +129,145 @@ export var UpgradeComponent = (function () {
     /**
      * @return {?}
      */
-    UpgradeComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        var /** @type {?} */ attrs = NOT_SUPPORTED;
-        var /** @type {?} */ transcludeFn = NOT_SUPPORTED;
-        var /** @type {?} */ directiveRequire = this.getDirectiveRequire(this.directive);
-        var /** @type {?} */ requiredControllers = this.resolveRequire(this.directive.name, this.$element, directiveRequire);
+    ngOnInit() {
+        const /** @type {?} */ attrs = NOT_SUPPORTED;
+        const /** @type {?} */ transcludeFn = NOT_SUPPORTED;
+        const /** @type {?} */ directiveRequire = this.getDirectiveRequire(this.directive);
+        const /** @type {?} */ requiredControllers = this.resolveRequire(this.directive.name, this.$element, directiveRequire);
         if (this.directive.bindToController && isMap(directiveRequire)) {
-            var /** @type {?} */ requiredControllersMap_1 = (requiredControllers);
-            Object.keys(requiredControllersMap_1).forEach(function (key) {
-                _this.controllerInstance[key] = requiredControllersMap_1[key];
+            const /** @type {?} */ requiredControllersMap = (requiredControllers);
+            Object.keys(requiredControllersMap).forEach(key => {
+                this.controllerInstance[key] = requiredControllersMap[key];
             });
         }
         this.callLifecycleHook('$onInit', this.controllerInstance);
         if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
-            var /** @type {?} */ callDoCheck = function () { return _this.callLifecycleHook('$doCheck', _this.controllerInstance); };
+            const /** @type {?} */ callDoCheck = () => this.callLifecycleHook('$doCheck', this.controllerInstance);
             this.$componentScope.$parent.$watch(callDoCheck);
             callDoCheck();
         }
-        var /** @type {?} */ link = this.directive.link;
-        var /** @type {?} */ preLink = (typeof link == 'object') && ((link)).pre;
-        var /** @type {?} */ postLink = (typeof link == 'object') ? ((link)).post : link;
+        const /** @type {?} */ link = this.directive.link;
+        const /** @type {?} */ preLink = (typeof link == 'object') && ((link)).pre;
+        const /** @type {?} */ postLink = (typeof link == 'object') ? ((link)).post : link;
         if (preLink) {
             preLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
-        var /** @type {?} */ childNodes = [];
-        var /** @type {?} */ childNode;
+        const /** @type {?} */ childNodes = [];
+        let /** @type {?} */ childNode;
         while (childNode = this.element.firstChild) {
             this.element.removeChild(childNode);
             childNodes.push(childNode);
         }
-        var /** @type {?} */ attachElement = function (clonedElements, scope) { _this.$element.append(clonedElements); };
-        var /** @type {?} */ attachChildNodes = function (scope, cloneAttach) { return cloneAttach(childNodes); };
+        const /** @type {?} */ attachElement = (clonedElements, scope) => { this.$element.append(clonedElements); };
+        const /** @type {?} */ attachChildNodes = (scope, cloneAttach) => cloneAttach(childNodes);
         this.linkFn(this.$componentScope, attachElement, { parentBoundTranscludeFn: attachChildNodes });
         if (postLink) {
             postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
         this.callLifecycleHook('$postLink', this.controllerInstance);
-    };
+    }
     /**
      * @param {?} changes
      * @return {?}
      */
-    UpgradeComponent.prototype.ngOnChanges = function (changes) {
-        var _this = this;
+    ngOnChanges(changes) {
         // Forward input changes to `bindingDestination`
-        Object.keys(changes).forEach(function (propName) { return _this.bindingDestination[propName] = changes[propName].currentValue; });
+        Object.keys(changes).forEach(propName => this.bindingDestination[propName] = changes[propName].currentValue);
         this.callLifecycleHook('$onChanges', this.bindingDestination, changes);
-    };
+    }
     /**
      * @return {?}
      */
-    UpgradeComponent.prototype.ngDoCheck = function () {
-        var _this = this;
-        var /** @type {?} */ twoWayBoundProperties = this.bindings.twoWayBoundProperties;
-        var /** @type {?} */ twoWayBoundLastValues = this.bindings.twoWayBoundLastValues;
-        var /** @type {?} */ propertyToOutputMap = this.bindings.propertyToOutputMap;
-        twoWayBoundProperties.forEach(function (propName, idx) {
-            var /** @type {?} */ newValue = _this.bindingDestination[propName];
-            var /** @type {?} */ oldValue = twoWayBoundLastValues[idx];
+    ngDoCheck() {
+        const /** @type {?} */ twoWayBoundProperties = this.bindings.twoWayBoundProperties;
+        const /** @type {?} */ twoWayBoundLastValues = this.bindings.twoWayBoundLastValues;
+        const /** @type {?} */ propertyToOutputMap = this.bindings.propertyToOutputMap;
+        twoWayBoundProperties.forEach((propName, idx) => {
+            const /** @type {?} */ newValue = this.bindingDestination[propName];
+            const /** @type {?} */ oldValue = twoWayBoundLastValues[idx];
             if (!looseIdentical(newValue, oldValue)) {
-                var /** @type {?} */ outputName = propertyToOutputMap[propName];
-                var /** @type {?} */ eventEmitter = ((_this))[outputName];
+                const /** @type {?} */ outputName = propertyToOutputMap[propName];
+                const /** @type {?} */ eventEmitter = ((this))[outputName];
                 eventEmitter.emit(newValue);
                 twoWayBoundLastValues[idx] = newValue;
             }
         });
-    };
+    }
     /**
      * @return {?}
      */
-    UpgradeComponent.prototype.ngOnDestroy = function () {
+    ngOnDestroy() {
         this.callLifecycleHook('$onDestroy', this.controllerInstance);
         this.$componentScope.$destroy();
-    };
+    }
     /**
      * @param {?} method
      * @param {?} context
      * @param {?=} arg
      * @return {?}
      */
-    UpgradeComponent.prototype.callLifecycleHook = function (method, context, arg) {
+    callLifecycleHook(method, context, arg) {
         if (context && isFunction(context[method])) {
             context[method](arg);
         }
-    };
+    }
     /**
      * @param {?} name
      * @return {?}
      */
-    UpgradeComponent.prototype.getDirective = function (name) {
-        var /** @type {?} */ directives = this.$injector.get(name + 'Directive');
+    getDirective(name) {
+        const /** @type {?} */ directives = this.$injector.get(name + 'Directive');
         if (directives.length > 1) {
             throw new Error('Only support single directive definition for: ' + this.name);
         }
-        var /** @type {?} */ directive = directives[0];
+        const /** @type {?} */ directive = directives[0];
         if (directive.replace)
             this.notSupported('replace');
         if (directive.terminal)
             this.notSupported('terminal');
         if (directive.compile)
             this.notSupported('compile');
-        var /** @type {?} */ link = directive.link;
+        const /** @type {?} */ link = directive.link;
         // QUESTION: why not support link.post?
         if (typeof link == 'object') {
             if (((link)).post)
                 this.notSupported('link.post');
         }
         return directive;
-    };
+    }
     /**
      * @param {?} directive
      * @return {?}
      */
-    UpgradeComponent.prototype.getDirectiveRequire = function (directive) {
-        var /** @type {?} */ require = directive.require || (directive.controller && directive.name);
+    getDirectiveRequire(directive) {
+        const /** @type {?} */ require = directive.require || (directive.controller && directive.name);
         if (isMap(require)) {
-            Object.keys(require).forEach(function (key) {
-                var /** @type {?} */ value = require[key];
-                var /** @type {?} */ match = value.match(REQUIRE_PREFIX_RE);
-                var /** @type {?} */ name = value.substring(match[0].length);
+            Object.keys(require).forEach(key => {
+                const /** @type {?} */ value = require[key];
+                const /** @type {?} */ match = value.match(REQUIRE_PREFIX_RE);
+                const /** @type {?} */ name = value.substring(match[0].length);
                 if (!name) {
                     require[key] = match[0] + key;
                 }
             });
         }
         return require;
-    };
+    }
     /**
      * @param {?} directive
      * @return {?}
      */
-    UpgradeComponent.prototype.initializeBindings = function (directive) {
-        var _this = this;
-        var /** @type {?} */ btcIsObject = typeof directive.bindToController === 'object';
+    initializeBindings(directive) {
+        const /** @type {?} */ btcIsObject = typeof directive.bindToController === 'object';
         if (btcIsObject && Object.keys(directive.scope).length) {
-            throw new Error("Binding definitions on scope and controller at the same time is not supported.");
+            throw new Error(`Binding definitions on scope and controller at the same time is not supported.`);
         }
-        var /** @type {?} */ context = (btcIsObject) ? directive.bindToController : directive.scope;
-        var /** @type {?} */ bindings = new Bindings();
+        const /** @type {?} */ context = (btcIsObject) ? directive.bindToController : directive.scope;
+        const /** @type {?} */ bindings = new Bindings();
         if (typeof context == 'object') {
-            Object.keys(context).forEach(function (propName) {
-                var /** @type {?} */ definition = context[propName];
-                var /** @type {?} */ bindingType = definition.charAt(0);
+            Object.keys(context).forEach(propName => {
+                const /** @type {?} */ definition = context[propName];
+                const /** @type {?} */ bindingType = definition.charAt(0);
                 // QUESTION: What about `=*`? Ignore? Throw? Support?
                 switch (bindingType) {
                     case '@':
@@ -291,24 +286,24 @@ export var UpgradeComponent = (function () {
                         bindings.propertyToOutputMap[propName] = propName;
                         break;
                     default:
-                        var /** @type {?} */ json = JSON.stringify(context);
-                        throw new Error("Unexpected mapping '" + bindingType + "' in '" + json + "' in '" + _this.name + "' directive.");
+                        let /** @type {?} */ json = JSON.stringify(context);
+                        throw new Error(`Unexpected mapping '${bindingType}' in '${json}' in '${this.name}' directive.`);
                 }
             });
         }
         return bindings;
-    };
+    }
     /**
      * @param {?} directive
      * @return {?}
      */
-    UpgradeComponent.prototype.compileTemplate = function (directive) {
+    compileTemplate(directive) {
         if (this.directive.template !== undefined) {
             return this.compileHtml(getOrCall(this.directive.template));
         }
         else if (this.directive.templateUrl) {
-            var /** @type {?} */ url = getOrCall(this.directive.templateUrl);
-            var /** @type {?} */ html = (this.$templateCache.get(url));
+            const /** @type {?} */ url = getOrCall(this.directive.templateUrl);
+            const /** @type {?} */ html = (this.$templateCache.get(url));
             if (html !== undefined) {
                 return this.compileHtml(html);
             }
@@ -317,9 +312,9 @@ export var UpgradeComponent = (function () {
             }
         }
         else {
-            throw new Error("Directive '" + this.name + "' is not a component, it is missing template.");
+            throw new Error(`Directive '${this.name}' is not a component, it is missing template.`);
         }
-    };
+    }
     /**
      * @param {?} controllerType
      * @param {?} $scope
@@ -327,90 +322,87 @@ export var UpgradeComponent = (function () {
      * @param {?} controllerAs
      * @return {?}
      */
-    UpgradeComponent.prototype.buildController = function (controllerType, $scope, $element, controllerAs) {
+    buildController(controllerType, $scope, $element, controllerAs) {
         // TODO: Document that we do not pre-assign bindings on the controller instance
-        var /** @type {?} */ locals = { $scope: $scope, $element: $element };
-        var /** @type {?} */ controller = this.$controller(controllerType, locals, null, controllerAs);
+        const /** @type {?} */ locals = { $scope, $element };
+        const /** @type {?} */ controller = this.$controller(controllerType, locals, null, controllerAs);
         $element.data(controllerKey(this.directive.name), controller);
         return controller;
-    };
+    }
     /**
      * @param {?} directiveName
      * @param {?} $element
      * @param {?} require
      * @return {?}
      */
-    UpgradeComponent.prototype.resolveRequire = function (directiveName, $element, require) {
-        var _this = this;
+    resolveRequire(directiveName, $element, require) {
         if (!require) {
             return null;
         }
         else if (Array.isArray(require)) {
-            return require.map(function (req) { return _this.resolveRequire(directiveName, $element, req); });
+            return require.map(req => this.resolveRequire(directiveName, $element, req));
         }
         else if (typeof require === 'object') {
-            var /** @type {?} */ value_1 = {};
-            Object.keys(require).forEach(function (key) { return value_1[key] = _this.resolveRequire(directiveName, $element, require[key]); });
-            return value_1;
+            const /** @type {?} */ value = {};
+            Object.keys(require).forEach(key => value[key] = this.resolveRequire(directiveName, $element, require[key]));
+            return value;
         }
         else if (typeof require === 'string') {
-            var /** @type {?} */ match = require.match(REQUIRE_PREFIX_RE);
-            var /** @type {?} */ inheritType = match[1] || match[3];
-            var /** @type {?} */ name_1 = require.substring(match[0].length);
-            var /** @type {?} */ isOptional = !!match[2];
-            var /** @type {?} */ searchParents = !!inheritType;
-            var /** @type {?} */ startOnParent = inheritType === '^^';
-            var /** @type {?} */ ctrlKey = controllerKey(name_1);
+            const /** @type {?} */ match = require.match(REQUIRE_PREFIX_RE);
+            const /** @type {?} */ inheritType = match[1] || match[3];
+            const /** @type {?} */ name = require.substring(match[0].length);
+            const /** @type {?} */ isOptional = !!match[2];
+            const /** @type {?} */ searchParents = !!inheritType;
+            const /** @type {?} */ startOnParent = inheritType === '^^';
+            const /** @type {?} */ ctrlKey = controllerKey(name);
             if (startOnParent) {
                 $element = $element.parent();
             }
-            var /** @type {?} */ value = searchParents ? $element.inheritedData(ctrlKey) : $element.data(ctrlKey);
+            const /** @type {?} */ value = searchParents ? $element.inheritedData(ctrlKey) : $element.data(ctrlKey);
             if (!value && !isOptional) {
-                throw new Error("Unable to find required '" + require + "' in upgraded directive '" + directiveName + "'.");
+                throw new Error(`Unable to find required '${require}' in upgraded directive '${directiveName}'.`);
             }
             return value;
         }
         else {
-            throw new Error("Unrecognized require syntax on upgraded directive '" + directiveName + "': " + require);
+            throw new Error(`Unrecognized require syntax on upgraded directive '${directiveName}': ${require}`);
         }
-    };
+    }
     /**
      * @return {?}
      */
-    UpgradeComponent.prototype.setupOutputs = function () {
-        var _this = this;
+    setupOutputs() {
         // Set up the outputs for `=` bindings
-        this.bindings.twoWayBoundProperties.forEach(function (propName) {
-            var /** @type {?} */ outputName = _this.bindings.propertyToOutputMap[propName];
-            ((_this))[outputName] = new EventEmitter();
+        this.bindings.twoWayBoundProperties.forEach(propName => {
+            const /** @type {?} */ outputName = this.bindings.propertyToOutputMap[propName];
+            ((this))[outputName] = new EventEmitter();
         });
         // Set up the outputs for `&` bindings
-        this.bindings.expressionBoundProperties.forEach(function (propName) {
-            var /** @type {?} */ outputName = _this.bindings.propertyToOutputMap[propName];
-            var /** @type {?} */ emitter = ((_this))[outputName] = new EventEmitter();
+        this.bindings.expressionBoundProperties.forEach(propName => {
+            const /** @type {?} */ outputName = this.bindings.propertyToOutputMap[propName];
+            const /** @type {?} */ emitter = ((this))[outputName] = new EventEmitter();
             // QUESTION: Do we want the ng1 component to call the function with `<value>` or with
             //           `{$event: <value>}`. The former is closer to ng2, the latter to ng1.
-            _this.bindingDestination[propName] = function (value) { return emitter.emit(value); };
+            this.bindingDestination[propName] = (value) => emitter.emit(value);
         });
-    };
+    }
     /**
      * @param {?} feature
      * @return {?}
      */
-    UpgradeComponent.prototype.notSupported = function (feature) {
-        throw new Error("Upgraded directive '" + this.name + "' contains unsupported feature: '" + feature + "'.");
-    };
+    notSupported(feature) {
+        throw new Error(`Upgraded directive '${this.name}' contains unsupported feature: '${feature}'.`);
+    }
     /**
      * @param {?} html
      * @return {?}
      */
-    UpgradeComponent.prototype.compileHtml = function (html) {
-        var /** @type {?} */ div = document.createElement('div');
+    compileHtml(html) {
+        const /** @type {?} */ div = document.createElement('div');
         div.innerHTML = html;
         return this.$compile(div.childNodes);
-    };
-    return UpgradeComponent;
-}());
+    }
+}
 function UpgradeComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     UpgradeComponent.prototype.$injector;

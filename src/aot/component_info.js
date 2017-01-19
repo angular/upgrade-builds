@@ -11,31 +11,30 @@
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-export var PropertyBinding = (function () {
+export class PropertyBinding {
     /**
      * @param {?} binding
      */
-    function PropertyBinding(binding) {
+    constructor(binding) {
         this.binding = binding;
         this.parseBinding();
     }
     /**
      * @return {?}
      */
-    PropertyBinding.prototype.parseBinding = function () {
-        var /** @type {?} */ parts = this.binding.split(':');
+    parseBinding() {
+        const /** @type {?} */ parts = this.binding.split(':');
         this.prop = parts[0].trim();
         this.attr = (parts[1] || this.prop).trim();
-        this.bracketAttr = "[" + this.attr + "]";
-        this.parenAttr = "(" + this.attr + ")";
-        this.bracketParenAttr = "[(" + this.attr + ")]";
-        var /** @type {?} */ capitalAttr = this.attr.charAt(0).toUpperCase() + this.attr.substr(1);
-        this.onAttr = "on" + capitalAttr;
-        this.bindAttr = "bind" + capitalAttr;
-        this.bindonAttr = "bindon" + capitalAttr;
-    };
-    return PropertyBinding;
-}());
+        this.bracketAttr = `[${this.attr}]`;
+        this.parenAttr = `(${this.attr})`;
+        this.bracketParenAttr = `[(${this.attr})]`;
+        const /** @type {?} */ capitalAttr = this.attr.charAt(0).toUpperCase() + this.attr.substr(1);
+        this.onAttr = `on${capitalAttr}`;
+        this.bindAttr = `bind${capitalAttr}`;
+        this.bindonAttr = `bindon${capitalAttr}`;
+    }
+}
 function PropertyBinding_tsickle_Closure_declarations() {
     /** @type {?} */
     PropertyBinding.prototype.prop;
