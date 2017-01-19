@@ -175,7 +175,7 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
         }
     };
     /**
-     *  Upgrade ng1 components into Angular 2.
+     * Upgrade ng1 components into Angular 2.
      * @param {?} exportedComponents
      * @param {?} injector
      * @return {?}
