@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.4-d3a3a8e
+ * @license Angular v4.0.0-beta.4-e21e9c5
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -62,6 +62,85 @@
     var /** @type {?} */ NG1_TEMPLATE_CACHE = '$templateCache';
     var /** @type {?} */ NG1_TESTABILITY = '$$testability';
     var /** @type {?} */ REQUIRE_INJECTOR = '?^^' + NG2_INJECTOR;
+    var /** @type {?} */ REQUIRE_NG1_MODEL = '?ngModel';
+
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    /**
+     * @param {?} e
+     * @return {?}
+     */
+    function onError(e) {
+        // TODO: (misko): We seem to not have a stack trace here!
+        if (console.error) {
+            console.error(e, e.stack);
+        }
+        else {
+            // tslint:disable-next-line:no-console
+            console.log(e, e.stack);
+        }
+        throw e;
+    }
+    /**
+     * @param {?} name
+     * @return {?}
+     */
+    function controllerKey(name) {
+        return '$' + name + 'Controller';
+    }
+    /**
+     * @param {?} node
+     * @return {?}
+     */
+    function getAttributesAsArray(node) {
+        var /** @type {?} */ attributes = node.attributes;
+        var /** @type {?} */ asArray;
+        if (attributes) {
+            var /** @type {?} */ attrLen = attributes.length;
+            asArray = new Array(attrLen);
+            for (var /** @type {?} */ i = 0; i < attrLen; i++) {
+                asArray[i] = [attributes[i].nodeName, attributes[i].nodeValue];
+            }
+        }
+        return asArray || [];
+    }
+    var Deferred = (function () {
+        function Deferred() {
+            var _this = this;
+            this.promise = new Promise(function (res, rej) {
+                _this.resolve = res;
+                _this.reject = rej;
+            });
+        }
+        return Deferred;
+    }());
+    /**
+     * @param {?} component
+     * @return {?} true if the passed-in component implements the subset of
+     *     ControlValueAccessor needed for AngularJS ng-model compatibility.
+     */
+    function supportsNgModel(component) {
+        return typeof component.writeValue === 'function' &&
+            typeof component.registerOnChange === 'function';
+    }
+    /**
+     * Glue the AngularJS ngModelController if it exists to the component if it
+     * implements the needed subset of ControlValueAccessor.
+     * @param {?} ngModel
+     * @param {?} component
+     * @return {?}
+     */
+    function hookupNgModel(ngModel, component) {
+        if (ngModel && supportsNgModel(component)) {
+            ngModel.$render = function () { component.writeValue(ngModel.$viewValue); };
+            component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
+        }
+    }
 
     var /** @type {?} */ INITIAL_VALUE = {
         __UNINITIALIZED__: true
@@ -72,15 +151,17 @@
          * @param {?} element
          * @param {?} attrs
          * @param {?} scope
+         * @param {?} ngModel
          * @param {?} parentInjector
          * @param {?} parse
          * @param {?} componentFactory
          */
-        function DowngradeNg2ComponentAdapter(info, element, attrs, scope, parentInjector, parse, componentFactory) {
+        function DowngradeNg2ComponentAdapter(info, element, attrs, scope, ngModel, parentInjector, parse, componentFactory) {
             this.info = info;
             this.element = element;
             this.attrs = attrs;
             this.scope = scope;
+            this.ngModel = ngModel;
             this.parentInjector = parentInjector;
             this.parse = parse;
             this.componentFactory = componentFactory;
@@ -101,6 +182,7 @@
                 this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
             this.changeDetector = this.componentRef.changeDetectorRef;
             this.component = this.componentRef.instance;
+            hookupNgModel(this.ngModel, this.component);
         };
         /**
          * @return {?}
@@ -272,60 +354,6 @@
         }
         return attrProps;
     }
-
-    /**
-     * @license
-     * Copyright Google Inc. All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     * @param {?} e
-     * @return {?}
-     */
-    function onError(e) {
-        // TODO: (misko): We seem to not have a stack trace here!
-        if (console.error) {
-            console.error(e, e.stack);
-        }
-        else {
-            // tslint:disable-next-line:no-console
-            console.log(e, e.stack);
-        }
-        throw e;
-    }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    function controllerKey(name) {
-        return '$' + name + 'Controller';
-    }
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    function getAttributesAsArray(node) {
-        var /** @type {?} */ attributes = node.attributes;
-        var /** @type {?} */ asArray;
-        if (attributes) {
-            var /** @type {?} */ attrLen = attributes.length;
-            asArray = new Array(attrLen);
-            for (var /** @type {?} */ i = 0; i < attrLen; i++) {
-                asArray[i] = [attributes[i].nodeName, attributes[i].nodeValue];
-            }
-        }
-        return asArray || [];
-    }
-    var Deferred = (function () {
-        function Deferred() {
-            var _this = this;
-            this.promise = new Promise(function (res, rej) {
-                _this.resolve = res;
-                _this.reject = rej;
-            });
-        }
-        return Deferred;
-    }());
 
     var /** @type {?} */ CAMEL_CASE = /([A-Z])/g;
     var /** @type {?} */ INITIAL_VALUE$1 = {
@@ -838,6 +866,9 @@
          * 2. Even thought the component is instantiated in Angular 1, it will be using Angular 2+
          *    syntax. This has to be done, this way because we must follow Angular 2+ components do not
          *    declare how the attributes should be interpreted.
+         * 3. ng-model is controlled by AngularJS v1 and communicates with the downgraded Ng2 component
+         *    by way of the ControlValueAccessor interface from \@angular/forms. Only components that
+         *    implement this interface are eligible.
          *
          * ## Supported Features
          *
@@ -846,6 +877,7 @@
          *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
          *   - Expression:  `<comp [name]="username">`
          *   - Event:  `<comp (close)="doSomething()">`
+         *   - ng-model: `<comp ng-model="name">`
          * - Content projection: yes
          *
          * ### Example
@@ -1364,14 +1396,16 @@
             return {
                 restrict: 'E',
                 terminal: true,
-                require: REQUIRE_INJECTOR,
+                require: [REQUIRE_INJECTOR, REQUIRE_NG1_MODEL],
                 compile: function (templateElement, templateAttributes, transclude) {
                     // We might have compile the contents lazily, because this might have been triggered by the
                     // UpgradeNg1ComponentAdapterBuilder, when the ng2 templates have not been compiled yet
                     return {
-                        post: function (scope, element, attrs, parentInjector, transclude) {
+                        post: function (scope, element, attrs, required, transclude) {
                             var /** @type {?} */ id = idPrefix + (idCount++);
                             ((element[0])).id = id;
+                            var /** @type {?} */ parentInjector = required[0];
+                            var /** @type {?} */ ngModel = required[1];
                             var /** @type {?} */ injectorPromise = new ParentInjectorPromise(element);
                             var /** @type {?} */ ng2Compiler = (ng1Injector.get(NG2_COMPILER));
                             var /** @type {?} */ ngContentSelectors = ng2Compiler.getNgContentSelectors(info.type);
@@ -1400,7 +1434,7 @@
                              * @return {?}
                              */
                             function downgrade(injector) {
-                                var /** @type {?} */ facade = new DowngradeNg2ComponentAdapter(info, element, attrs, scope, injector, parse, componentFactory);
+                                var /** @type {?} */ facade = new DowngradeNg2ComponentAdapter(info, element, attrs, scope, ngModel, injector, parse, componentFactory);
                                 facade.setupInputs();
                                 facade.bootstrapNg2(projectableNodes);
                                 facade.setupOutputs();
@@ -1512,7 +1546,7 @@
     /**
      * @stable
      */
-    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.4-d3a3a8e');
+    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.4-e21e9c5');
 
     exports.UpgradeAdapter = UpgradeAdapter;
     exports.UpgradeAdapterRef = UpgradeAdapterRef;

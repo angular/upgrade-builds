@@ -7,6 +7,7 @@
  */
 export var /** @type {?} */ UPGRADE_MODULE_NAME = '$$UpgradeModule';
 export var /** @type {?} */ INJECTOR_KEY = '$$angularInjector';
+export var /** @type {?} */ REQUIRE_NG1_MODEL = '?ngModel';
 export var /** @type {?} */ $INJECTOR = '$injector';
 export var /** @type {?} */ $PARSE = '$parse';
 export var /** @type {?} */ $ROOT_SCOPE = '$rootScope';

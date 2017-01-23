@@ -105,6 +105,9 @@ export declare class UpgradeAdapter {
      * 2. Even thought the component is instantiated in Angular 1, it will be using Angular 2+
      *    syntax. This has to be done, this way because we must follow Angular 2+ components do not
      *    declare how the attributes should be interpreted.
+     * 3. ng-model is controlled by AngularJS v1 and communicates with the downgraded Ng2 component
+     *    by way of the ControlValueAccessor interface from @angular/forms. Only components that
+     *    implement this interface are eligible.
      *
      * ## Supported Features
      *
@@ -113,6 +116,7 @@ export declare class UpgradeAdapter {
      *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
      *   - Expression:  `<comp [name]="username">`
      *   - Event:  `<comp (close)="doSomething()">`
+     *   - ng-model: `<comp ng-model="name">`
      * - Content projection: yes
      *
      * ### Example

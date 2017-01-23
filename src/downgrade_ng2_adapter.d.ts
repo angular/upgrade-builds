@@ -13,6 +13,7 @@ export declare class DowngradeNg2ComponentAdapter {
     private element;
     private attrs;
     private scope;
+    private ngModel;
     private parentInjector;
     private parse;
     private componentFactory;
@@ -22,7 +23,7 @@ export declare class DowngradeNg2ComponentAdapter {
     componentRef: ComponentRef<any>;
     changeDetector: ChangeDetectorRef;
     componentScope: angular.IScope;
-    constructor(info: ComponentInfo, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, parentInjector: Injector, parse: angular.IParseService, componentFactory: ComponentFactory<any>);
+    constructor(info: ComponentInfo, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, parse: angular.IParseService, componentFactory: ComponentFactory<any>);
     bootstrapNg2(projectableNodes: Node[][]): void;
     setupInputs(): void;
     setupOutputs(): void;

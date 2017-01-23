@@ -9,7 +9,7 @@ import { CssSelector, SelectorMatcher, createElementCssSelector } from '@angular
 import { Compiler, Injector, NgModule, NgZone, Testability } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import * as angular from './angular_js';
-import { NG1_COMPILE, NG1_INJECTOR, NG1_PARSE, NG1_ROOT_SCOPE, NG1_TESTABILITY, NG2_COMPILER, NG2_COMPONENT_FACTORY_REF_MAP, NG2_INJECTOR, NG2_ZONE, REQUIRE_INJECTOR } from './constants';
+import { NG1_COMPILE, NG1_INJECTOR, NG1_PARSE, NG1_ROOT_SCOPE, NG1_TESTABILITY, NG2_COMPILER, NG2_COMPONENT_FACTORY_REF_MAP, NG2_INJECTOR, NG2_ZONE, REQUIRE_INJECTOR, REQUIRE_NG1_MODEL } from './constants';
 import { DowngradeNg2ComponentAdapter } from './downgrade_ng2_adapter';
 import { getComponentInfo } from './metadata';
 import { UpgradeNg1ComponentAdapterBuilder } from './upgrade_ng1_adapter';
@@ -126,6 +126,9 @@ export var UpgradeAdapter = (function () {
      * 2. Even thought the component is instantiated in Angular 1, it will be using Angular 2+
      *    syntax. This has to be done, this way because we must follow Angular 2+ components do not
      *    declare how the attributes should be interpreted.
+     * 3. ng-model is controlled by AngularJS v1 and communicates with the downgraded Ng2 component
+     *    by way of the ControlValueAccessor interface from \@angular/forms. Only components that
+     *    implement this interface are eligible.
      *
      * ## Supported Features
      *
@@ -134,6 +137,7 @@ export var UpgradeAdapter = (function () {
      *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
      *   - Expression:  `<comp [name]="username">`
      *   - Event:  `<comp (close)="doSomething()">`
+     *   - ng-model: `<comp ng-model="name">`
      * - Content projection: yes
      *
      * ### Example
@@ -690,14 +694,16 @@ function ng1ComponentDirective(info, idPrefix) {
         return {
             restrict: 'E',
             terminal: true,
-            require: REQUIRE_INJECTOR,
+            require: [REQUIRE_INJECTOR, REQUIRE_NG1_MODEL],
             compile: function (templateElement, templateAttributes, transclude) {
                 // We might have compile the contents lazily, because this might have been triggered by the
                 // UpgradeNg1ComponentAdapterBuilder, when the ng2 templates have not been compiled yet
                 return {
-                    post: function (scope, element, attrs, parentInjector, transclude) {
+                    post: function (scope, element, attrs, required, transclude) {
                         var /** @type {?} */ id = idPrefix + (idCount++);
                         ((element[0])).id = id;
+                        var /** @type {?} */ parentInjector = required[0];
+                        var /** @type {?} */ ngModel = required[1];
                         var /** @type {?} */ injectorPromise = new ParentInjectorPromise(element);
                         var /** @type {?} */ ng2Compiler = (ng1Injector.get(NG2_COMPILER));
                         var /** @type {?} */ ngContentSelectors = ng2Compiler.getNgContentSelectors(info.type);
@@ -726,7 +732,7 @@ function ng1ComponentDirective(info, idPrefix) {
                          * @return {?}
                          */
                         function downgrade(injector) {
-                            var /** @type {?} */ facade = new DowngradeNg2ComponentAdapter(info, element, attrs, scope, injector, parse, componentFactory);
+                            var /** @type {?} */ facade = new DowngradeNg2ComponentAdapter(info, element, attrs, scope, ngModel, injector, parse, componentFactory);
                             facade.setupInputs();
                             facade.bootstrapNg2(projectableNodes);
                             facade.setupOutputs();
