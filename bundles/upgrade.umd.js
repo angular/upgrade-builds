@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.4-dff6ee3
+ * @license Angular v4.0.0-beta.4-d3a3a8e
  * (c) 2010-2016 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -1512,7 +1512,7 @@
     /**
      * @stable
      */
-    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.4-dff6ee3');
+    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.4-d3a3a8e');
 
     exports.UpgradeAdapter = UpgradeAdapter;
     exports.UpgradeAdapterRef = UpgradeAdapterRef;
