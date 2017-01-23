@@ -6,6 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { ReflectiveInjector, SimpleChange } from '@angular/core/index';
+import { hookupNgModel } from '../util';
 import { PropertyBinding } from './component_info';
 import { $SCOPE } from './constants';
 const /** @type {?} */ INITIAL_VALUE = {
@@ -18,16 +19,18 @@ export class DowngradeComponentAdapter {
      * @param {?} element
      * @param {?} attrs
      * @param {?} scope
+     * @param {?} ngModel
      * @param {?} parentInjector
      * @param {?} parse
      * @param {?} componentFactory
      */
-    constructor(id, info, element, attrs, scope, parentInjector, parse, componentFactory) {
+    constructor(id, info, element, attrs, scope, ngModel, parentInjector, parse, componentFactory) {
         this.id = id;
         this.info = info;
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
+        this.ngModel = ngModel;
         this.parentInjector = parentInjector;
         this.parse = parse;
         this.componentFactory = componentFactory;
@@ -50,6 +53,7 @@ export class DowngradeComponentAdapter {
         this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
+        hookupNgModel(this.ngModel, this.component);
     }
     /**
      * @return {?}
@@ -208,6 +212,8 @@ function DowngradeComponentAdapter_tsickle_Closure_declarations() {
     DowngradeComponentAdapter.prototype.attrs;
     /** @type {?} */
     DowngradeComponentAdapter.prototype.scope;
+    /** @type {?} */
+    DowngradeComponentAdapter.prototype.ngModel;
     /** @type {?} */
     DowngradeComponentAdapter.prototype.parentInjector;
     /** @type {?} */

@@ -172,6 +172,39 @@ export interface ITestabilityService {
     setLocation(url: string): void;
     whenStable(callback: Function): void;
 }
+export interface INgModelController {
+    $render(): void;
+    $isEmpty(value: any): boolean;
+    $setValidity(validationErrorKey: string, isValid: boolean): void;
+    $setPristine(): void;
+    $setDirty(): void;
+    $setUntouched(): void;
+    $setTouched(): void;
+    $rollbackViewValue(): void;
+    $validate(): void;
+    $commitViewValue(): void;
+    $setViewValue(value: any, trigger: string): void;
+    $viewValue: any;
+    $modelValue: any;
+    $parsers: Function[];
+    $formatters: Function[];
+    $validators: {
+        [key: string]: Function;
+    };
+    $asyncValidators: {
+        [key: string]: Function;
+    };
+    $viewChangeListeners: Function[];
+    $error: Object;
+    $pending: Object;
+    $untouched: boolean;
+    $touched: boolean;
+    $pristine: boolean;
+    $dirty: boolean;
+    $valid: boolean;
+    $invalid: boolean;
+    $name: string;
+}
 export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config: IAngularBootstrapConfig) => void;
 export declare const module: (prefix: string, dependencies?: string[]) => IModule;
 export declare const element: (e: Element) => IAugmentedJQuery;

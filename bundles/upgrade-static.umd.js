@@ -18,6 +18,7 @@
      */
     var /** @type {?} */ UPGRADE_MODULE_NAME = '$$UpgradeModule';
     var /** @type {?} */ INJECTOR_KEY = '$$angularInjector';
+    var /** @type {?} */ REQUIRE_NG1_MODEL = '?ngModel';
     var /** @type {?} */ $INJECTOR = '$injector';
     var /** @type {?} */ $PARSE = '$parse';
     var /** @type {?} */ $SCOPE = '$scope';
@@ -28,6 +29,36 @@
     var /** @type {?} */ $TEMPLATE_CACHE = '$templateCache';
     var /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
     var /** @type {?} */ $CONTROLLER = '$controller';
+
+    /**
+     * @param {?} name
+     * @return {?}
+     */
+    function controllerKey(name) {
+        return '$' + name + 'Controller';
+    }
+    /**
+     * @param {?} component
+     * @return {?} true if the passed-in component implements the subset of
+     *     ControlValueAccessor needed for AngularJS ng-model compatibility.
+     */
+    function supportsNgModel(component) {
+        return typeof component.writeValue === 'function' &&
+            typeof component.registerOnChange === 'function';
+    }
+    /**
+     * Glue the AngularJS ngModelController if it exists to the component if it
+     * implements the needed subset of ControlValueAccessor.
+     * @param {?} ngModel
+     * @param {?} component
+     * @return {?}
+     */
+    function hookupNgModel(ngModel, component) {
+        if (ngModel && supportsNgModel(component)) {
+            ngModel.$render = function () { component.writeValue(ngModel.$viewValue); };
+            component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
+        }
+    }
 
     /**
      * @license
@@ -78,16 +109,18 @@
          * @param {?} element
          * @param {?} attrs
          * @param {?} scope
+         * @param {?} ngModel
          * @param {?} parentInjector
          * @param {?} parse
          * @param {?} componentFactory
          */
-        function DowngradeComponentAdapter(id, info, element, attrs, scope, parentInjector, parse, componentFactory) {
+        function DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, parentInjector, parse, componentFactory) {
             this.id = id;
             this.info = info;
             this.element = element;
             this.attrs = attrs;
             this.scope = scope;
+            this.ngModel = ngModel;
             this.parentInjector = parentInjector;
             this.parse = parse;
             this.componentFactory = componentFactory;
@@ -110,6 +143,7 @@
             this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
             this.changeDetector = this.componentRef.changeDetectorRef;
             this.component = this.componentRef.instance;
+            hookupNgModel(this.ngModel, this.component);
         };
         /**
          * @return {?}
@@ -302,17 +336,19 @@
         var /** @type {?} */ directiveFactory = function ($injector, $parse) {
             return {
                 restrict: 'E',
-                require: '?^' + INJECTOR_KEY,
-                link: function (scope, element, attrs, parentInjector, transclude) {
+                require: ['?^' + INJECTOR_KEY, REQUIRE_NG1_MODEL],
+                link: function (scope, element, attrs, required, transclude) {
+                    var /** @type {?} */ parentInjector = required[0];
                     if (parentInjector === null) {
                         parentInjector = $injector.get(INJECTOR_KEY);
                     }
+                    var /** @type {?} */ ngModel = required[1];
                     var /** @type {?} */ componentFactoryResolver = parentInjector.get(_angular_core.ComponentFactoryResolver);
                     var /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + info.component);
                     }
-                    var /** @type {?} */ facade = new DowngradeComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, parentInjector, $parse, componentFactory);
+                    var /** @type {?} */ facade = new DowngradeComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, ngModel, parentInjector, $parse, componentFactory);
                     facade.setupInputs();
                     facade.createComponent();
                     facade.projectContent();
@@ -412,14 +448,6 @@
      */
     function looseIdentical(a, b) {
         return a === b || typeof a === 'number' && typeof b === 'number' && isNaN(a) && isNaN(b);
-    }
-
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    function controllerKey(name) {
-        return '$' + name + 'Controller';
     }
 
     var /** @type {?} */ REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;

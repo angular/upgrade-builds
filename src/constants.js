@@ -20,4 +20,5 @@ export const /** @type {?} */ NG1_PARSE = '$parse';
 export const /** @type {?} */ NG1_TEMPLATE_CACHE = '$templateCache';
 export const /** @type {?} */ NG1_TESTABILITY = '$$testability';
 export const /** @type {?} */ REQUIRE_INJECTOR = '?^^' + NG2_INJECTOR;
+export const /** @type {?} */ REQUIRE_NG1_MODEL = '?ngModel';
 //# sourceMappingURL=constants.js.map

@@ -7,6 +7,7 @@
  */
 import { ReflectiveInjector, SimpleChange } from '@angular/core/index';
 import { NG1_SCOPE } from './constants';
+import { hookupNgModel } from './util';
 const /** @type {?} */ INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
@@ -16,15 +17,17 @@ export class DowngradeNg2ComponentAdapter {
      * @param {?} element
      * @param {?} attrs
      * @param {?} scope
+     * @param {?} ngModel
      * @param {?} parentInjector
      * @param {?} parse
      * @param {?} componentFactory
      */
-    constructor(info, element, attrs, scope, parentInjector, parse, componentFactory) {
+    constructor(info, element, attrs, scope, ngModel, parentInjector, parse, componentFactory) {
         this.info = info;
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
+        this.ngModel = ngModel;
         this.parentInjector = parentInjector;
         this.parse = parse;
         this.componentFactory = componentFactory;
@@ -45,6 +48,7 @@ export class DowngradeNg2ComponentAdapter {
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
+        hookupNgModel(this.ngModel, this.component);
     }
     /**
      * @return {?}
@@ -183,6 +187,8 @@ function DowngradeNg2ComponentAdapter_tsickle_Closure_declarations() {
     DowngradeNg2ComponentAdapter.prototype.attrs;
     /** @type {?} */
     DowngradeNg2ComponentAdapter.prototype.scope;
+    /** @type {?} */
+    DowngradeNg2ComponentAdapter.prototype.ngModel;
     /** @type {?} */
     DowngradeNg2ComponentAdapter.prototype.parentInjector;
     /** @type {?} */

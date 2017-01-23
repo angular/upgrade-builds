@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { ComponentFactoryResolver } from '@angular/core/index';
-import { $INJECTOR, $PARSE, INJECTOR_KEY } from './constants';
+import { $INJECTOR, $PARSE, INJECTOR_KEY, REQUIRE_NG1_MODEL } from './constants';
 import { DowngradeComponentAdapter } from './downgrade_component_adapter';
 let /** @type {?} */ downgradeCount = 0;
 /**
@@ -64,17 +64,19 @@ export function downgradeComponent(info) {
     const /** @type {?} */ directiveFactory = function ($injector, $parse) {
         return {
             restrict: 'E',
-            require: '?^' + INJECTOR_KEY,
-            link: (scope, element, attrs, parentInjector, transclude) => {
+            require: ['?^' + INJECTOR_KEY, REQUIRE_NG1_MODEL],
+            link: (scope, element, attrs, required, transclude) => {
+                let /** @type {?} */ parentInjector = required[0];
                 if (parentInjector === null) {
                     parentInjector = $injector.get(INJECTOR_KEY);
                 }
+                const /** @type {?} */ ngModel = required[1];
                 const /** @type {?} */ componentFactoryResolver = parentInjector.get(ComponentFactoryResolver);
                 const /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                 if (!componentFactory) {
                     throw new Error('Expecting ComponentFactory for: ' + info.component);
                 }
-                const /** @type {?} */ facade = new DowngradeComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, parentInjector, $parse, componentFactory);
+                const /** @type {?} */ facade = new DowngradeComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, ngModel, parentInjector, $parse, componentFactory);
                 facade.setupInputs();
                 facade.createComponent();
                 facade.projectContent();

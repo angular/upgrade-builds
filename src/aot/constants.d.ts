@@ -7,6 +7,7 @@
  */
 export declare const UPGRADE_MODULE_NAME: string;
 export declare const INJECTOR_KEY: string;
+export declare const REQUIRE_NG1_MODEL: string;
 export declare const $INJECTOR: string;
 export declare const $PARSE: string;
 export declare const $ROOT_SCOPE: string;
