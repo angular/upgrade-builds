@@ -140,9 +140,10 @@ export class UpgradeModule {
      * @return {?}
      */
     bootstrap(element, modules = [], config /*angular.IAngularBootstrapConfig*/) {
+        const /** @type {?} */ INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
         // Create an ng1 module to bootstrap
-        const /** @type {?} */ upgradeModule = angular
-            .module(UPGRADE_MODULE_NAME, modules)
+        const /** @type {?} */ initModule = angular
+            .module(INIT_MODULE_NAME, [])
             .value(INJECTOR_KEY, this.injector)
             .config([
             $PROVIDE, $INJECTOR,
@@ -186,6 +187,7 @@ export class UpgradeModule {
                 this.ngZone.onMicrotaskEmpty.subscribe(() => this.ngZone.runOutsideAngular(() => $rootScope.$evalAsync()));
             }
         ]);
+        const /** @type {?} */ upgradeModule = angular.module(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
         const /** @type {?} */ windowAngular = ((window) /** TODO #???? */)['angular'];
         windowAngular.resumeBootstrap = undefined;
