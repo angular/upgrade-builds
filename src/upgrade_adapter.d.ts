@@ -1,12 +1,12 @@
 import { CompilerOptions, Injector, NgModuleRef, Type } from '@angular/core';
 import * as angular from './angular_js';
 /**
- * Use `UpgradeAdapter` to allow Angular 1 and Angular 2+ to coexist in a single application.
+ * Use `UpgradeAdapter` to allow AngularJS and Angular to coexist in a single application.
  *
  * The `UpgradeAdapter` allows:
- * 1. creation of Angular 2+ component from Angular 1 component directive
+ * 1. creation of Angular component from AngularJS component directive
  *    (See [UpgradeAdapter#upgradeNg1Component()])
- * 2. creation of Angular 1 directive from Angular 2+ component.
+ * 2. creation of AngularJS directive from Angular component.
  *    (See [UpgradeAdapter#downgradeNg2Component()])
  * 3. Bootstrapping of a hybrid Angular application which contains both of the frameworks
  *    coexisting in a single application.
@@ -21,20 +21,20 @@ import * as angular from './angular_js';
  * 2. Each DOM element on the page is owned exactly by one framework. Whichever framework
  *    instantiated the element is the owner. Each framework only updates/interacts with its own
  *    DOM elements and ignores others.
- * 3. Angular 1 directives always execute inside Angular 1 framework codebase regardless of
+ * 3. AngularJS directives always execute inside AngularJS framework codebase regardless of
  *    where they are instantiated.
- * 4. Angular 2+ components always execute inside Angular 2+ framework codebase regardless of
+ * 4. Angular components always execute inside Angular framework codebase regardless of
  *    where they are instantiated.
- * 5. An Angular 1 component can be upgraded to an Angular 2+ component. This creates an
- *    Angular 2+ directive, which bootstraps the Angular 1 component directive in that location.
- * 6. An Angular 2+ component can be downgraded to an Angular 1 component directive. This creates
- *    an Angular 1 directive, which bootstraps the Angular 2+ component in that location.
+ * 5. An AngularJS component can be upgraded to an Angular component. This creates an
+ *    Angular directive, which bootstraps the AngularJS component directive in that location.
+ * 6. An Angular component can be downgraded to an AngularJS component directive. This creates
+ *    an AngularJS directive, which bootstraps the Angular component in that location.
  * 7. Whenever an adapter component is instantiated the host element is owned by the framework
  *    doing the instantiation. The other framework then instantiates and owns the view for that
  *    component. This implies that component bindings will always follow the semantics of the
- *    instantiation framework. The syntax is always that of Angular 2+ syntax.
- * 8. Angular 1 is always bootstrapped first and owns the bottom most view.
- * 9. The new application is running in Angular 2+ zone, and therefore it no longer needs calls to
+ *    instantiation framework. The syntax is always that of Angular syntax.
+ * 8. AngularJS is always bootstrapped first and owns the bottom most view.
+ * 9. The new application is running in Angular zone, and therefore it no longer needs calls to
  *    `$apply()`.
  *
  * ### Example
@@ -91,19 +91,19 @@ export declare class UpgradeAdapter {
     private ng2BootstrapDeferred;
     constructor(ng2AppModule: Type<any>, compilerOptions?: CompilerOptions);
     /**
-     * Allows Angular 2+ Component to be used from Angular 1.
+     * Allows Angular Component to be used from AngularJS.
      *
-     * Use `downgradeNg2Component` to create an Angular 1 Directive Definition Factory from
-     * Angular 2+ Component. The adapter will bootstrap Angular 2+ component from within the
-     * Angular 1 template.
+     * Use `downgradeNg2Component` to create an AngularJS Directive Definition Factory from
+     * Angular Component. The adapter will bootstrap Angular component from within the
+     * AngularJS template.
      *
      * ## Mental Model
      *
-     * 1. The component is instantiated by being listed in Angular 1 template. This means that the
-     *    host element is controlled by Angular 1, but the component's view will be controlled by
-     *    Angular 2+.
-     * 2. Even thought the component is instantiated in Angular 1, it will be using Angular 2+
-     *    syntax. This has to be done, this way because we must follow Angular 2+ components do not
+     * 1. The component is instantiated by being listed in AngularJS template. This means that the
+     *    host element is controlled by AngularJS, but the component's view will be controlled by
+     *    Angular.
+     * 2. Even thought the component is instantiated in AngularJS, it will be using Angular
+     *    syntax. This has to be done, this way because we must follow Angular components do not
      *    declare how the attributes should be interpreted.
      * 3. ng-model is controlled by AngularJS v1 and communicates with the downgraded Ng2 component
      *    by way of the ControlValueAccessor interface from @angular/forms. Only components that
@@ -151,17 +151,17 @@ export declare class UpgradeAdapter {
      */
     downgradeNg2Component(type: Type<any>): Function;
     /**
-     * Allows Angular 1 Component to be used from Angular 2+.
+     * Allows AngularJS Component to be used from Angular.
      *
-     * Use `upgradeNg1Component` to create an Angular 2+ component from Angular 1 Component
-     * directive. The adapter will bootstrap Angular 1 component from within the Angular 2+
+     * Use `upgradeNg1Component` to create an Angular component from AngularJS Component
+     * directive. The adapter will bootstrap AngularJS component from within the Angular
      * template.
      *
      * ## Mental Model
      *
-     * 1. The component is instantiated by being listed in Angular 2+ template. This means that the
-     *    host element is controlled by Angular 2+, but the component's view will be controlled by
-     *    Angular 1.
+     * 1. The component is instantiated by being listed in Angular template. This means that the
+     *    host element is controlled by Angular, but the component's view will be controlled by
+     *    AngularJS.
      *
      * ## Supported Features
      *
@@ -174,7 +174,7 @@ export declare class UpgradeAdapter {
      * - Only some of the features of
      *   [Directive Definition Object](https://docs.angularjs.org/api/ng/service/$compile) are
      *   supported:
-     *   - `compile`: not supported because the host element is owned by Angular 2+, which does
+     *   - `compile`: not supported because the host element is owned by Angular, which does
      *     not allow modifying DOM structure during compilation.
      *   - `controller`: supported. (NOTE: injection of `$attrs` and `$transclude` is not supported.)
      *   - `controllerAs`: supported.
@@ -229,9 +229,9 @@ export declare class UpgradeAdapter {
      */
     upgradeNg1Component(name: string): Type<any>;
     /**
-     * Registers the adapter's Angular 1 upgrade module for unit testing in Angular 1.
+     * Registers the adapter's AngularJS upgrade module for unit testing in AngularJS.
      * Use this instead of `angular.mock.module()` to load the upgrade module into
-     * the Angular 1 testing injector.
+     * the AngularJS testing injector.
      *
      * ### Example
      *
@@ -265,17 +265,17 @@ export declare class UpgradeAdapter {
      *
      * ```
      *
-     * @param modules any Angular 1 modules that the upgrade module should depend upon
+     * @param modules any AngularJS modules that the upgrade module should depend upon
      * @returns an {@link UpgradeAdapterRef}, which lets you register a `ready()` callback to
-     * run assertions once the Angular 2+ components are ready to test through Angular 1.
+     * run assertions once the Angular components are ready to test through AngularJS.
      */
     registerForNg1Tests(modules?: string[]): UpgradeAdapterRef;
     /**
-     * Bootstrap a hybrid Angular 1 / Angular 2+ application.
+     * Bootstrap a hybrid AngularJS / Angular application.
      *
-     * This `bootstrap` method is a direct replacement (takes same arguments) for Angular 1
+     * This `bootstrap` method is a direct replacement (takes same arguments) for AngularJS
      * [`bootstrap`](https://docs.angularjs.org/api/ng/function/angular.bootstrap) method. Unlike
-     * Angular 1, this bootstrap is asynchronous.
+     * AngularJS, this bootstrap is asynchronous.
      *
      * ### Example
      *
@@ -316,7 +316,7 @@ export declare class UpgradeAdapter {
      */
     bootstrap(element: Element, modules?: any[], config?: angular.IAngularBootstrapConfig): UpgradeAdapterRef;
     /**
-     * Allows Angular 1 service to be accessible from Angular 2+.
+     * Allows AngularJS service to be accessible from Angular.
      *
      *
      * ### Example
@@ -350,7 +350,7 @@ export declare class UpgradeAdapter {
         asToken: any;
     }): void;
     /**
-     * Allows Angular 2+ service to be accessible from Angular 1.
+     * Allows Angular service to be accessible from AngularJS.
      *
      *
      * ### Example
@@ -372,13 +372,13 @@ export declare class UpgradeAdapter {
      */
     downgradeNg2Provider(token: any): Function;
     /**
-     * Declare the Angular 1 upgrade module for this adapter without bootstrapping the whole
+     * Declare the AngularJS upgrade module for this adapter without bootstrapping the whole
      * hybrid application.
      *
      * This method is automatically called by `bootstrap()` and `registerForNg1Tests()`.
      *
-     * @param modules The Angular 1 modules that this upgrade module should depend upon.
-     * @returns The Angular 1 upgrade module that is declared by this method
+     * @param modules The AngularJS modules that this upgrade module should depend upon.
+     * @returns The AngularJS upgrade module that is declared by this method
      *
      * ### Example
      *
@@ -390,7 +390,7 @@ export declare class UpgradeAdapter {
     private declareNg1Module(modules?);
 }
 /**
- * Use `UpgradeAdapterRef` to control a hybrid Angular 1 / Angular 2+ application.
+ * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.
  *
  * @stable
  */
@@ -400,15 +400,15 @@ export declare class UpgradeAdapterRef {
     ng2ModuleRef: NgModuleRef<any>;
     ng2Injector: Injector;
     /**
-     * Register a callback function which is notified upon successful hybrid Angular 1 / Angular 2+
+     * Register a callback function which is notified upon successful hybrid AngularJS / Angular
      * application has been bootstrapped.
      *
-     * The `ready` callback function is invoked inside the Angular 2+ zone, therefore it does not
+     * The `ready` callback function is invoked inside the Angular zone, therefore it does not
      * require a call to `$apply()`.
      */
     ready(fn: (upgradeAdapterRef?: UpgradeAdapterRef) => void): void;
     /**
-     * Dispose of running hybrid Angular 1 / Angular 2+ application.
+     * Dispose of running hybrid AngularJS / Angular application.
      */
     dispose(): void;
 }

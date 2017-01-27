@@ -174,7 +174,7 @@ export class UpgradeNg1ComponentAdapterBuilder {
         }
     }
     /**
-     * Upgrade ng1 components into Angular 2.
+     * Upgrade ng1 components into Angular.
      * @param {?} exportedComponents
      * @param {?} injector
      * @return {?}
