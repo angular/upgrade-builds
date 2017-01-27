@@ -156,13 +156,13 @@ export class UpgradeModule {
                             const /** @type {?} */ injector = this.injector;
                             // Cannot use arrow function below because we need the context
                             const /** @type {?} */ newWhenStable = function (callback) {
-                                originalWhenStable.call(this, function () {
+                                originalWhenStable.call(testabilityDelegate, function () {
                                     const /** @type {?} */ ng2Testability = injector.get(Testability);
                                     if (ng2Testability.isStable()) {
-                                        callback.apply(this, arguments);
+                                        callback();
                                     }
                                     else {
-                                        ng2Testability.whenStable(newWhenStable.bind(this, callback));
+                                        ng2Testability.whenStable(newWhenStable.bind(testabilityDelegate, callback));
                                     }
                                 });
                             };
@@ -183,8 +183,13 @@ export class UpgradeModule {
                 // Put the injector on the DOM, so that it can be "required"
                 angular.element(element).data(controllerKey(INJECTOR_KEY), this.injector);
                 // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles
-                const /** @type {?} */ $rootScope = $injector.get('$rootScope');
-                this.ngZone.onMicrotaskEmpty.subscribe(() => this.ngZone.runOutsideAngular(() => $rootScope.$evalAsync()));
+                // We need to do this in the next tick so that we don't prevent the bootup
+                // stabilizing
+                setTimeout(() => {
+                    const /** @type {?} */ $rootScope = $injector.get('$rootScope');
+                    const /** @type {?} */ subscription = this.ngZone.onMicrotaskEmpty.subscribe(() => $rootScope.$digest());
+                    $rootScope.$on('$destroy', () => { subscription.unsubscribe(); });
+                }, 0);
             }
         ]);
         const /** @type {?} */ upgradeModule = angular.module(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
