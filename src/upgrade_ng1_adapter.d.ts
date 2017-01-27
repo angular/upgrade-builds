@@ -28,7 +28,7 @@ export declare class UpgradeNg1ComponentAdapterBuilder {
     extractBindings(): void;
     compileTemplate(compile: angular.ICompileService, templateCache: angular.ITemplateCacheService, httpBackend: angular.IHttpBackendService): Promise<angular.ILinkFn>;
     /**
-     * Upgrade ng1 components into Angular 2.
+     * Upgrade ng1 components into Angular.
      */
     static resolve(exportedComponents: {
         [name: string]: UpgradeNg1ComponentAdapterBuilder;
