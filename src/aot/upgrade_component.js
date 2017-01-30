@@ -142,9 +142,11 @@ export var UpgradeComponent = (function () {
                 _this.controllerInstance[key] = requiredControllersMap_1[key];
             });
         }
-        this.callLifecycleHook('$onInit', this.controllerInstance);
+        if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
+            this.controllerInstance.$onInit();
+        }
         if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
-            var /** @type {?} */ callDoCheck = function () { return _this.callLifecycleHook('$doCheck', _this.controllerInstance); };
+            var /** @type {?} */ callDoCheck = function () { return _this.controllerInstance.$doCheck(); };
             this.$componentScope.$parent.$watch(callDoCheck);
             callDoCheck();
         }
@@ -166,7 +168,9 @@ export var UpgradeComponent = (function () {
         if (postLink) {
             postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
-        this.callLifecycleHook('$postLink', this.controllerInstance);
+        if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
+            this.controllerInstance.$postLink();
+        }
     };
     /**
      * @param {?} changes
@@ -176,7 +180,9 @@ export var UpgradeComponent = (function () {
         var _this = this;
         // Forward input changes to `bindingDestination`
         Object.keys(changes).forEach(function (propName) { return _this.bindingDestination[propName] = changes[propName].currentValue; });
-        this.callLifecycleHook('$onChanges', this.bindingDestination, changes);
+        if (isFunction(this.bindingDestination.$onChanges)) {
+            this.bindingDestination.$onChanges(changes);
+        }
     };
     /**
      * @return {?}
@@ -201,19 +207,10 @@ export var UpgradeComponent = (function () {
      * @return {?}
      */
     UpgradeComponent.prototype.ngOnDestroy = function () {
-        this.callLifecycleHook('$onDestroy', this.controllerInstance);
-        this.$componentScope.$destroy();
-    };
-    /**
-     * @param {?} method
-     * @param {?} context
-     * @param {?=} arg
-     * @return {?}
-     */
-    UpgradeComponent.prototype.callLifecycleHook = function (method, context, arg) {
-        if (context && isFunction(context[method])) {
-            context[method](arg);
+        if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
+            this.controllerInstance.$onDestroy();
         }
+        this.$componentScope.$destroy();
     };
     /**
      * @param {?} name
