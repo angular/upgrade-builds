@@ -140,9 +140,11 @@ export class UpgradeComponent {
                 this.controllerInstance[key] = requiredControllersMap[key];
             });
         }
-        this.callLifecycleHook('$onInit', this.controllerInstance);
+        if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
+            this.controllerInstance.$onInit();
+        }
         if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
-            const /** @type {?} */ callDoCheck = () => this.callLifecycleHook('$doCheck', this.controllerInstance);
+            const /** @type {?} */ callDoCheck = () => this.controllerInstance.$doCheck();
             this.$componentScope.$parent.$watch(callDoCheck);
             callDoCheck();
         }
@@ -164,7 +166,9 @@ export class UpgradeComponent {
         if (postLink) {
             postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
-        this.callLifecycleHook('$postLink', this.controllerInstance);
+        if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
+            this.controllerInstance.$postLink();
+        }
     }
     /**
      * @param {?} changes
@@ -173,7 +177,9 @@ export class UpgradeComponent {
     ngOnChanges(changes) {
         // Forward input changes to `bindingDestination`
         Object.keys(changes).forEach(propName => this.bindingDestination[propName] = changes[propName].currentValue);
-        this.callLifecycleHook('$onChanges', this.bindingDestination, changes);
+        if (isFunction(this.bindingDestination.$onChanges)) {
+            this.bindingDestination.$onChanges(changes);
+        }
     }
     /**
      * @return {?}
@@ -197,19 +203,10 @@ export class UpgradeComponent {
      * @return {?}
      */
     ngOnDestroy() {
-        this.callLifecycleHook('$onDestroy', this.controllerInstance);
-        this.$componentScope.$destroy();
-    }
-    /**
-     * @param {?} method
-     * @param {?} context
-     * @param {?=} arg
-     * @return {?}
-     */
-    callLifecycleHook(method, context, arg) {
-        if (context && isFunction(context[method])) {
-            context[method](arg);
+        if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
+            this.controllerInstance.$onDestroy();
         }
+        this.$componentScope.$destroy();
     }
     /**
      * @param {?} name

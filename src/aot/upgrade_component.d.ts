@@ -84,7 +84,6 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     ngOnChanges(changes: SimpleChanges): void;
     ngDoCheck(): void;
     ngOnDestroy(): void;
-    private callLifecycleHook(method, context, arg?);
     private getDirective(name);
     private getDirectiveRequire(directive);
     private initializeBindings(directive);
