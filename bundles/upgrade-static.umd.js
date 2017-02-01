@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.5-e0e5e78
+ * @license Angular v4.0.0-beta.5-bc20e8a
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -16,49 +16,20 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var /** @type {?} */ UPGRADE_MODULE_NAME = '$$UpgradeModule';
-    var /** @type {?} */ INJECTOR_KEY = '$$angularInjector';
-    var /** @type {?} */ REQUIRE_NG1_MODEL = '?ngModel';
+    var /** @type {?} */ $COMPILE = '$compile';
+    var /** @type {?} */ $CONTROLLER = '$controller';
+    var /** @type {?} */ $DELEGATE = '$delegate';
+    var /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
     var /** @type {?} */ $INJECTOR = '$injector';
     var /** @type {?} */ $PARSE = '$parse';
-    var /** @type {?} */ $SCOPE = '$scope';
     var /** @type {?} */ $PROVIDE = '$provide';
-    var /** @type {?} */ $DELEGATE = '$delegate';
-    var /** @type {?} */ $$TESTABILITY = '$$testability';
-    var /** @type {?} */ $COMPILE = '$compile';
+    var /** @type {?} */ $SCOPE = '$scope';
     var /** @type {?} */ $TEMPLATE_CACHE = '$templateCache';
-    var /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
-    var /** @type {?} */ $CONTROLLER = '$controller';
-
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    function controllerKey(name) {
-        return '$' + name + 'Controller';
-    }
-    /**
-     * @param {?} component
-     * @return {?} true if the passed-in component implements the subset of
-     *     ControlValueAccessor needed for AngularJS ng-model compatibility.
-     */
-    function supportsNgModel(component) {
-        return typeof component.writeValue === 'function' &&
-            typeof component.registerOnChange === 'function';
-    }
-    /**
-     * Glue the AngularJS ngModelController if it exists to the component if it
-     * implements the needed subset of ControlValueAccessor.
-     * @param {?} ngModel
-     * @param {?} component
-     * @return {?}
-     */
-    function hookupNgModel(ngModel, component) {
-        if (ngModel && supportsNgModel(component)) {
-            ngModel.$render = function () { component.writeValue(ngModel.$viewValue); };
-            component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
-        }
-    }
+    var /** @type {?} */ $$TESTABILITY = '$$testability';
+    var /** @type {?} */ INJECTOR_KEY = '$$angularInjector';
+    var /** @type {?} */ REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
+    var /** @type {?} */ REQUIRE_NG_MODEL = '?ngModel';
+    var /** @type {?} */ UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
     /**
      * @license
@@ -99,6 +70,69 @@
         return PropertyBinding;
     }());
 
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    var ContentProjectionHelper = (function () {
+        function ContentProjectionHelper() {
+        }
+        /**
+         * @param {?} $injector
+         * @param {?} component
+         * @param {?} nodes
+         * @return {?}
+         */
+        ContentProjectionHelper.prototype.groupProjectableNodes = function ($injector, component, nodes) {
+            // By default, do not support multi-slot projection,
+            // as `upgrade/static` does not support it yet.
+            return [nodes];
+        };
+        return ContentProjectionHelper;
+    }());
+
+    /**
+     * @param {?} name
+     * @return {?}
+     */
+    function controllerKey(name) {
+        return '$' + name + 'Controller';
+    }
+    /**
+     * @param {?} component
+     * @return {?}
+     */
+    function getComponentName(component) {
+        // Return the name of the component or the first line of its stringified version.
+        return ((component)).overriddenName || component.name || component.toString().split('\n')[0];
+    }
+    /**
+     * @param {?} component
+     * @return {?} Whether the passed-in component implements the subset of the
+     *     `ControlValueAccessor` interface needed for AngularJS `ng-model`
+     *     compatibility.
+     */
+    function supportsNgModel(component) {
+        return typeof component.writeValue === 'function' &&
+            typeof component.registerOnChange === 'function';
+    }
+    /**
+     * Glue the AngularJS `NgModelController` (if it exists) to the component
+     * (if it implements the needed subset of the `ControlValueAccessor` interface).
+     * @param {?} ngModel
+     * @param {?} component
+     * @return {?}
+     */
+    function hookupNgModel(ngModel, component) {
+        if (ngModel && supportsNgModel(component)) {
+            ngModel.$render = function () { component.writeValue(ngModel.$viewValue); };
+            component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
+        }
+    }
+
     var /** @type {?} */ INITIAL_VALUE = {
         __UNINITIALIZED__: true
     };
@@ -111,10 +145,12 @@
          * @param {?} scope
          * @param {?} ngModel
          * @param {?} parentInjector
-         * @param {?} parse
+         * @param {?} $injector
+         * @param {?} $compile
+         * @param {?} $parse
          * @param {?} componentFactory
          */
-        function DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, parentInjector, parse, componentFactory) {
+        function DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
             this.id = id;
             this.info = info;
             this.element = element;
@@ -122,25 +158,45 @@
             this.scope = scope;
             this.ngModel = ngModel;
             this.parentInjector = parentInjector;
-            this.parse = parse;
+            this.$injector = $injector;
+            this.$compile = $compile;
+            this.$parse = $parse;
             this.componentFactory = componentFactory;
-            this.component = null;
             this.inputChangeCount = 0;
             this.inputChanges = null;
             this.componentRef = null;
+            this.component = null;
             this.changeDetector = null;
-            this.contentInsertionPoint = null;
             this.element[0].id = id;
             this.componentScope = scope.$new();
-            this.childNodes = element.contents();
         }
         /**
          * @return {?}
          */
-        DowngradeComponentAdapter.prototype.createComponent = function () {
+        DowngradeComponentAdapter.prototype.compileContents = function () {
+            var _this = this;
+            var /** @type {?} */ compiledProjectableNodes = [];
+            // The projected content has to be grouped, before it is compiled.
+            var /** @type {?} */ projectionHelper = this.parentInjector.get(ContentProjectionHelper);
+            var /** @type {?} */ projectableNodes = projectionHelper.groupProjectableNodes(this.$injector, this.info.component, this.element.contents());
+            var /** @type {?} */ linkFns = projectableNodes.map(function (nodes) { return _this.$compile(nodes); });
+            this.element.empty();
+            linkFns.forEach(function (linkFn) {
+                linkFn(_this.scope, function (clone) {
+                    compiledProjectableNodes.push(clone);
+                    _this.element.append(clone);
+                });
+            });
+            return compiledProjectableNodes;
+        };
+        /**
+         * @param {?} projectableNodes
+         * @return {?}
+         */
+        DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
             var /** @type {?} */ childInjector = _angular_core.ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
-            this.contentInsertionPoint = document.createComment('ng1 insertion point');
-            this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
+            this.componentRef =
+                this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
             this.changeDetector = this.componentRef.changeDetectorRef;
             this.component = this.componentRef.instance;
             hookupNgModel(this.ngModel, this.component);
@@ -207,18 +263,6 @@
         /**
          * @return {?}
          */
-        DowngradeComponentAdapter.prototype.projectContent = function () {
-            var /** @type {?} */ childNodes = this.childNodes;
-            var /** @type {?} */ parent = this.contentInsertionPoint.parentNode;
-            if (parent) {
-                for (var /** @type {?} */ i = 0, /** @type {?} */ ii = childNodes.length; i < ii; i++) {
-                    parent.insertBefore(childNodes[i], this.contentInsertionPoint);
-                }
-            }
-        };
-        /**
-         * @return {?}
-         */
         DowngradeComponentAdapter.prototype.setupOutputs = function () {
             var _this = this;
             var /** @type {?} */ attrs = this.attrs;
@@ -246,7 +290,7 @@
                     assignExpr = true;
                 }
                 if (expr != null && assignExpr != null) {
-                    var /** @type {?} */ getter = this.parse(expr);
+                    var /** @type {?} */ getter = this.$parse(expr);
                     var /** @type {?} */ setter = getter.assign;
                     if (assignExpr && !setter) {
                         throw new Error("Expression '" + expr + "' is not assignable!");
@@ -262,7 +306,7 @@
                         });
                     }
                     else {
-                        throw new Error("Missing emitter '" + output.prop + "' on component '" + this.info.component + "'!");
+                        throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.info.component) + "'!");
                     }
                 }
             }
@@ -277,6 +321,10 @@
                 _this.componentRef.destroy();
             });
         };
+        /**
+         * @return {?}
+         */
+        DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef && this.componentRef.injector; };
         return DowngradeComponentAdapter;
     }());
 
@@ -333,33 +381,88 @@
     function downgradeComponent(info) {
         var /** @type {?} */ idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
         var /** @type {?} */ idCount = 0;
-        var /** @type {?} */ directiveFactory = function ($injector, $parse) {
+        var /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
             return {
                 restrict: 'E',
-                require: ['?^' + INJECTOR_KEY, REQUIRE_NG1_MODEL],
-                link: function (scope, element, attrs, required, transclude) {
-                    var /** @type {?} */ parentInjector = required[0];
-                    if (parentInjector === null) {
-                        parentInjector = $injector.get(INJECTOR_KEY);
-                    }
+                terminal: true,
+                require: [REQUIRE_INJECTOR, REQUIRE_NG_MODEL],
+                link: function (scope, element, attrs, required) {
+                    // We might have to compile the contents asynchronously, because this might have been
+                    // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
+                    // been compiled.
+                    var /** @type {?} */ parentInjector = required[0] || $injector.get(INJECTOR_KEY);
                     var /** @type {?} */ ngModel = required[1];
-                    var /** @type {?} */ componentFactoryResolver = parentInjector.get(_angular_core.ComponentFactoryResolver);
-                    var /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
-                    if (!componentFactory) {
-                        throw new Error('Expecting ComponentFactory for: ' + info.component);
+                    var /** @type {?} */ downgradeFn = function (injector) {
+                        var /** @type {?} */ componentFactoryResolver = injector.get(_angular_core.ComponentFactoryResolver);
+                        var /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
+                        if (!componentFactory) {
+                            throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
+                        }
+                        var /** @type {?} */ id = idPrefix + (idCount++);
+                        var /** @type {?} */ injectorPromise = new ParentInjectorPromise(element);
+                        var /** @type {?} */ facade = new DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
+                        var /** @type {?} */ projectableNodes = facade.compileContents();
+                        facade.createComponent(projectableNodes);
+                        facade.setupInputs();
+                        facade.setupOutputs();
+                        facade.registerCleanup();
+                        injectorPromise.resolve(facade.getInjector());
+                    };
+                    if (parentInjector instanceof ParentInjectorPromise) {
+                        parentInjector.then(downgradeFn);
                     }
-                    var /** @type {?} */ facade = new DowngradeComponentAdapter(idPrefix + (idCount++), info, element, attrs, scope, ngModel, parentInjector, $parse, componentFactory);
-                    facade.setupInputs();
-                    facade.createComponent();
-                    facade.projectContent();
-                    facade.setupOutputs();
-                    facade.registerCleanup();
+                    else {
+                        downgradeFn(parentInjector);
+                    }
                 }
             };
         };
-        directiveFactory.$inject = [$INJECTOR, $PARSE];
+        directiveFactory.$inject = [$COMPILE, $INJECTOR, $PARSE];
         return directiveFactory;
     }
+    /**
+     * Synchronous promise-like object to wrap parent injectors,
+     * to preserve the synchronous nature of Angular 1's $compile.
+     */
+    var ParentInjectorPromise = (function () {
+        /**
+         * @param {?} element
+         */
+        function ParentInjectorPromise(element) {
+            this.element = element;
+            this.injectorKey = controllerKey(INJECTOR_KEY);
+            this.callbacks = [];
+            // Store the promise on the element.
+            element.data(this.injectorKey, this);
+        }
+        /**
+         * @param {?} callback
+         * @return {?}
+         */
+        ParentInjectorPromise.prototype.then = function (callback) {
+            if (this.injector) {
+                callback(this.injector);
+            }
+            else {
+                this.callbacks.push(callback);
+            }
+        };
+        /**
+         * @param {?} injector
+         * @return {?}
+         */
+        ParentInjectorPromise.prototype.resolve = function (injector) {
+            this.injector = injector;
+            // Store the real injector on the element.
+            this.element.data(this.injectorKey, injector);
+            // Release the element to prevent memory leaks.
+            this.element = null;
+            // Run the queued callbacks.
+            this.callbacks.forEach(function (callback) { return callback(injector); });
+            this.callbacks.length = 0;
+        };
+        return ParentInjectorPromise;
+    }());
 
     /**
      * \@whatItDoes
@@ -406,8 +509,15 @@
      * @return {?}
      */
     function downgradeInjectable(token) {
-        return [INJECTOR_KEY, function (i) { return i.get(token); }];
+        var /** @type {?} */ factory = function (i) { return i.get(token); };
+        ((factory)).$inject = [INJECTOR_KEY];
+        return factory;
     }
+
+    /**
+     * @stable
+     */
+    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.5-bc20e8a');
 
     /**
      * @license
@@ -1121,7 +1231,7 @@
             }
         };
         UpgradeModule.decorators = [
-            { type: _angular_core.NgModule, args: [{ providers: angular1Providers },] },
+            { type: _angular_core.NgModule, args: [{ providers: [angular1Providers, ContentProjectionHelper] },] },
         ];
         /** @nocollapse */
         UpgradeModule.ctorParameters = function () { return [
@@ -1133,6 +1243,7 @@
 
     exports.downgradeComponent = downgradeComponent;
     exports.downgradeInjectable = downgradeInjectable;
+    exports.VERSION = VERSION;
     exports.UpgradeComponent = UpgradeComponent;
     exports.UpgradeModule = UpgradeModule;
 

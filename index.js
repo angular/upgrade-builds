@@ -8,7 +8,9 @@
 /**
  * @module
  * @description
- * Entry point for all public APIs of the upgrade package.
+ * Entry point for all public APIs of the upgrade/dynamic package, allowing
+ * Angular 1 and Angular 2+ to run side by side in the same application.
  */
-export { UpgradeAdapter, UpgradeAdapterRef, VERSION } from './src/upgrade';
+export { VERSION } from './src/common/version';
+export { UpgradeAdapter, UpgradeAdapterRef } from './src/dynamic/upgrade_adapter';
 //# sourceMappingURL=index.js.map
