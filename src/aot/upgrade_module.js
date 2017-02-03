@@ -158,13 +158,13 @@ export var UpgradeModule = (function () {
                             var /** @type {?} */ injector = _this.injector;
                             // Cannot use arrow function below because we need the context
                             var /** @type {?} */ newWhenStable = function (callback) {
-                                originalWhenStable.call(this, function () {
+                                originalWhenStable.call(testabilityDelegate, function () {
                                     var /** @type {?} */ ng2Testability = injector.get(Testability);
                                     if (ng2Testability.isStable()) {
-                                        callback.apply(this, arguments);
+                                        callback();
                                     }
                                     else {
-                                        ng2Testability.whenStable(newWhenStable.bind(this, callback));
+                                        ng2Testability.whenStable(newWhenStable.bind(testabilityDelegate, callback));
                                     }
                                 });
                             };
@@ -185,8 +185,13 @@ export var UpgradeModule = (function () {
                 // Put the injector on the DOM, so that it can be "required"
                 angular.element(element).data(controllerKey(INJECTOR_KEY), _this.injector);
                 // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles
-                var /** @type {?} */ $rootScope = $injector.get('$rootScope');
-                _this.ngZone.onMicrotaskEmpty.subscribe(function () { return _this.ngZone.runOutsideAngular(function () { return $rootScope.$evalAsync(); }); });
+                // We need to do this in the next tick so that we don't prevent the bootup
+                // stabilizing
+                setTimeout(function () {
+                    var /** @type {?} */ $rootScope = $injector.get('$rootScope');
+                    var /** @type {?} */ subscription = _this.ngZone.onMicrotaskEmpty.subscribe(function () { return $rootScope.$digest(); });
+                    $rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
+                }, 0);
             }
         ]);
         var /** @type {?} */ upgradeModule = angular.module(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
