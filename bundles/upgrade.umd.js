@@ -1,5 +1,5 @@
 /**
- * @license Angular v2.4.6-343ee8a
+ * @license Angular v2.4.6-5bb47db
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -243,8 +243,6 @@
         return Ng1Change;
     }());
 
-    var /** @type {?} */ COMPONENT_SELECTOR = /^[\w|-]*$/;
-    var /** @type {?} */ SKEWER_CASE = /-(\w)/g;
     var /** @type {?} */ directiveResolver = new _angular_compiler.DirectiveResolver();
     /**
      * @param {?} type
@@ -253,10 +251,6 @@
     function getComponentInfo(type) {
         var /** @type {?} */ resolvedMetadata = directiveResolver.resolve(type);
         var /** @type {?} */ selector = resolvedMetadata.selector;
-        if (!selector.match(COMPONENT_SELECTOR)) {
-            throw new Error('Only selectors matching element names are supported, got: ' + selector);
-        }
-        selector = selector.replace(SKEWER_CASE, function (all /** TODO #9100 */, letter) { return letter.toUpperCase(); });
         return {
             type: type,
             selector: selector,
@@ -1530,7 +1524,7 @@
     /**
      * @stable
      */
-    var /** @type {?} */ VERSION = new _angular_core.Version('2.4.6-343ee8a');
+    var /** @type {?} */ VERSION = new _angular_core.Version('2.4.6-5bb47db');
 
     exports.UpgradeAdapter = UpgradeAdapter;
     exports.UpgradeAdapterRef = UpgradeAdapterRef;

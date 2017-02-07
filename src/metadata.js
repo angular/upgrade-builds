@@ -7,7 +7,6 @@
  */
 import { DirectiveResolver } from '@angular/compiler';
 var /** @type {?} */ COMPONENT_SELECTOR = /^[\w|-]*$/;
-var /** @type {?} */ SKEWER_CASE = /-(\w)/g;
 var /** @type {?} */ directiveResolver = new DirectiveResolver();
 /**
  * @param {?} type
@@ -16,10 +15,6 @@ var /** @type {?} */ directiveResolver = new DirectiveResolver();
 export function getComponentInfo(type) {
     var /** @type {?} */ resolvedMetadata = directiveResolver.resolve(type);
     var /** @type {?} */ selector = resolvedMetadata.selector;
-    if (!selector.match(COMPONENT_SELECTOR)) {
-        throw new Error('Only selectors matching element names are supported, got: ' + selector);
-    }
-    selector = selector.replace(SKEWER_CASE, function (all /** TODO #9100 */, letter) { return letter.toUpperCase(); });
     return {
         type: type,
         selector: selector,
