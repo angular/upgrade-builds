@@ -87,15 +87,14 @@ export class DowngradeComponentAdapter {
             const /** @type {?} */ input = new PropertyBinding(inputs[i]);
             let /** @type {?} */ expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                const /** @type {?} */ observeFn = ((prop /** TODO #9100 */) => {
+                const /** @type {?} */ observeFn = (prop => {
                     let /** @type {?} */ prevValue = INITIAL_VALUE;
-                    return (value /** TODO #9100 */) => {
-                        if (this.inputChanges !== null) {
-                            this.inputChangeCount++;
-                            this.inputChanges[prop] = new SimpleChange(value, prevValue === INITIAL_VALUE ? value : prevValue, prevValue === INITIAL_VALUE);
-                            prevValue = value;
+                    return (currValue) => {
+                        if (prevValue === INITIAL_VALUE) {
+                            prevValue = currValue;
                         }
-                        this.component[prop] = value;
+                        this.updateInput(prop, prevValue, currValue);
+                        prevValue = currValue;
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn);
@@ -113,13 +112,7 @@ export class DowngradeComponentAdapter {
                 expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
             }
             if (expr != null) {
-                const /** @type {?} */ watchFn = ((prop /** TODO #9100 */) => (value /** TODO #9100 */, prevValue /** TODO #9100 */) => {
-                    if (this.inputChanges != null) {
-                        this.inputChangeCount++;
-                        this.inputChanges[prop] = new SimpleChange(prevValue, value, prevValue === value);
-                    }
-                    this.component[prop] = value;
-                })(input.prop);
+                const /** @type {?} */ watchFn = (prop => (currValue, prevValue) => this.updateInput(prop, prevValue, currValue))(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
@@ -196,6 +189,19 @@ export class DowngradeComponentAdapter {
      * @return {?}
      */
     getInjector() { return this.componentRef && this.componentRef.injector; }
+    /**
+     * @param {?} prop
+     * @param {?} prevValue
+     * @param {?} currValue
+     * @return {?}
+     */
+    updateInput(prop, prevValue, currValue) {
+        if (this.inputChanges) {
+            this.inputChangeCount++;
+            this.inputChanges[prop] = new SimpleChange(prevValue, currValue, prevValue === currValue);
+        }
+        this.component[prop] = currValue;
+    }
 }
 function DowngradeComponentAdapter_tsickle_Closure_declarations() {
     /** @type {?} */
