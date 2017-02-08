@@ -147,7 +147,7 @@ export var UpgradeComponent = (function () {
         }
         if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
             var /** @type {?} */ callDoCheck = function () { return _this.controllerInstance.$doCheck(); };
-            this.$componentScope.$parent.$watch(callDoCheck);
+            this.unregisterDoCheckWatcher = this.$componentScope.$parent.$watch(callDoCheck);
             callDoCheck();
         }
         var /** @type {?} */ link = this.directive.link;
@@ -207,6 +207,9 @@ export var UpgradeComponent = (function () {
      * @return {?}
      */
     UpgradeComponent.prototype.ngOnDestroy = function () {
+        if (isFunction(this.unregisterDoCheckWatcher)) {
+            this.unregisterDoCheckWatcher();
+        }
         if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
@@ -435,6 +438,8 @@ function UpgradeComponent_tsickle_Closure_declarations() {
     UpgradeComponent.prototype.controllerInstance;
     /** @type {?} */
     UpgradeComponent.prototype.bindingDestination;
+    /** @type {?} */
+    UpgradeComponent.prototype.unregisterDoCheckWatcher;
     /** @type {?} */
     UpgradeComponent.prototype.name;
     /** @type {?} */

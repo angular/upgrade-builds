@@ -13,4 +13,5 @@
  */
 export { VERSION } from './src/common/version';
 export { UpgradeAdapter, UpgradeAdapterRef } from './src/dynamic/upgrade_adapter';
+// This file only re-exports content of the `src` folder. Keep it that way.
 //# sourceMappingURL=index.js.map
