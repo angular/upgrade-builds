@@ -74,7 +74,7 @@ function Bindings_tsickle_Closure_declarations() {
  *
  * \@experimental
  */
-export var UpgradeComponent = (function () {
+var UpgradeComponent = (function () {
     /**
      * Create a new `UpgradeComponent` instance. You should not normally need to do this.
      * Instead you should derive a new class from this one and call the super constructor
@@ -411,6 +411,7 @@ export var UpgradeComponent = (function () {
     };
     return UpgradeComponent;
 }());
+export { UpgradeComponent };
 function UpgradeComponent_tsickle_Closure_declarations() {
     /** @type {?} */
     UpgradeComponent.prototype.$injector;

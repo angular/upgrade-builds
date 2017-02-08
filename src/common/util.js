@@ -51,7 +51,7 @@ export function getComponentName(component) {
     // Return the name of the component or the first line of its stringified version.
     return ((component)).overriddenName || component.name || component.toString().split('\n')[0];
 }
-export var Deferred = (function () {
+var Deferred = (function () {
     function Deferred() {
         var _this = this;
         this.promise = new Promise(function (res, rej) {
@@ -61,6 +61,7 @@ export var Deferred = (function () {
     }
     return Deferred;
 }());
+export { Deferred };
 function Deferred_tsickle_Closure_declarations() {
     /** @type {?} */
     Deferred.prototype.promise;

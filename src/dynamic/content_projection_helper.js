@@ -14,10 +14,10 @@ import { CssSelector, SelectorMatcher, createElementCssSelector } from '@angular
 import { COMPILER_KEY } from '../common/constants';
 import { ContentProjectionHelper } from '../common/content_projection_helper';
 import { getAttributesAsArray, getComponentName } from '../common/util';
-export var DynamicContentProjectionHelper = (function (_super) {
+var DynamicContentProjectionHelper = (function (_super) {
     __extends(DynamicContentProjectionHelper, _super);
     function DynamicContentProjectionHelper() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
      * @param {?} $injector
@@ -53,7 +53,7 @@ export var DynamicContentProjectionHelper = (function (_super) {
                 matcher.addSelectables(CssSelector.parse(selector), i);
             }
         }
-        var _loop_1 = function(j, jj) {
+        var _loop_1 = function (j, jj) {
             var /** @type {?} */ ngContentIndices = [];
             var /** @type {?} */ node = nodes[j];
             var /** @type {?} */ selector = createElementCssSelector(node.nodeName.toLowerCase(), getAttributesAsArray(node));
@@ -67,10 +67,11 @@ export var DynamicContentProjectionHelper = (function (_super) {
             }
         };
         for (var /** @type {?} */ j = 0, /** @type {?} */ jj = nodes.length; j < jj; ++j) {
-            _loop_1(j, jj);
+            _loop_1(/** @type {?} */ j, /** @type {?} */ jj);
         }
         return projectableNodes;
     };
     return DynamicContentProjectionHelper;
 }(ContentProjectionHelper));
+export { DynamicContentProjectionHelper };
 //# sourceMappingURL=content_projection_helper.js.map

@@ -14,7 +14,7 @@ var /** @type {?} */ INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 var /** @type {?} */ NOT_SUPPORTED = 'NOT_SUPPORTED';
-export var UpgradeNg1ComponentAdapterBuilder = (function () {
+var UpgradeNg1ComponentAdapterBuilder = (function () {
     /**
      * @param {?} name
      */
@@ -85,7 +85,7 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
         }
         var /** @type {?} */ context = (btcIsObject) ? this.directive.bindToController : this.directive.scope;
         if (typeof context == 'object') {
-            for (var name_1 in context) {
+            for (var /** @type {?} */ name_1 in context) {
                 if (((context)).hasOwnProperty(name_1)) {
                     var /** @type {?} */ localName = context[name_1];
                     var /** @type {?} */ type = localName.charAt(0);
@@ -186,7 +186,7 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
         var /** @type {?} */ templateCache = injector.get($TEMPLATE_CACHE);
         var /** @type {?} */ httpBackend = injector.get($HTTP_BACKEND);
         var /** @type {?} */ $controller = injector.get($CONTROLLER);
-        for (var name_2 in exportedComponents) {
+        for (var /** @type {?} */ name_2 in exportedComponents) {
             if (((exportedComponents)).hasOwnProperty(name_2)) {
                 var /** @type {?} */ exportedComponent = exportedComponents[name_2];
                 exportedComponent.directive = exportedComponent.extractDirective(injector);
@@ -201,6 +201,7 @@ export var UpgradeNg1ComponentAdapterBuilder = (function () {
     };
     return UpgradeNg1ComponentAdapterBuilder;
 }());
+export { UpgradeNg1ComponentAdapterBuilder };
 function UpgradeNg1ComponentAdapterBuilder_tsickle_Closure_declarations() {
     /** @type {?} */
     UpgradeNg1ComponentAdapterBuilder.prototype.type;
@@ -265,16 +266,16 @@ var UpgradeNg1ComponentAdapter = (function () {
             this.destinationObj = this.componentScope;
         }
         for (var i = 0; i < inputs.length; i++) {
-            this[inputs[i]] = null;
+            this /** TODO #9100 */[inputs[i]] = null;
         }
         for (var j = 0; j < outputs.length; j++) {
-            var emitter = this[outputs[j]] = new EventEmitter();
+            var emitter = this /** TODO #9100 */[outputs[j]] = new EventEmitter();
             this.setComponentProperty(outputs[j], (function (emitter /** TODO #9100 */) { return function (value /** TODO #9100 */) {
                 return emitter.emit(value);
             }; })(emitter));
         }
         for (var k = 0; k < propOuts.length; k++) {
-            this[propOuts[k]] = new EventEmitter();
+            this /** TODO #9100 */[propOuts[k]] = new EventEmitter();
             this.checkLastValues.push(INITIAL_VALUE);
         }
     }
@@ -299,7 +300,7 @@ var UpgradeNg1ComponentAdapter = (function () {
             ((this.directive.link))(this.componentScope, this.$element, attrs, linkController, transcludeFn);
         }
         var /** @type {?} */ childNodes = [];
-        var /** @type {?} */ childNode;
+        var /** @type {?} */ childNode /** TODO #9100 */;
         while (childNode = this.element.firstChild) {
             this.element.removeChild(childNode);
             childNodes.push(childNode);

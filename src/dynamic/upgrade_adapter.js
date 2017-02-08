@@ -96,7 +96,7 @@ var /** @type {?} */ upgradeCount = 0;
  *
  * \@stable
  */
-export var UpgradeAdapter = (function () {
+var UpgradeAdapter = (function () {
     /**
      * @param {?} ng2AppModule
      * @param {?=} compilerOptions
@@ -585,6 +585,7 @@ export var UpgradeAdapter = (function () {
     };
     return UpgradeAdapter;
 }());
+export { UpgradeAdapter };
 function UpgradeAdapter_tsickle_Closure_declarations() {
     /** @type {?} */
     UpgradeAdapter.prototype.idPrefix;
@@ -672,7 +673,7 @@ function ParentInjectorPromise_tsickle_Closure_declarations() {
  *
  * \@stable
  */
-export var UpgradeAdapterRef = (function () {
+var UpgradeAdapterRef = (function () {
     function UpgradeAdapterRef() {
         this._readyFn = null;
         this.ng1RootScope = null;
@@ -712,6 +713,7 @@ export var UpgradeAdapterRef = (function () {
     };
     return UpgradeAdapterRef;
 }());
+export { UpgradeAdapterRef };
 function UpgradeAdapterRef_tsickle_Closure_declarations() {
     /** @type {?} */
     UpgradeAdapterRef.prototype._readyFn;

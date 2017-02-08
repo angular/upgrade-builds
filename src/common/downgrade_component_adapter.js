@@ -13,7 +13,7 @@ import { getComponentName, hookupNgModel } from './util';
 var /** @type {?} */ INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
-export var DowngradeComponentAdapter = (function () {
+var DowngradeComponentAdapter = (function () {
     /**
      * @param {?} id
      * @param {?} info
@@ -212,6 +212,7 @@ export var DowngradeComponentAdapter = (function () {
     };
     return DowngradeComponentAdapter;
 }());
+export { DowngradeComponentAdapter };
 function DowngradeComponentAdapter_tsickle_Closure_declarations() {
     /** @type {?} */
     DowngradeComponentAdapter.prototype.inputChangeCount;

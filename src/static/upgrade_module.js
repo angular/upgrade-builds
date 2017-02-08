@@ -124,7 +124,7 @@ import { angular1Providers, setTempInjectorRef } from './angular1_providers';
  *
  * \@experimental
  */
-export var UpgradeModule = (function () {
+var UpgradeModule = (function () {
     /**
      * @param {?} injector
      * @param {?} ngZone
@@ -213,16 +213,17 @@ export var UpgradeModule = (function () {
             };
         }
     };
-    UpgradeModule.decorators = [
-        { type: NgModule, args: [{ providers: [angular1Providers, ContentProjectionHelper] },] },
-    ];
-    /** @nocollapse */
-    UpgradeModule.ctorParameters = function () { return [
-        { type: Injector, },
-        { type: NgZone, },
-    ]; };
     return UpgradeModule;
 }());
+export { UpgradeModule };
+UpgradeModule.decorators = [
+    { type: NgModule, args: [{ providers: [angular1Providers, ContentProjectionHelper] },] },
+];
+/** @nocollapse */
+UpgradeModule.ctorParameters = function () { return [
+    { type: Injector, },
+    { type: NgZone, },
+]; };
 function UpgradeModule_tsickle_Closure_declarations() {
     /** @type {?} */
     UpgradeModule.decorators;

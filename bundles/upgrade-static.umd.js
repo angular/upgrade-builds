@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.6-c33fda2
+ * @license Angular v4.0.0-beta.6-7a4c255
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -16,7 +16,13 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var /** @type {?} */ $COMPILE = '$compile';
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */ var /** @type {?} */ $COMPILE = '$compile';
     var /** @type {?} */ $CONTROLLER = '$controller';
     var /** @type {?} */ $DELEGATE = '$delegate';
     var /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
@@ -525,7 +531,7 @@
     /**
      * @stable
      */
-    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.6-c33fda2');
+    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.6-7a4c255');
 
     /**
      * @license
@@ -1241,16 +1247,16 @@
                 };
             }
         };
-        UpgradeModule.decorators = [
-            { type: _angular_core.NgModule, args: [{ providers: [angular1Providers, ContentProjectionHelper] },] },
-        ];
-        /** @nocollapse */
-        UpgradeModule.ctorParameters = function () { return [
-            { type: _angular_core.Injector, },
-            { type: _angular_core.NgZone, },
-        ]; };
         return UpgradeModule;
     }());
+    UpgradeModule.decorators = [
+        { type: _angular_core.NgModule, args: [{ providers: [angular1Providers, ContentProjectionHelper] },] },
+    ];
+    /** @nocollapse */
+    UpgradeModule.ctorParameters = function () { return [
+        { type: _angular_core.Injector, },
+        { type: _angular_core.NgZone, },
+    ]; };
 
     exports.downgradeComponent = downgradeComponent;
     exports.downgradeInjectable = downgradeInjectable;

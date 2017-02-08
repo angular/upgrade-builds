@@ -11,7 +11,7 @@
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-export var PropertyBinding = (function () {
+var PropertyBinding = (function () {
     /**
      * @param {?} binding
      */
@@ -36,6 +36,7 @@ export var PropertyBinding = (function () {
     };
     return PropertyBinding;
 }());
+export { PropertyBinding };
 function PropertyBinding_tsickle_Closure_declarations() {
     /** @type {?} */
     PropertyBinding.prototype.prop;
