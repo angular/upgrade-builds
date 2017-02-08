@@ -145,7 +145,7 @@ export class UpgradeComponent {
         }
         if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
             const /** @type {?} */ callDoCheck = () => this.controllerInstance.$doCheck();
-            this.$componentScope.$parent.$watch(callDoCheck);
+            this.unregisterDoCheckWatcher = this.$componentScope.$parent.$watch(callDoCheck);
             callDoCheck();
         }
         const /** @type {?} */ link = this.directive.link;
@@ -203,6 +203,9 @@ export class UpgradeComponent {
      * @return {?}
      */
     ngOnDestroy() {
+        if (isFunction(this.unregisterDoCheckWatcher)) {
+            this.unregisterDoCheckWatcher();
+        }
         if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
@@ -427,6 +430,8 @@ function UpgradeComponent_tsickle_Closure_declarations() {
     UpgradeComponent.prototype.controllerInstance;
     /** @type {?} */
     UpgradeComponent.prototype.bindingDestination;
+    /** @type {?} */
+    UpgradeComponent.prototype.unregisterDoCheckWatcher;
     /** @type {?} */
     UpgradeComponent.prototype.name;
     /** @type {?} */

@@ -695,7 +695,7 @@
             }
             if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
                 var /** @type {?} */ callDoCheck = function () { return _this.controllerInstance.$doCheck(); };
-                this.$componentScope.$parent.$watch(callDoCheck);
+                this.unregisterDoCheckWatcher = this.$componentScope.$parent.$watch(callDoCheck);
                 callDoCheck();
             }
             var /** @type {?} */ link = this.directive.link;
@@ -755,6 +755,9 @@
          * @return {?}
          */
         UpgradeComponent.prototype.ngOnDestroy = function () {
+            if (isFunction(this.unregisterDoCheckWatcher)) {
+                this.unregisterDoCheckWatcher();
+            }
             if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
                 this.controllerInstance.$onDestroy();
             }

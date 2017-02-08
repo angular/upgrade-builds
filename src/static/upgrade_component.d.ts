@@ -63,6 +63,7 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private linkFn;
     private controllerInstance;
     private bindingDestination;
+    private unregisterDoCheckWatcher;
     /**
      * Create a new `UpgradeComponent` instance. You should not normally need to do this.
      * Instead you should derive a new class from this one and call the super constructor
