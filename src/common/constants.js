@@ -5,7 +5,13 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-export const /** @type {?} */ $COMPILE = '$compile';
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */ export const /** @type {?} */ $COMPILE = '$compile';
 export const /** @type {?} */ $CONTROLLER = '$controller';
 export const /** @type {?} */ $DELEGATE = '$delegate';
 export const /** @type {?} */ $HTTP_BACKEND = '$httpBackend';

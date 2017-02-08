@@ -148,11 +148,11 @@ export class UpgradeModule {
             .value(INJECTOR_KEY, this.injector)
             .config([
             $PROVIDE, $INJECTOR,
-                ($provide, $injector) => {
+            ($provide, $injector) => {
                 if ($injector.has($$TESTABILITY)) {
                     $provide.decorator($$TESTABILITY, [
                         $DELEGATE,
-                            (testabilityDelegate) => {
+                        (testabilityDelegate) => {
                             const /** @type {?} */ originalWhenStable = testabilityDelegate.whenStable;
                             const /** @type {?} */ injector = this.injector;
                             // Cannot use arrow function below because we need the context
@@ -176,7 +176,7 @@ export class UpgradeModule {
         ])
             .run([
             $INJECTOR,
-                ($injector) => {
+            ($injector) => {
                 this.$injector = $injector;
                 // Initialize the ng1 $injector provider
                 setTempInjectorRef($injector);

@@ -53,7 +53,13 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var /** @type {?} */ $COMPILE = '$compile';
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */ var /** @type {?} */ $COMPILE = '$compile';
     var /** @type {?} */ $CONTROLLER = '$controller';
     var /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
     var /** @type {?} */ $INJECTOR = '$injector';
@@ -622,7 +628,7 @@
     var DynamicContentProjectionHelper = (function (_super) {
         __extends(DynamicContentProjectionHelper, _super);
         function DynamicContentProjectionHelper() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         /**
          * @param {?} $injector
@@ -658,7 +664,7 @@
                     matcher.addSelectables(_angular_compiler.CssSelector.parse(selector), i);
                 }
             }
-            var _loop_1 = function(j, jj) {
+            var _loop_1 = function (j, jj) {
                 var /** @type {?} */ ngContentIndices = [];
                 var /** @type {?} */ node = nodes[j];
                 var /** @type {?} */ selector = _angular_compiler.createElementCssSelector(node.nodeName.toLowerCase(), getAttributesAsArray(node));
@@ -672,7 +678,7 @@
                 }
             };
             for (var /** @type {?} */ j = 0, /** @type {?} */ jj = nodes.length; j < jj; ++j) {
-                _loop_1(j, jj);
+                _loop_1(/** @type {?} */ j, /** @type {?} */ jj);
             }
             return projectableNodes;
         };
@@ -755,7 +761,7 @@
             }
             var /** @type {?} */ context = (btcIsObject) ? this.directive.bindToController : this.directive.scope;
             if (typeof context == 'object') {
-                for (var name_1 in context) {
+                for (var /** @type {?} */ name_1 in context) {
                     if (((context)).hasOwnProperty(name_1)) {
                         var /** @type {?} */ localName = context[name_1];
                         var /** @type {?} */ type = localName.charAt(0);
@@ -856,7 +862,7 @@
             var /** @type {?} */ templateCache = injector.get($TEMPLATE_CACHE);
             var /** @type {?} */ httpBackend = injector.get($HTTP_BACKEND);
             var /** @type {?} */ $controller = injector.get($CONTROLLER);
-            for (var name_2 in exportedComponents) {
+            for (var /** @type {?} */ name_2 in exportedComponents) {
                 if (((exportedComponents)).hasOwnProperty(name_2)) {
                     var /** @type {?} */ exportedComponent = exportedComponents[name_2];
                     exportedComponent.directive = exportedComponent.extractDirective(injector);
@@ -909,16 +915,16 @@
                 this.destinationObj = this.componentScope;
             }
             for (var i = 0; i < inputs.length; i++) {
-                this[inputs[i]] = null;
+                this /** TODO #9100 */[inputs[i]] = null;
             }
             for (var j = 0; j < outputs.length; j++) {
-                var emitter = this[outputs[j]] = new _angular_core.EventEmitter();
+                var emitter = this /** TODO #9100 */[outputs[j]] = new _angular_core.EventEmitter();
                 this.setComponentProperty(outputs[j], (function (emitter /** TODO #9100 */) { return function (value /** TODO #9100 */) {
                     return emitter.emit(value);
                 }; })(emitter));
             }
             for (var k = 0; k < propOuts.length; k++) {
-                this[propOuts[k]] = new _angular_core.EventEmitter();
+                this /** TODO #9100 */[propOuts[k]] = new _angular_core.EventEmitter();
                 this.checkLastValues.push(INITIAL_VALUE$1);
             }
         }
@@ -943,7 +949,7 @@
                 ((this.directive.link))(this.componentScope, this.$element, attrs, linkController, transcludeFn);
             }
             var /** @type {?} */ childNodes = [];
-            var /** @type {?} */ childNode;
+            var /** @type {?} */ childNode /** TODO #9100 */;
             while (childNode = this.element.firstChild) {
                 this.element.removeChild(childNode);
                 childNodes.push(childNode);

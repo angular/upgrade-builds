@@ -492,7 +492,7 @@ export class UpgradeAdapter {
             .factory(COMPILER_KEY, () => this.moduleRef.injector.get(Compiler))
             .config([
             '$provide', '$injector',
-                (provide, ng1Injector) => {
+            (provide, ng1Injector) => {
                 provide.decorator($ROOT_SCOPE, [
                     '$delegate',
                     function (rootScopeDelegate) {
@@ -535,7 +535,7 @@ export class UpgradeAdapter {
         ]);
         ng1Module.run([
             '$injector', '$rootScope',
-                (ng1Injector, rootScope) => {
+            (ng1Injector, rootScope) => {
                 UpgradeNg1ComponentAdapterBuilder.resolve(this.ng1ComponentsToBeUpgraded, ng1Injector)
                     .then(() => {
                     // At this point we have ng1 injector and we have lifted ng1 components into ng2, we

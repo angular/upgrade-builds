@@ -85,7 +85,7 @@ export class UpgradeNg1ComponentAdapterBuilder {
         }
         const /** @type {?} */ context = (btcIsObject) ? this.directive.bindToController : this.directive.scope;
         if (typeof context == 'object') {
-            for (const name in context) {
+            for (const /** @type {?} */ name in context) {
                 if (((context)).hasOwnProperty(name)) {
                     let /** @type {?} */ localName = context[name];
                     const /** @type {?} */ type = localName.charAt(0);
@@ -185,7 +185,7 @@ export class UpgradeNg1ComponentAdapterBuilder {
         const /** @type {?} */ templateCache = injector.get($TEMPLATE_CACHE);
         const /** @type {?} */ httpBackend = injector.get($HTTP_BACKEND);
         const /** @type {?} */ $controller = injector.get($CONTROLLER);
-        for (const name in exportedComponents) {
+        for (const /** @type {?} */ name in exportedComponents) {
             if (((exportedComponents)).hasOwnProperty(name)) {
                 const /** @type {?} */ exportedComponent = exportedComponents[name];
                 exportedComponent.directive = exportedComponent.extractDirective(injector);
@@ -263,14 +263,14 @@ class UpgradeNg1ComponentAdapter {
             this.destinationObj = this.componentScope;
         }
         for (let i = 0; i < inputs.length; i++) {
-            this[inputs[i]] = null;
+            this /** TODO #9100 */[inputs[i]] = null;
         }
         for (let j = 0; j < outputs.length; j++) {
-            const emitter = this[outputs[j]] = new EventEmitter();
+            const emitter = this /** TODO #9100 */[outputs[j]] = new EventEmitter();
             this.setComponentProperty(outputs[j], ((emitter /** TODO #9100 */) => (value /** TODO #9100 */) => emitter.emit(value))(emitter));
         }
         for (let k = 0; k < propOuts.length; k++) {
-            this[propOuts[k]] = new EventEmitter();
+            this /** TODO #9100 */[propOuts[k]] = new EventEmitter();
             this.checkLastValues.push(INITIAL_VALUE);
         }
     }
@@ -294,7 +294,7 @@ class UpgradeNg1ComponentAdapter {
             ((this.directive.link))(this.componentScope, this.$element, attrs, linkController, transcludeFn);
         }
         const /** @type {?} */ childNodes = [];
-        let /** @type {?} */ childNode;
+        let /** @type {?} */ childNode /** TODO #9100 */;
         while (childNode = this.element.firstChild) {
             this.element.removeChild(childNode);
             childNodes.push(childNode);
