@@ -27,4 +27,5 @@ export declare class DowngradeNg2ComponentAdapter {
     setupInputs(): void;
     setupOutputs(): void;
     registerCleanup(): void;
+    private updateInput(prop, prevValue, currValue);
 }

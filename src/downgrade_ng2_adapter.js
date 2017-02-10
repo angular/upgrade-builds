@@ -57,16 +57,14 @@ export var DowngradeNg2ComponentAdapter = (function () {
             var /** @type {?} */ input = inputs[i];
             var /** @type {?} */ expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                var /** @type {?} */ observeFn = (function (prop /** TODO #9100 */) {
+                var /** @type {?} */ observeFn = (function (prop) {
                     var /** @type {?} */ prevValue = INITIAL_VALUE;
-                    return function (value /** TODO #9100 */) {
-                        if (_this.inputChanges !== null) {
-                            _this.inputChangeCount++;
-                            _this.inputChanges[prop] =
-                                new Ng1Change(value, prevValue === INITIAL_VALUE ? value : prevValue);
-                            prevValue = value;
+                    return function (currValue) {
+                        if (prevValue === INITIAL_VALUE) {
+                            prevValue = currValue;
                         }
-                        _this.component[prop] = value;
+                        _this.updateInput(prop, prevValue, currValue);
+                        prevValue = currValue;
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn);
@@ -84,15 +82,9 @@ export var DowngradeNg2ComponentAdapter = (function () {
                 expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
             }
             if (expr != null) {
-                var /** @type {?} */ watchFn = (function (prop /** TODO #9100 */) {
-                    return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
-                        if (_this.inputChanges != null) {
-                            _this.inputChangeCount++;
-                            _this.inputChanges[prop] = new Ng1Change(prevValue, value);
-                        }
-                        _this.component[prop] = value;
-                    };
-                })(input.prop);
+                var /** @type {?} */ watchFn = (function (prop) { return function (currValue, prevValue) {
+                    return _this.updateInput(prop, prevValue, currValue);
+                }; })(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
@@ -168,6 +160,19 @@ export var DowngradeNg2ComponentAdapter = (function () {
             _this.componentScope.$destroy();
             _this.componentRef.destroy();
         });
+    };
+    /**
+     * @param {?} prop
+     * @param {?} prevValue
+     * @param {?} currValue
+     * @return {?}
+     */
+    DowngradeNg2ComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
+        if (this.inputChanges) {
+            this.inputChangeCount++;
+            this.inputChanges[prop] = new Ng1Change(prevValue, currValue);
+        }
+        this.component[prop] = currValue;
     };
     return DowngradeNg2ComponentAdapter;
 }());

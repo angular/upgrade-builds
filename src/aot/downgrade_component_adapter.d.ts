@@ -32,4 +32,5 @@ export declare class DowngradeComponentAdapter {
     projectContent(): void;
     setupOutputs(): void;
     registerCleanup(): void;
+    private updateInput(prop, prevValue, currValue);
 }
