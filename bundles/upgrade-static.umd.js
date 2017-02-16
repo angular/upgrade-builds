@@ -1263,5 +1263,11 @@
     exports.VERSION = VERSION;
     exports.UpgradeComponent = UpgradeComponent;
     exports.UpgradeModule = UpgradeModule;
+    exports.ɵf = ContentProjectionHelper;
+    exports.ɵa = angular1Providers;
+    exports.ɵd = compileFactory;
+    exports.ɵb = injectorFactory;
+    exports.ɵe = parseFactory;
+    exports.ɵc = rootScopeFactory;
 
 }));
