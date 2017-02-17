@@ -98,8 +98,7 @@ export function downgradeComponent(info) {
             }
         };
     };
-    // bracket-notation because of closure - see #14441
-    directiveFactory['$inject'] = [$COMPILE, $INJECTOR, $PARSE];
+    directiveFactory.$inject = [$COMPILE, $INJECTOR, $PARSE];
     return directiveFactory;
 }
 /**

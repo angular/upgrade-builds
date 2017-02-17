@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-beta.7-96d06f7
+ * @license Angular v4.0.0-beta.7-b1a79fd
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -12,7 +12,7 @@
     /**
      * @stable
      */
-    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.7-96d06f7');
+    var /** @type {?} */ VERSION = new _angular_core.Version('4.0.0-beta.7-b1a79fd');
 
     /**
      * @license
@@ -516,8 +516,7 @@
                 }
             };
         };
-        // bracket-notation because of closure - see #14441
-        directiveFactory['$inject'] = [$COMPILE, $INJECTOR, $PARSE];
+        directiveFactory.$inject = [$COMPILE, $INJECTOR, $PARSE];
         return directiveFactory;
     }
     /**
