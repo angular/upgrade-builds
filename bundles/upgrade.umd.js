@@ -516,7 +516,8 @@
                 }
             };
         };
-        directiveFactory.$inject = [$COMPILE, $INJECTOR, $PARSE];
+        // bracket-notation because of closure - see #14441
+        directiveFactory['$inject'] = [$COMPILE, $INJECTOR, $PARSE];
         return directiveFactory;
     }
     /**
