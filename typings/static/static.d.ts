@@ -3,4 +3,4 @@
  */
 export * from './public_api_static';
 export { ContentProjectionHelper as ɵf } from './src/common/content_projection_helper';
-export { angular1Providers as ɵa, compileFactory as ɵd, injectorFactory as ɵb, parseFactory as ɵe, rootScopeFactory as ɵc } from './src/static/angular1_providers';
+export { angular1Providers as ɵe, compileFactory as ɵc, injectorFactory as ɵa, parseFactory as ɵd, rootScopeFactory as ɵb } from './src/static/angular1_providers';
