@@ -114,7 +114,7 @@
     /**
      * @stable
      */
-    var /** @type {?} */VERSION = new _core.Version('4.0.0-beta.8-be85103');
+    var /** @type {?} */VERSION = new _core.Version('4.0.0-beta.8-41da599');
 
     /**
      * @license
