@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.1-5ba55b0
+ * @license Angular v4.0.0-rc.1-968995a
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -482,7 +482,7 @@
     /**
      * @stable
      */
-    var VERSION = new _core.Version('4.0.0-rc.1-5ba55b0');
+    var VERSION = new _core.Version('4.0.0-rc.1-968995a');
 
     /**
      * @license
@@ -786,7 +786,8 @@
         };
         UpgradeComponent.prototype.buildController = function (controllerType, $scope, $element, controllerAs) {
             // TODO: Document that we do not pre-assign bindings on the controller instance
-            var locals = { $scope: $scope, $element: $element };
+            // Quoted properties below so that this code can be optimized with Closure Compiler.
+            var locals = { '$scope': $scope, '$element': $element };
             var controller = this.$controller(controllerType, locals, null, controllerAs);
             $element.data(controllerKey(this.directive.name), controller);
             return controller;

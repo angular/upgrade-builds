@@ -451,7 +451,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.0.0-rc.1-5ba55b0');
+var VERSION = new Version('4.0.0-rc.1-968995a');
 
 /**
  * @license
@@ -755,7 +755,8 @@ var UpgradeComponent = function () {
     };
     UpgradeComponent.prototype.buildController = function (controllerType, $scope, $element, controllerAs) {
         // TODO: Document that we do not pre-assign bindings on the controller instance
-        var locals = { $scope: $scope, $element: $element };
+        // Quoted properties below so that this code can be optimized with Closure Compiler.
+        var locals = { '$scope': $scope, '$element': $element };
         var controller = this.$controller(controllerType, locals, null, controllerAs);
         $element.data(controllerKey(this.directive.name), controller);
         return controller;
