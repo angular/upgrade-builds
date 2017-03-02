@@ -1,3 +1,5 @@
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 import { SimpleChange, ReflectiveInjector, EventEmitter, Testability, ComponentFactoryResolver, Version, NgModule, NgZone, Injector } from '@angular/core';
 
 /**
@@ -325,18 +327,18 @@ var downgradeCount = 0;
 function downgradeComponent(info) {
     var idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
     var idCount = 0;
-    var directiveFactory = function ($compile, $injector, $parse) {
+    var directiveFactory = function directiveFactory($compile, $injector, $parse) {
         return {
             restrict: 'E',
             terminal: true,
             require: [REQUIRE_INJECTOR, REQUIRE_NG_MODEL],
-            link: function (scope, element, attrs, required) {
+            link: function link(scope, element, attrs, required) {
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
                 // been compiled.
                 var parentInjector = required[0] || $injector.get(INJECTOR_KEY);
                 var ngModel = required[1];
-                var downgradeFn = function (injector) {
+                var downgradeFn = function downgradeFn(injector) {
                     var componentFactoryResolver = injector.get(ComponentFactoryResolver);
                     var componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                     if (!componentFactory) {
@@ -441,7 +443,7 @@ var ParentInjectorPromise = function () {
  * @experimental
  */
 function downgradeInjectable(token) {
-    var factory = function (i) {
+    var factory = function factory(i) {
         return i.get(token);
     };
     factory.$inject = [INJECTOR_KEY];
@@ -451,7 +453,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.0.0-rc.1-b6e6fc1');
+var VERSION = new Version('4.0.0-rc.1-3168ef7');
 
 /**
  * @license
@@ -604,15 +606,15 @@ var UpgradeComponent = function () {
             this.controllerInstance.$onInit();
         }
         if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
-            var callDoCheck = function () {
+            var callDoCheck = function callDoCheck() {
                 return _this.controllerInstance.$doCheck();
             };
             this.unregisterDoCheckWatcher = this.$componentScope.$parent.$watch(callDoCheck);
             callDoCheck();
         }
         var link = this.directive.link;
-        var preLink = typeof link == 'object' && link.pre;
-        var postLink = typeof link == 'object' ? link.post : link;
+        var preLink = (typeof link === 'undefined' ? 'undefined' : _typeof(link)) == 'object' && link.pre;
+        var postLink = (typeof link === 'undefined' ? 'undefined' : _typeof(link)) == 'object' ? link.post : link;
         if (preLink) {
             preLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
@@ -622,10 +624,10 @@ var UpgradeComponent = function () {
             this.element.removeChild(childNode);
             childNodes.push(childNode);
         }
-        var attachElement = function (clonedElements, scope) {
+        var attachElement = function attachElement(clonedElements, scope) {
             _this.$element.append(clonedElements);
         };
-        var attachChildNodes = function (scope, cloneAttach) {
+        var attachChildNodes = function attachChildNodes(scope, cloneAttach) {
             return cloneAttach(childNodes);
         };
         this.linkFn(this.$componentScope, attachElement, { parentBoundTranscludeFn: attachChildNodes });
@@ -682,7 +684,7 @@ var UpgradeComponent = function () {
         if (directive.compile) this.notSupported('compile');
         var link = directive.link;
         // QUESTION: why not support link.post?
-        if (typeof link == 'object') {
+        if ((typeof link === 'undefined' ? 'undefined' : _typeof(link)) == 'object') {
             if (link.post) this.notSupported('link.post');
         }
         return directive;
@@ -703,13 +705,13 @@ var UpgradeComponent = function () {
     };
     UpgradeComponent.prototype.initializeBindings = function (directive) {
         var _this = this;
-        var btcIsObject = typeof directive.bindToController === 'object';
+        var btcIsObject = _typeof(directive.bindToController) === 'object';
         if (btcIsObject && Object.keys(directive.scope).length) {
             throw new Error("Binding definitions on scope and controller at the same time is not supported.");
         }
         var context = btcIsObject ? directive.bindToController : directive.scope;
         var bindings = new Bindings();
-        if (typeof context == 'object') {
+        if ((typeof context === 'undefined' ? 'undefined' : _typeof(context)) == 'object') {
             Object.keys(context).forEach(function (propName) {
                 var definition = context[propName];
                 var bindingType = definition.charAt(0);
@@ -769,7 +771,7 @@ var UpgradeComponent = function () {
             return require.map(function (req) {
                 return _this.resolveRequire(directiveName, $element, req);
             });
-        } else if (typeof require === 'object') {
+        } else if ((typeof require === 'undefined' ? 'undefined' : _typeof(require)) === 'object') {
             var value_1 = {};
             Object.keys(require).forEach(function (key) {
                 return value_1[key] = _this.resolveRequire(directiveName, $element, require[key]);
@@ -831,7 +833,7 @@ function isFunction(value) {
 }
 // NOTE: Only works for `typeof T !== 'object'`.
 function isMap(value) {
-    return value && !Array.isArray(value) && typeof value === 'object';
+    return value && !Array.isArray(value) && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object';
 }
 
 /**
@@ -1011,7 +1013,7 @@ var UpgradeModule = function () {
                     var originalWhenStable = testabilityDelegate.whenStable;
                     var injector = _this.injector;
                     // Cannot use arrow function below because we need the context
-                    var newWhenStable = function (callback) {
+                    var newWhenStable = function newWhenStable(callback) {
                         originalWhenStable.call(testabilityDelegate, function () {
                             var ng2Testability = injector.get(Testability);
                             if (ng2Testability.isStable()) {
