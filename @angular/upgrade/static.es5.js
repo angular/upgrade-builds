@@ -1,6 +1,6 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-import { SimpleChange, ReflectiveInjector, EventEmitter, Testability, ComponentFactoryResolver, Version, NgModule, NgZone, Injector } from '@angular/core';
+import { SimpleChange, ReflectiveInjector, EventEmitter, ɵlooseIdentical, Testability, ComponentFactoryResolver, Version, NgModule, NgZone, Injector } from '@angular/core';
 
 /**
  * @license
@@ -453,7 +453,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.0.0-rc.2-207298c');
+var VERSION = new Version('4.0.0-rc.2-b7e76cc');
 
 /**
  * @license
@@ -481,11 +481,6 @@ try {
 var bootstrap = angular.bootstrap;
 var module$1 = angular.module;
 var element = angular.element;
-
-// JS has NaN !== NaN
-function looseIdentical(a, b) {
-    return a === b || typeof a === 'number' && typeof b === 'number' && isNaN(a) && isNaN(b);
-}
 
 var REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 var NOT_SUPPORTED = 'NOT_SUPPORTED';
@@ -656,7 +651,7 @@ var UpgradeComponent = function () {
         twoWayBoundProperties.forEach(function (propName, idx) {
             var newValue = _this.bindingDestination[propName];
             var oldValue = twoWayBoundLastValues[idx];
-            if (!looseIdentical(newValue, oldValue)) {
+            if (!ɵlooseIdentical(newValue, oldValue)) {
                 var outputName = propertyToOutputMap[propName];
                 var eventEmitter = _this[outputName];
                 eventEmitter.emit(newValue);

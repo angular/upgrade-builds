@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.2-207298c
+ * @license Angular v4.0.0-rc.2-b7e76cc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -482,7 +482,7 @@
     /**
      * @stable
      */
-    var VERSION = new _core.Version('4.0.0-rc.2-207298c');
+    var VERSION = new _core.Version('4.0.0-rc.2-b7e76cc');
 
     /**
      * @license
@@ -510,11 +510,6 @@
     var bootstrap = angular.bootstrap;
     var module$1 = angular.module;
     var element = angular.element;
-
-    // JS has NaN !== NaN
-    function looseIdentical(a, b) {
-        return a === b || typeof a === 'number' && typeof b === 'number' && isNaN(a) && isNaN(b);
-    }
 
     var REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
     var NOT_SUPPORTED = 'NOT_SUPPORTED';
@@ -685,7 +680,7 @@
             twoWayBoundProperties.forEach(function (propName, idx) {
                 var newValue = _this.bindingDestination[propName];
                 var oldValue = twoWayBoundLastValues[idx];
-                if (!looseIdentical(newValue, oldValue)) {
+                if (!(0, _core.ɵlooseIdentical)(newValue, oldValue)) {
                     var outputName = propertyToOutputMap[propName];
                     var eventEmitter = _this[outputName];
                     eventEmitter.emit(newValue);
