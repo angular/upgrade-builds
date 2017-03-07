@@ -446,7 +446,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.0.0-rc.2-1cff125');
+var VERSION = new Version('4.0.0-rc.2-5df998d');
 
 /**
  * @license
