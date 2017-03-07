@@ -60,9 +60,9 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private $componentScope;
     private directive;
     private bindings;
-    private linkFn;
     private controllerInstance;
     private bindingDestination;
+    private pendingChanges;
     private unregisterDoCheckWatcher;
     /**
      * Create a new `UpgradeComponent` instance. You should not normally need to do this.
@@ -88,10 +88,13 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private getDirective(name);
     private getDirectiveRequire(directive);
     private initializeBindings(directive);
+    private extractChildNodes(element);
     private compileTemplate(directive);
     private buildController(controllerType, $scope, $element, controllerAs);
     private resolveRequire(directiveName, $element, require);
-    private setupOutputs();
+    private initializeOutputs();
+    private bindOutputs();
+    private forwardChanges(changes);
     private notSupported(feature);
     private compileHtml(html);
 }

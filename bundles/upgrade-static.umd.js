@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.2-ebd4463
+ * @license Angular v4.0.0-rc.2-07122f0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -482,7 +482,7 @@
     /**
      * @stable
      */
-    var VERSION = new _core.Version('4.0.0-rc.2-ebd4463');
+    var VERSION = new _core.Version('4.0.0-rc.2-07122f0');
 
     /**
      * @license
@@ -586,8 +586,6 @@
             this.name = name;
             this.elementRef = elementRef;
             this.injector = injector;
-            this.controllerInstance = null;
-            this.bindingDestination = null;
             this.$injector = injector.get($INJECTOR);
             this.$compile = this.$injector.get($COMPILE);
             this.$templateCache = this.$injector.get($TEMPLATE_CACHE);
@@ -597,27 +595,31 @@
             this.$element = element(this.element);
             this.directive = this.getDirective(name);
             this.bindings = this.initializeBindings(this.directive);
-            this.linkFn = this.compileTemplate(this.directive);
             // We ask for the AngularJS scope from the Angular injector, since
             // we will put the new component scope onto the new injector for each component
             var $parentScope = injector.get($SCOPE);
             // QUESTION 1: Should we create an isolated scope if the scope is only true?
             // QUESTION 2: Should we make the scope accessible through `$element.scope()/isolateScope()`?
             this.$componentScope = $parentScope.$new(!!this.directive.scope);
+            this.initializeOutputs();
+        }
+        UpgradeComponent.prototype.ngOnInit = function () {
+            var _this = this;
+            // Collect contents, insert and compile template
+            var contentChildNodes = this.extractChildNodes(this.element);
+            var linkFn = this.compileTemplate(this.directive);
+            // Instantiate controller
             var controllerType = this.directive.controller;
             var bindToController = this.directive.bindToController;
             if (controllerType) {
                 this.controllerInstance = this.buildController(controllerType, this.$componentScope, this.$element, this.directive.controllerAs);
             } else if (bindToController) {
-                throw new Error("Upgraded directive '" + name + "' specifies 'bindToController' but no controller.");
+                throw new Error("Upgraded directive '" + this.directive.name + "' specifies 'bindToController' but no controller.");
             }
+            // Set up outputs
             this.bindingDestination = bindToController ? this.controllerInstance : this.$componentScope;
-            this.setupOutputs();
-        }
-        UpgradeComponent.prototype.ngOnInit = function () {
-            var _this = this;
-            var attrs = NOT_SUPPORTED;
-            var transcludeFn = NOT_SUPPORTED;
+            this.bindOutputs();
+            // Require other controllers
             var directiveRequire = this.getDirectiveRequire(this.directive);
             var requiredControllers = this.resolveRequire(this.directive.name, this.$element, directiveRequire);
             if (this.directive.bindToController && isMap(directiveRequire)) {
@@ -626,9 +628,16 @@
                     _this.controllerInstance[key] = requiredControllersMap_1[key];
                 });
             }
+            // Hook: $onChanges
+            if (this.pendingChanges) {
+                this.forwardChanges(this.pendingChanges);
+                this.pendingChanges = null;
+            }
+            // Hook: $onInit
             if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
                 this.controllerInstance.$onInit();
             }
+            // Hook: $doCheck
             if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
                 var callDoCheck = function callDoCheck() {
                     return _this.controllerInstance.$doCheck();
@@ -636,40 +645,32 @@
                 this.unregisterDoCheckWatcher = this.$componentScope.$parent.$watch(callDoCheck);
                 callDoCheck();
             }
+            // Linking
             var link = this.directive.link;
             var preLink = (typeof link === 'undefined' ? 'undefined' : _typeof(link)) == 'object' && link.pre;
             var postLink = (typeof link === 'undefined' ? 'undefined' : _typeof(link)) == 'object' ? link.post : link;
+            var attrs = NOT_SUPPORTED;
+            var transcludeFn = NOT_SUPPORTED;
             if (preLink) {
                 preLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
             }
-            var childNodes = [];
-            var childNode;
-            while (childNode = this.element.firstChild) {
-                this.element.removeChild(childNode);
-                childNodes.push(childNode);
-            }
-            var attachElement = function attachElement(clonedElements, scope) {
-                _this.$element.append(clonedElements);
-            };
             var attachChildNodes = function attachChildNodes(scope, cloneAttach) {
-                return cloneAttach(childNodes);
+                return cloneAttach(contentChildNodes);
             };
-            this.linkFn(this.$componentScope, attachElement, { parentBoundTranscludeFn: attachChildNodes });
+            linkFn(this.$componentScope, null, { parentBoundTranscludeFn: attachChildNodes });
             if (postLink) {
                 postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
             }
+            // Hook: $postLink
             if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
                 this.controllerInstance.$postLink();
             }
         };
         UpgradeComponent.prototype.ngOnChanges = function (changes) {
-            var _this = this;
-            // Forward input changes to `bindingDestination`
-            Object.keys(changes).forEach(function (propName) {
-                return _this.bindingDestination[propName] = changes[propName].currentValue;
-            });
-            if (isFunction(this.bindingDestination.$onChanges)) {
-                this.bindingDestination.$onChanges(changes);
+            if (!this.bindingDestination) {
+                this.pendingChanges = changes;
+            } else {
+                this.forwardChanges(changes);
             }
         };
         UpgradeComponent.prototype.ngDoCheck = function () {
@@ -764,6 +765,15 @@
             }
             return bindings;
         };
+        UpgradeComponent.prototype.extractChildNodes = function (element) {
+            var childNodes = [];
+            var childNode;
+            while (childNode = element.firstChild) {
+                element.removeChild(childNode);
+                childNodes.push(childNode);
+            }
+            return childNodes;
+        };
         UpgradeComponent.prototype.compileTemplate = function (directive) {
             if (this.directive.template !== undefined) {
                 return this.compileHtml(getOrCall(this.directive.template));
@@ -821,31 +831,41 @@
                 throw new Error("Unrecognized require syntax on upgraded directive '" + directiveName + "': " + require);
             }
         };
-        UpgradeComponent.prototype.setupOutputs = function () {
+        UpgradeComponent.prototype.initializeOutputs = function () {
             var _this = this;
-            // Set up the outputs for `=` bindings
-            this.bindings.twoWayBoundProperties.forEach(function (propName) {
+            // Initialize the outputs for `=` and `&` bindings
+            this.bindings.twoWayBoundProperties.concat(this.bindings.expressionBoundProperties).forEach(function (propName) {
                 var outputName = _this.bindings.propertyToOutputMap[propName];
                 _this[outputName] = new _core.EventEmitter();
             });
-            // Set up the outputs for `&` bindings
+        };
+        UpgradeComponent.prototype.bindOutputs = function () {
+            var _this = this;
+            // Bind `&` bindings to the corresponding outputs
             this.bindings.expressionBoundProperties.forEach(function (propName) {
                 var outputName = _this.bindings.propertyToOutputMap[propName];
-                var emitter = _this[outputName] = new _core.EventEmitter();
-                // QUESTION: Do we want the ng1 component to call the function with `<value>` or with
-                //           `{$event: <value>}`. The former is closer to ng2, the latter to ng1.
+                var emitter = _this[outputName];
                 _this.bindingDestination[propName] = function (value) {
                     return emitter.emit(value);
                 };
             });
         };
+        UpgradeComponent.prototype.forwardChanges = function (changes) {
+            var _this = this;
+            // Forward input changes to `bindingDestination`
+            Object.keys(changes).forEach(function (propName) {
+                return _this.bindingDestination[propName] = changes[propName].currentValue;
+            });
+            if (isFunction(this.bindingDestination.$onChanges)) {
+                this.bindingDestination.$onChanges(changes);
+            }
+        };
         UpgradeComponent.prototype.notSupported = function (feature) {
             throw new Error("Upgraded directive '" + this.name + "' contains unsupported feature: '" + feature + "'.");
         };
         UpgradeComponent.prototype.compileHtml = function (html) {
-            var div = document.createElement('div');
-            div.innerHTML = html;
-            return this.$compile(div.childNodes);
+            this.element.innerHTML = html;
+            return this.$compile(this.element.childNodes);
         };
         return UpgradeComponent;
     }();
