@@ -1,3 +1,8 @@
+/**
+ * @license Angular v4.0.0-rc.3-6c8638c
+ * (c) 2010-2017 Google, Inc. https://angular.io/
+ * License: MIT
+ */
 import { SimpleChange, ReflectiveInjector, EventEmitter, ɵlooseIdentical, Testability, ComponentFactoryResolver, Version, NgModule, NgZone, Injector } from '@angular/core';
 
 /**
@@ -446,7 +451,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.0.0-rc.2-5ad5301');
+var VERSION = new Version('4.0.0-rc.3-6c8638c');
 
 /**
  * @license
@@ -1101,4 +1106,4 @@ UpgradeModule.ctorParameters = function () { return [
     { type: NgZone, },
 ]; };
 
-export { ContentProjectionHelper as ɵf, angular1Providers as ɵe, compileFactory as ɵc, injectorFactory as ɵa, parseFactory as ɵd, rootScopeFactory as ɵb, downgradeComponent, downgradeInjectable, VERSION, UpgradeComponent, UpgradeModule };
+export { downgradeComponent, downgradeInjectable, VERSION, UpgradeComponent, UpgradeModule };

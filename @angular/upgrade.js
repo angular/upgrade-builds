@@ -1,16 +1,16 @@
 /**
- * @license Angular v4.0.0-rc.2-5ad5301
+ * @license Angular v4.0.0-rc.3-6c8638c
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { Version, NgModule, Testability, Compiler, Injector, NgZone, ComponentFactoryResolver, SimpleChange, ReflectiveInjector, ElementRef, Inject, Directive, EventEmitter } from '@angular/core';
+import { SimpleChange, ReflectiveInjector, Version, NgModule, Testability, Compiler, Injector, NgZone, ComponentFactoryResolver, ElementRef, Inject, Directive, EventEmitter } from '@angular/core';
 import { DirectiveResolver, createElementCssSelector, CssSelector, SelectorMatcher } from '@angular/compiler';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
  * @stable
  */
-const /** @type {?} */ VERSION = new Version('4.0.0-rc.2-5ad5301');
+var VERSION = new Version('4.0.0-rc.3-6c8638c');
 
 /**
  * @license
@@ -19,30 +19,27 @@ const /** @type {?} */ VERSION = new Version('4.0.0-rc.2-5ad5301');
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/**
- * @return {?}
- */
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
-let /** @type {?} */ angular = ({
+var angular = {
     bootstrap: noNg,
     module: noNg,
     element: noNg,
     version: noNg,
     resumeBootstrap: noNg,
     getTestability: noNg
-});
+};
 try {
     if (window.hasOwnProperty('angular')) {
-        angular = ((window)).angular;
+        angular = window.angular;
     }
 }
 catch (e) {
 }
-const /** @type {?} */ bootstrap = angular.bootstrap;
-const /** @type {?} */ module$1 = angular.module;
-const /** @type {?} */ element = angular.element;
+var bootstrap = angular.bootstrap;
+var module$1 = angular.module;
+var element = angular.element;
 
 /**
  * @license
@@ -57,20 +54,20 @@ const /** @type {?} */ element = angular.element;
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
- */ const /** @type {?} */ $COMPILE = '$compile';
-const /** @type {?} */ $CONTROLLER = '$controller';
-const /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
-const /** @type {?} */ $INJECTOR = '$injector';
-const /** @type {?} */ $PARSE = '$parse';
-const /** @type {?} */ $ROOT_SCOPE = '$rootScope';
-const /** @type {?} */ $SCOPE = '$scope';
-const /** @type {?} */ $TEMPLATE_CACHE = '$templateCache';
-const /** @type {?} */ $$TESTABILITY = '$$testability';
-const /** @type {?} */ COMPILER_KEY = '$$angularCompiler';
-const /** @type {?} */ INJECTOR_KEY = '$$angularInjector';
-const /** @type {?} */ NG_ZONE_KEY = '$$angularNgZone';
-const /** @type {?} */ REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
-const /** @type {?} */ REQUIRE_NG_MODEL = '?ngModel';
+ */ var $COMPILE = '$compile';
+var $CONTROLLER = '$controller';
+var $HTTP_BACKEND = '$httpBackend';
+var $INJECTOR = '$injector';
+var $PARSE = '$parse';
+var $ROOT_SCOPE = '$rootScope';
+var $SCOPE = '$scope';
+var $TEMPLATE_CACHE = '$templateCache';
+var $$TESTABILITY = '$$testability';
+var COMPILER_KEY = '$$angularCompiler';
+var INJECTOR_KEY = '$$angularInjector';
+var NG_ZONE_KEY = '$$angularNgZone';
+var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
+var REQUIRE_NG_MODEL = '?ngModel';
 
 /**
  * @license
@@ -79,19 +76,16 @@ const /** @type {?} */ REQUIRE_NG_MODEL = '?ngModel';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-class ContentProjectionHelper {
-    /**
-     * @param {?} $injector
-     * @param {?} component
-     * @param {?} nodes
-     * @return {?}
-     */
-    groupProjectableNodes($injector, component, nodes) {
+var ContentProjectionHelper = (function () {
+    function ContentProjectionHelper() {
+    }
+    ContentProjectionHelper.prototype.groupProjectableNodes = function ($injector, component, nodes) {
         // By default, do not support multi-slot projection,
         // as `upgrade/static` does not support it yet.
         return [nodes];
-    }
-}
+    };
+    return ContentProjectionHelper;
+}());
 
 /**
  * @license
@@ -106,30 +100,25 @@ class ContentProjectionHelper {
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-class PropertyBinding {
-    /**
-     * @param {?} binding
-     */
-    constructor(binding) {
+var PropertyBinding = (function () {
+    function PropertyBinding(binding) {
         this.binding = binding;
         this.parseBinding();
     }
-    /**
-     * @return {?}
-     */
-    parseBinding() {
-        const /** @type {?} */ parts = this.binding.split(':');
+    PropertyBinding.prototype.parseBinding = function () {
+        var parts = this.binding.split(':');
         this.prop = parts[0].trim();
         this.attr = (parts[1] || this.prop).trim();
-        this.bracketAttr = `[${this.attr}]`;
-        this.parenAttr = `(${this.attr})`;
-        this.bracketParenAttr = `[(${this.attr})]`;
-        const /** @type {?} */ capitalAttr = this.attr.charAt(0).toUpperCase() + this.attr.substr(1);
-        this.onAttr = `on${capitalAttr}`;
-        this.bindAttr = `bind${capitalAttr}`;
-        this.bindonAttr = `bindon${capitalAttr}`;
-    }
-}
+        this.bracketAttr = "[" + this.attr + "]";
+        this.parenAttr = "(" + this.attr + ")";
+        this.bracketParenAttr = "[(" + this.attr + ")]";
+        var capitalAttr = this.attr.charAt(0).toUpperCase() + this.attr.substr(1);
+        this.onAttr = "on" + capitalAttr;
+        this.bindAttr = "bind" + capitalAttr;
+        this.bindonAttr = "bindon" + capitalAttr;
+    };
+    return PropertyBinding;
+}());
 
 /**
  * @license
@@ -137,10 +126,6 @@ class PropertyBinding {
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @param {?} e
- * @return {?}
  */
 function onError(e) {
     // TODO: (misko): We seem to not have a stack trace here!
@@ -153,48 +138,37 @@ function onError(e) {
     }
     throw e;
 }
-/**
- * @param {?} name
- * @return {?}
- */
 function controllerKey(name) {
     return '$' + name + 'Controller';
 }
-/**
- * @param {?} node
- * @return {?}
- */
 function getAttributesAsArray(node) {
-    const /** @type {?} */ attributes = node.attributes;
-    let /** @type {?} */ asArray;
+    var attributes = node.attributes;
+    var asArray;
     if (attributes) {
-        let /** @type {?} */ attrLen = attributes.length;
+        var attrLen = attributes.length;
         asArray = new Array(attrLen);
-        for (let /** @type {?} */ i = 0; i < attrLen; i++) {
+        for (var i = 0; i < attrLen; i++) {
             asArray[i] = [attributes[i].nodeName, attributes[i].nodeValue];
         }
     }
     return asArray || [];
 }
-/**
- * @param {?} component
- * @return {?}
- */
 function getComponentName(component) {
     // Return the name of the component or the first line of its stringified version.
-    return ((component)).overriddenName || component.name || component.toString().split('\n')[0];
+    return component.overriddenName || component.name || component.toString().split('\n')[0];
 }
-class Deferred {
-    constructor() {
-        this.promise = new Promise((res, rej) => {
-            this.resolve = res;
-            this.reject = rej;
+var Deferred = (function () {
+    function Deferred() {
+        var _this = this;
+        this.promise = new Promise(function (res, rej) {
+            _this.resolve = res;
+            _this.reject = rej;
         });
     }
-}
+    return Deferred;
+}());
 /**
- * @param {?} component
- * @return {?} Whether the passed-in component implements the subset of the
+ * @return Whether the passed-in component implements the subset of the
  *     `ControlValueAccessor` interface needed for AngularJS `ng-model`
  *     compatibility.
  */
@@ -205,35 +179,19 @@ function supportsNgModel(component) {
 /**
  * Glue the AngularJS `NgModelController` (if it exists) to the component
  * (if it implements the needed subset of the `ControlValueAccessor` interface).
- * @param {?} ngModel
- * @param {?} component
- * @return {?}
  */
 function hookupNgModel(ngModel, component) {
     if (ngModel && supportsNgModel(component)) {
-        ngModel.$render = () => { component.writeValue(ngModel.$viewValue); };
+        ngModel.$render = function () { component.writeValue(ngModel.$viewValue); };
         component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
     }
 }
 
-const /** @type {?} */ INITIAL_VALUE = {
+var INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
-class DowngradeComponentAdapter {
-    /**
-     * @param {?} id
-     * @param {?} info
-     * @param {?} element
-     * @param {?} attrs
-     * @param {?} scope
-     * @param {?} ngModel
-     * @param {?} parentInjector
-     * @param {?} $injector
-     * @param {?} $compile
-     * @param {?} $parse
-     * @param {?} componentFactory
-     */
-    constructor(id, info, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
+var DowngradeComponentAdapter = (function () {
+    function DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
         this.id = id;
         this.info = info;
         this.element = element;
@@ -253,185 +211,169 @@ class DowngradeComponentAdapter {
         this.element[0].id = id;
         this.componentScope = scope.$new();
     }
-    /**
-     * @return {?}
-     */
-    compileContents() {
-        const /** @type {?} */ compiledProjectableNodes = [];
+    DowngradeComponentAdapter.prototype.compileContents = function () {
+        var _this = this;
+        var compiledProjectableNodes = [];
         // The projected content has to be grouped, before it is compiled.
-        const /** @type {?} */ projectionHelper = this.parentInjector.get(ContentProjectionHelper);
-        const /** @type {?} */ projectableNodes = projectionHelper.groupProjectableNodes(this.$injector, this.info.component, this.element.contents());
-        const /** @type {?} */ linkFns = projectableNodes.map(nodes => this.$compile(nodes));
+        var projectionHelper = this.parentInjector.get(ContentProjectionHelper);
+        var projectableNodes = projectionHelper.groupProjectableNodes(this.$injector, this.info.component, this.element.contents());
+        var linkFns = projectableNodes.map(function (nodes) { return _this.$compile(nodes); });
         this.element.empty();
-        linkFns.forEach(linkFn => {
-            linkFn(this.scope, (clone) => {
+        linkFns.forEach(function (linkFn) {
+            linkFn(_this.scope, function (clone) {
                 compiledProjectableNodes.push(clone);
-                this.element.append(clone);
+                _this.element.append(clone);
             });
         });
         return compiledProjectableNodes;
-    }
-    /**
-     * @param {?} projectableNodes
-     * @return {?}
-     */
-    createComponent(projectableNodes) {
-        const /** @type {?} */ childInjector = ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+    };
+    DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
+        var childInjector = ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
         hookupNgModel(this.ngModel, this.component);
-    }
-    /**
-     * @return {?}
-     */
-    setupInputs() {
-        const /** @type {?} */ attrs = this.attrs;
-        const /** @type {?} */ inputs = this.info.inputs || [];
-        for (let /** @type {?} */ i = 0; i < inputs.length; i++) {
-            const /** @type {?} */ input = new PropertyBinding(inputs[i]);
-            let /** @type {?} */ expr = null;
+    };
+    DowngradeComponentAdapter.prototype.setupInputs = function () {
+        var _this = this;
+        var attrs = this.attrs;
+        var inputs = this.info.inputs || [];
+        for (var i = 0; i < inputs.length; i++) {
+            var input = new PropertyBinding(inputs[i]);
+            var expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                const /** @type {?} */ observeFn = (prop => {
-                    let /** @type {?} */ prevValue = INITIAL_VALUE;
-                    return (currValue) => {
+                var observeFn = (function (prop) {
+                    var prevValue = INITIAL_VALUE;
+                    return function (currValue) {
                         if (prevValue === INITIAL_VALUE) {
                             prevValue = currValue;
                         }
-                        this.updateInput(prop, prevValue, currValue);
+                        _this.updateInput(prop, prevValue, currValue);
                         prevValue = currValue;
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn);
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bindAttr];
+                expr = attrs /** TODO #9100 */[input.bindAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bracketAttr];
+                expr = attrs /** TODO #9100 */[input.bracketAttr];
             }
             else if (attrs.hasOwnProperty(input.bindonAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bindonAttr];
+                expr = attrs /** TODO #9100 */[input.bindonAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketParenAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
+                expr = attrs /** TODO #9100 */[input.bracketParenAttr];
             }
             if (expr != null) {
-                const /** @type {?} */ watchFn = (prop => (currValue, prevValue) => this.updateInput(prop, prevValue, currValue))(input.prop);
+                var watchFn = (function (prop) { return function (currValue, prevValue) {
+                    return _this.updateInput(prop, prevValue, currValue);
+                }; })(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
-        const /** @type {?} */ prototype = this.info.component.prototype;
-        if (prototype && ((prototype)).ngOnChanges) {
+        var prototype = this.info.component.prototype;
+        if (prototype && prototype.ngOnChanges) {
             // Detect: OnChanges interface
             this.inputChanges = {};
-            this.componentScope.$watch(() => this.inputChangeCount, () => {
-                const /** @type {?} */ inputChanges = this.inputChanges;
-                this.inputChanges = {};
-                ((this.component)).ngOnChanges(inputChanges);
+            this.componentScope.$watch(function () { return _this.inputChangeCount; }, function () {
+                var inputChanges = _this.inputChanges;
+                _this.inputChanges = {};
+                _this.component.ngOnChanges(inputChanges);
             });
         }
-        this.componentScope.$watch(() => this.changeDetector && this.changeDetector.detectChanges());
-    }
-    /**
-     * @return {?}
-     */
-    setupOutputs() {
-        const /** @type {?} */ attrs = this.attrs;
-        const /** @type {?} */ outputs = this.info.outputs || [];
-        for (let /** @type {?} */ j = 0; j < outputs.length; j++) {
-            const /** @type {?} */ output = new PropertyBinding(outputs[j]);
-            let /** @type {?} */ expr = null;
-            let /** @type {?} */ assignExpr = false;
-            const /** @type {?} */ bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
-            const /** @type {?} */ bracketParenAttr = output.bracketParenAttr ?
-                `[(${output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8)})]` :
+        this.componentScope.$watch(function () { return _this.changeDetector && _this.changeDetector.detectChanges(); });
+    };
+    DowngradeComponentAdapter.prototype.setupOutputs = function () {
+        var _this = this;
+        var attrs = this.attrs;
+        var outputs = this.info.outputs || [];
+        for (var j = 0; j < outputs.length; j++) {
+            var output = new PropertyBinding(outputs[j]);
+            var expr = null;
+            var assignExpr = false;
+            var bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
+            var bracketParenAttr = output.bracketParenAttr ?
+                "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]" :
                 null;
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[output.onAttr];
+                expr = attrs /** TODO #9100 */[output.onAttr];
             }
             else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[output.parenAttr];
+                expr = attrs /** TODO #9100 */[output.parenAttr];
             }
             else if (attrs.hasOwnProperty(bindonAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[bindonAttr];
+                expr = attrs /** TODO #9100 */[bindonAttr];
                 assignExpr = true;
             }
             else if (attrs.hasOwnProperty(bracketParenAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[bracketParenAttr];
+                expr = attrs /** TODO #9100 */[bracketParenAttr];
                 assignExpr = true;
             }
             if (expr != null && assignExpr != null) {
-                const /** @type {?} */ getter = this.$parse(expr);
-                const /** @type {?} */ setter = getter.assign;
+                var getter = this.$parse(expr);
+                var setter = getter.assign;
                 if (assignExpr && !setter) {
-                    throw new Error(`Expression '${expr}' is not assignable!`);
+                    throw new Error("Expression '" + expr + "' is not assignable!");
                 }
-                const /** @type {?} */ emitter = (this.component[output.prop]);
+                var emitter = this.component[output.prop];
                 if (emitter) {
                     emitter.subscribe({
                         next: assignExpr ?
-                            ((setter) => (v /** TODO #9100 */) => setter(this.scope, v))(setter) :
-                            ((getter) => (v /** TODO #9100 */) => getter(this.scope, { $event: v }))(getter)
+                            (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
+                            (function (getter) { return function (v /** TODO #9100 */) {
+                                return getter(_this.scope, { $event: v });
+                            }; })(getter)
                     });
                 }
                 else {
-                    throw new Error(`Missing emitter '${output.prop}' on component '${getComponentName(this.info.component)}'!`);
+                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.info.component) + "'!");
                 }
             }
         }
-    }
-    /**
-     * @return {?}
-     */
-    registerCleanup() {
-        this.element.bind('$destroy', () => {
-            this.componentScope.$destroy();
-            this.componentRef.destroy();
+    };
+    DowngradeComponentAdapter.prototype.registerCleanup = function () {
+        var _this = this;
+        this.element.bind('$destroy', function () {
+            _this.componentScope.$destroy();
+            _this.componentRef.destroy();
         });
-    }
-    /**
-     * @return {?}
-     */
-    getInjector() { return this.componentRef && this.componentRef.injector; }
-    /**
-     * @param {?} prop
-     * @param {?} prevValue
-     * @param {?} currValue
-     * @return {?}
-     */
-    updateInput(prop, prevValue, currValue) {
+    };
+    DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef && this.componentRef.injector; };
+    DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
         if (this.inputChanges) {
             this.inputChangeCount++;
             this.inputChanges[prop] = new SimpleChange(prevValue, currValue, prevValue === currValue);
         }
         this.component[prop] = currValue;
-    }
-}
+    };
+    return DowngradeComponentAdapter;
+}());
 
-let /** @type {?} */ downgradeCount = 0;
+var downgradeCount = 0;
 /**
- * \@whatItDoes
+ * @whatItDoes
  *
  * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows an Angular component to be used from AngularJS.
  *
- * \@howToUse
+ * @howToUse
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
  * to be made available in AngularJS templates.
  *
- * {\@example upgrade/static/ts/module.ts region="ng2-heroes"}
+ * {@example upgrade/static/ts/module.ts region="ng2-heroes"}
  *
  * We must create an AngularJS [directive](https://docs.angularjs.org/guide/directive)
  * that will make this Angular component available inside AngularJS templates.
  * The `downgradeComponent()` function returns a factory function that we
  * can use to define the AngularJS directive that wraps the "downgraded" component.
  *
- * {\@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
+ * {@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
  *
  * In this example you can see that we must provide information about the component being
  * "downgraded". This is because once the AoT compiler has run, all metadata about the
@@ -441,7 +383,7 @@ let /** @type {?} */ downgradeCount = 0;
  * * specify the Angular component class that is to be downgraded
  * * specify all inputs and outputs that the AngularJS component expects
  *
- * \@description
+ * @description
  *
  * A helper function that returns a factory function to be used for registering an
  * AngularJS wrapper directive for "downgrading" an Angular component.
@@ -456,34 +398,32 @@ let /** @type {?} */ downgradeCount = 0;
  * attribute names. They are of the form `"prop: attr"`; or simply `"propAndAttr" where the
  * property and attribute have the same identifier.
  *
- * \@experimental
- * @param {?} info
- * @return {?}
+ * @experimental
  */
 function downgradeComponent(info) {
-    const /** @type {?} */ idPrefix = `NG2_UPGRADE_${downgradeCount++}_`;
-    let /** @type {?} */ idCount = 0;
-    const /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
+    var idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
+    var idCount = 0;
+    var directiveFactory = function ($compile, $injector, $parse) {
         return {
             restrict: 'E',
             terminal: true,
             require: [REQUIRE_INJECTOR, REQUIRE_NG_MODEL],
-            link: (scope, element, attrs, required) => {
+            link: function (scope, element, attrs, required) {
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
                 // been compiled.
-                const /** @type {?} */ parentInjector = required[0] || $injector.get(INJECTOR_KEY);
-                const /** @type {?} */ ngModel = required[1];
-                const /** @type {?} */ downgradeFn = (injector) => {
-                    const /** @type {?} */ componentFactoryResolver = injector.get(ComponentFactoryResolver);
-                    const /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
+                var parentInjector = required[0] || $injector.get(INJECTOR_KEY);
+                var ngModel = required[1];
+                var downgradeFn = function (injector) {
+                    var componentFactoryResolver = injector.get(ComponentFactoryResolver);
+                    var componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
-                    const /** @type {?} */ id = idPrefix + (idCount++);
-                    const /** @type {?} */ injectorPromise = new ParentInjectorPromise$1(element);
-                    const /** @type {?} */ facade = new DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
-                    const /** @type {?} */ projectableNodes = facade.compileContents();
+                    var id = idPrefix + (idCount++);
+                    var injectorPromise = new ParentInjectorPromise$1(element);
+                    var facade = new DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
+                    var projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
                     facade.setupInputs();
                     facade.setupOutputs();
@@ -507,76 +447,66 @@ function downgradeComponent(info) {
  * Synchronous promise-like object to wrap parent injectors,
  * to preserve the synchronous nature of Angular 1's $compile.
  */
-class ParentInjectorPromise$1 {
-    /**
-     * @param {?} element
-     */
-    constructor(element) {
+var ParentInjectorPromise$1 = (function () {
+    function ParentInjectorPromise(element) {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
         // Store the promise on the element.
         element.data(this.injectorKey, this);
     }
-    /**
-     * @param {?} callback
-     * @return {?}
-     */
-    then(callback) {
+    ParentInjectorPromise.prototype.then = function (callback) {
         if (this.injector) {
             callback(this.injector);
         }
         else {
             this.callbacks.push(callback);
         }
-    }
-    /**
-     * @param {?} injector
-     * @return {?}
-     */
-    resolve(injector) {
+    };
+    ParentInjectorPromise.prototype.resolve = function (injector) {
         this.injector = injector;
         // Store the real injector on the element.
         this.element.data(this.injectorKey, injector);
         // Release the element to prevent memory leaks.
         this.element = null;
         // Run the queued callbacks.
-        this.callbacks.forEach(callback => callback(injector));
+        this.callbacks.forEach(function (callback) { return callback(injector); });
         this.callbacks.length = 0;
-    }
-}
+    };
+    return ParentInjectorPromise;
+}());
 
 /**
- * \@whatItDoes
+ * @whatItDoes
  *
  * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allow an Angular service to be accessible from AngularJS.
  *
- * \@howToUse
+ * @howToUse
  *
- * First ensure that the service to be downgraded is provided in an {\@link NgModule}
+ * First ensure that the service to be downgraded is provided in an {@link NgModule}
  * that will be part of the upgrade application. For example, let's assume we have
  * defined `HeroesService`
  *
- * {\@example upgrade/static/ts/module.ts region="ng2-heroes-service"}
+ * {@example upgrade/static/ts/module.ts region="ng2-heroes-service"}
  *
- * and that we have included this in our upgrade app {\@link NgModule}
+ * and that we have included this in our upgrade app {@link NgModule}
  *
- * {\@example upgrade/static/ts/module.ts region="ng2-module"}
+ * {@example upgrade/static/ts/module.ts region="ng2-module"}
  *
  * Now we can register the `downgradeInjectable` factory function for the service
  * on an AngularJS module.
  *
- * {\@example upgrade/static/ts/module.ts region="downgrade-ng2-heroes-service"}
+ * {@example upgrade/static/ts/module.ts region="downgrade-ng2-heroes-service"}
  *
  * Inside an AngularJS component's controller we can get hold of the
  * downgraded service via the name we gave when downgrading.
  *
- * {\@example upgrade/static/ts/module.ts region="example-app"}
+ * {@example upgrade/static/ts/module.ts region="example-app"}
  *
- * \@description
+ * @description
  *
  * Takes a `token` that identifies a service provided from Angular.
  *
@@ -586,13 +516,11 @@ class ParentInjectorPromise$1 {
  * The factory function provides access to the Angular service that
  * is identified by the `token` parameter.
  *
- * \@experimental
- * @param {?} token
- * @return {?}
+ * @experimental
  */
 function downgradeInjectable(token) {
-    const /** @type {?} */ factory = function (i) { return i.get(token); };
-    ((factory)).$inject = [INJECTOR_KEY];
+    var factory = function (i) { return i.get(token); };
+    factory.$inject = [INJECTOR_KEY];
     return factory;
 }
 
