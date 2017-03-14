@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.3-1c1085b
+ * @license Angular v4.0.0-rc.3-221899a
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -1004,7 +1004,7 @@
     /**
      * @stable
      */
-    var VERSION = new _angular_core.Version('4.0.0-rc.3-1c1085b');
+    var VERSION = new _angular_core.Version('4.0.0-rc.3-221899a');
     /**
      * @license
      * Copyright Google Inc. All Rights Reserved.
