@@ -34,4 +34,9 @@ export declare class DowngradeComponentAdapter {
     registerCleanup(): void;
     getInjector(): Injector;
     private updateInput(prop, prevValue, currValue);
+    groupProjectableNodes(): Node[][];
+    /**
+     * Group a set of DOM nodes into `ngContent` groups, based on the given content selectors.
+     */
+    private _groupNodesBySelector(ngContentSelectors, nodes);
 }

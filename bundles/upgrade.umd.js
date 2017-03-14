@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.3-eedca09
+ * @license Angular v4.0.0-rc.3-1c1085b
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@
     /**
      * @stable
      */
-    var VERSION = new _angular_core.Version('4.0.0-rc.3-eedca09');
+    var VERSION = new _angular_core.Version('4.0.0-rc.3-1c1085b');
     /**
      * @license
      * Copyright Google Inc. All Rights Reserved.
@@ -80,16 +80,482 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var ContentProjectionHelper = (function () {
-        function ContentProjectionHelper() {
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */ var TagContentType;
+    (function (TagContentType) {
+        TagContentType[TagContentType["RAW_TEXT"] = 0] = "RAW_TEXT";
+        TagContentType[TagContentType["ESCAPABLE_RAW_TEXT"] = 1] = "ESCAPABLE_RAW_TEXT";
+        TagContentType[TagContentType["PARSABLE_DATA"] = 2] = "PARSABLE_DATA";
+    })(TagContentType || (TagContentType = {}));
+    var HtmlTagDefinition = (function () {
+        function HtmlTagDefinition(_a) {
+            var _b = _a === void 0 ? {} : _a, closedByChildren = _b.closedByChildren, requiredParents = _b.requiredParents, implicitNamespacePrefix = _b.implicitNamespacePrefix, _c = _b.contentType, contentType = _c === void 0 ? TagContentType.PARSABLE_DATA : _c, _d = _b.closedByParent, closedByParent = _d === void 0 ? false : _d, _e = _b.isVoid, isVoid = _e === void 0 ? false : _e, _f = _b.ignoreFirstLf, ignoreFirstLf = _f === void 0 ? false : _f;
+            var _this = this;
+            this.closedByChildren = {};
+            this.closedByParent = false;
+            this.canSelfClose = false;
+            if (closedByChildren && closedByChildren.length > 0) {
+                closedByChildren.forEach(function (tagName) { return _this.closedByChildren[tagName] = true; });
+            }
+            this.isVoid = isVoid;
+            this.closedByParent = closedByParent || isVoid;
+            if (requiredParents && requiredParents.length > 0) {
+                this.requiredParents = {};
+                // The first parent is the list is automatically when none of the listed parents are present
+                this.parentToAdd = requiredParents[0];
+                requiredParents.forEach(function (tagName) { return _this.requiredParents[tagName] = true; });
+            }
+            this.implicitNamespacePrefix = implicitNamespacePrefix;
+            this.contentType = contentType;
+            this.ignoreFirstLf = ignoreFirstLf;
         }
-        ContentProjectionHelper.prototype.groupProjectableNodes = function ($injector, component, nodes) {
-            // By default, do not support multi-slot projection,
-            // as `upgrade/static` does not support it yet.
-            return [nodes];
+        HtmlTagDefinition.prototype.requireExtraParent = function (currentParent) {
+            if (!this.requiredParents) {
+                return false;
+            }
+            if (!currentParent) {
+                return true;
+            }
+            var lcParent = currentParent.toLowerCase();
+            var isParentTemplate = lcParent === 'template' || currentParent === 'ng-template';
+            return !isParentTemplate && this.requiredParents[lcParent] != true;
         };
-        return ContentProjectionHelper;
+        HtmlTagDefinition.prototype.isClosedByChild = function (name) {
+            return this.isVoid || name.toLowerCase() in this.closedByChildren;
+        };
+        return HtmlTagDefinition;
     }());
+    // see http://www.w3.org/TR/html51/syntax.html#optional-tags
+    // This implementation does not fully conform to the HTML5 spec.
+    var TAG_DEFINITIONS = {
+        'base': new HtmlTagDefinition({ isVoid: true }),
+        'meta': new HtmlTagDefinition({ isVoid: true }),
+        'area': new HtmlTagDefinition({ isVoid: true }),
+        'embed': new HtmlTagDefinition({ isVoid: true }),
+        'link': new HtmlTagDefinition({ isVoid: true }),
+        'img': new HtmlTagDefinition({ isVoid: true }),
+        'input': new HtmlTagDefinition({ isVoid: true }),
+        'param': new HtmlTagDefinition({ isVoid: true }),
+        'hr': new HtmlTagDefinition({ isVoid: true }),
+        'br': new HtmlTagDefinition({ isVoid: true }),
+        'source': new HtmlTagDefinition({ isVoid: true }),
+        'track': new HtmlTagDefinition({ isVoid: true }),
+        'wbr': new HtmlTagDefinition({ isVoid: true }),
+        'p': new HtmlTagDefinition({
+            closedByChildren: [
+                'address', 'article', 'aside', 'blockquote', 'div', 'dl', 'fieldset', 'footer', 'form',
+                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr',
+                'main', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul'
+            ],
+            closedByParent: true
+        }),
+        'thead': new HtmlTagDefinition({ closedByChildren: ['tbody', 'tfoot'] }),
+        'tbody': new HtmlTagDefinition({ closedByChildren: ['tbody', 'tfoot'], closedByParent: true }),
+        'tfoot': new HtmlTagDefinition({ closedByChildren: ['tbody'], closedByParent: true }),
+        'tr': new HtmlTagDefinition({
+            closedByChildren: ['tr'],
+            requiredParents: ['tbody', 'tfoot', 'thead'],
+            closedByParent: true
+        }),
+        'td': new HtmlTagDefinition({ closedByChildren: ['td', 'th'], closedByParent: true }),
+        'th': new HtmlTagDefinition({ closedByChildren: ['td', 'th'], closedByParent: true }),
+        'col': new HtmlTagDefinition({ requiredParents: ['colgroup'], isVoid: true }),
+        'svg': new HtmlTagDefinition({ implicitNamespacePrefix: 'svg' }),
+        'math': new HtmlTagDefinition({ implicitNamespacePrefix: 'math' }),
+        'li': new HtmlTagDefinition({ closedByChildren: ['li'], closedByParent: true }),
+        'dt': new HtmlTagDefinition({ closedByChildren: ['dt', 'dd'] }),
+        'dd': new HtmlTagDefinition({ closedByChildren: ['dt', 'dd'], closedByParent: true }),
+        'rb': new HtmlTagDefinition({ closedByChildren: ['rb', 'rt', 'rtc', 'rp'], closedByParent: true }),
+        'rt': new HtmlTagDefinition({ closedByChildren: ['rb', 'rt', 'rtc', 'rp'], closedByParent: true }),
+        'rtc': new HtmlTagDefinition({ closedByChildren: ['rb', 'rtc', 'rp'], closedByParent: true }),
+        'rp': new HtmlTagDefinition({ closedByChildren: ['rb', 'rt', 'rtc', 'rp'], closedByParent: true }),
+        'optgroup': new HtmlTagDefinition({ closedByChildren: ['optgroup'], closedByParent: true }),
+        'option': new HtmlTagDefinition({ closedByChildren: ['option', 'optgroup'], closedByParent: true }),
+        'pre': new HtmlTagDefinition({ ignoreFirstLf: true }),
+        'listing': new HtmlTagDefinition({ ignoreFirstLf: true }),
+        'style': new HtmlTagDefinition({ contentType: TagContentType.RAW_TEXT }),
+        'script': new HtmlTagDefinition({ contentType: TagContentType.RAW_TEXT }),
+        'title': new HtmlTagDefinition({ contentType: TagContentType.ESCAPABLE_RAW_TEXT }),
+        'textarea': new HtmlTagDefinition({ contentType: TagContentType.ESCAPABLE_RAW_TEXT, ignoreFirstLf: true }),
+    };
+    var _DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
+    function getHtmlTagDefinition(tagName) {
+        return TAG_DEFINITIONS[tagName.toLowerCase()] || _DEFAULT_TAG_DEFINITION;
+    }
+    var _SELECTOR_REGEXP = new RegExp('(\\:not\\()|' +
+        '([-\\w]+)|' +
+        '(?:\\.([-\\w]+))|' +
+        // "-" should appear first in the regexp below as FF31 parses "[.-\w]" as a range
+        '(?:\\[([-.\\w*]+)(?:=([^\\]]*))?\\])|' +
+        '(\\))|' +
+        '(\\s*,\\s*)', // ","
+    'g');
+    /**
+     * A css selector contains an element name,
+     * css classes and attribute/value pairs with the purpose
+     * of selecting subsets out of them.
+     */
+    var CssSelector = (function () {
+        function CssSelector() {
+            this.element = null;
+            this.classNames = [];
+            this.attrs = [];
+            this.notSelectors = [];
+        }
+        CssSelector.parse = function (selector) {
+            var results = [];
+            var _addResult = function (res, cssSel) {
+                if (cssSel.notSelectors.length > 0 && !cssSel.element && cssSel.classNames.length == 0 &&
+                    cssSel.attrs.length == 0) {
+                    cssSel.element = '*';
+                }
+                res.push(cssSel);
+            };
+            var cssSelector = new CssSelector();
+            var match;
+            var current = cssSelector;
+            var inNot = false;
+            _SELECTOR_REGEXP.lastIndex = 0;
+            while (match = _SELECTOR_REGEXP.exec(selector)) {
+                if (match[1]) {
+                    if (inNot) {
+                        throw new Error('Nesting :not is not allowed in a selector');
+                    }
+                    inNot = true;
+                    current = new CssSelector();
+                    cssSelector.notSelectors.push(current);
+                }
+                if (match[2]) {
+                    current.setElement(match[2]);
+                }
+                if (match[3]) {
+                    current.addClassName(match[3]);
+                }
+                if (match[4]) {
+                    current.addAttribute(match[4], match[5]);
+                }
+                if (match[6]) {
+                    inNot = false;
+                    current = cssSelector;
+                }
+                if (match[7]) {
+                    if (inNot) {
+                        throw new Error('Multiple selectors in :not are not supported');
+                    }
+                    _addResult(results, cssSelector);
+                    cssSelector = current = new CssSelector();
+                }
+            }
+            _addResult(results, cssSelector);
+            return results;
+        };
+        CssSelector.prototype.isElementSelector = function () {
+            return this.hasElementSelector() && this.classNames.length == 0 && this.attrs.length == 0 &&
+                this.notSelectors.length === 0;
+        };
+        CssSelector.prototype.hasElementSelector = function () { return !!this.element; };
+        CssSelector.prototype.setElement = function (element) {
+            if (element === void 0) {
+                element = null;
+            }
+            this.element = element;
+        };
+        /** Gets a template string for an element that matches the selector. */
+        CssSelector.prototype.getMatchingElementTemplate = function () {
+            var tagName = this.element || 'div';
+            var classAttr = this.classNames.length > 0 ? " class=\"" + this.classNames.join(' ') + "\"" : '';
+            var attrs = '';
+            for (var i = 0; i < this.attrs.length; i += 2) {
+                var attrName = this.attrs[i];
+                var attrValue = this.attrs[i + 1] !== '' ? "=\"" + this.attrs[i + 1] + "\"" : '';
+                attrs += " " + attrName + attrValue;
+            }
+            return getHtmlTagDefinition(tagName).isVoid ? "<" + tagName + classAttr + attrs + "/>" :
+                "<" + tagName + classAttr + attrs + "></" + tagName + ">";
+        };
+        CssSelector.prototype.addAttribute = function (name, value) {
+            if (value === void 0) {
+                value = '';
+            }
+            this.attrs.push(name, value && value.toLowerCase() || '');
+        };
+        CssSelector.prototype.addClassName = function (name) { this.classNames.push(name.toLowerCase()); };
+        CssSelector.prototype.toString = function () {
+            var res = this.element || '';
+            if (this.classNames) {
+                this.classNames.forEach(function (klass) { return res += "." + klass; });
+            }
+            if (this.attrs) {
+                for (var i = 0; i < this.attrs.length; i += 2) {
+                    var name_1 = this.attrs[i];
+                    var value = this.attrs[i + 1];
+                    res += "[" + name_1 + (value ? '=' + value : '') + "]";
+                }
+            }
+            this.notSelectors.forEach(function (notSelector) { return res += ":not(" + notSelector + ")"; });
+            return res;
+        };
+        return CssSelector;
+    }());
+    /**
+     * Reads a list of CssSelectors and allows to calculate which ones
+     * are contained in a given CssSelector.
+     */
+    var SelectorMatcher = (function () {
+        function SelectorMatcher() {
+            this._elementMap = new Map();
+            this._elementPartialMap = new Map();
+            this._classMap = new Map();
+            this._classPartialMap = new Map();
+            this._attrValueMap = new Map();
+            this._attrValuePartialMap = new Map();
+            this._listContexts = [];
+        }
+        SelectorMatcher.createNotMatcher = function (notSelectors) {
+            var notMatcher = new SelectorMatcher();
+            notMatcher.addSelectables(notSelectors, null);
+            return notMatcher;
+        };
+        SelectorMatcher.prototype.addSelectables = function (cssSelectors, callbackCtxt) {
+            var listContext = null;
+            if (cssSelectors.length > 1) {
+                listContext = new SelectorListContext(cssSelectors);
+                this._listContexts.push(listContext);
+            }
+            for (var i = 0; i < cssSelectors.length; i++) {
+                this._addSelectable(cssSelectors[i], callbackCtxt, listContext);
+            }
+        };
+        /**
+         * Add an object that can be found later on by calling `match`.
+         * @param cssSelector A css selector
+         * @param callbackCtxt An opaque object that will be given to the callback of the `match` function
+         */
+        SelectorMatcher.prototype._addSelectable = function (cssSelector, callbackCtxt, listContext) {
+            var matcher = this;
+            var element = cssSelector.element;
+            var classNames = cssSelector.classNames;
+            var attrs = cssSelector.attrs;
+            var selectable = new SelectorContext(cssSelector, callbackCtxt, listContext);
+            if (element) {
+                var isTerminal = attrs.length === 0 && classNames.length === 0;
+                if (isTerminal) {
+                    this._addTerminal(matcher._elementMap, element, selectable);
+                }
+                else {
+                    matcher = this._addPartial(matcher._elementPartialMap, element);
+                }
+            }
+            if (classNames) {
+                for (var i = 0; i < classNames.length; i++) {
+                    var isTerminal = attrs.length === 0 && i === classNames.length - 1;
+                    var className = classNames[i];
+                    if (isTerminal) {
+                        this._addTerminal(matcher._classMap, className, selectable);
+                    }
+                    else {
+                        matcher = this._addPartial(matcher._classPartialMap, className);
+                    }
+                }
+            }
+            if (attrs) {
+                for (var i = 0; i < attrs.length; i += 2) {
+                    var isTerminal = i === attrs.length - 2;
+                    var name_2 = attrs[i];
+                    var value = attrs[i + 1];
+                    if (isTerminal) {
+                        var terminalMap = matcher._attrValueMap;
+                        var terminalValuesMap = terminalMap.get(name_2);
+                        if (!terminalValuesMap) {
+                            terminalValuesMap = new Map();
+                            terminalMap.set(name_2, terminalValuesMap);
+                        }
+                        this._addTerminal(terminalValuesMap, value, selectable);
+                    }
+                    else {
+                        var partialMap = matcher._attrValuePartialMap;
+                        var partialValuesMap = partialMap.get(name_2);
+                        if (!partialValuesMap) {
+                            partialValuesMap = new Map();
+                            partialMap.set(name_2, partialValuesMap);
+                        }
+                        matcher = this._addPartial(partialValuesMap, value);
+                    }
+                }
+            }
+        };
+        SelectorMatcher.prototype._addTerminal = function (map, name, selectable) {
+            var terminalList = map.get(name);
+            if (!terminalList) {
+                terminalList = [];
+                map.set(name, terminalList);
+            }
+            terminalList.push(selectable);
+        };
+        SelectorMatcher.prototype._addPartial = function (map, name) {
+            var matcher = map.get(name);
+            if (!matcher) {
+                matcher = new SelectorMatcher();
+                map.set(name, matcher);
+            }
+            return matcher;
+        };
+        /**
+         * Find the objects that have been added via `addSelectable`
+         * whose css selector is contained in the given css selector.
+         * @param cssSelector A css selector
+         * @param matchedCallback This callback will be called with the object handed into `addSelectable`
+         * @return boolean true if a match was found
+        */
+        SelectorMatcher.prototype.match = function (cssSelector, matchedCallback) {
+            var result = false;
+            var element = cssSelector.element;
+            var classNames = cssSelector.classNames;
+            var attrs = cssSelector.attrs;
+            for (var i = 0; i < this._listContexts.length; i++) {
+                this._listContexts[i].alreadyMatched = false;
+            }
+            result = this._matchTerminal(this._elementMap, element, cssSelector, matchedCallback) || result;
+            result = this._matchPartial(this._elementPartialMap, element, cssSelector, matchedCallback) ||
+                result;
+            if (classNames) {
+                for (var i = 0; i < classNames.length; i++) {
+                    var className = classNames[i];
+                    result =
+                        this._matchTerminal(this._classMap, className, cssSelector, matchedCallback) || result;
+                    result =
+                        this._matchPartial(this._classPartialMap, className, cssSelector, matchedCallback) ||
+                            result;
+                }
+            }
+            if (attrs) {
+                for (var i = 0; i < attrs.length; i += 2) {
+                    var name_3 = attrs[i];
+                    var value = attrs[i + 1];
+                    var terminalValuesMap = this._attrValueMap.get(name_3);
+                    if (value) {
+                        result =
+                            this._matchTerminal(terminalValuesMap, '', cssSelector, matchedCallback) || result;
+                    }
+                    result =
+                        this._matchTerminal(terminalValuesMap, value, cssSelector, matchedCallback) || result;
+                    var partialValuesMap = this._attrValuePartialMap.get(name_3);
+                    if (value) {
+                        result = this._matchPartial(partialValuesMap, '', cssSelector, matchedCallback) || result;
+                    }
+                    result =
+                        this._matchPartial(partialValuesMap, value, cssSelector, matchedCallback) || result;
+                }
+            }
+            return result;
+        };
+        /** @internal */
+        SelectorMatcher.prototype._matchTerminal = function (map, name, cssSelector, matchedCallback) {
+            if (!map || typeof name !== 'string') {
+                return false;
+            }
+            var selectables = map.get(name) || [];
+            var starSelectables = map.get('*');
+            if (starSelectables) {
+                selectables = selectables.concat(starSelectables);
+            }
+            if (selectables.length === 0) {
+                return false;
+            }
+            var selectable;
+            var result = false;
+            for (var i = 0; i < selectables.length; i++) {
+                selectable = selectables[i];
+                result = selectable.finalize(cssSelector, matchedCallback) || result;
+            }
+            return result;
+        };
+        /** @internal */
+        SelectorMatcher.prototype._matchPartial = function (map, name, cssSelector, matchedCallback) {
+            if (!map || typeof name !== 'string') {
+                return false;
+            }
+            var nestedSelector = map.get(name);
+            if (!nestedSelector) {
+                return false;
+            }
+            // TODO(perf): get rid of recursion and measure again
+            // TODO(perf): don't pass the whole selector into the recursion,
+            // but only the not processed parts
+            return nestedSelector.match(cssSelector, matchedCallback);
+        };
+        return SelectorMatcher;
+    }());
+    var SelectorListContext = (function () {
+        function SelectorListContext(selectors) {
+            this.selectors = selectors;
+            this.alreadyMatched = false;
+        }
+        return SelectorListContext;
+    }());
+    // Store context to pass back selector and context when a selector is matched
+    var SelectorContext = (function () {
+        function SelectorContext(selector, cbContext, listContext) {
+            this.selector = selector;
+            this.cbContext = cbContext;
+            this.listContext = listContext;
+            this.notSelectors = selector.notSelectors;
+        }
+        SelectorContext.prototype.finalize = function (cssSelector, callback) {
+            var result = true;
+            if (this.notSelectors.length > 0 && (!this.listContext || !this.listContext.alreadyMatched)) {
+                var notMatcher = SelectorMatcher.createNotMatcher(this.notSelectors);
+                result = !notMatcher.match(cssSelector, null);
+            }
+            if (result && callback && (!this.listContext || !this.listContext.alreadyMatched)) {
+                if (this.listContext) {
+                    this.listContext.alreadyMatched = true;
+                }
+                callback(this.selector, this.cbContext);
+            }
+            return result;
+        };
+        return SelectorContext;
+    }());
+    /*
+     * The following items are copied from the Angular Compiler to be used here
+     * without the need to import the entire compiler into the build
+     */
+    var CLASS_ATTR = 'class';
+    function createElementCssSelector(elementName, attributes) {
+        var cssSelector = new CssSelector();
+        var elNameNoNs = splitNsName(elementName)[1];
+        cssSelector.setElement(elNameNoNs);
+        for (var i = 0; i < attributes.length; i++) {
+            var attrName = attributes[i][0];
+            var attrNameNoNs = splitNsName(attrName)[1];
+            var attrValue = attributes[i][1];
+            cssSelector.addAttribute(attrNameNoNs, attrValue);
+            if (attrName.toLowerCase() == CLASS_ATTR) {
+                var classes = splitClasses(attrValue);
+                classes.forEach(function (className) { return cssSelector.addClassName(className); });
+            }
+        }
+        return cssSelector;
+    }
+    function splitNsName(elementName) {
+        if (elementName[0] != ':') {
+            return [null, elementName];
+        }
+        var colonIndex = elementName.indexOf(':', 1);
+        if (colonIndex == -1) {
+            throw new Error("Unsupported format \"" + elementName + "\" expecting \":namespace:name\"");
+        }
+        return [elementName.slice(1, colonIndex), elementName.slice(colonIndex + 1)];
+    }
+    function splitClasses(classAttrValue) {
+        return classAttrValue.trim().split(/\s+/g);
+    }
     /**
      * @license
      * Copyright Google Inc. All Rights Reserved.
@@ -121,6 +587,30 @@
             this.bindonAttr = "bindon" + capitalAttr;
         };
         return PropertyBinding;
+    }());
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
+    /**
+     * This class gives an extension point between the static and dynamic versions
+     * of ngUpgrade:
+     * * In the static version (this one) we must specify them manually as part of
+     *   the call to `downgradeComponent(...)`.
+     * * In the dynamic version (`DynamicNgContentSelectorHelper`) we are able to
+     *   ask the compiler for the selectors of a component.
+     */
+    var NgContentSelectorHelper = (function () {
+        function NgContentSelectorHelper() {
+        }
+        NgContentSelectorHelper.prototype.getNgContentSelectors = function (info) {
+            // if no selectors are passed then default to a single "wildcard" selector
+            return info.selectors || ['*'];
+        };
+        return NgContentSelectorHelper;
     }());
     /**
      * @license
@@ -215,9 +705,7 @@
         DowngradeComponentAdapter.prototype.compileContents = function () {
             var _this = this;
             var compiledProjectableNodes = [];
-            // The projected content has to be grouped, before it is compiled.
-            var projectionHelper = this.parentInjector.get(ContentProjectionHelper);
-            var projectableNodes = projectionHelper.groupProjectableNodes(this.$injector, this.info.component, this.element.contents());
+            var projectableNodes = this.groupProjectableNodes();
             var linkFns = projectableNodes.map(function (nodes) { return _this.$compile(nodes); });
             this.element.empty();
             linkFns.forEach(function (linkFn) {
@@ -354,6 +842,49 @@
             }
             this.component[prop] = currValue;
         };
+        DowngradeComponentAdapter.prototype.groupProjectableNodes = function () {
+            var ngContentSelectorHelper = this.parentInjector.get(NgContentSelectorHelper);
+            var ngContentSelectors = ngContentSelectorHelper.getNgContentSelectors(this.info);
+            if (!ngContentSelectors) {
+                throw new Error('Expecting ngContentSelectors for: ' + getComponentName(this.info.component));
+            }
+            return this._groupNodesBySelector(ngContentSelectors, this.element.contents());
+        };
+        /**
+         * Group a set of DOM nodes into `ngContent` groups, based on the given content selectors.
+         */
+        DowngradeComponentAdapter.prototype._groupNodesBySelector = function (ngContentSelectors, nodes) {
+            var projectableNodes = [];
+            var matcher = new SelectorMatcher();
+            var wildcardNgContentIndex;
+            for (var i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
+                projectableNodes[i] = [];
+                var selector = ngContentSelectors[i];
+                if (selector === '*') {
+                    wildcardNgContentIndex = i;
+                }
+                else {
+                    matcher.addSelectables(CssSelector.parse(selector), i);
+                }
+            }
+            var _loop_1 = function (j, jj) {
+                var ngContentIndices = [];
+                var node = nodes[j];
+                var selector = createElementCssSelector(node.nodeName.toLowerCase(), getAttributesAsArray(node));
+                matcher.match(selector, function (_, index) { return ngContentIndices.push(index); });
+                ngContentIndices.sort();
+                if (wildcardNgContentIndex !== undefined) {
+                    ngContentIndices.push(wildcardNgContentIndex);
+                }
+                if (ngContentIndices.length) {
+                    projectableNodes[ngContentIndices[0]].push(node);
+                }
+            };
+            for (var j = 0, jj = nodes.length; j < jj; ++j) {
+                _loop_1(j, jj);
+            }
+            return projectableNodes;
+        };
         return DowngradeComponentAdapter;
     }());
     var downgradeCount = 0;
@@ -386,6 +917,7 @@
      * We must do the following:
      * * specify the Angular component class that is to be downgraded
      * * specify all inputs and outputs that the AngularJS component expects
+     * * specify the selectors used in any `ng-content` elements in the component's template
      *
      * @description
      *
@@ -395,12 +927,20 @@
      * The parameter contains information about the Component that is being downgraded:
      *
      * * `component: Type<any>`: The type of the Component that will be downgraded
-     * * `inputs: string[]`: A collection of strings that specify what inputs the component accepts.
-     * * `outputs: string[]`: A collection of strings that specify what outputs the component emits.
+     * * `inputs: string[]`: A collection of strings that specify what inputs the component accepts
+     * * `outputs: string[]`: A collection of strings that specify what outputs the component emits
+     * * `selectors: string[]`: A collection of strings that specify what selectors are expected on
+     *   `ng-content` elements in the template to enable content projection (a.k.a. transclusion in
+     *   AngularJS)
      *
      * The `inputs` and `outputs` are strings that map the names of properties to camelCased
      * attribute names. They are of the form `"prop: attr"`; or simply `"propAndAttr" where the
      * property and attribute have the same identifier.
+     *
+     * The `selectors` are the values of the `select` attribute of each of the `ng-content` elements
+     * that appear in the downgraded component's template.
+     * These selectors must be provided in the order that they appear in the template as they are
+     * mapped by index to the projected nodes.
      *
      * @experimental
      */
@@ -526,65 +1066,35 @@
         factory.$inject = [INJECTOR_KEY];
         return factory;
     }
-    var DynamicContentProjectionHelper = (function (_super) {
-        __extends(DynamicContentProjectionHelper, _super);
-        function DynamicContentProjectionHelper() {
-            return _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * See `NgContentSelectorHelper` for more information about this class.
+     */
+    var DynamicNgContentSelectorHelper = (function (_super) {
+        __extends(DynamicNgContentSelectorHelper, _super);
+        /**
+         * @param {?} compiler
+         */
+        function DynamicNgContentSelectorHelper(compiler) {
+            var _this = _super.call(this) || this;
+            _this.compiler = compiler;
+            return _this;
         }
         /**
-         * @param {?} $injector
-         * @param {?} component
-         * @param {?} nodes
+         * @param {?} info
          * @return {?}
          */
-        DynamicContentProjectionHelper.prototype.groupProjectableNodes = function ($injector, component, nodes) {
-            var /** @type {?} */ ng2Compiler = ($injector.get(COMPILER_KEY));
-            var /** @type {?} */ ngContentSelectors = ng2Compiler.getNgContentSelectors(component);
-            if (!ngContentSelectors) {
-                throw new Error('Expecting ngContentSelectors for: ' + getComponentName(component));
-            }
-            return this.groupNodesBySelector(ngContentSelectors, nodes);
+        DynamicNgContentSelectorHelper.prototype.getNgContentSelectors = function (info) {
+            return this.compiler.getNgContentSelectors(info.component);
         };
-        /**
-         * Group a set of DOM nodes into `ngContent` groups, based on the given content selectors.
-         * @param {?} ngContentSelectors
-         * @param {?} nodes
-         * @return {?}
-         */
-        DynamicContentProjectionHelper.prototype.groupNodesBySelector = function (ngContentSelectors, nodes) {
-            var /** @type {?} */ projectableNodes = [];
-            var /** @type {?} */ matcher = new _angular_compiler.SelectorMatcher();
-            var /** @type {?} */ wildcardNgContentIndex;
-            for (var /** @type {?} */ i = 0, /** @type {?} */ ii = ngContentSelectors.length; i < ii; ++i) {
-                projectableNodes[i] = [];
-                var /** @type {?} */ selector = ngContentSelectors[i];
-                if (selector === '*') {
-                    wildcardNgContentIndex = i;
-                }
-                else {
-                    matcher.addSelectables(_angular_compiler.CssSelector.parse(selector), i);
-                }
-            }
-            var _loop_1 = function (j, jj) {
-                var /** @type {?} */ ngContentIndices = [];
-                var /** @type {?} */ node = nodes[j];
-                var /** @type {?} */ selector = _angular_compiler.createElementCssSelector(node.nodeName.toLowerCase(), getAttributesAsArray(node));
-                matcher.match(selector, function (_, index) { return ngContentIndices.push(index); });
-                ngContentIndices.sort();
-                if (wildcardNgContentIndex !== undefined) {
-                    ngContentIndices.push(wildcardNgContentIndex);
-                }
-                if (ngContentIndices.length) {
-                    projectableNodes[ngContentIndices[0]].push(node);
-                }
-            };
-            for (var /** @type {?} */ j = 0, /** @type {?} */ jj = nodes.length; j < jj; ++j) {
-                _loop_1(/** @type {?} */ j, /** @type {?} */ jj);
-            }
-            return projectableNodes;
-        };
-        return DynamicContentProjectionHelper;
-    }(ContentProjectionHelper));
+        return DynamicNgContentSelectorHelper;
+    }(NgContentSelectorHelper));
+    DynamicNgContentSelectorHelper.decorators = [
+        { type: _angular_core.Injectable },
+    ];
+    /** @nocollapse */
+    DynamicNgContentSelectorHelper.ctorParameters = function () { return [
+        { type: _angular_core.Compiler, },
+    ]; };
     var /** @type {?} */ CAMEL_CASE = /([A-Z])/g;
     var /** @type {?} */ INITIAL_VALUE$1 = {
         __UNINITIALIZED__: true
@@ -1356,8 +1866,8 @@
                     resolve();
                 }
             });
-            Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(function (_a) {
-                var ng1Injector = _a[0];
+            Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(function (_g) {
+                var ng1Injector = _g[0];
                 element(element$$).data(controllerKey(INJECTOR_KEY), _this.moduleRef.injector);
                 _this.moduleRef.injector.get(_angular_core.NgZone).run(function () { ((upgrade))._bootstrapDone(_this.moduleRef, ng1Injector); });
             }, onError);
@@ -1514,7 +2024,7 @@
                             providers: [
                                 { provide: $INJECTOR, useFactory: function () { return ng1Injector; } },
                                 { provide: $COMPILE, useFactory: function () { return ng1Injector.get($COMPILE); } },
-                                { provide: ContentProjectionHelper, useClass: DynamicContentProjectionHelper },
+                                { provide: NgContentSelectorHelper, useClass: DynamicNgContentSelectorHelper },
                                 _this.upgradedProviders
                             ],
                             imports: [_this.ng2AppModule],

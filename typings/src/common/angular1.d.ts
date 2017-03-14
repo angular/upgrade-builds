@@ -211,7 +211,7 @@ export interface INgModelController {
 }
 export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config: IAngularBootstrapConfig) => void;
 export declare const module: (prefix: string, dependencies?: string[]) => IModule;
-export declare const element: (e: Element) => IAugmentedJQuery;
+export declare const element: (e: string | Element) => IAugmentedJQuery;
 export declare const version: {
     major: number;
 };

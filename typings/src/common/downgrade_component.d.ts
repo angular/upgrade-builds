@@ -35,6 +35,7 @@ import { Type } from '@angular/core';
  * We must do the following:
  * * specify the Angular component class that is to be downgraded
  * * specify all inputs and outputs that the AngularJS component expects
+ * * specify the selectors used in any `ng-content` elements in the component's template
  *
  * @description
  *
@@ -44,12 +45,20 @@ import { Type } from '@angular/core';
  * The parameter contains information about the Component that is being downgraded:
  *
  * * `component: Type<any>`: The type of the Component that will be downgraded
- * * `inputs: string[]`: A collection of strings that specify what inputs the component accepts.
- * * `outputs: string[]`: A collection of strings that specify what outputs the component emits.
+ * * `inputs: string[]`: A collection of strings that specify what inputs the component accepts
+ * * `outputs: string[]`: A collection of strings that specify what outputs the component emits
+ * * `selectors: string[]`: A collection of strings that specify what selectors are expected on
+ *   `ng-content` elements in the template to enable content projection (a.k.a. transclusion in
+ *   AngularJS)
  *
  * The `inputs` and `outputs` are strings that map the names of properties to camelCased
  * attribute names. They are of the form `"prop: attr"`; or simply `"propAndAttr" where the
  * property and attribute have the same identifier.
+ *
+ * The `selectors` are the values of the `select` attribute of each of the `ng-content` elements
+ * that appear in the downgraded component's template.
+ * These selectors must be provided in the order that they appear in the template as they are
+ * mapped by index to the projected nodes.
  *
  * @experimental
  */
@@ -57,4 +66,5 @@ export declare function downgradeComponent(info: {
     component: Type<any>;
     inputs?: string[];
     outputs?: string[];
+    selectors?: string[];
 }): any;

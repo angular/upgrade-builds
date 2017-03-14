@@ -10,6 +10,7 @@ export interface ComponentInfo {
     component: Type<any>;
     inputs?: string[];
     outputs?: string[];
+    selectors?: string[];
 }
 /**
  * A `PropertyBinding` represents a mapping between a property name
