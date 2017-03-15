@@ -7,10 +7,8 @@
  */
 import { ComponentFactory, Injector } from '@angular/core';
 import * as angular from './angular1';
-import { ComponentInfo } from './component_info';
 export declare class DowngradeComponentAdapter {
     private id;
-    private info;
     private element;
     private attrs;
     private scope;
@@ -26,7 +24,7 @@ export declare class DowngradeComponentAdapter {
     private componentRef;
     private component;
     private changeDetector;
-    constructor(id: string, info: ComponentInfo, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>);
+    constructor(id: string, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>);
     compileContents(): Node[][];
     createComponent(projectableNodes: Node[][]): void;
     setupInputs(): void;
@@ -35,8 +33,8 @@ export declare class DowngradeComponentAdapter {
     getInjector(): Injector;
     private updateInput(prop, prevValue, currValue);
     groupProjectableNodes(): Node[][];
-    /**
-     * Group a set of DOM nodes into `ngContent` groups, based on the given content selectors.
-     */
-    private _groupNodesBySelector(ngContentSelectors, nodes);
 }
+/**
+ * Group a set of DOM nodes into `ngContent` groups, based on the given content selectors.
+ */
+export declare function groupNodesBySelector(ngContentSelectors: string[], nodes: Node[]): Node[][];
