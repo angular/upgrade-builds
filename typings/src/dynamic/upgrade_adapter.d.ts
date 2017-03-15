@@ -1,10 +1,3 @@
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 import { CompilerOptions, Injector, NgModuleRef, Type } from '@angular/core';
 import * as angular from '../common/angular1';
 /**
@@ -90,6 +83,7 @@ export declare class UpgradeAdapter {
     private ng2AppModule;
     private compilerOptions;
     private idPrefix;
+    private directiveResolver;
     private downgradedComponents;
     private upgradedProviders;
     private ngZone;
