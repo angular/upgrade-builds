@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.3-4f7d62a
+ * @license Angular v4.0.0-rc.3-5c0ea20
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@
     /**
      * @stable
      */
-    var VERSION = new _angular_core.Version('4.0.0-rc.3-4f7d62a');
+    var VERSION = new _angular_core.Version('4.0.0-rc.3-5c0ea20');
     /**
      * @license
      * Copyright Google Inc. All Rights Reserved.
@@ -1091,7 +1091,9 @@
     DynamicNgContentSelectorHelper.decorators = [
         { type: _angular_core.Injectable },
     ];
-    /** @nocollapse */
+    /**
+     * @nocollapse
+     */
     DynamicNgContentSelectorHelper.ctorParameters = function () { return [
         { type: _angular_core.Compiler, },
     ]; };
@@ -1582,6 +1584,14 @@
             this.idPrefix = "NG2_UPGRADE_" + upgradeCount++ + "_";
             this.directiveResolver = new _angular_compiler.DirectiveResolver();
             this.downgradedComponents = [];
+            /**
+             * An internal map of ng1 components which need to up upgraded to ng2.
+             *
+             * We can't upgrade until injector is instantiated and we can retrieve the component metadata.
+             * For this reason we keep a list of components to upgrade until ng1 injector is bootstrapped.
+             *
+             * \@internal
+             */
             this.ng1ComponentsToBeUpgraded = {};
             this.upgradedProviders = [];
             this.moduleRef = null;
