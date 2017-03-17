@@ -5,13 +5,6 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { Type } from '@angular/core';
-export interface ComponentInfo {
-    component: Type<any>;
-    inputs?: string[];
-    outputs?: string[];
-    selectors?: string[];
-}
 /**
  * A `PropertyBinding` represents a mapping between a property name
  * and an attribute name. It is parsed from a string of the form
@@ -19,7 +12,6 @@ export interface ComponentInfo {
  * and attribute have the same identifier.
  */
 export declare class PropertyBinding {
-    binding: string;
     prop: string;
     attr: string;
     bracketAttr: string;
@@ -28,6 +20,6 @@ export declare class PropertyBinding {
     onAttr: string;
     bindAttr: string;
     bindonAttr: string;
-    constructor(binding: string);
+    constructor(prop: string, attr: string);
     private parseBinding();
 }
