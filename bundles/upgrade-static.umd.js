@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.3-994089d
+ * @license Angular v4.0.0-rc.3-410aa33
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -1004,7 +1004,7 @@
     /**
      * @stable
      */
-    var VERSION = new _angular_core.Version('4.0.0-rc.3-994089d');
+    var VERSION = new _angular_core.Version('4.0.0-rc.3-410aa33');
     /**
      * @license
      * Copyright Google Inc. All Rights Reserved.
@@ -1659,6 +1659,12 @@
         ];
     };
 
+    exports.ɵf = NgContentSelectorHelper;
+    exports.ɵe = angular1Providers;
+    exports.ɵc = compileFactory;
+    exports.ɵa = injectorFactory;
+    exports.ɵd = parseFactory;
+    exports.ɵb = rootScopeFactory;
     exports.downgradeComponent = downgradeComponent;
     exports.downgradeInjectable = downgradeInjectable;
     exports.VERSION = VERSION;

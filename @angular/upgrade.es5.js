@@ -4,17 +4,17 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /**
- * @license Angular v4.0.0-rc.3-994089d
+ * @license Angular v4.0.0-rc.3-410aa33
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { SimpleChange, ReflectiveInjector, Version, NgModule, Testability, Compiler, Injector, NgZone, ComponentFactoryResolver, Injectable, ElementRef, Inject, Directive, EventEmitter } from '@angular/core';
+import { Version, NgModule, Testability, Compiler, Injector, NgZone, ComponentFactoryResolver, SimpleChange, ReflectiveInjector, Injectable, ElementRef, Inject, Directive, EventEmitter } from '@angular/core';
 import { DirectiveResolver } from '@angular/compiler';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
- * @stable
+ * \@stable
  */
-var VERSION = new Version('4.0.0-rc.3-994089d');
+var VERSION = new Version('4.0.0-rc.3-410aa33');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -22,27 +22,30 @@ var VERSION = new Version('4.0.0-rc.3-994089d');
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+/**
+ * @return {?}
+ */
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
-var angular = {
+var /** @type {?} */ angular = ({
     bootstrap: noNg,
     module: noNg,
     element: noNg,
     version: noNg,
     resumeBootstrap: noNg,
     getTestability: noNg
-};
+});
 try {
     if (window.hasOwnProperty('angular')) {
-        angular = window.angular;
+        angular = ((window)).angular;
     }
 }
 catch (e) {
 }
-var bootstrap = angular.bootstrap;
-var module$1 = angular.module;
-var element = angular.element;
+var /** @type {?} */ bootstrap = angular.bootstrap;
+var /** @type {?} */ module$1 = angular.module;
+var /** @type {?} */ element = angular.element;
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -50,46 +53,31 @@ var element = angular.element;
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */ var $COMPILE = '$compile';
-var $CONTROLLER = '$controller';
-var $HTTP_BACKEND = '$httpBackend';
-var $INJECTOR = '$injector';
-var $PARSE = '$parse';
-var $ROOT_SCOPE = '$rootScope';
-var $SCOPE = '$scope';
-var $TEMPLATE_CACHE = '$templateCache';
-var $$TESTABILITY = '$$testability';
-var COMPILER_KEY = '$$angularCompiler';
-var INJECTOR_KEY = '$$angularInjector';
-var NG_ZONE_KEY = '$$angularNgZone';
-var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
-var REQUIRE_NG_MODEL = '?ngModel';
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */ var TagContentType;
-(function (TagContentType) {
-    TagContentType[TagContentType["RAW_TEXT"] = 0] = "RAW_TEXT";
-    TagContentType[TagContentType["ESCAPABLE_RAW_TEXT"] = 1] = "ESCAPABLE_RAW_TEXT";
-    TagContentType[TagContentType["PARSABLE_DATA"] = 2] = "PARSABLE_DATA";
-})(TagContentType || (TagContentType = {}));
+var $COMPILE = '$compile';
+var /** @type {?} */ $CONTROLLER = '$controller';
+var /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
+var /** @type {?} */ $INJECTOR = '$injector';
+var /** @type {?} */ $PARSE = '$parse';
+var /** @type {?} */ $ROOT_SCOPE = '$rootScope';
+var /** @type {?} */ $SCOPE = '$scope';
+var /** @type {?} */ $TEMPLATE_CACHE = '$templateCache';
+var /** @type {?} */ $$TESTABILITY = '$$testability';
+var /** @type {?} */ COMPILER_KEY = '$$angularCompiler';
+var /** @type {?} */ INJECTOR_KEY = '$$angularInjector';
+var /** @type {?} */ NG_ZONE_KEY = '$$angularNgZone';
+var /** @type {?} */ REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
+var /** @type {?} */ REQUIRE_NG_MODEL = '?ngModel';
+var TagContentType = {};
+TagContentType.RAW_TEXT = 0;
+TagContentType.ESCAPABLE_RAW_TEXT = 1;
+TagContentType.PARSABLE_DATA = 2;
+TagContentType[TagContentType.RAW_TEXT] = "RAW_TEXT";
+TagContentType[TagContentType.ESCAPABLE_RAW_TEXT] = "ESCAPABLE_RAW_TEXT";
+TagContentType[TagContentType.PARSABLE_DATA] = "PARSABLE_DATA";
 var HtmlTagDefinition = (function () {
+    /**
+     * @param {?=} __0
+     */
     function HtmlTagDefinition(_a) {
         var _b = _a === void 0 ? {} : _a, closedByChildren = _b.closedByChildren, requiredParents = _b.requiredParents, implicitNamespacePrefix = _b.implicitNamespacePrefix, _c = _b.contentType, contentType = _c === void 0 ? TagContentType.PARSABLE_DATA : _c, _d = _b.closedByParent, closedByParent = _d === void 0 ? false : _d, _e = _b.isVoid, isVoid = _e === void 0 ? false : _e, _f = _b.ignoreFirstLf, ignoreFirstLf = _f === void 0 ? false : _f;
         var _this = this;
@@ -111,6 +99,10 @@ var HtmlTagDefinition = (function () {
         this.contentType = contentType;
         this.ignoreFirstLf = ignoreFirstLf;
     }
+    /**
+     * @param {?} currentParent
+     * @return {?}
+     */
     HtmlTagDefinition.prototype.requireExtraParent = function (currentParent) {
         if (!this.requiredParents) {
             return false;
@@ -118,10 +110,14 @@ var HtmlTagDefinition = (function () {
         if (!currentParent) {
             return true;
         }
-        var lcParent = currentParent.toLowerCase();
-        var isParentTemplate = lcParent === 'template' || currentParent === 'ng-template';
+        var /** @type {?} */ lcParent = currentParent.toLowerCase();
+        var /** @type {?} */ isParentTemplate = lcParent === 'template' || currentParent === 'ng-template';
         return !isParentTemplate && this.requiredParents[lcParent] != true;
     };
+    /**
+     * @param {?} name
+     * @return {?}
+     */
     HtmlTagDefinition.prototype.isClosedByChild = function (name) {
         return this.isVoid || name.toLowerCase() in this.closedByChildren;
     };
@@ -129,7 +125,7 @@ var HtmlTagDefinition = (function () {
 }());
 // see http://www.w3.org/TR/html51/syntax.html#optional-tags
 // This implementation does not fully conform to the HTML5 spec.
-var TAG_DEFINITIONS = {
+var /** @type {?} */ TAG_DEFINITIONS = {
     'base': new HtmlTagDefinition({ isVoid: true }),
     'meta': new HtmlTagDefinition({ isVoid: true }),
     'area': new HtmlTagDefinition({ isVoid: true }),
@@ -180,11 +176,15 @@ var TAG_DEFINITIONS = {
     'title': new HtmlTagDefinition({ contentType: TagContentType.ESCAPABLE_RAW_TEXT }),
     'textarea': new HtmlTagDefinition({ contentType: TagContentType.ESCAPABLE_RAW_TEXT, ignoreFirstLf: true }),
 };
-var _DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
+var /** @type {?} */ _DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
+/**
+ * @param {?} tagName
+ * @return {?}
+ */
 function getHtmlTagDefinition(tagName) {
     return TAG_DEFINITIONS[tagName.toLowerCase()] || _DEFAULT_TAG_DEFINITION;
 }
-var _SELECTOR_REGEXP = new RegExp('(\\:not\\()|' +
+var /** @type {?} */ _SELECTOR_REGEXP = new RegExp('(\\:not\\()|' +
     '([-\\w]+)|' +
     '(?:\\.([-\\w]+))|' +
     // "-" should appear first in the regexp below as FF31 parses "[.-\w]" as a range
@@ -204,19 +204,23 @@ var CssSelector = (function () {
         this.attrs = [];
         this.notSelectors = [];
     }
+    /**
+     * @param {?} selector
+     * @return {?}
+     */
     CssSelector.parse = function (selector) {
-        var results = [];
-        var _addResult = function (res, cssSel) {
+        var /** @type {?} */ results = [];
+        var /** @type {?} */ _addResult = function (res, cssSel) {
             if (cssSel.notSelectors.length > 0 && !cssSel.element && cssSel.classNames.length == 0 &&
                 cssSel.attrs.length == 0) {
                 cssSel.element = '*';
             }
             res.push(cssSel);
         };
-        var cssSelector = new CssSelector();
-        var match;
-        var current = cssSelector;
-        var inNot = false;
+        var /** @type {?} */ cssSelector = new CssSelector();
+        var /** @type {?} */ match;
+        var /** @type {?} */ current = cssSelector;
+        var /** @type {?} */ inNot = false;
         _SELECTOR_REGEXP.lastIndex = 0;
         while (match = _SELECTOR_REGEXP.exec(selector)) {
             if (match[1]) {
@@ -251,47 +255,68 @@ var CssSelector = (function () {
         _addResult(results, cssSelector);
         return results;
     };
+    /**
+     * @return {?}
+     */
     CssSelector.prototype.isElementSelector = function () {
         return this.hasElementSelector() && this.classNames.length == 0 && this.attrs.length == 0 &&
             this.notSelectors.length === 0;
     };
+    /**
+     * @return {?}
+     */
     CssSelector.prototype.hasElementSelector = function () { return !!this.element; };
+    /**
+     * @param {?=} element
+     * @return {?}
+     */
     CssSelector.prototype.setElement = function (element) {
-        if (element === void 0) {
-            element = null;
-        }
+        if (element === void 0) { element = null; }
         this.element = element;
     };
-    /** Gets a template string for an element that matches the selector. */
+    /**
+     * Gets a template string for an element that matches the selector.
+     * @return {?}
+     */
     CssSelector.prototype.getMatchingElementTemplate = function () {
-        var tagName = this.element || 'div';
-        var classAttr = this.classNames.length > 0 ? " class=\"" + this.classNames.join(' ') + "\"" : '';
-        var attrs = '';
-        for (var i = 0; i < this.attrs.length; i += 2) {
-            var attrName = this.attrs[i];
-            var attrValue = this.attrs[i + 1] !== '' ? "=\"" + this.attrs[i + 1] + "\"" : '';
+        var /** @type {?} */ tagName = this.element || 'div';
+        var /** @type {?} */ classAttr = this.classNames.length > 0 ? " class=\"" + this.classNames.join(' ') + "\"" : '';
+        var /** @type {?} */ attrs = '';
+        for (var /** @type {?} */ i = 0; i < this.attrs.length; i += 2) {
+            var /** @type {?} */ attrName = this.attrs[i];
+            var /** @type {?} */ attrValue = this.attrs[i + 1] !== '' ? "=\"" + this.attrs[i + 1] + "\"" : '';
             attrs += " " + attrName + attrValue;
         }
         return getHtmlTagDefinition(tagName).isVoid ? "<" + tagName + classAttr + attrs + "/>" :
             "<" + tagName + classAttr + attrs + "></" + tagName + ">";
     };
+    /**
+     * @param {?} name
+     * @param {?=} value
+     * @return {?}
+     */
     CssSelector.prototype.addAttribute = function (name, value) {
-        if (value === void 0) {
-            value = '';
-        }
+        if (value === void 0) { value = ''; }
         this.attrs.push(name, value && value.toLowerCase() || '');
     };
+    /**
+     * @param {?} name
+     * @return {?}
+     */
     CssSelector.prototype.addClassName = function (name) { this.classNames.push(name.toLowerCase()); };
+    /**
+     * @return {?}
+     */
     CssSelector.prototype.toString = function () {
-        var res = this.element || '';
+        var /** @type {?} */ res = this.element || '';
         if (this.classNames) {
             this.classNames.forEach(function (klass) { return res += "." + klass; });
         }
         if (this.attrs) {
-            for (var i = 0; i < this.attrs.length; i += 2) {
-                var name_1 = this.attrs[i];
-                var value = this.attrs[i + 1];
-                res += "[" + name_1 + (value ? '=' + value : '') + "]";
+            for (var /** @type {?} */ i = 0; i < this.attrs.length; i += 2) {
+                var /** @type {?} */ name = this.attrs[i];
+                var /** @type {?} */ value = this.attrs[i + 1];
+                res += "[" + name + (value ? '=' + value : '') + "]";
             }
         }
         this.notSelectors.forEach(function (notSelector) { return res += ":not(" + notSelector + ")"; });
@@ -313,34 +338,45 @@ var SelectorMatcher = (function () {
         this._attrValuePartialMap = new Map();
         this._listContexts = [];
     }
+    /**
+     * @param {?} notSelectors
+     * @return {?}
+     */
     SelectorMatcher.createNotMatcher = function (notSelectors) {
-        var notMatcher = new SelectorMatcher();
+        var /** @type {?} */ notMatcher = new SelectorMatcher();
         notMatcher.addSelectables(notSelectors, null);
         return notMatcher;
     };
+    /**
+     * @param {?} cssSelectors
+     * @param {?=} callbackCtxt
+     * @return {?}
+     */
     SelectorMatcher.prototype.addSelectables = function (cssSelectors, callbackCtxt) {
-        var listContext = null;
+        var /** @type {?} */ listContext = null;
         if (cssSelectors.length > 1) {
             listContext = new SelectorListContext(cssSelectors);
             this._listContexts.push(listContext);
         }
-        for (var i = 0; i < cssSelectors.length; i++) {
+        for (var /** @type {?} */ i = 0; i < cssSelectors.length; i++) {
             this._addSelectable(cssSelectors[i], callbackCtxt, listContext);
         }
     };
     /**
      * Add an object that can be found later on by calling `match`.
-     * @param cssSelector A css selector
-     * @param callbackCtxt An opaque object that will be given to the callback of the `match` function
+     * @param {?} cssSelector A css selector
+     * @param {?} callbackCtxt An opaque object that will be given to the callback of the `match` function
+     * @param {?} listContext
+     * @return {?}
      */
     SelectorMatcher.prototype._addSelectable = function (cssSelector, callbackCtxt, listContext) {
-        var matcher = this;
-        var element = cssSelector.element;
-        var classNames = cssSelector.classNames;
-        var attrs = cssSelector.attrs;
-        var selectable = new SelectorContext(cssSelector, callbackCtxt, listContext);
+        var /** @type {?} */ matcher = this;
+        var /** @type {?} */ element = cssSelector.element;
+        var /** @type {?} */ classNames = cssSelector.classNames;
+        var /** @type {?} */ attrs = cssSelector.attrs;
+        var /** @type {?} */ selectable = new SelectorContext(cssSelector, callbackCtxt, listContext);
         if (element) {
-            var isTerminal = attrs.length === 0 && classNames.length === 0;
+            var /** @type {?} */ isTerminal = attrs.length === 0 && classNames.length === 0;
             if (isTerminal) {
                 this._addTerminal(matcher._elementMap, element, selectable);
             }
@@ -349,9 +385,9 @@ var SelectorMatcher = (function () {
             }
         }
         if (classNames) {
-            for (var i = 0; i < classNames.length; i++) {
-                var isTerminal = attrs.length === 0 && i === classNames.length - 1;
-                var className = classNames[i];
+            for (var /** @type {?} */ i = 0; i < classNames.length; i++) {
+                var /** @type {?} */ isTerminal = attrs.length === 0 && i === classNames.length - 1;
+                var /** @type {?} */ className = classNames[i];
                 if (isTerminal) {
                     this._addTerminal(matcher._classMap, className, selectable);
                 }
@@ -361,41 +397,52 @@ var SelectorMatcher = (function () {
             }
         }
         if (attrs) {
-            for (var i = 0; i < attrs.length; i += 2) {
-                var isTerminal = i === attrs.length - 2;
-                var name_2 = attrs[i];
-                var value = attrs[i + 1];
+            for (var /** @type {?} */ i = 0; i < attrs.length; i += 2) {
+                var /** @type {?} */ isTerminal = i === attrs.length - 2;
+                var /** @type {?} */ name = attrs[i];
+                var /** @type {?} */ value = attrs[i + 1];
                 if (isTerminal) {
-                    var terminalMap = matcher._attrValueMap;
-                    var terminalValuesMap = terminalMap.get(name_2);
+                    var /** @type {?} */ terminalMap = matcher._attrValueMap;
+                    var /** @type {?} */ terminalValuesMap = terminalMap.get(name);
                     if (!terminalValuesMap) {
                         terminalValuesMap = new Map();
-                        terminalMap.set(name_2, terminalValuesMap);
+                        terminalMap.set(name, terminalValuesMap);
                     }
                     this._addTerminal(terminalValuesMap, value, selectable);
                 }
                 else {
-                    var partialMap = matcher._attrValuePartialMap;
-                    var partialValuesMap = partialMap.get(name_2);
+                    var /** @type {?} */ partialMap = matcher._attrValuePartialMap;
+                    var /** @type {?} */ partialValuesMap = partialMap.get(name);
                     if (!partialValuesMap) {
                         partialValuesMap = new Map();
-                        partialMap.set(name_2, partialValuesMap);
+                        partialMap.set(name, partialValuesMap);
                     }
                     matcher = this._addPartial(partialValuesMap, value);
                 }
             }
         }
     };
+    /**
+     * @param {?} map
+     * @param {?} name
+     * @param {?} selectable
+     * @return {?}
+     */
     SelectorMatcher.prototype._addTerminal = function (map, name, selectable) {
-        var terminalList = map.get(name);
+        var /** @type {?} */ terminalList = map.get(name);
         if (!terminalList) {
             terminalList = [];
             map.set(name, terminalList);
         }
         terminalList.push(selectable);
     };
+    /**
+     * @param {?} map
+     * @param {?} name
+     * @return {?}
+     */
     SelectorMatcher.prototype._addPartial = function (map, name) {
-        var matcher = map.get(name);
+        var /** @type {?} */ matcher = map.get(name);
         if (!matcher) {
             matcher = new SelectorMatcher();
             map.set(name, matcher);
@@ -405,24 +452,24 @@ var SelectorMatcher = (function () {
     /**
      * Find the objects that have been added via `addSelectable`
      * whose css selector is contained in the given css selector.
-     * @param cssSelector A css selector
-     * @param matchedCallback This callback will be called with the object handed into `addSelectable`
-     * @return boolean true if a match was found
-    */
+     * @param {?} cssSelector A css selector
+     * @param {?} matchedCallback This callback will be called with the object handed into `addSelectable`
+     * @return {?} boolean true if a match was found
+     */
     SelectorMatcher.prototype.match = function (cssSelector, matchedCallback) {
-        var result = false;
-        var element = cssSelector.element;
-        var classNames = cssSelector.classNames;
-        var attrs = cssSelector.attrs;
-        for (var i = 0; i < this._listContexts.length; i++) {
+        var /** @type {?} */ result = false;
+        var /** @type {?} */ element = cssSelector.element;
+        var /** @type {?} */ classNames = cssSelector.classNames;
+        var /** @type {?} */ attrs = cssSelector.attrs;
+        for (var /** @type {?} */ i = 0; i < this._listContexts.length; i++) {
             this._listContexts[i].alreadyMatched = false;
         }
         result = this._matchTerminal(this._elementMap, element, cssSelector, matchedCallback) || result;
         result = this._matchPartial(this._elementPartialMap, element, cssSelector, matchedCallback) ||
             result;
         if (classNames) {
-            for (var i = 0; i < classNames.length; i++) {
-                var className = classNames[i];
+            for (var /** @type {?} */ i = 0; i < classNames.length; i++) {
+                var /** @type {?} */ className = classNames[i];
                 result =
                     this._matchTerminal(this._classMap, className, cssSelector, matchedCallback) || result;
                 result =
@@ -431,17 +478,17 @@ var SelectorMatcher = (function () {
             }
         }
         if (attrs) {
-            for (var i = 0; i < attrs.length; i += 2) {
-                var name_3 = attrs[i];
-                var value = attrs[i + 1];
-                var terminalValuesMap = this._attrValueMap.get(name_3);
+            for (var /** @type {?} */ i = 0; i < attrs.length; i += 2) {
+                var /** @type {?} */ name = attrs[i];
+                var /** @type {?} */ value = attrs[i + 1];
+                var /** @type {?} */ terminalValuesMap = this._attrValueMap.get(name);
                 if (value) {
                     result =
                         this._matchTerminal(terminalValuesMap, '', cssSelector, matchedCallback) || result;
                 }
                 result =
                     this._matchTerminal(terminalValuesMap, value, cssSelector, matchedCallback) || result;
-                var partialValuesMap = this._attrValuePartialMap.get(name_3);
+                var /** @type {?} */ partialValuesMap = this._attrValuePartialMap.get(name);
                 if (value) {
                     result = this._matchPartial(partialValuesMap, '', cssSelector, matchedCallback) || result;
                 }
@@ -451,33 +498,47 @@ var SelectorMatcher = (function () {
         }
         return result;
     };
-    /** @internal */
+    /**
+     * \@internal
+     * @param {?} map
+     * @param {?} name
+     * @param {?} cssSelector
+     * @param {?} matchedCallback
+     * @return {?}
+     */
     SelectorMatcher.prototype._matchTerminal = function (map, name, cssSelector, matchedCallback) {
         if (!map || typeof name !== 'string') {
             return false;
         }
-        var selectables = map.get(name) || [];
-        var starSelectables = map.get('*');
+        var /** @type {?} */ selectables = map.get(name) || [];
+        var /** @type {?} */ starSelectables = map.get('*');
         if (starSelectables) {
             selectables = selectables.concat(starSelectables);
         }
         if (selectables.length === 0) {
             return false;
         }
-        var selectable;
-        var result = false;
-        for (var i = 0; i < selectables.length; i++) {
+        var /** @type {?} */ selectable;
+        var /** @type {?} */ result = false;
+        for (var /** @type {?} */ i = 0; i < selectables.length; i++) {
             selectable = selectables[i];
             result = selectable.finalize(cssSelector, matchedCallback) || result;
         }
         return result;
     };
-    /** @internal */
+    /**
+     * \@internal
+     * @param {?} map
+     * @param {?} name
+     * @param {?} cssSelector
+     * @param {?} matchedCallback
+     * @return {?}
+     */
     SelectorMatcher.prototype._matchPartial = function (map, name, cssSelector, matchedCallback) {
         if (!map || typeof name !== 'string') {
             return false;
         }
-        var nestedSelector = map.get(name);
+        var /** @type {?} */ nestedSelector = map.get(name);
         if (!nestedSelector) {
             return false;
         }
@@ -489,24 +550,36 @@ var SelectorMatcher = (function () {
     return SelectorMatcher;
 }());
 var SelectorListContext = (function () {
+    /**
+     * @param {?} selectors
+     */
     function SelectorListContext(selectors) {
         this.selectors = selectors;
         this.alreadyMatched = false;
     }
     return SelectorListContext;
 }());
-// Store context to pass back selector and context when a selector is matched
 var SelectorContext = (function () {
+    /**
+     * @param {?} selector
+     * @param {?} cbContext
+     * @param {?} listContext
+     */
     function SelectorContext(selector, cbContext, listContext) {
         this.selector = selector;
         this.cbContext = cbContext;
         this.listContext = listContext;
         this.notSelectors = selector.notSelectors;
     }
+    /**
+     * @param {?} cssSelector
+     * @param {?} callback
+     * @return {?}
+     */
     SelectorContext.prototype.finalize = function (cssSelector, callback) {
-        var result = true;
+        var /** @type {?} */ result = true;
         if (this.notSelectors.length > 0 && (!this.listContext || !this.listContext.alreadyMatched)) {
-            var notMatcher = SelectorMatcher.createNotMatcher(this.notSelectors);
+            var /** @type {?} */ notMatcher = SelectorMatcher.createNotMatcher(this.notSelectors);
             result = !notMatcher.match(cssSelector, null);
         }
         if (result && callback && (!this.listContext || !this.listContext.alreadyMatched)) {
@@ -523,33 +596,46 @@ var SelectorContext = (function () {
  * The following items are copied from the Angular Compiler to be used here
  * without the need to import the entire compiler into the build
  */
-var CLASS_ATTR = 'class';
+var /** @type {?} */ CLASS_ATTR = 'class';
+/**
+ * @param {?} elementName
+ * @param {?} attributes
+ * @return {?}
+ */
 function createElementCssSelector(elementName, attributes) {
-    var cssSelector = new CssSelector();
-    var elNameNoNs = splitNsName(elementName)[1];
+    var /** @type {?} */ cssSelector = new CssSelector();
+    var /** @type {?} */ elNameNoNs = splitNsName(elementName)[1];
     cssSelector.setElement(elNameNoNs);
-    for (var i = 0; i < attributes.length; i++) {
-        var attrName = attributes[i][0];
-        var attrNameNoNs = splitNsName(attrName)[1];
-        var attrValue = attributes[i][1];
+    for (var /** @type {?} */ i = 0; i < attributes.length; i++) {
+        var /** @type {?} */ attrName = attributes[i][0];
+        var /** @type {?} */ attrNameNoNs = splitNsName(attrName)[1];
+        var /** @type {?} */ attrValue = attributes[i][1];
         cssSelector.addAttribute(attrNameNoNs, attrValue);
         if (attrName.toLowerCase() == CLASS_ATTR) {
-            var classes = splitClasses(attrValue);
+            var /** @type {?} */ classes = splitClasses(attrValue);
             classes.forEach(function (className) { return cssSelector.addClassName(className); });
         }
     }
     return cssSelector;
 }
+/**
+ * @param {?} elementName
+ * @return {?}
+ */
 function splitNsName(elementName) {
     if (elementName[0] != ':') {
         return [null, elementName];
     }
-    var colonIndex = elementName.indexOf(':', 1);
+    var /** @type {?} */ colonIndex = elementName.indexOf(':', 1);
     if (colonIndex == -1) {
         throw new Error("Unsupported format \"" + elementName + "\" expecting \":namespace:name\"");
     }
     return [elementName.slice(1, colonIndex), elementName.slice(colonIndex + 1)];
 }
+/**
+ * @param {?} classAttrValue
+ * @return {?}
+ */
 function splitClasses(classAttrValue) {
     return classAttrValue.trim().split(/\s+/g);
 }
@@ -567,18 +653,24 @@ function splitClasses(classAttrValue) {
  * and attribute have the same identifier.
  */
 var PropertyBinding = (function () {
+    /**
+     * @param {?} binding
+     */
     function PropertyBinding(binding) {
         this.binding = binding;
         this.parseBinding();
     }
+    /**
+     * @return {?}
+     */
     PropertyBinding.prototype.parseBinding = function () {
-        var parts = this.binding.split(':');
+        var /** @type {?} */ parts = this.binding.split(':');
         this.prop = parts[0].trim();
         this.attr = (parts[1] || this.prop).trim();
         this.bracketAttr = "[" + this.attr + "]";
         this.parenAttr = "(" + this.attr + ")";
         this.bracketParenAttr = "[(" + this.attr + ")]";
-        var capitalAttr = this.attr.charAt(0).toUpperCase() + this.attr.substr(1);
+        var /** @type {?} */ capitalAttr = this.attr.charAt(0).toUpperCase() + this.attr.substr(1);
         this.onAttr = "on" + capitalAttr;
         this.bindAttr = "bind" + capitalAttr;
         this.bindonAttr = "bindon" + capitalAttr;
@@ -603,6 +695,10 @@ var PropertyBinding = (function () {
 var NgContentSelectorHelper = (function () {
     function NgContentSelectorHelper() {
     }
+    /**
+     * @param {?} info
+     * @return {?}
+     */
     NgContentSelectorHelper.prototype.getNgContentSelectors = function (info) {
         // if no selectors are passed then default to a single "wildcard" selector
         return info.selectors || ['*'];
@@ -616,6 +712,10 @@ var NgContentSelectorHelper = (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+/**
+ * @param {?} e
+ * @return {?}
+ */
 function onError(e) {
     // TODO: (misko): We seem to not have a stack trace here!
     if (console.error) {
@@ -627,24 +727,36 @@ function onError(e) {
     }
     throw e;
 }
+/**
+ * @param {?} name
+ * @return {?}
+ */
 function controllerKey(name) {
     return '$' + name + 'Controller';
 }
+/**
+ * @param {?} node
+ * @return {?}
+ */
 function getAttributesAsArray(node) {
-    var attributes = node.attributes;
-    var asArray;
+    var /** @type {?} */ attributes = node.attributes;
+    var /** @type {?} */ asArray;
     if (attributes) {
-        var attrLen = attributes.length;
+        var /** @type {?} */ attrLen = attributes.length;
         asArray = new Array(attrLen);
-        for (var i = 0; i < attrLen; i++) {
+        for (var /** @type {?} */ i = 0; i < attrLen; i++) {
             asArray[i] = [attributes[i].nodeName, attributes[i].nodeValue];
         }
     }
     return asArray || [];
 }
+/**
+ * @param {?} component
+ * @return {?}
+ */
 function getComponentName(component) {
     // Return the name of the component or the first line of its stringified version.
-    return component.overriddenName || component.name || component.toString().split('\n')[0];
+    return ((component)).overriddenName || component.name || component.toString().split('\n')[0];
 }
 var Deferred = (function () {
     function Deferred() {
@@ -657,7 +769,8 @@ var Deferred = (function () {
     return Deferred;
 }());
 /**
- * @return Whether the passed-in component implements the subset of the
+ * @param {?} component
+ * @return {?} Whether the passed-in component implements the subset of the
  *     `ControlValueAccessor` interface needed for AngularJS `ng-model`
  *     compatibility.
  */
@@ -668,6 +781,9 @@ function supportsNgModel(component) {
 /**
  * Glue the AngularJS `NgModelController` (if it exists) to the component
  * (if it implements the needed subset of the `ControlValueAccessor` interface).
+ * @param {?} ngModel
+ * @param {?} component
+ * @return {?}
  */
 function hookupNgModel(ngModel, component) {
     if (ngModel && supportsNgModel(component)) {
@@ -675,10 +791,23 @@ function hookupNgModel(ngModel, component) {
         component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
     }
 }
-var INITIAL_VALUE = {
+var /** @type {?} */ INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 var DowngradeComponentAdapter = (function () {
+    /**
+     * @param {?} id
+     * @param {?} info
+     * @param {?} element
+     * @param {?} attrs
+     * @param {?} scope
+     * @param {?} ngModel
+     * @param {?} parentInjector
+     * @param {?} $injector
+     * @param {?} $compile
+     * @param {?} $parse
+     * @param {?} componentFactory
+     */
     function DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
         this.id = id;
         this.info = info;
@@ -699,11 +828,14 @@ var DowngradeComponentAdapter = (function () {
         this.element[0].id = id;
         this.componentScope = scope.$new();
     }
+    /**
+     * @return {?}
+     */
     DowngradeComponentAdapter.prototype.compileContents = function () {
         var _this = this;
-        var compiledProjectableNodes = [];
-        var projectableNodes = this.groupProjectableNodes();
-        var linkFns = projectableNodes.map(function (nodes) { return _this.$compile(nodes); });
+        var /** @type {?} */ compiledProjectableNodes = [];
+        var /** @type {?} */ projectableNodes = this.groupProjectableNodes();
+        var /** @type {?} */ linkFns = projectableNodes.map(function (nodes) { return _this.$compile(nodes); });
         this.element.empty();
         linkFns.forEach(function (linkFn) {
             linkFn(_this.scope, function (clone) {
@@ -713,24 +845,31 @@ var DowngradeComponentAdapter = (function () {
         });
         return compiledProjectableNodes;
     };
+    /**
+     * @param {?} projectableNodes
+     * @return {?}
+     */
     DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
-        var childInjector = ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        var /** @type {?} */ childInjector = ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
         hookupNgModel(this.ngModel, this.component);
     };
+    /**
+     * @return {?}
+     */
     DowngradeComponentAdapter.prototype.setupInputs = function () {
         var _this = this;
-        var attrs = this.attrs;
-        var inputs = this.info.inputs || [];
-        for (var i = 0; i < inputs.length; i++) {
-            var input = new PropertyBinding(inputs[i]);
-            var expr = null;
+        var /** @type {?} */ attrs = this.attrs;
+        var /** @type {?} */ inputs = this.info.inputs || [];
+        for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
+            var /** @type {?} */ input = new PropertyBinding(inputs[i]);
+            var /** @type {?} */ expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                var observeFn = (function (prop) {
-                    var prevValue = INITIAL_VALUE;
+                var /** @type {?} */ observeFn = (function (prop) {
+                    var /** @type {?} */ prevValue = INITIAL_VALUE;
                     return function (currValue) {
                         if (prevValue === INITIAL_VALUE) {
                             prevValue = currValue;
@@ -742,80 +881,75 @@ var DowngradeComponentAdapter = (function () {
                 attrs.$observe(input.attr, observeFn);
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
-                expr = attrs /** TODO #9100 */[input.bindAttr];
+                expr = ((attrs) /** TODO #9100 */)[input.bindAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketAttr)) {
-                expr = attrs /** TODO #9100 */[input.bracketAttr];
+                expr = ((attrs) /** TODO #9100 */)[input.bracketAttr];
             }
             else if (attrs.hasOwnProperty(input.bindonAttr)) {
-                expr = attrs /** TODO #9100 */[input.bindonAttr];
+                expr = ((attrs) /** TODO #9100 */)[input.bindonAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketParenAttr)) {
-                expr = attrs /** TODO #9100 */[input.bracketParenAttr];
+                expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
             }
             if (expr != null) {
-                var watchFn = (function (prop) {
-                    return function (currValue, prevValue) {
-                        return _this.updateInput(prop, prevValue, currValue);
-                    };
-                })(input.prop);
+                var /** @type {?} */ watchFn = (function (prop) { return function (currValue, prevValue) { return _this.updateInput(prop, prevValue, currValue); }; })(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
-        var prototype = this.info.component.prototype;
-        if (prototype && prototype.ngOnChanges) {
+        var /** @type {?} */ prototype = this.info.component.prototype;
+        if (prototype && ((prototype)).ngOnChanges) {
             // Detect: OnChanges interface
             this.inputChanges = {};
             this.componentScope.$watch(function () { return _this.inputChangeCount; }, function () {
-                var inputChanges = _this.inputChanges;
+                var /** @type {?} */ inputChanges = _this.inputChanges;
                 _this.inputChanges = {};
-                _this.component.ngOnChanges(inputChanges);
+                ((_this.component)).ngOnChanges(inputChanges);
             });
         }
         this.componentScope.$watch(function () { return _this.changeDetector && _this.changeDetector.detectChanges(); });
     };
+    /**
+     * @return {?}
+     */
     DowngradeComponentAdapter.prototype.setupOutputs = function () {
         var _this = this;
-        var attrs = this.attrs;
-        var outputs = this.info.outputs || [];
-        for (var j = 0; j < outputs.length; j++) {
-            var output = new PropertyBinding(outputs[j]);
-            var expr = null;
-            var assignExpr = false;
-            var bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
-            var bracketParenAttr = output.bracketParenAttr ?
+        var /** @type {?} */ attrs = this.attrs;
+        var /** @type {?} */ outputs = this.info.outputs || [];
+        for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
+            var /** @type {?} */ output = new PropertyBinding(outputs[j]);
+            var /** @type {?} */ expr = null;
+            var /** @type {?} */ assignExpr = false;
+            var /** @type {?} */ bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
+            var /** @type {?} */ bracketParenAttr = output.bracketParenAttr ?
                 "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]" :
                 null;
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = attrs /** TODO #9100 */[output.onAttr];
+                expr = ((attrs) /** TODO #9100 */)[output.onAttr];
             }
             else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = attrs /** TODO #9100 */[output.parenAttr];
+                expr = ((attrs) /** TODO #9100 */)[output.parenAttr];
             }
             else if (attrs.hasOwnProperty(bindonAttr)) {
-                expr = attrs /** TODO #9100 */[bindonAttr];
+                expr = ((attrs) /** TODO #9100 */)[bindonAttr];
                 assignExpr = true;
             }
             else if (attrs.hasOwnProperty(bracketParenAttr)) {
-                expr = attrs /** TODO #9100 */[bracketParenAttr];
+                expr = ((attrs) /** TODO #9100 */)[bracketParenAttr];
                 assignExpr = true;
             }
             if (expr != null && assignExpr != null) {
-                var getter = this.$parse(expr);
-                var setter = getter.assign;
+                var /** @type {?} */ getter = this.$parse(expr);
+                var /** @type {?} */ setter = getter.assign;
                 if (assignExpr && !setter) {
                     throw new Error("Expression '" + expr + "' is not assignable!");
                 }
-                var emitter = this.component[output.prop];
+                var /** @type {?} */ emitter = (this.component[output.prop]);
                 if (emitter) {
                     emitter.subscribe({
                         next: assignExpr ?
                             (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
-                            (function (getter) {
-                                return function (v /** TODO #9100 */) {
-                                    return getter(_this.scope, { $event: v });
-                                };
-                            })(getter)
+                            (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { $event: v }); }; })(getter)
                     });
                 }
                 else {
@@ -824,6 +958,9 @@ var DowngradeComponentAdapter = (function () {
             }
         }
     };
+    /**
+     * @return {?}
+     */
     DowngradeComponentAdapter.prototype.registerCleanup = function () {
         var _this = this;
         this.element.bind('$destroy', function () {
@@ -831,7 +968,16 @@ var DowngradeComponentAdapter = (function () {
             _this.componentRef.destroy();
         });
     };
+    /**
+     * @return {?}
+     */
     DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef && this.componentRef.injector; };
+    /**
+     * @param {?} prop
+     * @param {?} prevValue
+     * @param {?} currValue
+     * @return {?}
+     */
     DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
         if (this.inputChanges) {
             this.inputChangeCount++;
@@ -839,9 +985,12 @@ var DowngradeComponentAdapter = (function () {
         }
         this.component[prop] = currValue;
     };
+    /**
+     * @return {?}
+     */
     DowngradeComponentAdapter.prototype.groupProjectableNodes = function () {
-        var ngContentSelectorHelper = this.parentInjector.get(NgContentSelectorHelper);
-        var ngContentSelectors = ngContentSelectorHelper.getNgContentSelectors(this.info);
+        var /** @type {?} */ ngContentSelectorHelper = (this.parentInjector.get(NgContentSelectorHelper));
+        var /** @type {?} */ ngContentSelectors = ngContentSelectorHelper.getNgContentSelectors(this.info);
         if (!ngContentSelectors) {
             throw new Error('Expecting ngContentSelectors for: ' + getComponentName(this.info.component));
         }
@@ -849,14 +998,17 @@ var DowngradeComponentAdapter = (function () {
     };
     /**
      * Group a set of DOM nodes into `ngContent` groups, based on the given content selectors.
+     * @param {?} ngContentSelectors
+     * @param {?} nodes
+     * @return {?}
      */
     DowngradeComponentAdapter.prototype._groupNodesBySelector = function (ngContentSelectors, nodes) {
-        var projectableNodes = [];
-        var matcher = new SelectorMatcher();
-        var wildcardNgContentIndex;
-        for (var i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
+        var /** @type {?} */ projectableNodes = [];
+        var /** @type {?} */ matcher = new SelectorMatcher();
+        var /** @type {?} */ wildcardNgContentIndex;
+        for (var /** @type {?} */ i = 0, /** @type {?} */ ii = ngContentSelectors.length; i < ii; ++i) {
             projectableNodes[i] = [];
-            var selector = ngContentSelectors[i];
+            var /** @type {?} */ selector = ngContentSelectors[i];
             if (selector === '*') {
                 wildcardNgContentIndex = i;
             }
@@ -865,9 +1017,9 @@ var DowngradeComponentAdapter = (function () {
             }
         }
         var _loop_1 = function (j, jj) {
-            var ngContentIndices = [];
-            var node = nodes[j];
-            var selector = createElementCssSelector(node.nodeName.toLowerCase(), getAttributesAsArray(node));
+            var /** @type {?} */ ngContentIndices = [];
+            var /** @type {?} */ node = nodes[j];
+            var /** @type {?} */ selector = createElementCssSelector(node.nodeName.toLowerCase(), getAttributesAsArray(node));
             matcher.match(selector, function (_, index) { return ngContentIndices.push(index); });
             ngContentIndices.sort();
             if (wildcardNgContentIndex !== undefined) {
@@ -877,35 +1029,35 @@ var DowngradeComponentAdapter = (function () {
                 projectableNodes[ngContentIndices[0]].push(node);
             }
         };
-        for (var j = 0, jj = nodes.length; j < jj; ++j) {
-            _loop_1(j, jj);
+        for (var /** @type {?} */ j = 0, /** @type {?} */ jj = nodes.length; j < jj; ++j) {
+            _loop_1(/** @type {?} */ j, /** @type {?} */ jj);
         }
         return projectableNodes;
     };
     return DowngradeComponentAdapter;
 }());
-var downgradeCount = 0;
+var /** @type {?} */ downgradeCount = 0;
 /**
- * @whatItDoes
+ * \@whatItDoes
  *
  * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows an Angular component to be used from AngularJS.
  *
- * @howToUse
+ * \@howToUse
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
  * to be made available in AngularJS templates.
  *
- * {@example upgrade/static/ts/module.ts region="ng2-heroes"}
+ * {\@example upgrade/static/ts/module.ts region="ng2-heroes"}
  *
  * We must create an AngularJS [directive](https://docs.angularjs.org/guide/directive)
  * that will make this Angular component available inside AngularJS templates.
  * The `downgradeComponent()` function returns a factory function that we
  * can use to define the AngularJS directive that wraps the "downgraded" component.
  *
- * {@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
+ * {\@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
  *
  * In this example you can see that we must provide information about the component being
  * "downgraded". This is because once the AoT compiler has run, all metadata about the
@@ -916,7 +1068,7 @@ var downgradeCount = 0;
  * * specify all inputs and outputs that the AngularJS component expects
  * * specify the selectors used in any `ng-content` elements in the component's template
  *
- * @description
+ * \@description
  *
  * A helper function that returns a factory function to be used for registering an
  * AngularJS wrapper directive for "downgrading" an Angular component.
@@ -939,12 +1091,14 @@ var downgradeCount = 0;
  * These selectors must be provided in the order that they appear in the template as they are
  * mapped by index to the projected nodes.
  *
- * @experimental
+ * \@experimental
+ * @param {?} info
+ * @return {?}
  */
 function downgradeComponent(info) {
-    var idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
-    var idCount = 0;
-    var directiveFactory = function ($compile, $injector, $parse) {
+    var /** @type {?} */ idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
+    var /** @type {?} */ idCount = 0;
+    var /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
         return {
             restrict: 'E',
             terminal: true,
@@ -953,18 +1107,18 @@ function downgradeComponent(info) {
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
                 // been compiled.
-                var parentInjector = required[0] || $injector.get(INJECTOR_KEY);
-                var ngModel = required[1];
-                var downgradeFn = function (injector) {
-                    var componentFactoryResolver = injector.get(ComponentFactoryResolver);
-                    var componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
+                var /** @type {?} */ parentInjector = required[0] || $injector.get(INJECTOR_KEY);
+                var /** @type {?} */ ngModel = required[1];
+                var /** @type {?} */ downgradeFn = function (injector) {
+                    var /** @type {?} */ componentFactoryResolver = injector.get(ComponentFactoryResolver);
+                    var /** @type {?} */ componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
-                    var id = idPrefix + (idCount++);
-                    var injectorPromise = new ParentInjectorPromise$1(element);
-                    var facade = new DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
-                    var projectableNodes = facade.compileContents();
+                    var /** @type {?} */ id = idPrefix + (idCount++);
+                    var /** @type {?} */ injectorPromise = new ParentInjectorPromise$1(element);
+                    var /** @type {?} */ facade = new DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
+                    var /** @type {?} */ projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
                     facade.setupInputs();
                     facade.setupOutputs();
@@ -989,14 +1143,21 @@ function downgradeComponent(info) {
  * to preserve the synchronous nature of Angular 1's $compile.
  */
 var ParentInjectorPromise$1 = (function () {
-    function ParentInjectorPromise(element) {
+    /**
+     * @param {?} element
+     */
+    function ParentInjectorPromise$1(element) {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
         // Store the promise on the element.
         element.data(this.injectorKey, this);
     }
-    ParentInjectorPromise.prototype.then = function (callback) {
+    /**
+     * @param {?} callback
+     * @return {?}
+     */
+    ParentInjectorPromise$1.prototype.then = function (callback) {
         if (this.injector) {
             callback(this.injector);
         }
@@ -1004,7 +1165,11 @@ var ParentInjectorPromise$1 = (function () {
             this.callbacks.push(callback);
         }
     };
-    ParentInjectorPromise.prototype.resolve = function (injector) {
+    /**
+     * @param {?} injector
+     * @return {?}
+     */
+    ParentInjectorPromise$1.prototype.resolve = function (injector) {
         this.injector = injector;
         // Store the real injector on the element.
         this.element.data(this.injectorKey, injector);
@@ -1014,39 +1179,39 @@ var ParentInjectorPromise$1 = (function () {
         this.callbacks.forEach(function (callback) { return callback(injector); });
         this.callbacks.length = 0;
     };
-    return ParentInjectorPromise;
+    return ParentInjectorPromise$1;
 }());
 /**
- * @whatItDoes
+ * \@whatItDoes
  *
  * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allow an Angular service to be accessible from AngularJS.
  *
- * @howToUse
+ * \@howToUse
  *
- * First ensure that the service to be downgraded is provided in an {@link NgModule}
+ * First ensure that the service to be downgraded is provided in an {\@link NgModule}
  * that will be part of the upgrade application. For example, let's assume we have
  * defined `HeroesService`
  *
- * {@example upgrade/static/ts/module.ts region="ng2-heroes-service"}
+ * {\@example upgrade/static/ts/module.ts region="ng2-heroes-service"}
  *
- * and that we have included this in our upgrade app {@link NgModule}
+ * and that we have included this in our upgrade app {\@link NgModule}
  *
- * {@example upgrade/static/ts/module.ts region="ng2-module"}
+ * {\@example upgrade/static/ts/module.ts region="ng2-module"}
  *
  * Now we can register the `downgradeInjectable` factory function for the service
  * on an AngularJS module.
  *
- * {@example upgrade/static/ts/module.ts region="downgrade-ng2-heroes-service"}
+ * {\@example upgrade/static/ts/module.ts region="downgrade-ng2-heroes-service"}
  *
  * Inside an AngularJS component's controller we can get hold of the
  * downgraded service via the name we gave when downgrading.
  *
- * {@example upgrade/static/ts/module.ts region="example-app"}
+ * {\@example upgrade/static/ts/module.ts region="example-app"}
  *
- * @description
+ * \@description
  *
  * Takes a `token` that identifies a service provided from Angular.
  *
@@ -1056,11 +1221,13 @@ var ParentInjectorPromise$1 = (function () {
  * The factory function provides access to the Angular service that
  * is identified by the `token` parameter.
  *
- * @experimental
+ * \@experimental
+ * @param {?} token
+ * @return {?}
  */
 function downgradeInjectable(token) {
-    var factory = function (i) { return i.get(token); };
-    factory.$inject = [INJECTOR_KEY];
+    var /** @type {?} */ factory = function (i) { return i.get(token); };
+    ((factory)).$inject = [INJECTOR_KEY];
     return factory;
 }
 /**
@@ -1873,8 +2040,8 @@ var UpgradeAdapter = (function () {
                 resolve();
             }
         });
-        Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(function (_g) {
-            var ng1Injector = _g[0];
+        Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(function (_a) {
+            var ng1Injector = _a[0];
             element(element$$).data(controllerKey(INJECTOR_KEY), _this.moduleRef.injector);
             _this.moduleRef.injector.get(NgZone).run(function () { ((upgrade))._bootstrapDone(_this.moduleRef, ng1Injector); });
         }, onError);
