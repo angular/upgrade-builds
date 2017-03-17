@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.3-480a407
+ * @license Angular v4.0.0-rc.4-fcaca45
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -999,7 +999,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.0.0-rc.3-480a407');
+var VERSION = new Version('4.0.0-rc.4-fcaca45');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1653,4 +1653,5 @@ UpgradeModule.ctorParameters = function () {
         { type: NgZone, },
     ];
 };
-export { downgradeComponent, downgradeInjectable, VERSION, UpgradeComponent, UpgradeModule };
+export { NgContentSelectorHelper as ɵf, angular1Providers as ɵe, compileFactory as ɵc, injectorFactory as ɵa, parseFactory as ɵd, rootScopeFactory as ɵb, downgradeComponent, downgradeInjectable, VERSION, UpgradeComponent, UpgradeModule };
+//# sourceMappingURL=static.es5.js.map
