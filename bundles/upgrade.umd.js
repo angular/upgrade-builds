@@ -1,23 +1,18 @@
 /**
- * @license Angular v4.0.0-rc.4-fcaca45
+ * @license Angular v4.0.0-rc.5-d0bc83c
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/compiler'), require('@angular/platform-browser-dynamic')) :
-    typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/compiler', '@angular/platform-browser-dynamic'], factory) :
-    (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}),global.ng.core,global.ng.compiler,global.ng.platformBrowserDynamic));
-}(this, function (exports,_angular_core,_angular_compiler,_angular_platformBrowserDynamic) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser-dynamic')) :
+    typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser-dynamic'], factory) :
+    (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}),global.ng.core,global.ng.platformBrowserDynamic));
+}(this, function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
-    var __extends = (this && this.__extends) || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
     /**
      * \@stable
      */
-    var VERSION = new _angular_core.Version('4.0.0-rc.4-fcaca45');
+    var VERSION = new _angular_core.Version('4.0.0-rc.5-d0bc83c');
     /**
      * @license
      * Copyright Google Inc. All Rights Reserved.
@@ -70,585 +65,6 @@
     var /** @type {?} */ NG_ZONE_KEY = '$$angularNgZone';
     var /** @type {?} */ REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
     var /** @type {?} */ REQUIRE_NG_MODEL = '?ngModel';
-    var TagContentType = {};
-    TagContentType.RAW_TEXT = 0;
-    TagContentType.ESCAPABLE_RAW_TEXT = 1;
-    TagContentType.PARSABLE_DATA = 2;
-    TagContentType[TagContentType.RAW_TEXT] = "RAW_TEXT";
-    TagContentType[TagContentType.ESCAPABLE_RAW_TEXT] = "ESCAPABLE_RAW_TEXT";
-    TagContentType[TagContentType.PARSABLE_DATA] = "PARSABLE_DATA";
-    var HtmlTagDefinition = (function () {
-        /**
-         * @param {?=} __0
-         */
-        function HtmlTagDefinition(_a) {
-            var _b = _a === void 0 ? {} : _a, closedByChildren = _b.closedByChildren, requiredParents = _b.requiredParents, implicitNamespacePrefix = _b.implicitNamespacePrefix, _c = _b.contentType, contentType = _c === void 0 ? TagContentType.PARSABLE_DATA : _c, _d = _b.closedByParent, closedByParent = _d === void 0 ? false : _d, _e = _b.isVoid, isVoid = _e === void 0 ? false : _e, _f = _b.ignoreFirstLf, ignoreFirstLf = _f === void 0 ? false : _f;
-            var _this = this;
-            this.closedByChildren = {};
-            this.closedByParent = false;
-            this.canSelfClose = false;
-            if (closedByChildren && closedByChildren.length > 0) {
-                closedByChildren.forEach(function (tagName) { return _this.closedByChildren[tagName] = true; });
-            }
-            this.isVoid = isVoid;
-            this.closedByParent = closedByParent || isVoid;
-            if (requiredParents && requiredParents.length > 0) {
-                this.requiredParents = {};
-                // The first parent is the list is automatically when none of the listed parents are present
-                this.parentToAdd = requiredParents[0];
-                requiredParents.forEach(function (tagName) { return _this.requiredParents[tagName] = true; });
-            }
-            this.implicitNamespacePrefix = implicitNamespacePrefix;
-            this.contentType = contentType;
-            this.ignoreFirstLf = ignoreFirstLf;
-        }
-        /**
-         * @param {?} currentParent
-         * @return {?}
-         */
-        HtmlTagDefinition.prototype.requireExtraParent = function (currentParent) {
-            if (!this.requiredParents) {
-                return false;
-            }
-            if (!currentParent) {
-                return true;
-            }
-            var /** @type {?} */ lcParent = currentParent.toLowerCase();
-            var /** @type {?} */ isParentTemplate = lcParent === 'template' || currentParent === 'ng-template';
-            return !isParentTemplate && this.requiredParents[lcParent] != true;
-        };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        HtmlTagDefinition.prototype.isClosedByChild = function (name) {
-            return this.isVoid || name.toLowerCase() in this.closedByChildren;
-        };
-        return HtmlTagDefinition;
-    }());
-    // see http://www.w3.org/TR/html51/syntax.html#optional-tags
-    // This implementation does not fully conform to the HTML5 spec.
-    var /** @type {?} */ TAG_DEFINITIONS = {
-        'base': new HtmlTagDefinition({ isVoid: true }),
-        'meta': new HtmlTagDefinition({ isVoid: true }),
-        'area': new HtmlTagDefinition({ isVoid: true }),
-        'embed': new HtmlTagDefinition({ isVoid: true }),
-        'link': new HtmlTagDefinition({ isVoid: true }),
-        'img': new HtmlTagDefinition({ isVoid: true }),
-        'input': new HtmlTagDefinition({ isVoid: true }),
-        'param': new HtmlTagDefinition({ isVoid: true }),
-        'hr': new HtmlTagDefinition({ isVoid: true }),
-        'br': new HtmlTagDefinition({ isVoid: true }),
-        'source': new HtmlTagDefinition({ isVoid: true }),
-        'track': new HtmlTagDefinition({ isVoid: true }),
-        'wbr': new HtmlTagDefinition({ isVoid: true }),
-        'p': new HtmlTagDefinition({
-            closedByChildren: [
-                'address', 'article', 'aside', 'blockquote', 'div', 'dl', 'fieldset', 'footer', 'form',
-                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr',
-                'main', 'nav', 'ol', 'p', 'pre', 'section', 'table', 'ul'
-            ],
-            closedByParent: true
-        }),
-        'thead': new HtmlTagDefinition({ closedByChildren: ['tbody', 'tfoot'] }),
-        'tbody': new HtmlTagDefinition({ closedByChildren: ['tbody', 'tfoot'], closedByParent: true }),
-        'tfoot': new HtmlTagDefinition({ closedByChildren: ['tbody'], closedByParent: true }),
-        'tr': new HtmlTagDefinition({
-            closedByChildren: ['tr'],
-            requiredParents: ['tbody', 'tfoot', 'thead'],
-            closedByParent: true
-        }),
-        'td': new HtmlTagDefinition({ closedByChildren: ['td', 'th'], closedByParent: true }),
-        'th': new HtmlTagDefinition({ closedByChildren: ['td', 'th'], closedByParent: true }),
-        'col': new HtmlTagDefinition({ requiredParents: ['colgroup'], isVoid: true }),
-        'svg': new HtmlTagDefinition({ implicitNamespacePrefix: 'svg' }),
-        'math': new HtmlTagDefinition({ implicitNamespacePrefix: 'math' }),
-        'li': new HtmlTagDefinition({ closedByChildren: ['li'], closedByParent: true }),
-        'dt': new HtmlTagDefinition({ closedByChildren: ['dt', 'dd'] }),
-        'dd': new HtmlTagDefinition({ closedByChildren: ['dt', 'dd'], closedByParent: true }),
-        'rb': new HtmlTagDefinition({ closedByChildren: ['rb', 'rt', 'rtc', 'rp'], closedByParent: true }),
-        'rt': new HtmlTagDefinition({ closedByChildren: ['rb', 'rt', 'rtc', 'rp'], closedByParent: true }),
-        'rtc': new HtmlTagDefinition({ closedByChildren: ['rb', 'rtc', 'rp'], closedByParent: true }),
-        'rp': new HtmlTagDefinition({ closedByChildren: ['rb', 'rt', 'rtc', 'rp'], closedByParent: true }),
-        'optgroup': new HtmlTagDefinition({ closedByChildren: ['optgroup'], closedByParent: true }),
-        'option': new HtmlTagDefinition({ closedByChildren: ['option', 'optgroup'], closedByParent: true }),
-        'pre': new HtmlTagDefinition({ ignoreFirstLf: true }),
-        'listing': new HtmlTagDefinition({ ignoreFirstLf: true }),
-        'style': new HtmlTagDefinition({ contentType: TagContentType.RAW_TEXT }),
-        'script': new HtmlTagDefinition({ contentType: TagContentType.RAW_TEXT }),
-        'title': new HtmlTagDefinition({ contentType: TagContentType.ESCAPABLE_RAW_TEXT }),
-        'textarea': new HtmlTagDefinition({ contentType: TagContentType.ESCAPABLE_RAW_TEXT, ignoreFirstLf: true }),
-    };
-    var /** @type {?} */ _DEFAULT_TAG_DEFINITION = new HtmlTagDefinition();
-    /**
-     * @param {?} tagName
-     * @return {?}
-     */
-    function getHtmlTagDefinition(tagName) {
-        return TAG_DEFINITIONS[tagName.toLowerCase()] || _DEFAULT_TAG_DEFINITION;
-    }
-    var /** @type {?} */ _SELECTOR_REGEXP = new RegExp('(\\:not\\()|' +
-        '([-\\w]+)|' +
-        '(?:\\.([-\\w]+))|' +
-        // "-" should appear first in the regexp below as FF31 parses "[.-\w]" as a range
-        '(?:\\[([-.\\w*]+)(?:=([^\\]]*))?\\])|' +
-        '(\\))|' +
-        '(\\s*,\\s*)', // ","
-    'g');
-    /**
-     * A css selector contains an element name,
-     * css classes and attribute/value pairs with the purpose
-     * of selecting subsets out of them.
-     */
-    var CssSelector = (function () {
-        function CssSelector() {
-            this.element = null;
-            this.classNames = [];
-            this.attrs = [];
-            this.notSelectors = [];
-        }
-        /**
-         * @param {?} selector
-         * @return {?}
-         */
-        CssSelector.parse = function (selector) {
-            var /** @type {?} */ results = [];
-            var /** @type {?} */ _addResult = function (res, cssSel) {
-                if (cssSel.notSelectors.length > 0 && !cssSel.element && cssSel.classNames.length == 0 &&
-                    cssSel.attrs.length == 0) {
-                    cssSel.element = '*';
-                }
-                res.push(cssSel);
-            };
-            var /** @type {?} */ cssSelector = new CssSelector();
-            var /** @type {?} */ match;
-            var /** @type {?} */ current = cssSelector;
-            var /** @type {?} */ inNot = false;
-            _SELECTOR_REGEXP.lastIndex = 0;
-            while (match = _SELECTOR_REGEXP.exec(selector)) {
-                if (match[1]) {
-                    if (inNot) {
-                        throw new Error('Nesting :not is not allowed in a selector');
-                    }
-                    inNot = true;
-                    current = new CssSelector();
-                    cssSelector.notSelectors.push(current);
-                }
-                if (match[2]) {
-                    current.setElement(match[2]);
-                }
-                if (match[3]) {
-                    current.addClassName(match[3]);
-                }
-                if (match[4]) {
-                    current.addAttribute(match[4], match[5]);
-                }
-                if (match[6]) {
-                    inNot = false;
-                    current = cssSelector;
-                }
-                if (match[7]) {
-                    if (inNot) {
-                        throw new Error('Multiple selectors in :not are not supported');
-                    }
-                    _addResult(results, cssSelector);
-                    cssSelector = current = new CssSelector();
-                }
-            }
-            _addResult(results, cssSelector);
-            return results;
-        };
-        /**
-         * @return {?}
-         */
-        CssSelector.prototype.isElementSelector = function () {
-            return this.hasElementSelector() && this.classNames.length == 0 && this.attrs.length == 0 &&
-                this.notSelectors.length === 0;
-        };
-        /**
-         * @return {?}
-         */
-        CssSelector.prototype.hasElementSelector = function () { return !!this.element; };
-        /**
-         * @param {?=} element
-         * @return {?}
-         */
-        CssSelector.prototype.setElement = function (element) {
-            if (element === void 0) { element = null; }
-            this.element = element;
-        };
-        /**
-         * Gets a template string for an element that matches the selector.
-         * @return {?}
-         */
-        CssSelector.prototype.getMatchingElementTemplate = function () {
-            var /** @type {?} */ tagName = this.element || 'div';
-            var /** @type {?} */ classAttr = this.classNames.length > 0 ? " class=\"" + this.classNames.join(' ') + "\"" : '';
-            var /** @type {?} */ attrs = '';
-            for (var /** @type {?} */ i = 0; i < this.attrs.length; i += 2) {
-                var /** @type {?} */ attrName = this.attrs[i];
-                var /** @type {?} */ attrValue = this.attrs[i + 1] !== '' ? "=\"" + this.attrs[i + 1] + "\"" : '';
-                attrs += " " + attrName + attrValue;
-            }
-            return getHtmlTagDefinition(tagName).isVoid ? "<" + tagName + classAttr + attrs + "/>" :
-                "<" + tagName + classAttr + attrs + "></" + tagName + ">";
-        };
-        /**
-         * @param {?} name
-         * @param {?=} value
-         * @return {?}
-         */
-        CssSelector.prototype.addAttribute = function (name, value) {
-            if (value === void 0) { value = ''; }
-            this.attrs.push(name, value && value.toLowerCase() || '');
-        };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        CssSelector.prototype.addClassName = function (name) { this.classNames.push(name.toLowerCase()); };
-        /**
-         * @return {?}
-         */
-        CssSelector.prototype.toString = function () {
-            var /** @type {?} */ res = this.element || '';
-            if (this.classNames) {
-                this.classNames.forEach(function (klass) { return res += "." + klass; });
-            }
-            if (this.attrs) {
-                for (var /** @type {?} */ i = 0; i < this.attrs.length; i += 2) {
-                    var /** @type {?} */ name = this.attrs[i];
-                    var /** @type {?} */ value = this.attrs[i + 1];
-                    res += "[" + name + (value ? '=' + value : '') + "]";
-                }
-            }
-            this.notSelectors.forEach(function (notSelector) { return res += ":not(" + notSelector + ")"; });
-            return res;
-        };
-        return CssSelector;
-    }());
-    /**
-     * Reads a list of CssSelectors and allows to calculate which ones
-     * are contained in a given CssSelector.
-     */
-    var SelectorMatcher = (function () {
-        function SelectorMatcher() {
-            this._elementMap = new Map();
-            this._elementPartialMap = new Map();
-            this._classMap = new Map();
-            this._classPartialMap = new Map();
-            this._attrValueMap = new Map();
-            this._attrValuePartialMap = new Map();
-            this._listContexts = [];
-        }
-        /**
-         * @param {?} notSelectors
-         * @return {?}
-         */
-        SelectorMatcher.createNotMatcher = function (notSelectors) {
-            var /** @type {?} */ notMatcher = new SelectorMatcher();
-            notMatcher.addSelectables(notSelectors, null);
-            return notMatcher;
-        };
-        /**
-         * @param {?} cssSelectors
-         * @param {?=} callbackCtxt
-         * @return {?}
-         */
-        SelectorMatcher.prototype.addSelectables = function (cssSelectors, callbackCtxt) {
-            var /** @type {?} */ listContext = null;
-            if (cssSelectors.length > 1) {
-                listContext = new SelectorListContext(cssSelectors);
-                this._listContexts.push(listContext);
-            }
-            for (var /** @type {?} */ i = 0; i < cssSelectors.length; i++) {
-                this._addSelectable(cssSelectors[i], callbackCtxt, listContext);
-            }
-        };
-        /**
-         * Add an object that can be found later on by calling `match`.
-         * @param {?} cssSelector A css selector
-         * @param {?} callbackCtxt An opaque object that will be given to the callback of the `match` function
-         * @param {?} listContext
-         * @return {?}
-         */
-        SelectorMatcher.prototype._addSelectable = function (cssSelector, callbackCtxt, listContext) {
-            var /** @type {?} */ matcher = this;
-            var /** @type {?} */ element = cssSelector.element;
-            var /** @type {?} */ classNames = cssSelector.classNames;
-            var /** @type {?} */ attrs = cssSelector.attrs;
-            var /** @type {?} */ selectable = new SelectorContext(cssSelector, callbackCtxt, listContext);
-            if (element) {
-                var /** @type {?} */ isTerminal = attrs.length === 0 && classNames.length === 0;
-                if (isTerminal) {
-                    this._addTerminal(matcher._elementMap, element, selectable);
-                }
-                else {
-                    matcher = this._addPartial(matcher._elementPartialMap, element);
-                }
-            }
-            if (classNames) {
-                for (var /** @type {?} */ i = 0; i < classNames.length; i++) {
-                    var /** @type {?} */ isTerminal = attrs.length === 0 && i === classNames.length - 1;
-                    var /** @type {?} */ className = classNames[i];
-                    if (isTerminal) {
-                        this._addTerminal(matcher._classMap, className, selectable);
-                    }
-                    else {
-                        matcher = this._addPartial(matcher._classPartialMap, className);
-                    }
-                }
-            }
-            if (attrs) {
-                for (var /** @type {?} */ i = 0; i < attrs.length; i += 2) {
-                    var /** @type {?} */ isTerminal = i === attrs.length - 2;
-                    var /** @type {?} */ name = attrs[i];
-                    var /** @type {?} */ value = attrs[i + 1];
-                    if (isTerminal) {
-                        var /** @type {?} */ terminalMap = matcher._attrValueMap;
-                        var /** @type {?} */ terminalValuesMap = terminalMap.get(name);
-                        if (!terminalValuesMap) {
-                            terminalValuesMap = new Map();
-                            terminalMap.set(name, terminalValuesMap);
-                        }
-                        this._addTerminal(terminalValuesMap, value, selectable);
-                    }
-                    else {
-                        var /** @type {?} */ partialMap = matcher._attrValuePartialMap;
-                        var /** @type {?} */ partialValuesMap = partialMap.get(name);
-                        if (!partialValuesMap) {
-                            partialValuesMap = new Map();
-                            partialMap.set(name, partialValuesMap);
-                        }
-                        matcher = this._addPartial(partialValuesMap, value);
-                    }
-                }
-            }
-        };
-        /**
-         * @param {?} map
-         * @param {?} name
-         * @param {?} selectable
-         * @return {?}
-         */
-        SelectorMatcher.prototype._addTerminal = function (map, name, selectable) {
-            var /** @type {?} */ terminalList = map.get(name);
-            if (!terminalList) {
-                terminalList = [];
-                map.set(name, terminalList);
-            }
-            terminalList.push(selectable);
-        };
-        /**
-         * @param {?} map
-         * @param {?} name
-         * @return {?}
-         */
-        SelectorMatcher.prototype._addPartial = function (map, name) {
-            var /** @type {?} */ matcher = map.get(name);
-            if (!matcher) {
-                matcher = new SelectorMatcher();
-                map.set(name, matcher);
-            }
-            return matcher;
-        };
-        /**
-         * Find the objects that have been added via `addSelectable`
-         * whose css selector is contained in the given css selector.
-         * @param {?} cssSelector A css selector
-         * @param {?} matchedCallback This callback will be called with the object handed into `addSelectable`
-         * @return {?} boolean true if a match was found
-         */
-        SelectorMatcher.prototype.match = function (cssSelector, matchedCallback) {
-            var /** @type {?} */ result = false;
-            var /** @type {?} */ element = cssSelector.element;
-            var /** @type {?} */ classNames = cssSelector.classNames;
-            var /** @type {?} */ attrs = cssSelector.attrs;
-            for (var /** @type {?} */ i = 0; i < this._listContexts.length; i++) {
-                this._listContexts[i].alreadyMatched = false;
-            }
-            result = this._matchTerminal(this._elementMap, element, cssSelector, matchedCallback) || result;
-            result = this._matchPartial(this._elementPartialMap, element, cssSelector, matchedCallback) ||
-                result;
-            if (classNames) {
-                for (var /** @type {?} */ i = 0; i < classNames.length; i++) {
-                    var /** @type {?} */ className = classNames[i];
-                    result =
-                        this._matchTerminal(this._classMap, className, cssSelector, matchedCallback) || result;
-                    result =
-                        this._matchPartial(this._classPartialMap, className, cssSelector, matchedCallback) ||
-                            result;
-                }
-            }
-            if (attrs) {
-                for (var /** @type {?} */ i = 0; i < attrs.length; i += 2) {
-                    var /** @type {?} */ name = attrs[i];
-                    var /** @type {?} */ value = attrs[i + 1];
-                    var /** @type {?} */ terminalValuesMap = this._attrValueMap.get(name);
-                    if (value) {
-                        result =
-                            this._matchTerminal(terminalValuesMap, '', cssSelector, matchedCallback) || result;
-                    }
-                    result =
-                        this._matchTerminal(terminalValuesMap, value, cssSelector, matchedCallback) || result;
-                    var /** @type {?} */ partialValuesMap = this._attrValuePartialMap.get(name);
-                    if (value) {
-                        result = this._matchPartial(partialValuesMap, '', cssSelector, matchedCallback) || result;
-                    }
-                    result =
-                        this._matchPartial(partialValuesMap, value, cssSelector, matchedCallback) || result;
-                }
-            }
-            return result;
-        };
-        /**
-         * \@internal
-         * @param {?} map
-         * @param {?} name
-         * @param {?} cssSelector
-         * @param {?} matchedCallback
-         * @return {?}
-         */
-        SelectorMatcher.prototype._matchTerminal = function (map, name, cssSelector, matchedCallback) {
-            if (!map || typeof name !== 'string') {
-                return false;
-            }
-            var /** @type {?} */ selectables = map.get(name) || [];
-            var /** @type {?} */ starSelectables = map.get('*');
-            if (starSelectables) {
-                selectables = selectables.concat(starSelectables);
-            }
-            if (selectables.length === 0) {
-                return false;
-            }
-            var /** @type {?} */ selectable;
-            var /** @type {?} */ result = false;
-            for (var /** @type {?} */ i = 0; i < selectables.length; i++) {
-                selectable = selectables[i];
-                result = selectable.finalize(cssSelector, matchedCallback) || result;
-            }
-            return result;
-        };
-        /**
-         * \@internal
-         * @param {?} map
-         * @param {?} name
-         * @param {?} cssSelector
-         * @param {?} matchedCallback
-         * @return {?}
-         */
-        SelectorMatcher.prototype._matchPartial = function (map, name, cssSelector, matchedCallback) {
-            if (!map || typeof name !== 'string') {
-                return false;
-            }
-            var /** @type {?} */ nestedSelector = map.get(name);
-            if (!nestedSelector) {
-                return false;
-            }
-            // TODO(perf): get rid of recursion and measure again
-            // TODO(perf): don't pass the whole selector into the recursion,
-            // but only the not processed parts
-            return nestedSelector.match(cssSelector, matchedCallback);
-        };
-        return SelectorMatcher;
-    }());
-    var SelectorListContext = (function () {
-        /**
-         * @param {?} selectors
-         */
-        function SelectorListContext(selectors) {
-            this.selectors = selectors;
-            this.alreadyMatched = false;
-        }
-        return SelectorListContext;
-    }());
-    var SelectorContext = (function () {
-        /**
-         * @param {?} selector
-         * @param {?} cbContext
-         * @param {?} listContext
-         */
-        function SelectorContext(selector, cbContext, listContext) {
-            this.selector = selector;
-            this.cbContext = cbContext;
-            this.listContext = listContext;
-            this.notSelectors = selector.notSelectors;
-        }
-        /**
-         * @param {?} cssSelector
-         * @param {?} callback
-         * @return {?}
-         */
-        SelectorContext.prototype.finalize = function (cssSelector, callback) {
-            var /** @type {?} */ result = true;
-            if (this.notSelectors.length > 0 && (!this.listContext || !this.listContext.alreadyMatched)) {
-                var /** @type {?} */ notMatcher = SelectorMatcher.createNotMatcher(this.notSelectors);
-                result = !notMatcher.match(cssSelector, null);
-            }
-            if (result && callback && (!this.listContext || !this.listContext.alreadyMatched)) {
-                if (this.listContext) {
-                    this.listContext.alreadyMatched = true;
-                }
-                callback(this.selector, this.cbContext);
-            }
-            return result;
-        };
-        return SelectorContext;
-    }());
-    /*
-     * The following items are copied from the Angular Compiler to be used here
-     * without the need to import the entire compiler into the build
-     */
-    var /** @type {?} */ CLASS_ATTR = 'class';
-    /**
-     * @param {?} elementName
-     * @param {?} attributes
-     * @return {?}
-     */
-    function createElementCssSelector(elementName, attributes) {
-        var /** @type {?} */ cssSelector = new CssSelector();
-        var /** @type {?} */ elNameNoNs = splitNsName(elementName)[1];
-        cssSelector.setElement(elNameNoNs);
-        for (var /** @type {?} */ i = 0; i < attributes.length; i++) {
-            var /** @type {?} */ attrName = attributes[i][0];
-            var /** @type {?} */ attrNameNoNs = splitNsName(attrName)[1];
-            var /** @type {?} */ attrValue = attributes[i][1];
-            cssSelector.addAttribute(attrNameNoNs, attrValue);
-            if (attrName.toLowerCase() == CLASS_ATTR) {
-                var /** @type {?} */ classes = splitClasses(attrValue);
-                classes.forEach(function (className) { return cssSelector.addClassName(className); });
-            }
-        }
-        return cssSelector;
-    }
-    /**
-     * @param {?} elementName
-     * @return {?}
-     */
-    function splitNsName(elementName) {
-        if (elementName[0] != ':') {
-            return [null, elementName];
-        }
-        var /** @type {?} */ colonIndex = elementName.indexOf(':', 1);
-        if (colonIndex == -1) {
-            throw new Error("Unsupported format \"" + elementName + "\" expecting \":namespace:name\"");
-        }
-        return [elementName.slice(1, colonIndex), elementName.slice(colonIndex + 1)];
-    }
-    /**
-     * @param {?} classAttrValue
-     * @return {?}
-     */
-    function splitClasses(classAttrValue) {
-        return classAttrValue.trim().split(/\s+/g);
-    }
-    /**
-     * @license
-     * Copyright Google Inc. All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     /**
      * A `PropertyBinding` represents a mapping between a property name
      * and an attribute name. It is parsed from a string of the form
@@ -657,19 +73,18 @@
      */
     var PropertyBinding = (function () {
         /**
-         * @param {?} binding
+         * @param {?} prop
+         * @param {?} attr
          */
-        function PropertyBinding(binding) {
-            this.binding = binding;
+        function PropertyBinding(prop, attr) {
+            this.prop = prop;
+            this.attr = attr;
             this.parseBinding();
         }
         /**
          * @return {?}
          */
         PropertyBinding.prototype.parseBinding = function () {
-            var /** @type {?} */ parts = this.binding.split(':');
-            this.prop = parts[0].trim();
-            this.attr = (parts[1] || this.prop).trim();
             this.bracketAttr = "[" + this.attr + "]";
             this.parenAttr = "(" + this.attr + ")";
             this.bracketParenAttr = "[(" + this.attr + ")]";
@@ -679,34 +94,6 @@
             this.bindonAttr = "bindon" + capitalAttr;
         };
         return PropertyBinding;
-    }());
-    /**
-     * @license
-     * Copyright Google Inc. All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
-    /**
-     * This class gives an extension point between the static and dynamic versions
-     * of ngUpgrade:
-     * * In the static version (this one) we must specify them manually as part of
-     *   the call to `downgradeComponent(...)`.
-     * * In the dynamic version (`DynamicNgContentSelectorHelper`) we are able to
-     *   ask the compiler for the selectors of a component.
-     */
-    var NgContentSelectorHelper = (function () {
-        function NgContentSelectorHelper() {
-        }
-        /**
-         * @param {?} info
-         * @return {?}
-         */
-        NgContentSelectorHelper.prototype.getNgContentSelectors = function (info) {
-            // if no selectors are passed then default to a single "wildcard" selector
-            return info.selectors || ['*'];
-        };
-        return NgContentSelectorHelper;
     }());
     /**
      * @license
@@ -736,22 +123,6 @@
      */
     function controllerKey(name) {
         return '$' + name + 'Controller';
-    }
-    /**
-     * @param {?} node
-     * @return {?}
-     */
-    function getAttributesAsArray(node) {
-        var /** @type {?} */ attributes = node.attributes;
-        var /** @type {?} */ asArray;
-        if (attributes) {
-            var /** @type {?} */ attrLen = attributes.length;
-            asArray = new Array(attrLen);
-            for (var /** @type {?} */ i = 0; i < attrLen; i++) {
-                asArray[i] = [attributes[i].nodeName, attributes[i].nodeValue];
-            }
-        }
-        return asArray || [];
     }
     /**
      * @param {?} component
@@ -800,7 +171,6 @@
     var DowngradeComponentAdapter = (function () {
         /**
          * @param {?} id
-         * @param {?} info
          * @param {?} element
          * @param {?} attrs
          * @param {?} scope
@@ -811,9 +181,8 @@
          * @param {?} $parse
          * @param {?} componentFactory
          */
-        function DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
+        function DowngradeComponentAdapter(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
             this.id = id;
-            this.info = info;
             this.element = element;
             this.attrs = attrs;
             this.scope = scope;
@@ -866,9 +235,9 @@
         DowngradeComponentAdapter.prototype.setupInputs = function () {
             var _this = this;
             var /** @type {?} */ attrs = this.attrs;
-            var /** @type {?} */ inputs = this.info.inputs || [];
+            var /** @type {?} */ inputs = this.componentFactory.inputs || [];
             for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
-                var /** @type {?} */ input = new PropertyBinding(inputs[i]);
+                var /** @type {?} */ input = new PropertyBinding(inputs[i].propName, inputs[i].templateName);
                 var /** @type {?} */ expr = null;
                 if (attrs.hasOwnProperty(input.attr)) {
                     var /** @type {?} */ observeFn = (function (prop) {
@@ -900,7 +269,7 @@
                     this.componentScope.$watch(expr, watchFn);
                 }
             }
-            var /** @type {?} */ prototype = this.info.component.prototype;
+            var /** @type {?} */ prototype = this.componentFactory.componentType.prototype;
             if (prototype && ((prototype)).ngOnChanges) {
                 // Detect: OnChanges interface
                 this.inputChanges = {};
@@ -918,9 +287,9 @@
         DowngradeComponentAdapter.prototype.setupOutputs = function () {
             var _this = this;
             var /** @type {?} */ attrs = this.attrs;
-            var /** @type {?} */ outputs = this.info.outputs || [];
+            var /** @type {?} */ outputs = this.componentFactory.outputs || [];
             for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
-                var /** @type {?} */ output = new PropertyBinding(outputs[j]);
+                var /** @type {?} */ output = new PropertyBinding(outputs[j].propName, outputs[j].templateName);
                 var /** @type {?} */ expr = null;
                 var /** @type {?} */ assignExpr = false;
                 var /** @type {?} */ bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
@@ -956,7 +325,7 @@
                         });
                     }
                     else {
-                        throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.info.component) + "'!");
+                        throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.componentFactory.componentType) + "'!");
                     }
                 }
             }
@@ -992,53 +361,71 @@
          * @return {?}
          */
         DowngradeComponentAdapter.prototype.groupProjectableNodes = function () {
-            var /** @type {?} */ ngContentSelectorHelper = (this.parentInjector.get(NgContentSelectorHelper));
-            var /** @type {?} */ ngContentSelectors = ngContentSelectorHelper.getNgContentSelectors(this.info);
-            if (!ngContentSelectors) {
-                throw new Error('Expecting ngContentSelectors for: ' + getComponentName(this.info.component));
-            }
-            return this._groupNodesBySelector(ngContentSelectors, this.element.contents());
-        };
-        /**
-         * Group a set of DOM nodes into `ngContent` groups, based on the given content selectors.
-         * @param {?} ngContentSelectors
-         * @param {?} nodes
-         * @return {?}
-         */
-        DowngradeComponentAdapter.prototype._groupNodesBySelector = function (ngContentSelectors, nodes) {
-            var /** @type {?} */ projectableNodes = [];
-            var /** @type {?} */ matcher = new SelectorMatcher();
-            var /** @type {?} */ wildcardNgContentIndex;
-            for (var /** @type {?} */ i = 0, /** @type {?} */ ii = ngContentSelectors.length; i < ii; ++i) {
-                projectableNodes[i] = [];
-                var /** @type {?} */ selector = ngContentSelectors[i];
-                if (selector === '*') {
-                    wildcardNgContentIndex = i;
-                }
-                else {
-                    matcher.addSelectables(CssSelector.parse(selector), i);
-                }
-            }
-            var _loop_1 = function (j, jj) {
-                var /** @type {?} */ ngContentIndices = [];
-                var /** @type {?} */ node = nodes[j];
-                var /** @type {?} */ selector = createElementCssSelector(node.nodeName.toLowerCase(), getAttributesAsArray(node));
-                matcher.match(selector, function (_, index) { return ngContentIndices.push(index); });
-                ngContentIndices.sort();
-                if (wildcardNgContentIndex !== undefined) {
-                    ngContentIndices.push(wildcardNgContentIndex);
-                }
-                if (ngContentIndices.length) {
-                    projectableNodes[ngContentIndices[0]].push(node);
-                }
-            };
-            for (var /** @type {?} */ j = 0, /** @type {?} */ jj = nodes.length; j < jj; ++j) {
-                _loop_1(/** @type {?} */ j, /** @type {?} */ jj);
-            }
-            return projectableNodes;
+            var /** @type {?} */ ngContentSelectors = this.componentFactory.ngContentSelectors;
+            return groupNodesBySelector(ngContentSelectors, this.element.contents());
         };
         return DowngradeComponentAdapter;
     }());
+    /**
+     * Group a set of DOM nodes into `ngContent` groups, based on the given content selectors.
+     * @param {?} ngContentSelectors
+     * @param {?} nodes
+     * @return {?}
+     */
+    function groupNodesBySelector(ngContentSelectors, nodes) {
+        var /** @type {?} */ projectableNodes = [];
+        var /** @type {?} */ wildcardNgContentIndex;
+        for (var /** @type {?} */ i = 0, /** @type {?} */ ii = ngContentSelectors.length; i < ii; ++i) {
+            projectableNodes[i] = [];
+        }
+        for (var /** @type {?} */ j = 0, /** @type {?} */ jj = nodes.length; j < jj; ++j) {
+            var /** @type {?} */ node = nodes[j];
+            var /** @type {?} */ ngContentIndex = findMatchingNgContentIndex(node, ngContentSelectors);
+            if (ngContentIndex != null) {
+                projectableNodes[ngContentIndex].push(node);
+            }
+        }
+        return projectableNodes;
+    }
+    /**
+     * @param {?} element
+     * @param {?} ngContentSelectors
+     * @return {?}
+     */
+    function findMatchingNgContentIndex(element, ngContentSelectors) {
+        var /** @type {?} */ ngContentIndices = [];
+        var /** @type {?} */ wildcardNgContentIndex;
+        for (var /** @type {?} */ i = 0; i < ngContentSelectors.length; i++) {
+            var /** @type {?} */ selector = ngContentSelectors[i];
+            if (selector === '*') {
+                wildcardNgContentIndex = i;
+            }
+            else {
+                if (matchesSelector(element, selector)) {
+                    ngContentIndices.push(i);
+                }
+            }
+        }
+        ngContentIndices.sort();
+        if (wildcardNgContentIndex !== undefined) {
+            ngContentIndices.push(wildcardNgContentIndex);
+        }
+        return ngContentIndices.length ? ngContentIndices[0] : null;
+    }
+    var /** @type {?} */ _matches;
+    /**
+     * @param {?} el
+     * @param {?} selector
+     * @return {?}
+     */
+    function matchesSelector(el, selector) {
+        if (!_matches) {
+            var /** @type {?} */ elProto = (Element.prototype);
+            _matches = elProto.matches || elProto.matchesSelector || elProto.mozMatchesSelector ||
+                elProto.msMatchesSelector || elProto.oMatchesSelector || elProto.webkitMatchesSelector;
+        }
+        return el.nodeType === Node.ELEMENT_NODE ? _matches.call(el, selector) : false;
+    }
     var /** @type {?} */ downgradeCount = 0;
     /**
      * \@whatItDoes
@@ -1062,15 +449,6 @@
      *
      * {\@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
      *
-     * In this example you can see that we must provide information about the component being
-     * "downgraded". This is because once the AoT compiler has run, all metadata about the
-     * component has been removed from the code, and so cannot be inferred.
-     *
-     * We must do the following:
-     * * specify the Angular component class that is to be downgraded
-     * * specify all inputs and outputs that the AngularJS component expects
-     * * specify the selectors used in any `ng-content` elements in the component's template
-     *
      * \@description
      *
      * A helper function that returns a factory function to be used for registering an
@@ -1079,20 +457,6 @@
      * The parameter contains information about the Component that is being downgraded:
      *
      * * `component: Type<any>`: The type of the Component that will be downgraded
-     * * `inputs: string[]`: A collection of strings that specify what inputs the component accepts
-     * * `outputs: string[]`: A collection of strings that specify what outputs the component emits
-     * * `selectors: string[]`: A collection of strings that specify what selectors are expected on
-     *   `ng-content` elements in the template to enable content projection (a.k.a. transclusion in
-     *   AngularJS)
-     *
-     * The `inputs` and `outputs` are strings that map the names of properties to camelCased
-     * attribute names. They are of the form `"prop: attr"`; or simply `"propAndAttr" where the
-     * property and attribute have the same identifier.
-     *
-     * The `selectors` are the values of the `select` attribute of each of the `ng-content` elements
-     * that appear in the downgraded component's template.
-     * These selectors must be provided in the order that they appear in the template as they are
-     * mapped by index to the projected nodes.
      *
      * \@experimental
      * @param {?} info
@@ -1120,7 +484,7 @@
                         }
                         var /** @type {?} */ id = idPrefix + (idCount++);
                         var /** @type {?} */ injectorPromise = new ParentInjectorPromise$1(element);
-                        var /** @type {?} */ facade = new DowngradeComponentAdapter(id, info, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
+                        var /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
                         var /** @type {?} */ projectableNodes = facade.compileContents();
                         facade.createComponent(projectableNodes);
                         facade.setupInputs();
@@ -1233,37 +597,6 @@
         ((factory)).$inject = [INJECTOR_KEY];
         return factory;
     }
-    /**
-     * See `NgContentSelectorHelper` for more information about this class.
-     */
-    var DynamicNgContentSelectorHelper = (function (_super) {
-        __extends(DynamicNgContentSelectorHelper, _super);
-        /**
-         * @param {?} compiler
-         */
-        function DynamicNgContentSelectorHelper(compiler) {
-            var _this = _super.call(this) || this;
-            _this.compiler = compiler;
-            return _this;
-        }
-        /**
-         * @param {?} info
-         * @return {?}
-         */
-        DynamicNgContentSelectorHelper.prototype.getNgContentSelectors = function (info) {
-            return this.compiler.getNgContentSelectors(info.component);
-        };
-        return DynamicNgContentSelectorHelper;
-    }(NgContentSelectorHelper));
-    DynamicNgContentSelectorHelper.decorators = [
-        { type: _angular_core.Injectable },
-    ];
-    /**
-     * @nocollapse
-     */
-    DynamicNgContentSelectorHelper.ctorParameters = function () { return [
-        { type: _angular_core.Compiler, },
-    ]; };
     var /** @type {?} */ CAMEL_CASE = /([A-Z])/g;
     var /** @type {?} */ INITIAL_VALUE$1 = {
         __UNINITIALIZED__: true
@@ -1749,7 +1082,6 @@
             this.ng2AppModule = ng2AppModule;
             this.compilerOptions = compilerOptions;
             this.idPrefix = "NG2_UPGRADE_" + upgradeCount++ + "_";
-            this.directiveResolver = new _angular_compiler.DirectiveResolver();
             this.downgradedComponents = [];
             /**
              * An internal map of ng1 components which need to up upgraded to ng2.
@@ -1829,9 +1161,7 @@
          */
         UpgradeAdapter.prototype.downgradeNg2Component = function (component) {
             this.downgradedComponents.push(component);
-            var /** @type {?} */ metadata = this.directiveResolver.resolve(component);
-            var /** @type {?} */ info = { component: component, inputs: metadata.inputs, outputs: metadata.outputs };
-            return downgradeComponent(info);
+            return downgradeComponent({ component: component });
         };
         /**
          * Allows AngularJS Component to be used from Angular.
@@ -2201,7 +1531,6 @@
                             providers: [
                                 { provide: $INJECTOR, useFactory: function () { return ng1Injector; } },
                                 { provide: $COMPILE, useFactory: function () { return ng1Injector.get($COMPILE); } },
-                                { provide: NgContentSelectorHelper, useClass: DynamicNgContentSelectorHelper },
                                 _this.upgradedProviders
                             ],
                             imports: [_this.ng2AppModule],
