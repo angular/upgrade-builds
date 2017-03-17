@@ -1,15 +1,27 @@
 /**
- * @license Angular v4.0.0-rc.5-5c5c2ae
+ * @license Angular v4.0.0-rc.5-bcc29ff
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { Version, NgModule, Testability, Compiler, Injector, NgZone, ComponentFactoryResolver, SimpleChange, ReflectiveInjector, ElementRef, Inject, Directive, EventEmitter } from '@angular/core';
+import { Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * @module
+ * @description
+ * Entry point for all public APIs of the common package.
+ */
+/**
  * \@stable
  */
-const VERSION = new Version('4.0.0-rc.5-5c5c2ae');
+const VERSION = new Version('4.0.0-rc.5-bcc29ff');
 
 /**
  * @license
@@ -24,7 +36,7 @@ const VERSION = new Version('4.0.0-rc.5-5c5c2ae');
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
-let /** @type {?} */ angular = ({
+let angular = ({
     bootstrap: noNg,
     module: noNg,
     element: noNg,
@@ -39,9 +51,9 @@ try {
 }
 catch (e) {
 }
-const /** @type {?} */ bootstrap = angular.bootstrap;
-const /** @type {?} */ module$1 = angular.module;
-const /** @type {?} */ element = angular.element;
+const bootstrap = angular.bootstrap;
+const module$1 = angular.module;
+const element = angular.element;
 
 /**
  * @license
@@ -51,19 +63,23 @@ const /** @type {?} */ element = angular.element;
  * found in the LICENSE file at https://angular.io/license
  */
 const $COMPILE = '$compile';
-const /** @type {?} */ $CONTROLLER = '$controller';
-const /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
-const /** @type {?} */ $INJECTOR = '$injector';
-const /** @type {?} */ $PARSE = '$parse';
-const /** @type {?} */ $ROOT_SCOPE = '$rootScope';
-const /** @type {?} */ $SCOPE = '$scope';
-const /** @type {?} */ $TEMPLATE_CACHE = '$templateCache';
-const /** @type {?} */ $$TESTABILITY = '$$testability';
-const /** @type {?} */ COMPILER_KEY = '$$angularCompiler';
-const /** @type {?} */ INJECTOR_KEY = '$$angularInjector';
-const /** @type {?} */ NG_ZONE_KEY = '$$angularNgZone';
-const /** @type {?} */ REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
-const /** @type {?} */ REQUIRE_NG_MODEL = '?ngModel';
+const $CONTROLLER = '$controller';
+
+const $HTTP_BACKEND = '$httpBackend';
+const $INJECTOR = '$injector';
+const $PARSE = '$parse';
+
+const $ROOT_SCOPE = '$rootScope';
+const $SCOPE = '$scope';
+const $TEMPLATE_CACHE = '$templateCache';
+
+const $$TESTABILITY = '$$testability';
+const COMPILER_KEY = '$$angularCompiler';
+
+const INJECTOR_KEY = '$$angularInjector';
+const NG_ZONE_KEY = '$$angularNgZone';
+const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
+const REQUIRE_NG_MODEL = '?ngModel';
 
 /**
  * A `PropertyBinding` represents a mapping between a property name
@@ -125,6 +141,11 @@ function controllerKey(name) {
     return '$' + name + 'Controller';
 }
 /**
+ * @param {?} node
+ * @return {?}
+ */
+
+/**
  * @param {?} component
  * @return {?}
  */
@@ -164,7 +185,14 @@ function hookupNgModel(ngModel, component) {
     }
 }
 
-const /** @type {?} */ INITIAL_VALUE = {
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+const INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 class DowngradeComponentAdapter {
@@ -406,7 +434,7 @@ function findMatchingNgContentIndex(element, ngContentSelectors) {
     }
     return ngContentIndices.length ? ngContentIndices[0] : null;
 }
-let /** @type {?} */ _matches;
+let _matches;
 /**
  * @param {?} el
  * @param {?} selector
@@ -421,7 +449,14 @@ function matchesSelector(el, selector) {
     return el.nodeType === Node.ELEMENT_NODE ? _matches.call(el, selector) : false;
 }
 
-let /** @type {?} */ downgradeCount = 0;
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+let downgradeCount = 0;
 /**
  * \@whatItDoes
  *
@@ -544,6 +579,13 @@ class ParentInjectorPromise$1 {
 }
 
 /**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
  * \@whatItDoes
  *
  * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
@@ -593,11 +635,18 @@ function downgradeInjectable(token) {
     return factory;
 }
 
-const /** @type {?} */ CAMEL_CASE = /([A-Z])/g;
-const /** @type {?} */ INITIAL_VALUE$1 = {
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+const CAMEL_CASE = /([A-Z])/g;
+const INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true
 };
-const /** @type {?} */ NOT_SUPPORTED = 'NOT_SUPPORTED';
+const NOT_SUPPORTED = 'NOT_SUPPORTED';
 class UpgradeNg1ComponentAdapterBuilder {
     /**
      * @param {?} name
@@ -852,7 +901,7 @@ class UpgradeNg1ComponentAdapter {
             ((this.directive.link))(this.componentScope, this.$element, attrs, linkController, transcludeFn);
         }
         const /** @type {?} */ childNodes = [];
-        let /** @type {?} */ childNode /** TODO #9100 */;
+        let /** @type {?} */ childNode;
         while (childNode = this.element.firstChild) {
             this.element.removeChild(childNode);
             childNodes.push(childNode);
@@ -985,7 +1034,14 @@ function isFunction(value) {
     return typeof value === 'function';
 }
 
-let /** @type {?} */ upgradeCount = 0;
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+let upgradeCount = 0;
 /**
  * Use `UpgradeAdapter` to allow AngularJS and Angular to coexist in a single application.
  *
@@ -1343,13 +1399,13 @@ class UpgradeAdapter {
      * @param {?=} config
      * @return {?}
      */
-    bootstrap(element$$, modules, config) {
+    bootstrap(element$$1, modules, config) {
         this.declareNg1Module(modules);
         const /** @type {?} */ upgrade = new UpgradeAdapterRef();
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
         const /** @type {?} */ windowAngular = ((window) /** TODO #???? */)['angular'];
         windowAngular.resumeBootstrap = undefined;
-        this.ngZone.run(() => { bootstrap(element$$, [this.ng1Module.name], config); });
+        this.ngZone.run(() => { bootstrap(element$$1, [this.ng1Module.name], config); });
         const /** @type {?} */ ng1BootstrapPromise = new Promise((resolve) => {
             if (windowAngular.resumeBootstrap) {
                 const /** @type {?} */ originalResumeBootstrap = windowAngular.resumeBootstrap;
@@ -1364,7 +1420,7 @@ class UpgradeAdapter {
             }
         });
         Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(([ng1Injector]) => {
-            element(element$$).data(controllerKey(INJECTOR_KEY), this.moduleRef.injector);
+            element(element$$1).data(controllerKey(INJECTOR_KEY), this.moduleRef.injector);
             this.moduleRef.injector.get(NgZone).run(() => { ((upgrade))._bootstrapDone(this.moduleRef, ng1Injector); });
         }, onError);
         return upgrade;
@@ -1596,6 +1652,26 @@ class UpgradeAdapterRef {
         this.ng2ModuleRef.destroy();
     }
 }
+
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * @module
+ * @description
+ * Entry point for all public APIs of the upgrade/dynamic package, allowing
+ * Angular 1 and Angular 2+ to run side by side in the same application.
+ */
+
+// This file only re-exports content of the `src` folder. Keep it that way.
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { VERSION, UpgradeAdapter, UpgradeAdapterRef };
 //# sourceMappingURL=upgrade.js.map
