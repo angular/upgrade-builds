@@ -1,9 +1,9 @@
 /**
- * @license Angular v4.0.0-rc.5-a50d79d
+ * @license Angular v4.0.0-rc.5-ea49a95
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version, ɵlooseIdentical } from '@angular/core';
+import { ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
 
 /**
  * @license
@@ -512,7 +512,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.0.0-rc.5-a50d79d');
+var VERSION = new Version('4.0.0-rc.5-ea49a95');
 
 /**
  * @license
@@ -1089,8 +1089,8 @@ var UpgradeModule = (function () {
         injector, 
         /** The bootstrap zone for the upgrade application */
         ngZone) {
-        this.injector = injector;
         this.ngZone = ngZone;
+        this.injector = new NgAdapterInjector(injector);
     }
     /**
      * Bootstrap an AngularJS application from this NgModule
@@ -1180,6 +1180,22 @@ UpgradeModule.ctorParameters = function () { return [
     { type: Injector, },
     { type: NgZone, },
 ]; };
+var NgAdapterInjector = (function () {
+    function NgAdapterInjector(modInjector) {
+        this.modInjector = modInjector;
+    }
+    // When Angular locate a service in the component injector tree, the not found value is set to
+    // `NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR`. In such a case we should not walk up to the module
+    // injector.
+    // AngularJS only supports a single tree and should always check the module injector.
+    NgAdapterInjector.prototype.get = function (token, notFoundValue) {
+        if (notFoundValue === ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR) {
+            return notFoundValue;
+        }
+        return this.modInjector.get(token, notFoundValue);
+    };
+    return NgAdapterInjector;
+}());
 
 /**
  * @license
