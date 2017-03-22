@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.0-rc.5-5efc860
+ * @license Angular v4.0.0-rc.5-1bcbcfd
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v4.0.0-rc.5-5efc860
+ * @license Angular v4.0.0-rc.5-1bcbcfd
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -29,7 +29,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('4.0.0-rc.5-5efc860');
+var VERSION = new _angular_core.Version('4.0.0-rc.5-1bcbcfd');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
