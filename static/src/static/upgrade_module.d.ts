@@ -120,14 +120,14 @@ import { Injector, NgZone } from '@angular/core';
  * @experimental
  */
 export declare class UpgradeModule {
-    /** The root {@link Injector} for the upgrade application. */
-    injector: Injector;
     /** The bootstrap zone for the upgrade application */
     ngZone: NgZone;
     /**
      * The AngularJS `$injector` for the upgrade application.
      */
     $injector: any;
+    /** The Angular Injector **/
+    injector: Injector;
     constructor(
         /** The root {@link Injector} for the upgrade application. */
         injector: Injector, 
