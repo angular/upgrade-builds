@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-beta.0-91b2e39
+ * @license Angular v4.1.0-beta.0-0799f18
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core) { 'use strict';
 
 /**
- * @license Angular v4.1.0-beta.0-91b2e39
+ * @license Angular v4.1.0-beta.0-0799f18
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -512,7 +512,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('4.1.0-beta.0-91b2e39');
+var VERSION = new _angular_core.Version('4.1.0-beta.0-0799f18');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
