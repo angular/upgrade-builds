@@ -209,25 +209,11 @@ export interface INgModelController {
     $invalid: boolean;
     $name: string;
 }
-/**
- * Resets the AngularJS library.
- *
- * Used when angularjs is loaded lazily, and not available on `window`.
- *
- * @stable
- */
-export declare function setAngularLib(ng: any): void;
-/**
- * Returns the current version of the AngularJS library.
- *
- * @stable
- */
-export declare function getAngularLib(): any;
-export declare function bootstrap(e: Element, modules: (string | IInjectable)[], config: IAngularBootstrapConfig): void;
-export declare function module(prefix: string, dependencies?: string[]): IModule;
-export declare function element(e: Element | string): IAugmentedJQuery;
-export declare function resumeBootstrap(): void;
-export declare function getTestability(e: Element): ITestabilityService;
+export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config: IAngularBootstrapConfig) => void;
+export declare const module: (prefix: string, dependencies?: string[]) => IModule;
+export declare const element: (e: string | Element) => IAugmentedJQuery;
 export declare const version: {
     major: number;
 };
+export declare const resumeBootstrap: () => void;
+export declare const getTestability: (e: Element) => ITestabilityService;

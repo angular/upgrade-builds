@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-beta.1-8ad464d
+ * @license Angular v4.1.0-beta.1-cb5a7ef
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.1.0-beta.1-8ad464d');
+const VERSION = new Version('4.1.0-beta.1-cb5a7ef');
 
 /**
  * @license
@@ -36,73 +36,24 @@ const VERSION = new Version('4.1.0-beta.1-8ad464d');
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
-let angular;
+let angular = ({
+    bootstrap: noNg,
+    module: noNg,
+    element: noNg,
+    version: noNg,
+    resumeBootstrap: noNg,
+    getTestability: noNg
+});
 try {
     if (window.hasOwnProperty('angular')) {
-        setAngularLib(((window)).angular);
+        angular = ((window)).angular;
     }
 }
 catch (e) {
-    setAngularLib(/** @type {?} */ ({
-        bootstrap: noNg,
-        module: noNg,
-        element: noNg,
-        version: noNg,
-        resumeBootstrap: noNg,
-        getTestability: noNg
-    }));
 }
-/**
- * Resets the AngularJS library.
- *
- * Used when angularjs is loaded lazily, and not available on `window`.
- *
- * \@stable
- * @param {?} ng
- * @return {?}
- */
-function setAngularLib(ng) {
-    angular = ng;
-}
-/**
- * Returns the current version of the AngularJS library.
- *
- * \@stable
- * @return {?}
- */
-
-/**
- * @param {?} e
- * @param {?} modules
- * @param {?} config
- * @return {?}
- */
-function bootstrap(e, modules, config) {
-    angular.bootstrap(e, modules, config);
-}
-/**
- * @param {?} prefix
- * @param {?=} dependencies
- * @return {?}
- */
-function module$1(prefix, dependencies) {
-    return angular.module(prefix, dependencies);
-}
-/**
- * @param {?} e
- * @return {?}
- */
-function element(e) {
-    return angular.element(e);
-}
-/**
- * @return {?}
- */
-
-/**
- * @param {?} e
- * @return {?}
- */
+const bootstrap = angular.bootstrap;
+const module$1 = angular.module;
+const element = angular.element;
 
 /**
  * @license
