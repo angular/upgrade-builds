@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-beta.1-a77b126
+ * @license Angular v4.1.0-beta.1-38a7e0d
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v4.1.0-beta.1-a77b126
+ * @license Angular v4.1.0-beta.1-38a7e0d
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -29,7 +29,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('4.1.0-beta.1-a77b126');
+var VERSION = new _angular_core.Version('4.1.0-beta.1-38a7e0d');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -58,9 +58,24 @@ try {
 }
 catch (e) {
 }
-var bootstrap = angular.bootstrap;
-var module$1 = angular.module;
-var element = angular.element;
+/**
+ * Resets the AngularJS library.
+ *
+ * Used when angularjs is loaded lazily, and not available on `window`.
+ *
+ * \@stable
+ * @param {?} ng
+ * @return {?}
+ */
+/**
+ * Returns the current version of the AngularJS library.
+ *
+ * \@stable
+ * @return {?}
+ */
+var bootstrap = function (e, modules, config) { return angular.bootstrap(e, modules, config); };
+var module$1 = function (prefix, dependencies) { return angular.module(prefix, dependencies); };
+var element = function (e) { return angular.element(e); };
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
