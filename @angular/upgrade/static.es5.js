@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-beta.1-bccfaa4
+ * @license Angular v4.1.0-beta.1-5293794
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -340,7 +340,7 @@ function groupNodesBySelector(ngContentSelectors, nodes) {
 }
 function findMatchingNgContentIndex(element, ngContentSelectors) {
     var ngContentIndices = [];
-    var wildcardNgContentIndex;
+    var wildcardNgContentIndex = -1;
     for (var i = 0; i < ngContentSelectors.length; i++) {
         var selector = ngContentSelectors[i];
         if (selector === '*') {
@@ -353,7 +353,7 @@ function findMatchingNgContentIndex(element, ngContentSelectors) {
         }
     }
     ngContentIndices.sort();
-    if (wildcardNgContentIndex !== undefined) {
+    if (wildcardNgContentIndex !== -1) {
         ngContentIndices.push(wildcardNgContentIndex);
     }
     return ngContentIndices.length ? ngContentIndices[0] : null;
@@ -552,7 +552,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.1.0-beta.1-bccfaa4');
+var VERSION = new Version('4.1.0-beta.1-5293794');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
