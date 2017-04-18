@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-beta.1-6f3710e
+ * @license Angular v4.1.0-beta.1-b46aba9
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('4.1.0-beta.1-6f3710e');
+var VERSION = new Version('4.1.0-beta.1-b46aba9');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -49,9 +49,24 @@ try {
 }
 catch (e) {
 }
-var bootstrap = angular.bootstrap;
-var module$1 = angular.module;
-var element = angular.element;
+/**
+ * Resets the AngularJS library.
+ *
+ * Used when angularjs is loaded lazily, and not available on `window`.
+ *
+ * \@stable
+ * @param {?} ng
+ * @return {?}
+ */
+/**
+ * Returns the current version of the AngularJS library.
+ *
+ * \@stable
+ * @return {?}
+ */
+var bootstrap = function (e, modules, config) { return angular.bootstrap(e, modules, config); };
+var module$1 = function (prefix, dependencies) { return angular.module(prefix, dependencies); };
+var element = function (e) { return angular.element(e); };
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1148,7 +1163,7 @@ var UpgradeAdapter = (function () {
     /**
      * Allows Angular Component to be used from AngularJS.
      *
-     * Use `downgradeNg2Component` to create an AngularJS Directive Definition Factory from
+     * Use `downgradeNg2Component` to create an AngularJS Directive Reference Factory from
      * Angular Component. The adapter will bootstrap Angular component from within the
      * AngularJS template.
      *
@@ -1232,7 +1247,7 @@ var UpgradeAdapter = (function () {
      *   - Event:  `<comp (close)="doSomething()">`
      * - Transclusion: yes
      * - Only some of the features of
-     *   [Directive Definition Object](https://docs.angularjs.org/api/ng/service/$compile) are
+     *   [Directive Reference Object](https://docs.angularjs.org/api/ng/service/$compile) are
      *   supported:
      *   - `compile`: not supported because the host element is owned by Angular, which does
      *     not allow modifying DOM structure during compilation.
