@@ -413,7 +413,7 @@ export declare class UpgradeAdapterRef {
      * The `ready` callback function is invoked inside the Angular zone, therefore it does not
      * require a call to `$apply()`.
      */
-    ready(fn: (upgradeAdapterRef?: UpgradeAdapterRef) => void): void;
+    ready(fn: (upgradeAdapterRef: UpgradeAdapterRef) => void): void;
     /**
      * Dispose of running hybrid AngularJS / Angular application.
      */

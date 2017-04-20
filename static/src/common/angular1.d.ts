@@ -224,7 +224,7 @@ export declare function setAngularLib(ng: any): void;
  */
 export declare function getAngularLib(): any;
 export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config: IAngularBootstrapConfig) => void;
-export declare const module: (prefix: string, dependencies?: string[]) => IModule;
+export declare const module: (prefix: string, dependencies?: string[] | undefined) => IModule;
 export declare const element: (e: string | Element) => IAugmentedJQuery;
 export declare const resumeBootstrap: () => void;
 export declare const getTestability: (e: Element) => ITestabilityService;
