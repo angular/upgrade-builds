@@ -1,9 +1,59 @@
 /**
- * @license Angular v4.0.2-14a2d1a
+ * @license Angular v4.0.3-6ccb937
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 import { ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+function noNg() {
+    throw new Error('AngularJS v1.x is not loaded!');
+}
+var angular = {
+    bootstrap: noNg,
+    module: noNg,
+    element: noNg,
+    version: noNg,
+    resumeBootstrap: noNg,
+    getTestability: noNg
+};
+try {
+    if (window.hasOwnProperty('angular')) {
+        angular = window.angular;
+    }
+}
+catch (e) {
+}
+/**
+ * Resets the AngularJS library.
+ *
+ * Used when angularjs is loaded lazily, and not available on `window`.
+ *
+ * @stable
+ */
+function setAngularLib(ng) {
+    angular = ng;
+}
+/**
+ * Returns the current version of the AngularJS library.
+ *
+ * @stable
+ */
+function getAngularLib() {
+    return angular;
+}
+var bootstrap = function (e, modules, config) {
+    return angular.bootstrap(e, modules, config);
+};
+var module$1 = function (prefix, dependencies) {
+    return angular.module(prefix, dependencies);
+};
+var element = function (e) { return angular.element(e); };
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -502,35 +552,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.0.2-14a2d1a');
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-function noNg() {
-    throw new Error('AngularJS v1.x is not loaded!');
-}
-var angular = {
-    bootstrap: noNg,
-    module: noNg,
-    element: noNg,
-    version: noNg,
-    resumeBootstrap: noNg,
-    getTestability: noNg
-};
-try {
-    if (window.hasOwnProperty('angular')) {
-        angular = window.angular;
-    }
-}
-catch (e) {
-}
-var bootstrap = angular.bootstrap;
-var module$1 = angular.module;
-var element = angular.element;
+var VERSION = new Version('4.0.3-6ccb937');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1203,5 +1225,5 @@ var NgAdapterInjector = (function () {
 /**
  * Generated bundle index. Do not edit.
  */
-export { angular1Providers as ɵe, compileFactory as ɵc, injectorFactory as ɵa, parseFactory as ɵd, rootScopeFactory as ɵb, downgradeComponent, downgradeInjectable, VERSION, UpgradeComponent, UpgradeModule };
+export { angular1Providers as ɵe, compileFactory as ɵc, injectorFactory as ɵa, parseFactory as ɵd, rootScopeFactory as ɵb, getAngularLib, setAngularLib, downgradeComponent, downgradeInjectable, VERSION, UpgradeComponent, UpgradeModule };
 //# sourceMappingURL=static.es5.js.map

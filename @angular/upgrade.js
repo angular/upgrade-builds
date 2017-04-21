@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.0.2-14a2d1a
+ * @license Angular v4.0.3-6ccb937
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.0.2-14a2d1a');
+const VERSION = new Version('4.0.3-6ccb937');
 
 /**
  * @license
@@ -51,9 +51,26 @@ try {
 }
 catch (e) {
 }
-const bootstrap = angular.bootstrap;
-const module$1 = angular.module;
-const element = angular.element;
+/**
+ * Resets the AngularJS library.
+ *
+ * Used when angularjs is loaded lazily, and not available on `window`.
+ *
+ * \@stable
+ * @param {?} ng
+ * @return {?}
+ */
+
+/**
+ * Returns the current version of the AngularJS library.
+ *
+ * \@stable
+ * @return {?}
+ */
+
+const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
+const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
+const element = (e) => angular.element(e);
 
 /**
  * @license
