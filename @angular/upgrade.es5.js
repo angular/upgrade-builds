@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-rc.0-feda017
+ * @license Angular v4.1.0-rc.0-d1fb066
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('4.1.0-rc.0-feda017');
+var VERSION = new Version('4.1.0-rc.0-d1fb066');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -725,53 +725,51 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
      * @return {?}
      */
     UpgradeNg1ComponentAdapterBuilder.prototype.extractBindings = function () {
+        var _this = this;
         var /** @type {?} */ btcIsObject = typeof ((this.directive)).bindToController === 'object';
         if (btcIsObject && Object.keys(/** @type {?} */ ((this.directive)).scope).length) {
             throw new Error("Binding definitions on scope and controller at the same time are not supported.");
         }
         var /** @type {?} */ context = (btcIsObject) ? ((this.directive)).bindToController : ((this.directive)).scope;
         if (typeof context == 'object') {
-            for (var /** @type {?} */ name in context) {
-                if (((context)).hasOwnProperty(name)) {
-                    var /** @type {?} */ localName = context[name];
-                    var /** @type {?} */ type = localName.charAt(0);
-                    var /** @type {?} */ typeOptions = localName.charAt(1);
-                    localName = typeOptions === '?' ? localName.substr(2) : localName.substr(1);
-                    localName = localName || name;
-                    var /** @type {?} */ outputName = 'output_' + name;
-                    var /** @type {?} */ outputNameRename = outputName + ': ' + name;
-                    var /** @type {?} */ outputNameRenameChange = outputName + ': ' + name + 'Change';
-                    var /** @type {?} */ inputName = 'input_' + name;
-                    var /** @type {?} */ inputNameRename = inputName + ': ' + name;
-                    switch (type) {
-                        case '=':
-                            this.propertyOutputs.push(outputName);
-                            this.checkProperties.push(localName);
-                            this.outputs.push(outputName);
-                            this.outputsRename.push(outputNameRenameChange);
-                            this.propertyMap[outputName] = localName;
-                            this.inputs.push(inputName);
-                            this.inputsRename.push(inputNameRename);
-                            this.propertyMap[inputName] = localName;
-                            break;
-                        case '@':
-                        // handle the '<' binding of angular 1.5 components
-                        case '<':
-                            this.inputs.push(inputName);
-                            this.inputsRename.push(inputNameRename);
-                            this.propertyMap[inputName] = localName;
-                            break;
-                        case '&':
-                            this.outputs.push(outputName);
-                            this.outputsRename.push(outputNameRename);
-                            this.propertyMap[outputName] = localName;
-                            break;
-                        default:
-                            var /** @type {?} */ json = JSON.stringify(context);
-                            throw new Error("Unexpected mapping '" + type + "' in '" + json + "' in '" + this.name + "' directive.");
-                    }
+            Object.keys(context).forEach(function (propName) {
+                var /** @type {?} */ definition = context[propName];
+                var /** @type {?} */ bindingType = definition.charAt(0);
+                var /** @type {?} */ bindingOptions = definition.charAt(1);
+                var /** @type {?} */ attrName = definition.substring(bindingOptions === '?' ? 2 : 1) || propName;
+                // QUESTION: What about `=*`? Ignore? Throw? Support?
+                var /** @type {?} */ inputName = "input_" + attrName;
+                var /** @type {?} */ inputNameRename = inputName + ": " + attrName;
+                var /** @type {?} */ outputName = "output_" + attrName;
+                var /** @type {?} */ outputNameRename = outputName + ": " + attrName;
+                var /** @type {?} */ outputNameRenameChange = outputNameRename + "Change";
+                switch (bindingType) {
+                    case '@':
+                    case '<':
+                        _this.inputs.push(inputName);
+                        _this.inputsRename.push(inputNameRename);
+                        _this.propertyMap[inputName] = propName;
+                        break;
+                    case '=':
+                        _this.inputs.push(inputName);
+                        _this.inputsRename.push(inputNameRename);
+                        _this.propertyMap[inputName] = propName;
+                        _this.outputs.push(outputName);
+                        _this.outputsRename.push(outputNameRenameChange);
+                        _this.propertyMap[outputName] = propName;
+                        _this.checkProperties.push(propName);
+                        _this.propertyOutputs.push(outputName);
+                        break;
+                    case '&':
+                        _this.outputs.push(outputName);
+                        _this.outputsRename.push(outputNameRename);
+                        _this.propertyMap[outputName] = propName;
+                        break;
+                    default:
+                        var /** @type {?} */ json = JSON.stringify(context);
+                        throw new Error("Unexpected mapping '" + bindingType + "' in '" + json + "' in '" + _this.name + "' directive.");
                 }
-            }
+            });
         }
     };
     /**
@@ -887,11 +885,10 @@ var UpgradeNg1ComponentAdapter = (function () {
             this /** TODO #9100 */[inputs[i]] = null;
         }
         for (var j = 0; j < outputs.length; j++) {
-            var emitter = this /** TODO #9100 */[outputs[j]] = new EventEmitter();
-            this.setComponentProperty(outputs[j], (function (emitter /** TODO #9100 */) { return function (value /** TODO #9100 */) { return emitter.emit(value); }; })(emitter));
+            var emitter = this[outputs[j]] = new EventEmitter();
+            this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
         }
         for (var k = 0; k < propOuts.length; k++) {
-            this /** TODO #9100 */[propOuts[k]] = new EventEmitter();
             this.checkLastValues.push(INITIAL_VALUE$1);
         }
     }
@@ -952,21 +949,20 @@ var UpgradeNg1ComponentAdapter = (function () {
      * @return {?}
      */
     UpgradeNg1ComponentAdapter.prototype.ngDoCheck = function () {
+        var _this = this;
         var /** @type {?} */ destinationObj = this.destinationObj;
         var /** @type {?} */ lastValues = this.checkLastValues;
         var /** @type {?} */ checkProperties = this.checkProperties;
-        for (var /** @type {?} */ i = 0; i < checkProperties.length; i++) {
-            var /** @type {?} */ value = ((destinationObj))[checkProperties[i]];
+        var /** @type {?} */ propOuts = this.propOuts;
+        checkProperties.forEach(function (propName, i) {
+            var /** @type {?} */ value = ((destinationObj))[propName];
             var /** @type {?} */ last = lastValues[i];
-            if (value !== last) {
-                if (typeof value == 'number' && isNaN(value) && typeof last == 'number' && isNaN(last)) {
-                }
-                else {
-                    var /** @type {?} */ eventEmitter = ((this) /** TODO #9100 */)[this.propOuts[i]];
-                    eventEmitter.emit(lastValues[i] = value);
-                }
+            if (value !== last &&
+                (value === value || last === last)) {
+                var /** @type {?} */ eventEmitter = ((_this))[propOuts[i]];
+                eventEmitter.emit(lastValues[i] = value);
             }
-        }
+        });
         if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
             this.controllerInstance.$doCheck();
         }
