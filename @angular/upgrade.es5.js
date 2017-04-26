@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-rc.0-d8e2829
+ * @license Angular v4.1.0-rc.0-35a2dfc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('4.1.0-rc.0-d8e2829');
+var VERSION = new Version('4.1.0-rc.0-35a2dfc');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
