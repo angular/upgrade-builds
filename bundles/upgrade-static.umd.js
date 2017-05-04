@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-b9723f9
+ * @license Angular v4.1.1-5f6d0f2
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core) { 'use strict';
 
 /**
- * @license Angular v4.1.0-b9723f9
+ * @license Angular v4.1.1-5f6d0f2
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -155,6 +155,12 @@ function hookupNgModel(ngModel, component) {
     }
 }
 /**
+ * Test two values for strict equality, accounting for the fact that `NaN !== NaN`.
+ */
+function strictEquals(val1, val2) {
+    return val1 === val2 || (val1 !== val1 && val2 !== val2);
+}
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
@@ -210,21 +216,32 @@ var DowngradeComponentAdapter = (function () {
         var _this = this;
         var attrs = this.attrs;
         var inputs = this.componentFactory.inputs || [];
-        for (var i = 0; i < inputs.length; i++) {
+        var _loop_1 = function (i) {
             var input = new PropertyBinding(inputs[i].propName, inputs[i].templateName);
             var expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                var observeFn = (function (prop) {
+                var observeFn_1 = (function (prop) {
                     var prevValue = INITIAL_VALUE;
                     return function (currValue) {
-                        if (prevValue === INITIAL_VALUE) {
+                        // Initially, both `$observe()` and `$watch()` will call this function.
+                        if (!strictEquals(prevValue, currValue)) {
+                            if (prevValue === INITIAL_VALUE) {
+                                prevValue = currValue;
+                            }
+                            _this.updateInput(prop, prevValue, currValue);
                             prevValue = currValue;
                         }
-                        _this.updateInput(prop, prevValue, currValue);
-                        prevValue = currValue;
                     };
                 })(input.prop);
-                attrs.$observe(input.attr, observeFn);
+                attrs.$observe(input.attr, observeFn_1);
+                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input  in time
+                // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
+                // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
+                var unwatch_1 = this_1.componentScope.$watch(function () {
+                    unwatch_1();
+                    unwatch_1 = null;
+                    observeFn_1(attrs[input.attr]);
+                });
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
                 expr = attrs /** TODO #9100 */[input.bindAttr];
@@ -244,8 +261,12 @@ var DowngradeComponentAdapter = (function () {
                         return _this.updateInput(prop, prevValue, currValue);
                     };
                 })(input.prop);
-                this.componentScope.$watch(expr, watchFn);
+                this_1.componentScope.$watch(expr, watchFn);
             }
+        };
+        var this_1 = this;
+        for (var i = 0; i < inputs.length; i++) {
+            _loop_1(i);
         }
         var prototype = this.componentFactory.componentType.prototype;
         if (prototype && prototype.ngOnChanges) {
@@ -562,7 +583,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('4.1.0-b9723f9');
+var VERSION = new _angular_core.Version('4.1.1-5f6d0f2');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.

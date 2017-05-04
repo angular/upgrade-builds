@@ -22,3 +22,7 @@ export declare class Deferred<R> {
  * (if it implements the needed subset of the `ControlValueAccessor` interface).
  */
 export declare function hookupNgModel(ngModel: angular.INgModelController, component: any): void;
+/**
+ * Test two values for strict equality, accounting for the fact that `NaN !== NaN`.
+ */
+export declare function strictEquals(val1: any, val2: any): boolean;
