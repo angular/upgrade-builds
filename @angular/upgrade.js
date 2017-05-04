@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-77b8a76
+ * @license Angular v4.1.0-b3e63c0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.1.0-77b8a76');
+const VERSION = new Version('4.1.0-b3e63c0');
 
 /**
  * @license
@@ -201,6 +201,15 @@ function hookupNgModel(ngModel, component) {
         component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
     }
 }
+/**
+ * Test two values for strict equality, accounting for the fact that `NaN !== NaN`.
+ * @param {?} val1
+ * @param {?} val2
+ * @return {?}
+ */
+function strictEquals(val1, val2) {
+    return val1 === val2 || (val1 !== val1 && val2 !== val2);
+}
 
 /**
  * @license
@@ -285,14 +294,25 @@ class DowngradeComponentAdapter {
                 const /** @type {?} */ observeFn = (prop => {
                     let /** @type {?} */ prevValue = INITIAL_VALUE;
                     return (currValue) => {
-                        if (prevValue === INITIAL_VALUE) {
+                        // Initially, both `$observe()` and `$watch()` will call this function.
+                        if (!strictEquals(prevValue, currValue)) {
+                            if (prevValue === INITIAL_VALUE) {
+                                prevValue = currValue;
+                            }
+                            this.updateInput(prop, prevValue, currValue);
                             prevValue = currValue;
                         }
-                        this.updateInput(prop, prevValue, currValue);
-                        prevValue = currValue;
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn);
+                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input  in time
+                // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
+                // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
+                let /** @type {?} */ unwatch = this.componentScope.$watch(() => {
+                    unwatch();
+                    unwatch = null;
+                    observeFn(((attrs))[input.attr]);
+                });
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
                 expr = ((attrs) /** TODO #9100 */)[input.bindAttr];
@@ -958,8 +978,7 @@ class UpgradeNg1ComponentAdapter {
         checkProperties.forEach((propName, i) => {
             const /** @type {?} */ value = ((destinationObj))[propName];
             const /** @type {?} */ last = lastValues[i];
-            if (value !== last &&
-                (value === value || last === last)) {
+            if (!strictEquals(last, value)) {
                 const /** @type {?} */ eventEmitter = ((this))[propOuts[i]];
                 eventEmitter.emit(lastValues[i] = value);
             }

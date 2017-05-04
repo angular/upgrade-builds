@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.0-77b8a76
+ * @license Angular v4.1.0-b3e63c0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v4.1.0-77b8a76
+ * @license Angular v4.1.0-b3e63c0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -29,7 +29,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('4.1.0-77b8a76');
+var VERSION = new _angular_core.Version('4.1.0-b3e63c0');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -202,6 +202,15 @@ function hookupNgModel(ngModel, component) {
     }
 }
 /**
+ * Test two values for strict equality, accounting for the fact that `NaN !== NaN`.
+ * @param {?} val1
+ * @param {?} val2
+ * @return {?}
+ */
+function strictEquals(val1, val2) {
+    return val1 === val2 || (val1 !== val1 && val2 !== val2);
+}
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
@@ -279,21 +288,32 @@ var DowngradeComponentAdapter = (function () {
         var _this = this;
         var /** @type {?} */ attrs = this.attrs;
         var /** @type {?} */ inputs = this.componentFactory.inputs || [];
-        for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
+        var _loop_1 = function (i) {
             var /** @type {?} */ input = new PropertyBinding(inputs[i].propName, inputs[i].templateName);
             var /** @type {?} */ expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                var /** @type {?} */ observeFn = (function (prop) {
+                var /** @type {?} */ observeFn_1 = (function (prop) {
                     var /** @type {?} */ prevValue = INITIAL_VALUE;
                     return function (currValue) {
-                        if (prevValue === INITIAL_VALUE) {
+                        // Initially, both `$observe()` and `$watch()` will call this function.
+                        if (!strictEquals(prevValue, currValue)) {
+                            if (prevValue === INITIAL_VALUE) {
+                                prevValue = currValue;
+                            }
+                            _this.updateInput(prop, prevValue, currValue);
                             prevValue = currValue;
                         }
-                        _this.updateInput(prop, prevValue, currValue);
-                        prevValue = currValue;
                     };
                 })(input.prop);
-                attrs.$observe(input.attr, observeFn);
+                attrs.$observe(input.attr, observeFn_1);
+                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input  in time
+                // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
+                // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
+                var /** @type {?} */ unwatch_1 = this_1.componentScope.$watch(function () {
+                    unwatch_1();
+                    unwatch_1 = null;
+                    observeFn_1(((attrs))[input.attr]);
+                });
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
                 expr = ((attrs) /** TODO #9100 */)[input.bindAttr];
@@ -309,8 +329,12 @@ var DowngradeComponentAdapter = (function () {
             }
             if (expr != null) {
                 var /** @type {?} */ watchFn = (function (prop) { return function (currValue, prevValue) { return _this.updateInput(prop, prevValue, currValue); }; })(input.prop);
-                this.componentScope.$watch(expr, watchFn);
+                this_1.componentScope.$watch(expr, watchFn);
             }
+        };
+        var this_1 = this;
+        for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
+            _loop_1(/** @type {?} */ i);
         }
         var /** @type {?} */ prototype = this.componentFactory.componentType.prototype;
         if (prototype && ((prototype)).ngOnChanges) {
@@ -966,8 +990,7 @@ var UpgradeNg1ComponentAdapter = (function () {
         checkProperties.forEach(function (propName, i) {
             var /** @type {?} */ value = ((destinationObj))[propName];
             var /** @type {?} */ last = lastValues[i];
-            if (value !== last &&
-                (value === value || last === last)) {
+            if (!strictEquals(last, value)) {
                 var /** @type {?} */ eventEmitter = ((_this))[propOuts[i]];
                 eventEmitter.emit(lastValues[i] = value);
             }
