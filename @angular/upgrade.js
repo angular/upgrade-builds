@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.0-c5ce040
+ * @license Angular v4.2.0-beta.0-a2dcb7b
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.2.0-beta.0-c5ce040');
+const VERSION = new Version('4.2.0-beta.0-a2dcb7b');
 
 /**
  * @license
@@ -497,7 +497,7 @@ let downgradeCount = 0;
 /**
  * \@whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows an Angular component to be used from AngularJS.
@@ -626,7 +626,7 @@ class ParentInjectorPromise$1 {
 /**
  * \@whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allow an Angular service to be accessible from AngularJS.

@@ -9,7 +9,7 @@ import { Injector, NgZone } from '@angular/core';
 /**
  * @whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows AngularJS and Angular components to be used together inside a hybrid upgrade
@@ -79,6 +79,7 @@ import { Injector, NgZone } from '@angular/core';
  *
  * {@example upgrade/static/ts/module.ts region='bootstrap'}
  *
+ * {@a upgrading-an-angular-1-service}
  *
  * ## Upgrading an AngularJS service
  *

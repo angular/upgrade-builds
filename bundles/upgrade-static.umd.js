@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.0-c5ce040
+ * @license Angular v4.2.0-beta.0-a2dcb7b
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core) { 'use strict';
 
 /**
- * @license Angular v4.2.0-beta.0-c5ce040
+ * @license Angular v4.2.0-beta.0-a2dcb7b
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -409,7 +409,7 @@ var downgradeCount = 0;
 /**
  * @whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows an Angular component to be used from AngularJS.
@@ -524,7 +524,7 @@ var ParentInjectorPromise = (function () {
 /**
  * @whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allow an Angular service to be accessible from AngularJS.
@@ -583,7 +583,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('4.2.0-beta.0-c5ce040');
+var VERSION = new _angular_core.Version('4.2.0-beta.0-a2dcb7b');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -608,7 +608,7 @@ var Bindings = (function () {
 /**
  * @whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows an AngularJS component to be used from Angular.
@@ -1012,7 +1012,7 @@ var angular1Providers = [
 /**
  * @whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows AngularJS and Angular components to be used together inside a hybrid upgrade
@@ -1082,6 +1082,7 @@ var angular1Providers = [
  *
  * {@example upgrade/static/ts/module.ts region='bootstrap'}
  *
+ * {@a upgrading-an-angular-1-service}
  *
  * ## Upgrading an AngularJS service
  *
