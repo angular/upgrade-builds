@@ -9,7 +9,7 @@ import { DoCheck, ElementRef, Injector, OnChanges, OnDestroy, OnInit, SimpleChan
 /**
  * @whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows an AngularJS component to be used from Angular.
