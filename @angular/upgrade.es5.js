@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.1-abb36e3
+ * @license Angular v4.2.0-beta.1-44c7ac0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('4.2.0-beta.1-abb36e3');
+var VERSION = new Version('4.2.0-beta.1-44c7ac0');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -379,7 +379,7 @@ var DowngradeComponentAdapter = (function () {
                     emitter.subscribe({
                         next: assignExpr ?
                             (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
-                            (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { $event: v }); }; })(getter)
+                            (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { '$event': v }); }; })(getter)
                     });
                 }
                 else {

@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.1-abb36e3
+ * @license Angular v4.2.0-beta.1-44c7ac0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.2.0-beta.1-abb36e3');
+const VERSION = new Version('4.2.0-beta.1-44c7ac0');
 
 /**
  * @license
@@ -382,7 +382,7 @@ class DowngradeComponentAdapter {
                     emitter.subscribe({
                         next: assignExpr ?
                             ((setter) => (v /** TODO #9100 */) => setter(this.scope, v))(setter) :
-                            ((getter) => (v /** TODO #9100 */) => getter(this.scope, { $event: v }))(getter)
+                            ((getter) => (v /** TODO #9100 */) => getter(this.scope, { '$event': v }))(getter)
                     });
                 }
                 else {
