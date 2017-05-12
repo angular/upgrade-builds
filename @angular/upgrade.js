@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.1-b016984
+ * @license Angular v4.2.0-beta.1-b83fe6f
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.2.0-beta.1-b016984');
+const VERSION = new Version('4.2.0-beta.1-b83fe6f');
 
 /**
  * @license
@@ -669,7 +669,7 @@ class ParentInjectorPromise$1 {
  */
 function downgradeInjectable(token) {
     const /** @type {?} */ factory = function (i) { return i.get(token); };
-    ((factory)).$inject = [INJECTOR_KEY];
+    ((factory))['$inject'] = [INJECTOR_KEY];
     return factory;
 }
 
