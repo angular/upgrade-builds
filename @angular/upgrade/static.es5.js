@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.1-38c524d
+ * @license Angular v4.2.0-beta.1-4a599ee
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -555,7 +555,7 @@ var ParentInjectorPromise = (function () {
  */
 function downgradeInjectable(token) {
     var factory = function (i) { return i.get(token); };
-    factory['$inject'] = [INJECTOR_KEY];
+    factory.$inject = [INJECTOR_KEY];
     return factory;
 }
 /**
@@ -573,7 +573,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.2.0-beta.1-38c524d');
+var VERSION = new Version('4.2.0-beta.1-4a599ee');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
