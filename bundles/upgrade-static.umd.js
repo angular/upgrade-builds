@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.1-af99cf2
+ * @license Angular v4.2.0-beta.1-9a7f5d5
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core) { 'use strict';
 
 /**
- * @license Angular v4.2.0-beta.1-af99cf2
+ * @license Angular v4.2.0-beta.1-9a7f5d5
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -38,6 +38,7 @@ try {
     }
 }
 catch (e) {
+    // ignore in CJS mode.
 }
 /**
  * Resets the AngularJS library.
@@ -583,7 +584,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('4.2.0-beta.1-af99cf2');
+var VERSION = new _angular_core.Version('4.2.0-beta.1-9a7f5d5');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -870,6 +871,15 @@ var UpgradeComponent = (function () {
             }
             else {
                 throw new Error('loading directive templates asynchronously is not supported');
+                // return new Promise((resolve, reject) => {
+                //   this.$httpBackend('GET', url, null, (status: number, response: string) => {
+                //     if (status == 200) {
+                //       resolve(this.compileHtml(this.$templateCache.put(url, response)));
+                //     } else {
+                //       reject(`GET component template from '${url}' returned '${status}: ${response}'`);
+                //     }
+                //   });
+                // });
             }
         }
         else {
