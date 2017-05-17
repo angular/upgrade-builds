@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.1.2-62a8618
+ * @license Angular v4.1.2-6f039d7
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.1.2-62a8618');
+const VERSION = new Version('4.1.2-6f039d7');
 
 /**
  * @license
@@ -382,7 +382,7 @@ class DowngradeComponentAdapter {
                     emitter.subscribe({
                         next: assignExpr ?
                             ((setter) => (v /** TODO #9100 */) => setter(this.scope, v))(setter) :
-                            ((getter) => (v /** TODO #9100 */) => getter(this.scope, { $event: v }))(getter)
+                            ((getter) => (v /** TODO #9100 */) => getter(this.scope, { '$event': v }))(getter)
                     });
                 }
                 else {
@@ -669,7 +669,7 @@ class ParentInjectorPromise$1 {
  */
 function downgradeInjectable(token) {
     const /** @type {?} */ factory = function (i) { return i.get(token); };
-    ((factory)).$inject = [INJECTOR_KEY];
+    ((factory))['$inject'] = [INJECTOR_KEY];
     return factory;
 }
 
