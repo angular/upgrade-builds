@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.1-d761059
+ * @license Angular v4.2.0-beta.1-54a6e4f
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v4.2.0-beta.1-d761059
+ * @license Angular v4.2.0-beta.1-54a6e4f
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -29,7 +29,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('4.2.0-beta.1-d761059');
+var VERSION = new _angular_core.Version('4.2.0-beta.1-54a6e4f');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -311,7 +311,7 @@ var DowngradeComponentAdapter = (function () {
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 var /** @type {?} */ unwatch_1 = this_1.componentScope.$watch(function () {
-                    unwatch_1();
+                    unwatch_1('');
                     unwatch_1 = null;
                     observeFn_1(((attrs))[input.attr]);
                 });

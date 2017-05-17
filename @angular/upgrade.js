@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-beta.1-d761059
+ * @license Angular v4.2.0-beta.1-54a6e4f
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.2.0-beta.1-d761059');
+const VERSION = new Version('4.2.0-beta.1-54a6e4f');
 
 /**
  * @license
@@ -310,7 +310,7 @@ class DowngradeComponentAdapter {
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 let /** @type {?} */ unwatch = this.componentScope.$watch(() => {
-                    unwatch();
+                    unwatch('');
                     unwatch = null;
                     observeFn(((attrs))[input.attr]);
                 });
