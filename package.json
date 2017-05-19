@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "4.2.0-beta.1-7d9f96a",
+  "version": "4.2.0-beta.1-b836aca",
   "description": "Angular - the library for easing update from v1 to v2",
   "main": "./bundles/upgrade.umd.js",
   "module": "./@angular/upgrade.es5.js",
@@ -9,10 +9,10 @@
   "author": "angular",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "4.2.0-beta.1-7d9f96a",
-    "@angular/compiler": "4.2.0-beta.1-7d9f96a",
-    "@angular/platform-browser": "4.2.0-beta.1-7d9f96a",
-    "@angular/platform-browser-dynamic": "4.2.0-beta.1-7d9f96a"
+    "@angular/core": "4.2.0-beta.1-b836aca",
+    "@angular/compiler": "4.2.0-beta.1-b836aca",
+    "@angular/platform-browser": "4.2.0-beta.1-b836aca",
+    "@angular/platform-browser-dynamic": "4.2.0-beta.1-b836aca"
   },
   "repository": {
     "type": "git",
