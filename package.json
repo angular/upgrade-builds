@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "4.2.0-rc.0-eba59aa",
+  "version": "4.2.0-rc.0-9e17a14",
   "description": "Angular - the library for easing update from v1 to v2",
   "main": "./bundles/upgrade.umd.js",
   "module": "./@angular/upgrade.es5.js",
@@ -12,10 +12,10 @@
     "tslib": "^1.7.1"
   },
   "peerDependencies": {
-    "@angular/core": "4.2.0-rc.0-eba59aa",
-    "@angular/compiler": "4.2.0-rc.0-eba59aa",
-    "@angular/platform-browser": "4.2.0-rc.0-eba59aa",
-    "@angular/platform-browser-dynamic": "4.2.0-rc.0-eba59aa"
+    "@angular/core": "4.2.0-rc.0-9e17a14",
+    "@angular/compiler": "4.2.0-rc.0-9e17a14",
+    "@angular/platform-browser": "4.2.0-rc.0-9e17a14",
+    "@angular/platform-browser-dynamic": "4.2.0-rc.0-9e17a14"
   },
   "repository": {
     "type": "git",
