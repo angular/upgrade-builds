@@ -169,6 +169,10 @@ export interface IInjectorService {
     get(key: string): any;
     has(key: string): boolean;
 }
+export interface IIntervalService {
+    (func: Function, delay: number, count?: number, invokeApply?: boolean, ...args: any[]): Promise<any>;
+    cancel(promise: Promise<any>): boolean;
+}
 export interface ITestabilityService {
     findBindings(element: Element, expression: string, opt_exactMatch?: boolean): Element[];
     findModels(element: Element, expression: string, opt_exactMatch?: boolean): Element[];

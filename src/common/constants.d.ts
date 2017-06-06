@@ -10,6 +10,7 @@ export declare const $CONTROLLER = "$controller";
 export declare const $DELEGATE = "$delegate";
 export declare const $HTTP_BACKEND = "$httpBackend";
 export declare const $INJECTOR = "$injector";
+export declare const $INTERVAL = "$interval";
 export declare const $PARSE = "$parse";
 export declare const $PROVIDE = "$provide";
 export declare const $ROOT_SCOPE = "$rootScope";

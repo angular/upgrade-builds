@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-rc.2-bb2fc6b
+ * @license Angular v4.2.0-rc.2-269bbe0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core) { 'use strict';
 
 /**
- * @license Angular v4.2.0-rc.2-bb2fc6b
+ * @license Angular v4.2.0-rc.2-269bbe0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -83,6 +83,7 @@ var $CONTROLLER = '$controller';
 var $DELEGATE = '$delegate';
 var $HTTP_BACKEND = '$httpBackend';
 var $INJECTOR = '$injector';
+var $INTERVAL = '$interval';
 var $PARSE = '$parse';
 var $PROVIDE = '$provide';
 var $SCOPE = '$scope';
@@ -584,7 +585,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('4.2.0-rc.2-bb2fc6b');
+var VERSION = new _angular_core.Version('4.2.0-rc.2-269bbe0');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1180,6 +1181,37 @@ var UpgradeModule = (function () {
                             };
                             testabilityDelegate.whenStable = newWhenStable;
                             return testabilityDelegate;
+                        }
+                    ]);
+                }
+                if ($injector.has($INTERVAL)) {
+                    $provide.decorator($INTERVAL, [
+                        $DELEGATE,
+                        function (intervalDelegate) {
+                            // Wrap the $interval service so that setInterval is called outside NgZone,
+                            // but the callback is still invoked within it. This is so that $interval
+                            // won't block stability, which preserves the behavior from AngularJS.
+                            var wrappedInterval = function (fn, delay, count, invokeApply) {
+                                var pass = [];
+                                for (var _i = 4; _i < arguments.length; _i++) {
+                                    pass[_i - 4] = arguments[_i];
+                                }
+                                return _this.ngZone.runOutsideAngular(function () {
+                                    return intervalDelegate.apply(void 0, [function () {
+                                            var args = [];
+                                            for (var _i = 0; _i < arguments.length; _i++) {
+                                                args[_i] = arguments[_i];
+                                            }
+                                            // Run callback in the next VM turn - $interval calls
+                                            // $rootScope.$apply, and running the callback in NgZone will
+                                            // cause a '$digest already in progress' error if it's in the
+                                            // same vm turn.
+                                            setTimeout(function () { _this.ngZone.run(function () { return fn.apply(void 0, args); }); });
+                                        }, delay, count, invokeApply].concat(pass));
+                                });
+                            };
+                            wrappedInterval['cancel'] = intervalDelegate.cancel;
+                            return wrappedInterval;
                         }
                     ]);
                 }
