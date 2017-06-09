@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.0-f7422a9
+ * @license Angular v4.2.0-8524187
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.2.0-f7422a9');
+const VERSION = new Version('4.2.0-8524187');
 
 /**
  * @license
