@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.2-0c07f8c
+ * @license Angular v4.2.2-38fc2a0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -575,7 +575,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.2.2-0c07f8c');
+var VERSION = new Version('4.2.2-38fc2a0');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
