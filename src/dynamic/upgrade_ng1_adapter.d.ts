@@ -19,14 +19,18 @@ export declare class UpgradeNg1ComponentAdapterBuilder {
     propertyMap: {
         [name: string]: string;
     };
+    linkFn: angular.ILinkFn | null;
     directive: angular.IDirective | null;
-    template: string;
+    $controller: angular.IControllerService | null;
     constructor(name: string);
+    extractDirective(injector: angular.IInjectorService): angular.IDirective;
+    private notSupported(feature);
     extractBindings(): void;
+    compileTemplate(compile: angular.ICompileService, templateCache: angular.ITemplateCacheService, httpBackend: angular.IHttpBackendService): Promise<angular.ILinkFn> | null;
     /**
      * Upgrade ng1 components into Angular.
      */
     static resolve(exportedComponents: {
         [name: string]: UpgradeNg1ComponentAdapterBuilder;
-    }, $injector: angular.IInjectorService): Promise<string[]>;
+    }, injector: angular.IInjectorService): Promise<angular.ILinkFn[]>;
 }
