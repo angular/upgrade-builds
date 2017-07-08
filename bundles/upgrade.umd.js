@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.2.5-3e61bf7
+ * @license Angular v4.2.5-8b8b4cb
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v4.2.5-3e61bf7
+ * @license Angular v4.2.5-8b8b4cb
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -29,7 +29,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('4.2.5-3e61bf7');
+var VERSION = new _angular_core.Version('4.2.5-8b8b4cb');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -158,6 +158,10 @@ function controllerKey(name) {
     return '$' + name + 'Controller';
 }
 /**
+ * @param {?} name
+ * @return {?}
+ */
+/**
  * @param {?} node
  * @return {?}
  */
@@ -169,6 +173,10 @@ function getComponentName(component) {
     // Return the name of the component or the first line of its stringified version.
     return ((component)).overriddenName || component.name || component.toString().split('\n')[0];
 }
+/**
+ * @param {?} value
+ * @return {?}
+ */
 var Deferred = (function () {
     function Deferred() {
         var _this = this;
@@ -815,10 +823,10 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
     UpgradeNg1ComponentAdapterBuilder.prototype.compileTemplate = function (compile, templateCache, httpBackend) {
         var _this = this;
         if (((this.directive)).template !== undefined) {
-            this.linkFn = compileHtml(isFunction(/** @type {?} */ ((this.directive)).template) ? ((((this.directive)).template))() : ((this.directive)).template);
+            this.linkFn = compileHtml(isFunction$1(/** @type {?} */ ((this.directive)).template) ? ((((this.directive)).template))() : ((this.directive)).template);
         }
         else if (((this.directive)).templateUrl) {
-            var /** @type {?} */ url_1 = isFunction(/** @type {?} */ ((this.directive)).templateUrl) ?
+            var /** @type {?} */ url_1 = isFunction$1(/** @type {?} */ ((this.directive)).templateUrl) ?
                 ((((this.directive)).templateUrl))() : ((this.directive)).templateUrl;
             var /** @type {?} */ html = templateCache.get(url_1);
             if (html !== undefined) {
@@ -934,7 +942,7 @@ var UpgradeNg1ComponentAdapter = (function () {
         if (!this.directive.bindToController && this.directive.controller) {
             this.controllerInstance = this.buildController(this.directive.controller);
         }
-        if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
+        if (this.controllerInstance && isFunction$1(this.controllerInstance.$onInit)) {
             this.controllerInstance.$onInit();
         }
         var /** @type {?} */ link = this.directive.link;
@@ -959,7 +967,7 @@ var UpgradeNg1ComponentAdapter = (function () {
         }, {
             parentBoundTranscludeFn: function (scope /** TODO #9100 */, cloneAttach /** TODO #9100 */) { cloneAttach(childNodes); }
         });
-        if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
+        if (this.controllerInstance && isFunction$1(this.controllerInstance.$postLink)) {
             this.controllerInstance.$postLink();
         }
     };
@@ -975,7 +983,7 @@ var UpgradeNg1ComponentAdapter = (function () {
             _this.setComponentProperty(name, change.currentValue);
             ng1Changes[_this.propertyMap[name]] = change;
         });
-        if (isFunction(/** @type {?} */ ((this.destinationObj)).$onChanges)) {
+        if (isFunction$1(/** @type {?} */ ((this.destinationObj)).$onChanges)) {
             ((((this.destinationObj)).$onChanges))(ng1Changes);
         }
     };
@@ -996,7 +1004,7 @@ var UpgradeNg1ComponentAdapter = (function () {
                 eventEmitter.emit(lastValues[i] = value);
             }
         });
-        if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
+        if (this.controllerInstance && isFunction$1(this.controllerInstance.$doCheck)) {
             this.controllerInstance.$doCheck();
         }
     };
@@ -1004,7 +1012,7 @@ var UpgradeNg1ComponentAdapter = (function () {
      * @return {?}
      */
     UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () {
-        if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
+        if (this.controllerInstance && isFunction$1(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
     };
@@ -1076,7 +1084,7 @@ var UpgradeNg1ComponentAdapter = (function () {
  * @param {?} value
  * @return {?}
  */
-function isFunction(value) {
+function isFunction$1(value) {
     return typeof value === 'function';
 }
 /**
