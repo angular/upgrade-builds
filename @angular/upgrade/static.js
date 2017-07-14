@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.3.0-a0b06be
+ * @license Angular v4.3.0-55742e4
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -251,22 +251,22 @@ var DowngradeComponentAdapter = (function () {
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 var unwatch_1 = this_1.componentScope.$watch(function () {
-                    unwatch_1('');
+                    unwatch_1();
                     unwatch_1 = null;
                     observeFn_1(attrs[input.attr]);
                 });
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
-                expr = attrs /** TODO #9100 */[input.bindAttr];
+                expr = attrs[input.bindAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketAttr)) {
-                expr = attrs /** TODO #9100 */[input.bracketAttr];
+                expr = attrs[input.bracketAttr];
             }
             else if (attrs.hasOwnProperty(input.bindonAttr)) {
-                expr = attrs /** TODO #9100 */[input.bindonAttr];
+                expr = attrs[input.bindonAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketParenAttr)) {
-                expr = attrs /** TODO #9100 */[input.bracketParenAttr];
+                expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
                 var watchFn = (function (prop) { return function (currValue, prevValue) {
@@ -295,48 +295,47 @@ var DowngradeComponentAdapter = (function () {
         var _this = this;
         var attrs = this.attrs;
         var outputs = this.componentFactory.outputs || [];
-        for (var j = 0; j < outputs.length; j++) {
+        var _loop_2 = function (j) {
             var output = new PropertyBinding(outputs[j].propName, outputs[j].templateName);
             var expr = null;
             var assignExpr = false;
-            var bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
-            var bracketParenAttr = output.bracketParenAttr ?
-                "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]" :
-                null;
+            var bindonAttr = output.bindonAttr.substring(0, output.bindonAttr.length - 6);
+            var bracketParenAttr = "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]";
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = attrs /** TODO #9100 */[output.onAttr];
+                expr = attrs[output.onAttr];
             }
             else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = attrs /** TODO #9100 */[output.parenAttr];
+                expr = attrs[output.parenAttr];
             }
             else if (attrs.hasOwnProperty(bindonAttr)) {
-                expr = attrs /** TODO #9100 */[bindonAttr];
+                expr = attrs[bindonAttr];
                 assignExpr = true;
             }
             else if (attrs.hasOwnProperty(bracketParenAttr)) {
-                expr = attrs /** TODO #9100 */[bracketParenAttr];
+                expr = attrs[bracketParenAttr];
                 assignExpr = true;
             }
             if (expr != null && assignExpr != null) {
-                var getter = this.$parse(expr);
-                var setter = getter.assign;
-                if (assignExpr && !setter) {
+                var getter_1 = this_2.$parse(expr);
+                var setter_1 = getter_1.assign;
+                if (assignExpr && !setter_1) {
                     throw new Error("Expression '" + expr + "' is not assignable!");
                 }
-                var emitter = this.component[output.prop];
+                var emitter = this_2.component[output.prop];
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ?
-                            (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
-                            (function (getter) { return function (v /** TODO #9100 */) {
-                                return getter(_this.scope, { '$event': v });
-                            }; })(getter)
+                        next: assignExpr ? function (v) { return setter_1(_this.scope, v); } :
+                            function (v) { return getter_1(_this.scope, { '$event': v }); }
                     });
                 }
                 else {
-                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.componentFactory.componentType) + "'!");
+                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this_2.componentFactory.componentType) + "'!");
                 }
             }
+        };
+        var this_2 = this;
+        for (var j = 0; j < outputs.length; j++) {
+            _loop_2(j);
         }
     };
     DowngradeComponentAdapter.prototype.registerCleanup = function () {
@@ -595,7 +594,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.3.0-a0b06be');
+var VERSION = new Version('4.3.0-55742e4');
 
 /**
  * @license
@@ -1339,7 +1338,7 @@ var UpgradeModule = (function () {
         ]);
         var upgradeModule = module$1(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
-        var windowAngular = window /** TODO #???? */['angular'];
+        var windowAngular = window['angular'];
         windowAngular.resumeBootstrap = undefined;
         // Bootstrap the AngularJS application inside our zone
         this.ngZone.run(function () { bootstrap(element$$1, [upgradeModule.name], config); });
