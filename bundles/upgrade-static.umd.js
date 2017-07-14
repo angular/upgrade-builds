@@ -1,16 +1,16 @@
 /**
- * @license Angular v4.3.0-a0b06be
+ * @license Angular v4.3.0-30e76fc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core'], factory) :
-	(factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = global.ng.upgrade.static || {}),global.ng.core));
-}(this, (function (exports,_angular_core) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser'], factory) :
+	(factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = global.ng.upgrade.static || {}),global.ng.core,global._angular_platformBrowser));
+}(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v4.3.0-a0b06be
+ * @license Angular v4.3.0-30e76fc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -90,6 +90,7 @@ var $SCOPE = '$scope';
 var $TEMPLATE_CACHE = '$templateCache';
 var $$TESTABILITY = '$$testability';
 var INJECTOR_KEY = '$$angularInjector';
+var LAZY_MODULE_REF = '$$angularLazyModuleRef';
 var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 var REQUIRE_NG_MODEL = '?ngModel';
 var UPGRADE_MODULE_NAME = '$$UpgradeModule';
@@ -193,8 +194,9 @@ var DowngradeComponentAdapter = (function () {
         this.$compile = $compile;
         this.$parse = $parse;
         this.componentFactory = componentFactory;
+        this.implementsOnChanges = false;
         this.inputChangeCount = 0;
-        this.inputChanges = null;
+        this.inputChanges = {};
         this.componentRef = null;
         this.component = null;
         this.changeDetector = null;
@@ -223,8 +225,11 @@ var DowngradeComponentAdapter = (function () {
         this.component = this.componentRef.instance;
         hookupNgModel(this.ngModel, this.component);
     };
-    DowngradeComponentAdapter.prototype.setupInputs = function () {
+    DowngradeComponentAdapter.prototype.setupInputs = function (propagateDigest) {
         var _this = this;
+        if (propagateDigest === void 0) {
+            propagateDigest = true;
+        }
         var attrs = this.attrs;
         var inputs = this.componentFactory.inputs || [];
         var _loop_1 = function (i) {
@@ -249,22 +254,22 @@ var DowngradeComponentAdapter = (function () {
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 var unwatch_1 = this_1.componentScope.$watch(function () {
-                    unwatch_1('');
+                    unwatch_1();
                     unwatch_1 = null;
                     observeFn_1(attrs[input.attr]);
                 });
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
-                expr = attrs /** TODO #9100 */[input.bindAttr];
+                expr = attrs[input.bindAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketAttr)) {
-                expr = attrs /** TODO #9100 */[input.bracketAttr];
+                expr = attrs[input.bracketAttr];
             }
             else if (attrs.hasOwnProperty(input.bindonAttr)) {
-                expr = attrs /** TODO #9100 */[input.bindonAttr];
+                expr = attrs[input.bindonAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketParenAttr)) {
-                expr = attrs /** TODO #9100 */[input.bracketParenAttr];
+                expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
                 var watchFn = (function (prop) {
@@ -279,66 +284,72 @@ var DowngradeComponentAdapter = (function () {
         for (var i = 0; i < inputs.length; i++) {
             _loop_1(i);
         }
+        // Invoke `ngOnChanges()` and Change Detection (when necessary)
+        var detectChanges = function () { return _this.changeDetector && _this.changeDetector.detectChanges(); };
         var prototype = this.componentFactory.componentType.prototype;
-        if (prototype && prototype.ngOnChanges) {
-            // Detect: OnChanges interface
-            this.inputChanges = {};
-            this.componentScope.$watch(function () { return _this.inputChangeCount; }, function () {
+        this.implementsOnChanges = !!(prototype && prototype.ngOnChanges);
+        this.componentScope.$watch(function () { return _this.inputChangeCount; }, function () {
+            // Invoke `ngOnChanges()`
+            if (_this.implementsOnChanges) {
                 var inputChanges = _this.inputChanges;
                 _this.inputChanges = {};
                 _this.component.ngOnChanges(inputChanges);
-            });
+            }
+            // If opted out of propagating digests, invoke change detection when inputs change
+            if (!propagateDigest) {
+                detectChanges();
+            }
+        });
+        // If not opted out of propagating digests, invoke change detection on every digest
+        if (propagateDigest) {
+            this.componentScope.$watch(detectChanges);
         }
-        this.componentScope.$watch(function () { return _this.changeDetector && _this.changeDetector.detectChanges(); });
     };
     DowngradeComponentAdapter.prototype.setupOutputs = function () {
         var _this = this;
         var attrs = this.attrs;
         var outputs = this.componentFactory.outputs || [];
-        for (var j = 0; j < outputs.length; j++) {
+        var _loop_2 = function (j) {
             var output = new PropertyBinding(outputs[j].propName, outputs[j].templateName);
             var expr = null;
             var assignExpr = false;
-            var bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
-            var bracketParenAttr = output.bracketParenAttr ?
-                "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]" :
-                null;
+            var bindonAttr = output.bindonAttr.substring(0, output.bindonAttr.length - 6);
+            var bracketParenAttr = "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]";
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = attrs /** TODO #9100 */[output.onAttr];
+                expr = attrs[output.onAttr];
             }
             else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = attrs /** TODO #9100 */[output.parenAttr];
+                expr = attrs[output.parenAttr];
             }
             else if (attrs.hasOwnProperty(bindonAttr)) {
-                expr = attrs /** TODO #9100 */[bindonAttr];
+                expr = attrs[bindonAttr];
                 assignExpr = true;
             }
             else if (attrs.hasOwnProperty(bracketParenAttr)) {
-                expr = attrs /** TODO #9100 */[bracketParenAttr];
+                expr = attrs[bracketParenAttr];
                 assignExpr = true;
             }
             if (expr != null && assignExpr != null) {
-                var getter = this.$parse(expr);
-                var setter = getter.assign;
-                if (assignExpr && !setter) {
+                var getter_1 = this_2.$parse(expr);
+                var setter_1 = getter_1.assign;
+                if (assignExpr && !setter_1) {
                     throw new Error("Expression '" + expr + "' is not assignable!");
                 }
-                var emitter = this.component[output.prop];
+                var emitter = this_2.component[output.prop];
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ?
-                            (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
-                            (function (getter) {
-                                return function (v /** TODO #9100 */) {
-                                    return getter(_this.scope, { '$event': v });
-                                };
-                            })(getter)
+                        next: assignExpr ? function (v) { return setter_1(_this.scope, v); } :
+                            function (v) { return getter_1(_this.scope, { '$event': v }); }
                     });
                 }
                 else {
-                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.componentFactory.componentType) + "'!");
+                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this_2.componentFactory.componentType) + "'!");
                 }
             }
+        };
+        var this_2 = this;
+        for (var j = 0; j < outputs.length; j++) {
+            _loop_2(j);
         }
     };
     DowngradeComponentAdapter.prototype.registerCleanup = function () {
@@ -350,10 +361,10 @@ var DowngradeComponentAdapter = (function () {
     };
     DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef && this.componentRef.injector; };
     DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
-        if (this.inputChanges) {
-            this.inputChangeCount++;
+        if (this.implementsOnChanges) {
             this.inputChanges[prop] = new _angular_core.SimpleChange(prevValue, currValue, prevValue === currValue);
         }
+        this.inputChangeCount++;
         this.component[prop] = currValue;
     };
     DowngradeComponentAdapter.prototype.groupProjectableNodes = function () {
@@ -462,8 +473,13 @@ function downgradeComponent(info) {
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
                 // been compiled.
-                var parentInjector = required[0] || $injector.get(INJECTOR_KEY);
                 var ngModel = required[1];
+                var parentInjector = required[0];
+                var ranAsync = false;
+                if (!parentInjector) {
+                    var lazyModuleRef = $injector.get(LAZY_MODULE_REF);
+                    parentInjector = lazyModuleRef.injector || lazyModuleRef.promise;
+                }
                 var downgradeFn = function (injector) {
                     var componentFactoryResolver = injector.get(_angular_core.ComponentFactoryResolver);
                     var componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
@@ -475,17 +491,23 @@ function downgradeComponent(info) {
                     var facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
                     var projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
-                    facade.setupInputs();
+                    facade.setupInputs(info.propagateDigest);
                     facade.setupOutputs();
                     facade.registerCleanup();
                     injectorPromise.resolve(facade.getInjector());
+                    if (ranAsync) {
+                        // If this is run async, it is possible that it is not run inside a
+                        // digest and initial input values will not be detected.
+                        scope.$evalAsync(function () { });
+                    }
                 };
-                if (parentInjector instanceof ParentInjectorPromise) {
+                if (isThenable(parentInjector)) {
                     parentInjector.then(downgradeFn);
                 }
                 else {
                     downgradeFn(parentInjector);
                 }
+                ranAsync = true;
             }
         };
     };
@@ -525,6 +547,9 @@ var ParentInjectorPromise = (function () {
     };
     return ParentInjectorPromise;
 }());
+function isThenable(obj) {
+    return isFunction(obj.then);
+}
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -594,7 +619,109 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('4.3.0-a0b06be');
+var VERSION = new _angular_core.Version('4.3.0-30e76fc');
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+// We have to do a little dance to get the ng1 injector into the module injector.
+// We store the ng1 injector so that the provider in the module injector can access it
+// Then we "get" the ng1 injector from the module injector, which triggers the provider to read
+// the stored injector and release the reference to it.
+var tempInjectorRef;
+function setTempInjectorRef(injector) {
+    tempInjectorRef = injector;
+}
+function injectorFactory() {
+    var injector = tempInjectorRef;
+    tempInjectorRef = null; // clear the value to prevent memory leaks
+    return injector;
+}
+function rootScopeFactory(i) {
+    return i.get('$rootScope');
+}
+function compileFactory(i) {
+    return i.get('$compile');
+}
+function parseFactory(i) {
+    return i.get('$parse');
+}
+var angular1Providers = [
+    // We must use exported named functions for the ng2 factories to keep the compiler happy:
+    // > Metadata collected contains an error that will be reported at runtime:
+    // >   Function calls are not supported.
+    // >   Consider replacing the function or lambda with a reference to an exported function
+    { provide: '$injector', useFactory: injectorFactory },
+    { provide: '$rootScope', useFactory: rootScopeFactory, deps: ['$injector'] },
+    { provide: '$compile', useFactory: compileFactory, deps: ['$injector'] },
+    { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
+];
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+var NgAdapterInjector = (function () {
+    function NgAdapterInjector(modInjector) {
+        this.modInjector = modInjector;
+    }
+    // When Angular locate a service in the component injector tree, the not found value is set to
+    // `NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR`. In such a case we should not walk up to the module
+    // injector.
+    // AngularJS only supports a single tree and should always check the module injector.
+    NgAdapterInjector.prototype.get = function (token, notFoundValue) {
+        if (notFoundValue === _angular_core.ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR) {
+            return notFoundValue;
+        }
+        return this.modInjector.get(token, notFoundValue);
+    };
+    return NgAdapterInjector;
+}());
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/** @experimental */
+function downgradeModule(moduleFactoryOrBootstrapFn) {
+    var LAZY_MODULE_NAME = UPGRADE_MODULE_NAME + '.lazy';
+    var bootstrapFn = isFunction(moduleFactoryOrBootstrapFn) ?
+        moduleFactoryOrBootstrapFn :
+        function (extraProviders) {
+            return _angular_platformBrowser.platformBrowser(extraProviders).bootstrapModuleFactory(moduleFactoryOrBootstrapFn);
+        };
+    var injector;
+    // Create an ng1 module to bootstrap.
+    module$1(LAZY_MODULE_NAME, [])
+        .factory(INJECTOR_KEY, function () {
+        if (!injector) {
+            throw new Error('The Angular module has not been bootstrapped yet.');
+        }
+        return injector;
+    })
+        .factory(LAZY_MODULE_REF, [
+        $INJECTOR,
+        function ($injector) {
+            var result = {
+                promise: bootstrapFn(angular1Providers).then(function (ref) {
+                    setTempInjectorRef($injector);
+                    injector = result.injector = new NgAdapterInjector(ref.injector);
+                    injector.get($INJECTOR);
+                    return injector;
+                })
+            };
+            return result;
+        }
+    ]);
+    return LAZY_MODULE_NAME;
+}
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1081,45 +1208,6 @@ var UpgradeComponent = (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-// We have to do a little dance to get the ng1 injector into the module injector.
-// We store the ng1 injector so that the provider in the module injector can access it
-// Then we "get" the ng1 injector from the module injector, which triggers the provider to read
-// the stored injector and release the reference to it.
-var tempInjectorRef;
-function setTempInjectorRef(injector) {
-    tempInjectorRef = injector;
-}
-function injectorFactory() {
-    var injector = tempInjectorRef;
-    tempInjectorRef = null; // clear the value to prevent memory leaks
-    return injector;
-}
-function rootScopeFactory(i) {
-    return i.get('$rootScope');
-}
-function compileFactory(i) {
-    return i.get('$compile');
-}
-function parseFactory(i) {
-    return i.get('$parse');
-}
-var angular1Providers = [
-    // We must use exported named functions for the ng2 factories to keep the compiler happy:
-    // > Metadata collected contains an error that will be reported at runtime:
-    // >   Function calls are not supported.
-    // >   Consider replacing the function or lambda with a reference to an exported function
-    { provide: '$injector', useFactory: injectorFactory },
-    { provide: '$rootScope', useFactory: rootScopeFactory, deps: ['$injector'] },
-    { provide: '$compile', useFactory: compileFactory, deps: ['$injector'] },
-    { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
-];
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 /**
  * @whatItDoes
  *
@@ -1258,6 +1346,10 @@ var UpgradeModule = (function () {
         // Create an ng1 module to bootstrap
         var initModule = module$1(INIT_MODULE_NAME, [])
             .value(INJECTOR_KEY, this.injector)
+            .factory(LAZY_MODULE_REF, [
+            INJECTOR_KEY,
+            function (injector) { return ({ injector: injector, promise: Promise.resolve(injector) }); }
+        ])
             .config([
             $PROVIDE, $INJECTOR,
             function ($provide, $injector) {
@@ -1338,7 +1430,7 @@ var UpgradeModule = (function () {
         ]);
         var upgradeModule = module$1(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
-        var windowAngular = window /** TODO #???? */['angular'];
+        var windowAngular = window['angular'];
         windowAngular.resumeBootstrap = undefined;
         // Bootstrap the AngularJS application inside our zone
         this.ngZone.run(function () { bootstrap(element$$1, [upgradeModule.name], config); });
@@ -1366,22 +1458,6 @@ UpgradeModule.ctorParameters = function () {
         { type: _angular_core.NgZone, },
     ];
 };
-var NgAdapterInjector = (function () {
-    function NgAdapterInjector(modInjector) {
-        this.modInjector = modInjector;
-    }
-    // When Angular locate a service in the component injector tree, the not found value is set to
-    // `NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR`. In such a case we should not walk up to the module
-    // injector.
-    // AngularJS only supports a single tree and should always check the module injector.
-    NgAdapterInjector.prototype.get = function (token, notFoundValue) {
-        if (notFoundValue === _angular_core.ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR) {
-            return notFoundValue;
-        }
-        return this.modInjector.get(token, notFoundValue);
-    };
-    return NgAdapterInjector;
-}());
 
 exports.ɵe = angular1Providers;
 exports.ɵc = compileFactory;
@@ -1393,6 +1469,7 @@ exports.setAngularLib = setAngularLib;
 exports.downgradeComponent = downgradeComponent;
 exports.downgradeInjectable = downgradeInjectable;
 exports.VERSION = VERSION;
+exports.downgradeModule = downgradeModule;
 exports.UpgradeComponent = UpgradeComponent;
 exports.UpgradeModule = UpgradeModule;
 

@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { Type } from '@angular/core';
+import { Injector, Type } from '@angular/core';
 import * as angular from './angular1';
 export declare function onError(e: any): void;
 export declare function controllerKey(name: string): string;
@@ -18,6 +18,10 @@ export declare class Deferred<R> {
     resolve: (value?: R | PromiseLike<R>) => void;
     reject: (error?: any) => void;
     constructor();
+}
+export interface LazyModuleRef {
+    injector?: Injector;
+    promise: Promise<Injector>;
 }
 /**
  * Glue the AngularJS `NgModelController` (if it exists) to the component

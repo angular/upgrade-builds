@@ -52,7 +52,7 @@ export interface IRootScopeService {
     $destroy(): any;
     $apply(exp?: Ng1Expression): any;
     $digest(): any;
-    $evalAsync(): any;
+    $evalAsync(exp: Ng1Expression, locals?: any): void;
     $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
     $$childTail: IScope;
     $$childHead: IScope;
@@ -113,6 +113,7 @@ export interface IComponent {
 }
 export interface IAttributes {
     $observe(attr: string, fn: (v: string) => void): void;
+    [key: string]: any;
 }
 export interface ITranscludeFunction {
     (scope: IScope, cloneAttachFn: ICloneAttachFunction): IAugmentedJQuery;
@@ -149,7 +150,8 @@ export interface IParseService {
     (expression: string): ICompiledExpression;
 }
 export interface ICompiledExpression {
-    assign(context: any, value: any): any;
+    (context: any, locals: any): any;
+    assign?: (context: any, value: any) => any;
 }
 export interface IHttpBackendService {
     (method: string, url: string, post?: any, callback?: Function, headers?: any, timeout?: number, withCredentials?: boolean): void;
@@ -231,7 +233,7 @@ export declare function setAngularLib(ng: any): void;
  * @stable
  */
 export declare function getAngularLib(): any;
-export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config: IAngularBootstrapConfig) => void;
+export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config?: IAngularBootstrapConfig | undefined) => IInjectorService;
 export declare const module: (prefix: string, dependencies?: string[] | undefined) => IModule;
 export declare const element: (e: string | Element) => IAugmentedJQuery;
 export declare const resumeBootstrap: () => void;

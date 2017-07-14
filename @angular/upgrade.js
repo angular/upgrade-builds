@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.3.0-a0b06be
+ * @license Angular v4.3.0-30e76fc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.3.0-a0b06be');
+const VERSION = new Version('4.3.0-30e76fc');
 
 /**
  * @license
@@ -96,6 +96,7 @@ const $$TESTABILITY = '$$testability';
 const COMPILER_KEY = '$$angularCompiler';
 
 const INJECTOR_KEY = '$$angularInjector';
+const LAZY_MODULE_REF = '$$angularLazyModuleRef';
 const NG_ZONE_KEY = '$$angularNgZone';
 const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 const REQUIRE_NG_MODEL = '?ngModel';
@@ -264,8 +265,9 @@ class DowngradeComponentAdapter {
         this.$compile = $compile;
         this.$parse = $parse;
         this.componentFactory = componentFactory;
+        this.implementsOnChanges = false;
         this.inputChangeCount = 0;
-        this.inputChanges = null;
+        this.inputChanges = {};
         this.componentRef = null;
         this.component = null;
         this.changeDetector = null;
@@ -301,9 +303,10 @@ class DowngradeComponentAdapter {
         hookupNgModel(this.ngModel, this.component);
     }
     /**
+     * @param {?=} propagateDigest
      * @return {?}
      */
-    setupInputs() {
+    setupInputs(propagateDigest = true) {
         const /** @type {?} */ attrs = this.attrs;
         const /** @type {?} */ inputs = this.componentFactory.inputs || [];
         for (let /** @type {?} */ i = 0; i < inputs.length; i++) {
@@ -328,39 +331,48 @@ class DowngradeComponentAdapter {
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 let /** @type {?} */ unwatch = this.componentScope.$watch(() => {
-                    unwatch('');
+                    ((unwatch))();
                     unwatch = null;
-                    observeFn(((attrs))[input.attr]);
+                    observeFn(attrs[input.attr]);
                 });
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bindAttr];
+                expr = attrs[input.bindAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bracketAttr];
+                expr = attrs[input.bracketAttr];
             }
             else if (attrs.hasOwnProperty(input.bindonAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bindonAttr];
+                expr = attrs[input.bindonAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketParenAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
+                expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
                 const /** @type {?} */ watchFn = (prop => (currValue, prevValue) => this.updateInput(prop, prevValue, currValue))(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
+        // Invoke `ngOnChanges()` and Change Detection (when necessary)
+        const /** @type {?} */ detectChanges = () => this.changeDetector && this.changeDetector.detectChanges();
         const /** @type {?} */ prototype = this.componentFactory.componentType.prototype;
-        if (prototype && ((prototype)).ngOnChanges) {
-            // Detect: OnChanges interface
-            this.inputChanges = {};
-            this.componentScope.$watch(() => this.inputChangeCount, () => {
+        this.implementsOnChanges = !!(prototype && ((prototype)).ngOnChanges);
+        this.componentScope.$watch(() => this.inputChangeCount, () => {
+            // Invoke `ngOnChanges()`
+            if (this.implementsOnChanges) {
                 const /** @type {?} */ inputChanges = this.inputChanges;
                 this.inputChanges = {};
                 ((this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
-            });
+            }
+            // If opted out of propagating digests, invoke change detection when inputs change
+            if (!propagateDigest) {
+                detectChanges();
+            }
+        });
+        // If not opted out of propagating digests, invoke change detection on every digest
+        if (propagateDigest) {
+            this.componentScope.$watch(detectChanges);
         }
-        this.componentScope.$watch(() => this.changeDetector && this.changeDetector.detectChanges());
     }
     /**
      * @return {?}
@@ -372,22 +384,20 @@ class DowngradeComponentAdapter {
             const /** @type {?} */ output = new PropertyBinding(outputs[j].propName, outputs[j].templateName);
             let /** @type {?} */ expr = null;
             let /** @type {?} */ assignExpr = false;
-            const /** @type {?} */ bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
-            const /** @type {?} */ bracketParenAttr = output.bracketParenAttr ?
-                `[(${output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8)})]` :
-                null;
+            const /** @type {?} */ bindonAttr = output.bindonAttr.substring(0, output.bindonAttr.length - 6);
+            const /** @type {?} */ bracketParenAttr = `[(${output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8)})]`;
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[output.onAttr];
+                expr = attrs[output.onAttr];
             }
             else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[output.parenAttr];
+                expr = attrs[output.parenAttr];
             }
-            else if (attrs.hasOwnProperty(/** @type {?} */ ((bindonAttr)))) {
-                expr = ((attrs) /** TODO #9100 */)[((bindonAttr))];
+            else if (attrs.hasOwnProperty(bindonAttr)) {
+                expr = attrs[bindonAttr];
                 assignExpr = true;
             }
-            else if (attrs.hasOwnProperty(/** @type {?} */ ((bracketParenAttr)))) {
-                expr = ((attrs) /** TODO #9100 */)[((bracketParenAttr))];
+            else if (attrs.hasOwnProperty(bracketParenAttr)) {
+                expr = attrs[bracketParenAttr];
                 assignExpr = true;
             }
             if (expr != null && assignExpr != null) {
@@ -399,9 +409,8 @@ class DowngradeComponentAdapter {
                 const /** @type {?} */ emitter = (this.component[output.prop]);
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ?
-                            ((setter) => (v /** TODO #9100 */) => setter(this.scope, v))(setter) :
-                            ((getter) => (v /** TODO #9100 */) => getter(this.scope, { '$event': v }))(getter)
+                        next: assignExpr ? (v) => ((setter))(this.scope, v) :
+                            (v) => getter(this.scope, { '$event': v })
                     });
                 }
                 else {
@@ -430,10 +439,10 @@ class DowngradeComponentAdapter {
      * @return {?}
      */
     updateInput(prop, prevValue, currValue) {
-        if (this.inputChanges) {
-            this.inputChangeCount++;
+        if (this.implementsOnChanges) {
             this.inputChanges[prop] = new SimpleChange(prevValue, currValue, prevValue === currValue);
         }
+        this.inputChangeCount++;
         this.component[prop] = currValue;
     }
     /**
@@ -560,8 +569,13 @@ function downgradeComponent(info) {
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
                 // been compiled.
-                const /** @type {?} */ parentInjector = required[0] || $injector.get(INJECTOR_KEY);
                 const /** @type {?} */ ngModel = required[1];
+                let /** @type {?} */ parentInjector = required[0];
+                let /** @type {?} */ ranAsync = false;
+                if (!parentInjector) {
+                    const /** @type {?} */ lazyModuleRef = ($injector.get(LAZY_MODULE_REF));
+                    parentInjector = lazyModuleRef.injector || lazyModuleRef.promise;
+                }
                 const /** @type {?} */ downgradeFn = (injector) => {
                     const /** @type {?} */ componentFactoryResolver = injector.get(ComponentFactoryResolver);
                     const /** @type {?} */ componentFactory = ((componentFactoryResolver.resolveComponentFactory(info.component)));
@@ -573,17 +587,23 @@ function downgradeComponent(info) {
                     const /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
                     const /** @type {?} */ projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
-                    facade.setupInputs();
+                    facade.setupInputs(info.propagateDigest);
                     facade.setupOutputs();
                     facade.registerCleanup();
                     injectorPromise.resolve(facade.getInjector());
+                    if (ranAsync) {
+                        // If this is run async, it is possible that it is not run inside a
+                        // digest and initial input values will not be detected.
+                        scope.$evalAsync(() => { });
+                    }
                 };
-                if (parentInjector instanceof ParentInjectorPromise$1) {
+                if (isThenable(parentInjector)) {
                     parentInjector.then(downgradeFn);
                 }
                 else {
                     downgradeFn(parentInjector);
                 }
+                ranAsync = true;
             }
         };
     };
@@ -633,6 +653,14 @@ class ParentInjectorPromise$1 {
         this.callbacks.forEach(callback => callback(injector));
         this.callbacks.length = 0;
     }
+}
+/**
+ * @template T
+ * @param {?} obj
+ * @return {?}
+ */
+function isThenable(obj) {
+    return isFunction(((obj)).then);
 }
 
 /**
@@ -1710,6 +1738,10 @@ class UpgradeAdapter {
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, () => ((this.moduleRef)).injector.get(Injector))
+            .factory(LAZY_MODULE_REF, [
+            INJECTOR_KEY,
+            (injector) => ({ injector, promise: Promise.resolve(injector) })
+        ])
             .constant(NG_ZONE_KEY, this.ngZone)
             .factory(COMPILER_KEY, () => ((this.moduleRef)).injector.get(Compiler))
             .config([

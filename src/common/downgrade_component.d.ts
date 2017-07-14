@@ -41,6 +41,8 @@ import { Type } from '@angular/core';
  */
 export declare function downgradeComponent(info: {
     component: Type<any>;
+    /** @experimental */
+    propagateDigest?: boolean;
     /** @deprecated since v4. This parameter is no longer used */
     inputs?: string[];
     /** @deprecated since v4. This parameter is no longer used */

@@ -18,6 +18,7 @@ export declare class DowngradeComponentAdapter {
     private $compile;
     private $parse;
     private componentFactory;
+    private implementsOnChanges;
     private inputChangeCount;
     private inputChanges;
     private componentScope;
@@ -27,7 +28,7 @@ export declare class DowngradeComponentAdapter {
     constructor(id: string, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>);
     compileContents(): Node[][];
     createComponent(projectableNodes: Node[][]): void;
-    setupInputs(): void;
+    setupInputs(propagateDigest?: boolean): void;
     setupOutputs(): void;
     registerCleanup(): void;
     getInjector(): Injector;

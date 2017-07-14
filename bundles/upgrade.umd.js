@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.3.0-a0b06be
+ * @license Angular v4.3.0-30e76fc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v4.3.0-a0b06be
+ * @license Angular v4.3.0-30e76fc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -29,7 +29,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('4.3.0-a0b06be');
+var VERSION = new _angular_core.Version('4.3.0-30e76fc');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -95,6 +95,7 @@ var $TEMPLATE_CACHE = '$templateCache';
 var $$TESTABILITY = '$$testability';
 var COMPILER_KEY = '$$angularCompiler';
 var INJECTOR_KEY = '$$angularInjector';
+var LAZY_MODULE_REF = '$$angularLazyModuleRef';
 var NG_ZONE_KEY = '$$angularNgZone';
 var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 var REQUIRE_NG_MODEL = '?ngModel';
@@ -262,8 +263,9 @@ var DowngradeComponentAdapter = (function () {
         this.$compile = $compile;
         this.$parse = $parse;
         this.componentFactory = componentFactory;
+        this.implementsOnChanges = false;
         this.inputChangeCount = 0;
-        this.inputChanges = null;
+        this.inputChanges = {};
         this.componentRef = null;
         this.component = null;
         this.changeDetector = null;
@@ -300,10 +302,12 @@ var DowngradeComponentAdapter = (function () {
         hookupNgModel(this.ngModel, this.component);
     };
     /**
+     * @param {?=} propagateDigest
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.setupInputs = function () {
+    DowngradeComponentAdapter.prototype.setupInputs = function (propagateDigest) {
         var _this = this;
+        if (propagateDigest === void 0) { propagateDigest = true; }
         var /** @type {?} */ attrs = this.attrs;
         var /** @type {?} */ inputs = this.componentFactory.inputs || [];
         var _loop_1 = function (i) {
@@ -328,22 +332,22 @@ var DowngradeComponentAdapter = (function () {
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 var /** @type {?} */ unwatch_1 = this_1.componentScope.$watch(function () {
-                    unwatch_1('');
+                    ((unwatch_1))();
                     unwatch_1 = null;
-                    observeFn_1(((attrs))[input.attr]);
+                    observeFn_1(attrs[input.attr]);
                 });
             }
             else if (attrs.hasOwnProperty(input.bindAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bindAttr];
+                expr = attrs[input.bindAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bracketAttr];
+                expr = attrs[input.bracketAttr];
             }
             else if (attrs.hasOwnProperty(input.bindonAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bindonAttr];
+                expr = attrs[input.bindonAttr];
             }
             else if (attrs.hasOwnProperty(input.bracketParenAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[input.bracketParenAttr];
+                expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
                 var /** @type {?} */ watchFn = (function (prop) { return function (currValue, prevValue) { return _this.updateInput(prop, prevValue, currValue); }; })(input.prop);
@@ -354,17 +358,26 @@ var DowngradeComponentAdapter = (function () {
         for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
             _loop_1(/** @type {?} */ i);
         }
+        // Invoke `ngOnChanges()` and Change Detection (when necessary)
+        var /** @type {?} */ detectChanges = function () { return _this.changeDetector && _this.changeDetector.detectChanges(); };
         var /** @type {?} */ prototype = this.componentFactory.componentType.prototype;
-        if (prototype && ((prototype)).ngOnChanges) {
-            // Detect: OnChanges interface
-            this.inputChanges = {};
-            this.componentScope.$watch(function () { return _this.inputChangeCount; }, function () {
+        this.implementsOnChanges = !!(prototype && ((prototype)).ngOnChanges);
+        this.componentScope.$watch(function () { return _this.inputChangeCount; }, function () {
+            // Invoke `ngOnChanges()`
+            if (_this.implementsOnChanges) {
                 var /** @type {?} */ inputChanges = _this.inputChanges;
                 _this.inputChanges = {};
                 ((_this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
-            });
+            }
+            // If opted out of propagating digests, invoke change detection when inputs change
+            if (!propagateDigest) {
+                detectChanges();
+            }
+        });
+        // If not opted out of propagating digests, invoke change detection on every digest
+        if (propagateDigest) {
+            this.componentScope.$watch(detectChanges);
         }
-        this.componentScope.$watch(function () { return _this.changeDetector && _this.changeDetector.detectChanges(); });
     };
     /**
      * @return {?}
@@ -373,46 +386,47 @@ var DowngradeComponentAdapter = (function () {
         var _this = this;
         var /** @type {?} */ attrs = this.attrs;
         var /** @type {?} */ outputs = this.componentFactory.outputs || [];
-        for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
+        var _loop_2 = function (j) {
             var /** @type {?} */ output = new PropertyBinding(outputs[j].propName, outputs[j].templateName);
             var /** @type {?} */ expr = null;
             var /** @type {?} */ assignExpr = false;
-            var /** @type {?} */ bindonAttr = output.bindonAttr ? output.bindonAttr.substring(0, output.bindonAttr.length - 6) : null;
-            var /** @type {?} */ bracketParenAttr = output.bracketParenAttr ?
-                "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]" :
-                null;
+            var /** @type {?} */ bindonAttr = output.bindonAttr.substring(0, output.bindonAttr.length - 6);
+            var /** @type {?} */ bracketParenAttr = "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]";
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[output.onAttr];
+                expr = attrs[output.onAttr];
             }
             else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = ((attrs) /** TODO #9100 */)[output.parenAttr];
+                expr = attrs[output.parenAttr];
             }
-            else if (attrs.hasOwnProperty(/** @type {?} */ ((bindonAttr)))) {
-                expr = ((attrs) /** TODO #9100 */)[((bindonAttr))];
+            else if (attrs.hasOwnProperty(bindonAttr)) {
+                expr = attrs[bindonAttr];
                 assignExpr = true;
             }
-            else if (attrs.hasOwnProperty(/** @type {?} */ ((bracketParenAttr)))) {
-                expr = ((attrs) /** TODO #9100 */)[((bracketParenAttr))];
+            else if (attrs.hasOwnProperty(bracketParenAttr)) {
+                expr = attrs[bracketParenAttr];
                 assignExpr = true;
             }
             if (expr != null && assignExpr != null) {
-                var /** @type {?} */ getter = this.$parse(expr);
-                var /** @type {?} */ setter = getter.assign;
-                if (assignExpr && !setter) {
+                var /** @type {?} */ getter_1 = this_2.$parse(expr);
+                var /** @type {?} */ setter_1 = getter_1.assign;
+                if (assignExpr && !setter_1) {
                     throw new Error("Expression '" + expr + "' is not assignable!");
                 }
-                var /** @type {?} */ emitter = (this.component[output.prop]);
+                var /** @type {?} */ emitter = (this_2.component[output.prop]);
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ?
-                            (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
-                            (function (getter) { return function (v /** TODO #9100 */) { return getter(_this.scope, { '$event': v }); }; })(getter)
+                        next: assignExpr ? function (v) { return ((setter_1))(_this.scope, v); } :
+                            function (v) { return getter_1(_this.scope, { '$event': v }); }
                     });
                 }
                 else {
-                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.componentFactory.componentType) + "'!");
+                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this_2.componentFactory.componentType) + "'!");
                 }
             }
+        };
+        var this_2 = this;
+        for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
+            _loop_2(/** @type {?} */ j);
         }
     };
     /**
@@ -436,10 +450,10 @@ var DowngradeComponentAdapter = (function () {
      * @return {?}
      */
     DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
-        if (this.inputChanges) {
-            this.inputChangeCount++;
+        if (this.implementsOnChanges) {
             this.inputChanges[prop] = new _angular_core.SimpleChange(prevValue, currValue, prevValue === currValue);
         }
+        this.inputChangeCount++;
         this.component[prop] = currValue;
     };
     /**
@@ -566,8 +580,13 @@ function downgradeComponent(info) {
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
                 // been compiled.
-                var /** @type {?} */ parentInjector = required[0] || $injector.get(INJECTOR_KEY);
                 var /** @type {?} */ ngModel = required[1];
+                var /** @type {?} */ parentInjector = required[0];
+                var /** @type {?} */ ranAsync = false;
+                if (!parentInjector) {
+                    var /** @type {?} */ lazyModuleRef = ($injector.get(LAZY_MODULE_REF));
+                    parentInjector = lazyModuleRef.injector || lazyModuleRef.promise;
+                }
                 var /** @type {?} */ downgradeFn = function (injector) {
                     var /** @type {?} */ componentFactoryResolver = injector.get(_angular_core.ComponentFactoryResolver);
                     var /** @type {?} */ componentFactory = ((componentFactoryResolver.resolveComponentFactory(info.component)));
@@ -579,17 +598,23 @@ function downgradeComponent(info) {
                     var /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
                     var /** @type {?} */ projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
-                    facade.setupInputs();
+                    facade.setupInputs(info.propagateDigest);
                     facade.setupOutputs();
                     facade.registerCleanup();
                     injectorPromise.resolve(facade.getInjector());
+                    if (ranAsync) {
+                        // If this is run async, it is possible that it is not run inside a
+                        // digest and initial input values will not be detected.
+                        scope.$evalAsync(function () { });
+                    }
                 };
-                if (parentInjector instanceof ParentInjectorPromise$1) {
+                if (isThenable(parentInjector)) {
                     parentInjector.then(downgradeFn);
                 }
                 else {
                     downgradeFn(parentInjector);
                 }
+                ranAsync = true;
             }
         };
     };
@@ -641,6 +666,14 @@ var ParentInjectorPromise$1 = (function () {
     };
     return ParentInjectorPromise$1;
 }());
+/**
+ * @template T
+ * @param {?} obj
+ * @return {?}
+ */
+function isThenable(obj) {
+    return isFunction(((obj)).then);
+}
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1727,6 +1760,10 @@ var UpgradeAdapter = (function () {
         this.ngZone = new _angular_core.NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, function () { return ((_this.moduleRef)).injector.get(_angular_core.Injector); })
+            .factory(LAZY_MODULE_REF, [
+            INJECTOR_KEY,
+            function (injector) { return ({ injector: injector, promise: Promise.resolve(injector) }); }
+        ])
             .constant(NG_ZONE_KEY, this.ngZone)
             .factory(COMPILER_KEY, function () { return ((_this.moduleRef)).injector.get(_angular_core.Compiler); })
             .config([
