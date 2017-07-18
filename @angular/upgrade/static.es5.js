@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.3.0-a5205c6
+ * @license Angular v4.3.0-8076482
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -613,7 +613,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.3.0-a5205c6');
+var VERSION = new Version('4.3.0-8076482');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -703,9 +703,9 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
         .factory(LAZY_MODULE_REF, [
         $INJECTOR,
         function ($injector) {
-            setTempInjectorRef($injector);
             var result = {
                 promise: bootstrapFn(angular1Providers).then(function (ref) {
+                    setTempInjectorRef($injector);
                     injector = result.injector = new NgAdapterInjector(ref.injector);
                     injector.get($INJECTOR);
                     return injector;
