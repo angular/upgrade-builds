@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.3.0-3b588fe
+ * @license Angular v4.3.0-59c23c7
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -166,6 +166,9 @@ function hookupNgModel(ngModel, component) {
     if (ngModel && supportsNgModel(component)) {
         ngModel.$render = function () { component.writeValue(ngModel.$viewValue); };
         component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
+        if (typeof component.registerOnTouched === 'function') {
+            component.registerOnTouched(ngModel.$setTouched.bind(ngModel));
+        }
     }
 }
 /**
@@ -621,7 +624,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.3.0-3b588fe');
+var VERSION = new Version('4.3.0-59c23c7');
 
 /**
  * @license

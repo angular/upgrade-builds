@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.3.0-3b588fe
+ * @license Angular v4.3.0-59c23c7
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('4.3.0-3b588fe');
+const VERSION = new Version('4.3.0-59c23c7');
 
 /**
  * @license
@@ -219,6 +219,9 @@ function hookupNgModel(ngModel, component) {
     if (ngModel && supportsNgModel(component)) {
         ngModel.$render = () => { component.writeValue(ngModel.$viewValue); };
         component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
+        if (typeof component.registerOnTouched === 'function') {
+            component.registerOnTouched(ngModel.$setTouched.bind(ngModel));
+        }
     }
 }
 /**
