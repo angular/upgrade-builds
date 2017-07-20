@@ -1,9 +1,9 @@
 /**
- * @license Angular v5.0.0-beta.0-8d28191
+ * @license Angular v5.0.0-beta.0-54e0244
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version } from '@angular/core';
+import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.0.0-beta.0-8d28191');
+const VERSION = new Version('5.0.0-beta.0-54e0244');
 
 /**
  * @license
@@ -256,8 +256,9 @@ class DowngradeComponentAdapter {
      * @param {?} $compile
      * @param {?} $parse
      * @param {?} componentFactory
+     * @param {?} wrapCallback
      */
-    constructor(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
+    constructor(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
         this.id = id;
         this.element = element;
         this.attrs = attrs;
@@ -268,14 +269,13 @@ class DowngradeComponentAdapter {
         this.$compile = $compile;
         this.$parse = $parse;
         this.componentFactory = componentFactory;
+        this.wrapCallback = wrapCallback;
         this.implementsOnChanges = false;
         this.inputChangeCount = 0;
         this.inputChanges = {};
-        this.componentRef = null;
-        this.component = null;
-        this.changeDetector = null;
         this.element[0].id = id;
         this.componentScope = scope.$new();
+        this.appRef = parentInjector.get(ApplicationRef);
     }
     /**
      * @return {?}
@@ -306,10 +306,11 @@ class DowngradeComponentAdapter {
         hookupNgModel(this.ngModel, this.component);
     }
     /**
+     * @param {?} needsNgZone
      * @param {?=} propagateDigest
      * @return {?}
      */
-    setupInputs(propagateDigest = true) {
+    setupInputs(needsNgZone, propagateDigest = true) {
         const /** @type {?} */ attrs = this.attrs;
         const /** @type {?} */ inputs = this.componentFactory.inputs || [];
         for (let /** @type {?} */ i = 0; i < inputs.length; i++) {
@@ -357,24 +358,29 @@ class DowngradeComponentAdapter {
             }
         }
         // Invoke `ngOnChanges()` and Change Detection (when necessary)
-        const /** @type {?} */ detectChanges = () => this.changeDetector && this.changeDetector.detectChanges();
+        const /** @type {?} */ detectChanges = () => this.changeDetector.detectChanges();
         const /** @type {?} */ prototype = this.componentFactory.componentType.prototype;
         this.implementsOnChanges = !!(prototype && ((prototype)).ngOnChanges);
-        this.componentScope.$watch(() => this.inputChangeCount, () => {
+        this.componentScope.$watch(() => this.inputChangeCount, this.wrapCallback(() => {
             // Invoke `ngOnChanges()`
             if (this.implementsOnChanges) {
                 const /** @type {?} */ inputChanges = this.inputChanges;
                 this.inputChanges = {};
                 ((this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
             }
-            // If opted out of propagating digests, invoke change detection when inputs change
+            // If opted out of propagating digests, invoke change detection
+            // when inputs change
             if (!propagateDigest) {
                 detectChanges();
             }
-        });
+        }));
         // If not opted out of propagating digests, invoke change detection on every digest
         if (propagateDigest) {
-            this.componentScope.$watch(detectChanges);
+            this.componentScope.$watch(this.wrapCallback(detectChanges));
+        }
+        // Attach the view so that it will be dirty-checked.
+        if (needsNgZone) {
+            this.appRef.attachView(this.componentRef.hostView);
         }
     }
     /**
@@ -423,18 +429,22 @@ class DowngradeComponentAdapter {
         }
     }
     /**
+     * @param {?} needsNgZone
      * @return {?}
      */
-    registerCleanup() {
-        ((this.element.bind))('$destroy', () => {
-            this.componentScope.$destroy(); /** @type {?} */
-            ((this.componentRef)).destroy();
+    registerCleanup(needsNgZone) {
+        ((this.element.on))('$destroy', () => {
+            this.componentScope.$destroy();
+            this.componentRef.destroy();
+            if (needsNgZone) {
+                this.appRef.detachView(this.componentRef.hostView);
+            }
         });
     }
     /**
      * @return {?}
      */
-    getInjector() { return ((this.componentRef)) && ((this.componentRef)).injector; }
+    getInjector() { return this.componentRef.injector; }
     /**
      * @param {?} prop
      * @param {?} prevValue
@@ -564,6 +574,14 @@ function downgradeComponent(info) {
     const /** @type {?} */ idPrefix = `NG2_UPGRADE_${downgradeCount++}_`;
     let /** @type {?} */ idCount = 0;
     const /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
+        // When using `UpgradeModule`, we don't need to ensure callbacks to Angular APIs (e.g. change
+        // detection) are run inside the Angular zone, because `$digest()` will be run inside the zone
+        // (except if explicitly escaped, in which case we shouldn't force it back in).
+        // When using `downgradeModule()` though, we need to ensure such callbacks are run inside the
+        // Angular zone.
+        let /** @type {?} */ needsNgZone = false;
+        let /** @type {?} */ wrapCallback = (cb) => cb;
+        let /** @type {?} */ ngZone;
         return {
             restrict: 'E',
             terminal: true,
@@ -577,9 +595,10 @@ function downgradeComponent(info) {
                 let /** @type {?} */ ranAsync = false;
                 if (!parentInjector) {
                     const /** @type {?} */ lazyModuleRef = ($injector.get(LAZY_MODULE_REF));
-                    parentInjector = lazyModuleRef.injector || lazyModuleRef.promise;
+                    needsNgZone = lazyModuleRef.needsNgZone;
+                    parentInjector = lazyModuleRef.injector || (lazyModuleRef.promise);
                 }
-                const /** @type {?} */ downgradeFn = (injector) => {
+                const /** @type {?} */ doDowngrade = (injector) => {
                     const /** @type {?} */ componentFactoryResolver = injector.get(ComponentFactoryResolver);
                     const /** @type {?} */ componentFactory = ((componentFactoryResolver.resolveComponentFactory(info.component)));
                     if (!componentFactory) {
@@ -587,18 +606,25 @@ function downgradeComponent(info) {
                     }
                     const /** @type {?} */ id = idPrefix + (idCount++);
                     const /** @type {?} */ injectorPromise = new ParentInjectorPromise$1(element);
-                    const /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
+                    const /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
                     const /** @type {?} */ projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
-                    facade.setupInputs(info.propagateDigest);
+                    facade.setupInputs(needsNgZone, info.propagateDigest);
                     facade.setupOutputs();
-                    facade.registerCleanup();
+                    facade.registerCleanup(needsNgZone);
                     injectorPromise.resolve(facade.getInjector());
                     if (ranAsync) {
                         // If this is run async, it is possible that it is not run inside a
                         // digest and initial input values will not be detected.
                         scope.$evalAsync(() => { });
                     }
+                };
+                const /** @type {?} */ downgradeFn = !needsNgZone ? doDowngrade : (injector) => {
+                    if (!ngZone) {
+                        ngZone = injector.get(NgZone);
+                        wrapCallback = (cb) => () => NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
+                    }
+                    wrapCallback(() => doDowngrade(injector))();
                 };
                 if (isThenable(parentInjector)) {
                     parentInjector.then(downgradeFn);
@@ -1741,10 +1767,7 @@ class UpgradeAdapter {
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, () => ((this.moduleRef)).injector.get(Injector))
-            .factory(LAZY_MODULE_REF, [
-            INJECTOR_KEY,
-            (injector) => ({ injector, promise: Promise.resolve(injector) })
-        ])
+            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (injector) => ({ injector, needsInNgZone: false })])
             .constant(NG_ZONE_KEY, this.ngZone)
             .factory(COMPILER_KEY, () => ((this.moduleRef)).injector.get(Compiler))
             .config([

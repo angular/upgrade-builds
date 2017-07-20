@@ -123,7 +123,7 @@ export interface ICloneAttachFunction {
     (clonedElement?: IAugmentedJQuery, scope?: IScope): any;
 }
 export declare type IAugmentedJQuery = Node[] & {
-    bind?: (name: string, fn: () => void) => void;
+    on?: (name: string, fn: () => void) => void;
     data?: (name: string, value?: any) => any;
     text?: () => string;
     inheritedData?: (name: string, value?: any) => any;

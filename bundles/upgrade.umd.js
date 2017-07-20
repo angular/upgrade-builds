@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.0-8d28191
+ * @license Angular v5.0.0-beta.0-54e0244
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.0-8d28191
+ * @license Angular v5.0.0-beta.0-54e0244
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -29,7 +29,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.0-8d28191');
+var VERSION = new _angular_core.Version('5.0.0-beta.0-54e0244');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -254,8 +254,9 @@ var DowngradeComponentAdapter = (function () {
      * @param {?} $compile
      * @param {?} $parse
      * @param {?} componentFactory
+     * @param {?} wrapCallback
      */
-    function DowngradeComponentAdapter(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
+    function DowngradeComponentAdapter(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
         this.id = id;
         this.element = element;
         this.attrs = attrs;
@@ -266,14 +267,13 @@ var DowngradeComponentAdapter = (function () {
         this.$compile = $compile;
         this.$parse = $parse;
         this.componentFactory = componentFactory;
+        this.wrapCallback = wrapCallback;
         this.implementsOnChanges = false;
         this.inputChangeCount = 0;
         this.inputChanges = {};
-        this.componentRef = null;
-        this.component = null;
-        this.changeDetector = null;
         this.element[0].id = id;
         this.componentScope = scope.$new();
+        this.appRef = parentInjector.get(_angular_core.ApplicationRef);
     }
     /**
      * @return {?}
@@ -305,10 +305,11 @@ var DowngradeComponentAdapter = (function () {
         hookupNgModel(this.ngModel, this.component);
     };
     /**
+     * @param {?} needsNgZone
      * @param {?=} propagateDigest
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.setupInputs = function (propagateDigest) {
+    DowngradeComponentAdapter.prototype.setupInputs = function (needsNgZone, propagateDigest) {
         var _this = this;
         if (propagateDigest === void 0) { propagateDigest = true; }
         var /** @type {?} */ attrs = this.attrs;
@@ -362,24 +363,29 @@ var DowngradeComponentAdapter = (function () {
             _loop_1(/** @type {?} */ i);
         }
         // Invoke `ngOnChanges()` and Change Detection (when necessary)
-        var /** @type {?} */ detectChanges = function () { return _this.changeDetector && _this.changeDetector.detectChanges(); };
+        var /** @type {?} */ detectChanges = function () { return _this.changeDetector.detectChanges(); };
         var /** @type {?} */ prototype = this.componentFactory.componentType.prototype;
         this.implementsOnChanges = !!(prototype && ((prototype)).ngOnChanges);
-        this.componentScope.$watch(function () { return _this.inputChangeCount; }, function () {
+        this.componentScope.$watch(function () { return _this.inputChangeCount; }, this.wrapCallback(function () {
             // Invoke `ngOnChanges()`
             if (_this.implementsOnChanges) {
                 var /** @type {?} */ inputChanges = _this.inputChanges;
                 _this.inputChanges = {};
                 ((_this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
             }
-            // If opted out of propagating digests, invoke change detection when inputs change
+            // If opted out of propagating digests, invoke change detection
+            // when inputs change
             if (!propagateDigest) {
                 detectChanges();
             }
-        });
+        }));
         // If not opted out of propagating digests, invoke change detection on every digest
         if (propagateDigest) {
-            this.componentScope.$watch(detectChanges);
+            this.componentScope.$watch(this.wrapCallback(detectChanges));
+        }
+        // Attach the view so that it will be dirty-checked.
+        if (needsNgZone) {
+            this.appRef.attachView(this.componentRef.hostView);
         }
     };
     /**
@@ -433,19 +439,23 @@ var DowngradeComponentAdapter = (function () {
         }
     };
     /**
+     * @param {?} needsNgZone
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.registerCleanup = function () {
+    DowngradeComponentAdapter.prototype.registerCleanup = function (needsNgZone) {
         var _this = this;
-        ((this.element.bind))('$destroy', function () {
-            _this.componentScope.$destroy(); /** @type {?} */
-            ((_this.componentRef)).destroy();
+        ((this.element.on))('$destroy', function () {
+            _this.componentScope.$destroy();
+            _this.componentRef.destroy();
+            if (needsNgZone) {
+                _this.appRef.detachView(_this.componentRef.hostView);
+            }
         });
     };
     /**
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.getInjector = function () { return ((this.componentRef)) && ((this.componentRef)).injector; };
+    DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
     /**
      * @param {?} prop
      * @param {?} prevValue
@@ -575,6 +585,14 @@ function downgradeComponent(info) {
     var /** @type {?} */ idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
     var /** @type {?} */ idCount = 0;
     var /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
+        // When using `UpgradeModule`, we don't need to ensure callbacks to Angular APIs (e.g. change
+        // detection) are run inside the Angular zone, because `$digest()` will be run inside the zone
+        // (except if explicitly escaped, in which case we shouldn't force it back in).
+        // When using `downgradeModule()` though, we need to ensure such callbacks are run inside the
+        // Angular zone.
+        var /** @type {?} */ needsNgZone = false;
+        var /** @type {?} */ wrapCallback = function (cb) { return cb; };
+        var /** @type {?} */ ngZone;
         return {
             restrict: 'E',
             terminal: true,
@@ -588,9 +606,10 @@ function downgradeComponent(info) {
                 var /** @type {?} */ ranAsync = false;
                 if (!parentInjector) {
                     var /** @type {?} */ lazyModuleRef = ($injector.get(LAZY_MODULE_REF));
-                    parentInjector = lazyModuleRef.injector || lazyModuleRef.promise;
+                    needsNgZone = lazyModuleRef.needsNgZone;
+                    parentInjector = lazyModuleRef.injector || (lazyModuleRef.promise);
                 }
-                var /** @type {?} */ downgradeFn = function (injector) {
+                var /** @type {?} */ doDowngrade = function (injector) {
                     var /** @type {?} */ componentFactoryResolver = injector.get(_angular_core.ComponentFactoryResolver);
                     var /** @type {?} */ componentFactory = ((componentFactoryResolver.resolveComponentFactory(info.component)));
                     if (!componentFactory) {
@@ -598,18 +617,25 @@ function downgradeComponent(info) {
                     }
                     var /** @type {?} */ id = idPrefix + (idCount++);
                     var /** @type {?} */ injectorPromise = new ParentInjectorPromise$1(element);
-                    var /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
+                    var /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
                     var /** @type {?} */ projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
-                    facade.setupInputs(info.propagateDigest);
+                    facade.setupInputs(needsNgZone, info.propagateDigest);
                     facade.setupOutputs();
-                    facade.registerCleanup();
+                    facade.registerCleanup(needsNgZone);
                     injectorPromise.resolve(facade.getInjector());
                     if (ranAsync) {
                         // If this is run async, it is possible that it is not run inside a
                         // digest and initial input values will not be detected.
                         scope.$evalAsync(function () { });
                     }
+                };
+                var /** @type {?} */ downgradeFn = !needsNgZone ? doDowngrade : function (injector) {
+                    if (!ngZone) {
+                        ngZone = injector.get(_angular_core.NgZone);
+                        wrapCallback = function (cb) { return function () { return _angular_core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb); }; };
+                    }
+                    wrapCallback(function () { return doDowngrade(injector); })();
                 };
                 if (isThenable(parentInjector)) {
                     parentInjector.then(downgradeFn);
@@ -1763,10 +1789,7 @@ var UpgradeAdapter = (function () {
         this.ngZone = new _angular_core.NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, function () { return ((_this.moduleRef)).injector.get(_angular_core.Injector); })
-            .factory(LAZY_MODULE_REF, [
-            INJECTOR_KEY,
-            function (injector) { return ({ injector: injector, promise: Promise.resolve(injector) }); }
-        ])
+            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector, needsInNgZone: false }); }])
             .constant(NG_ZONE_KEY, this.ngZone)
             .factory(COMPILER_KEY, function () { return ((_this.moduleRef)).injector.get(_angular_core.Compiler); })
             .config([
