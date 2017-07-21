@@ -1,10 +1,14 @@
 /**
- * @license Angular v5.0.0-beta.0-abee785
+ * @license Angular v5.0.0-beta.0-b7a6f52
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -20,13 +24,97 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('5.0.0-beta.0-abee785');
+var VERSION = new Version('5.0.0-beta.0-b7a6f52');
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
+ */
+/**
+ * @record
  */
 /**
  * @return {?}
@@ -69,13 +157,20 @@ var bootstrap = function (e, modules, config) { return angular.bootstrap(e, modu
 var module$1 = function (prefix, dependencies) { return angular.module(prefix, dependencies); };
 var element = function (e) { return angular.element(e); };
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var $COMPILE = '$compile';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */ var $COMPILE = '$compile';
 var $CONTROLLER = '$controller';
 var $HTTP_BACKEND = '$httpBackend';
 var $INJECTOR = '$injector';
@@ -91,12 +186,19 @@ var NG_ZONE_KEY = '$$angularNgZone';
 var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 var REQUIRE_NG_MODEL = '?ngModel';
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * A `PropertyBinding` represents a mapping between a property name
  * and an attribute name. It is parsed from a string of the form
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-var PropertyBinding = (function () {
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */ var PropertyBinding = (function () {
     /**
      * @param {?} prop
      * @param {?} attr
@@ -121,11 +223,8 @@ var PropertyBinding = (function () {
     return PropertyBinding;
 }());
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
  */
 var DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
 var DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
@@ -189,6 +288,9 @@ var Deferred = (function () {
     return Deferred;
 }());
 /**
+ * @record
+ */
+/**
  * @param {?} component
  * @return {?} Whether the passed-in component implements the subset of the
  *     `ControlValueAccessor` interface needed for AngularJS `ng-model`
@@ -223,6 +325,10 @@ function hookupNgModel(ngModel, component) {
 function strictEquals(val1, val2) {
     return val1 === val2 || (val1 !== val1 && val2 !== val2);
 }
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -262,7 +368,7 @@ var DowngradeComponentAdapter = (function () {
         this.implementsOnChanges = false;
         this.inputChangeCount = 0;
         this.inputChanges = {};
-        this.element[0].id = id;
+        ((this.element[0])).id = id;
         this.componentScope = scope.$new();
         this.appRef = parentInjector.get(ApplicationRef);
     }
@@ -530,6 +636,10 @@ function matchesSelector(el, selector) {
     return el.nodeType === Node.ELEMENT_NODE ? _matches.call(el, selector) : false;
 }
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
@@ -654,8 +764,9 @@ var ParentInjectorPromise$1 = (function () {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
+        ((
         // Store the promise on the element.
-        element.data(this.injectorKey, this);
+        element.data))(this.injectorKey, this);
     }
     /**
      * @param {?} callback
@@ -695,11 +806,8 @@ function isThenable(obj) {
     return isFunction(((obj)).then);
 }
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
  */
 /**
  * \@whatItDoes
@@ -751,14 +859,17 @@ function downgradeInjectable(token) {
     return factory;
 }
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
  */
 // Constants
 var REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
+/**
+ * @record
+ */
+/**
+ * @record
+ */
 var UpgradeHelper = (function () {
     /**
      * @param {?} injector
@@ -1040,6 +1151,10 @@ function notSupported(name, feature) {
     throw new Error("Upgraded directive '" + name + "' contains unsupported feature: '" + feature + "'.");
 }
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
@@ -1065,15 +1180,15 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
         this.checkProperties = [];
         this.propertyMap = {};
         this.directive = null;
-        var selector = name.replace(CAMEL_CASE, function (all, next) { return '-' + next.toLowerCase(); });
-        var self = this;
+        var /** @type {?} */ selector = name.replace(CAMEL_CASE, function (all, next) { return '-' + next.toLowerCase(); });
+        var /** @type {?} */ self = this;
         this.type =
             Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
                 .Class({
                 constructor: [
                     new Inject($SCOPE), Injector, ElementRef,
                     function (scope, injector, elementRef) {
-                        var helper = new UpgradeHelper(injector, name, elementRef, this.directive);
+                        var /** @type {?} */ helper = new UpgradeHelper(injector, name, elementRef, this.directive);
                         return new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
                     }
                 ],
@@ -1180,7 +1295,7 @@ var UpgradeNg1ComponentAdapter = (function () {
         this.element = helper.element;
         this.$element = helper.$element;
         this.componentScope = scope.$new(!!this.directive.scope);
-        var controllerType = this.directive.controller;
+        var /** @type {?} */ controllerType = this.directive.controller;
         if (this.directive.bindToController && controllerType) {
             this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
             this.destinationObj = this.controllerInstance;
@@ -1188,14 +1303,14 @@ var UpgradeNg1ComponentAdapter = (function () {
         else {
             this.destinationObj = this.componentScope;
         }
-        for (var i = 0; i < inputs.length; i++) {
-            this[inputs[i]] = null;
+        for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
+            ((this))[inputs[i]] = null;
         }
-        for (var j = 0; j < outputs.length; j++) {
-            var emitter = this[outputs[j]] = new EventEmitter();
+        for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
+            var /** @type {?} */ emitter = ((this))[outputs[j]] = new EventEmitter();
             this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
         }
-        for (var k = 0; k < propOuts.length; k++) {
+        for (var /** @type {?} */ k = 0; k < propOuts.length; k++) {
             this.checkLastValues.push(INITIAL_VALUE$1);
         }
     }
@@ -1291,6 +1406,10 @@ var UpgradeNg1ComponentAdapter = (function () {
     };
     return UpgradeNg1ComponentAdapter;
 }());
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1918,6 +2037,10 @@ var UpgradeAdapterRef = (function () {
     return UpgradeAdapterRef;
 }());
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
@@ -1931,6 +2054,10 @@ var UpgradeAdapterRef = (function () {
  * Angular 1 and Angular 2+ to run side by side in the same application.
  */
 // This file only re-exports content of the `src` folder. Keep it that way.
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * Generated bundle index. Do not edit.
  */

@@ -1,11 +1,15 @@
 /**
- * @license Angular v5.0.0-beta.0-abee785
+ * @license Angular v5.0.0-beta.0-b7a6f52
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -21,15 +25,128 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.0.0-beta.0-abee785');
+const VERSION = new Version('5.0.0-beta.0-b7a6f52');
 
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
  */
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
 /**
  * @return {?}
  */
@@ -74,13 +191,20 @@ const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e) => angular.element(e);
 
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const $COMPILE = '$compile';
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */ const $COMPILE = '$compile';
 const $CONTROLLER = '$controller';
 
 const $HTTP_BACKEND = '$httpBackend';
@@ -102,12 +226,19 @@ const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 const REQUIRE_NG_MODEL = '?ngModel';
 
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * A `PropertyBinding` represents a mapping between a property name
  * and an attribute name. It is parsed from a string of the form
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-class PropertyBinding {
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */ class PropertyBinding {
     /**
      * @param {?} prop
      * @param {?} attr
@@ -132,11 +263,8 @@ class PropertyBinding {
 }
 
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
  */
 const DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
 const DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
@@ -199,6 +327,10 @@ class Deferred {
     }
 }
 /**
+ * @record
+ */
+
+/**
  * @param {?} component
  * @return {?} Whether the passed-in component implements the subset of the
  *     `ControlValueAccessor` interface needed for AngularJS `ng-model`
@@ -234,6 +366,10 @@ function strictEquals(val1, val2) {
     return val1 === val2 || (val1 !== val1 && val2 !== val2);
 }
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -273,7 +409,7 @@ class DowngradeComponentAdapter {
         this.implementsOnChanges = false;
         this.inputChangeCount = 0;
         this.inputChanges = {};
-        this.element[0].id = id;
+        ((this.element[0])).id = id;
         this.componentScope = scope.$new();
         this.appRef = parentInjector.get(ApplicationRef);
     }
@@ -528,6 +664,10 @@ function matchesSelector(el, selector) {
 }
 
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
@@ -652,8 +792,9 @@ class ParentInjectorPromise$1 {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
+        ((
         // Store the promise on the element.
-        element.data(this.injectorKey, this);
+        element.data))(this.injectorKey, this);
     }
     /**
      * @param {?} callback
@@ -693,11 +834,8 @@ function isThenable(obj) {
 }
 
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
  */
 /**
  * \@whatItDoes
@@ -750,14 +888,19 @@ function downgradeInjectable(token) {
 }
 
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
  */
 // Constants
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
+/**
+ * @record
+ */
+
+/**
+ * @record
+ */
+
 class UpgradeHelper {
     /**
      * @param {?} injector
@@ -1036,6 +1179,10 @@ function notSupported(name, feature) {
 }
 
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
@@ -1061,15 +1208,15 @@ class UpgradeNg1ComponentAdapterBuilder {
         this.checkProperties = [];
         this.propertyMap = {};
         this.directive = null;
-        const selector = name.replace(CAMEL_CASE, (all, next) => '-' + next.toLowerCase());
-        const self = this;
+        const /** @type {?} */ selector = name.replace(CAMEL_CASE, (all, next) => '-' + next.toLowerCase());
+        const /** @type {?} */ self = this;
         this.type =
             Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
                 .Class({
                 constructor: [
                     new Inject($SCOPE), Injector, ElementRef,
                     function (scope, injector, elementRef) {
-                        const helper = new UpgradeHelper(injector, name, elementRef, this.directive);
+                        const /** @type {?} */ helper = new UpgradeHelper(injector, name, elementRef, this.directive);
                         return new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
                     }
                 ],
@@ -1174,7 +1321,7 @@ class UpgradeNg1ComponentAdapter {
         this.element = helper.element;
         this.$element = helper.$element;
         this.componentScope = scope.$new(!!this.directive.scope);
-        const controllerType = this.directive.controller;
+        const /** @type {?} */ controllerType = this.directive.controller;
         if (this.directive.bindToController && controllerType) {
             this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
             this.destinationObj = this.controllerInstance;
@@ -1182,14 +1329,14 @@ class UpgradeNg1ComponentAdapter {
         else {
             this.destinationObj = this.componentScope;
         }
-        for (let i = 0; i < inputs.length; i++) {
-            this[inputs[i]] = null;
+        for (let /** @type {?} */ i = 0; i < inputs.length; i++) {
+            ((this))[inputs[i]] = null;
         }
-        for (let j = 0; j < outputs.length; j++) {
-            const emitter = this[outputs[j]] = new EventEmitter();
+        for (let /** @type {?} */ j = 0; j < outputs.length; j++) {
+            const /** @type {?} */ emitter = ((this))[outputs[j]] = new EventEmitter();
             this.setComponentProperty(outputs[j], (emitter => (value) => emitter.emit(value))(emitter));
         }
-        for (let k = 0; k < propOuts.length; k++) {
+        for (let /** @type {?} */ k = 0; k < propOuts.length; k++) {
             this.checkLastValues.push(INITIAL_VALUE$1);
         }
     }
@@ -1283,6 +1430,10 @@ class UpgradeNg1ComponentAdapter {
     }
 }
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1904,6 +2055,10 @@ class UpgradeAdapterRef {
 }
 
 /**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
@@ -1919,6 +2074,10 @@ class UpgradeAdapterRef {
 
 // This file only re-exports content of the `src` folder. Keep it that way.
 
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
 /**
  * Generated bundle index. Do not edit.
  */
