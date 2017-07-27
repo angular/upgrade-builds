@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.3.0-4ce29f3
+ * @license Angular v4.3.1-bcea196
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -594,7 +594,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.3.0-4ce29f3');
+var VERSION = new Version('4.3.1-bcea196');
 
 /**
  * @license
@@ -1091,6 +1091,9 @@ function setTempInjectorRef(injector) {
     tempInjectorRef = injector;
 }
 function injectorFactory() {
+    if (!tempInjectorRef) {
+        throw new Error('Trying to get the AngularJS injector before it being set.');
+    }
     var injector = tempInjectorRef;
     tempInjectorRef = null; // clear the value to prevent memory leaks
     return injector;
