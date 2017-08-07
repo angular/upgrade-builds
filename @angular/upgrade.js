@@ -1,9 +1,9 @@
 /**
- * @license Angular v5.0.0-beta.2-685cc26
+ * @license Angular v5.0.0-beta.2-fcadbf4
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version } from '@angular/core';
+import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, Version } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.0.0-beta.2-685cc26');
+const VERSION = new Version('5.0.0-beta.2-fcadbf4');
 
 /**
  * @fileoverview added by tsickle
@@ -434,7 +434,7 @@ class DowngradeComponentAdapter {
      * @return {?}
      */
     createComponent(projectableNodes) {
-        const /** @type {?} */ childInjector = ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        const /** @type {?} */ childInjector = Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;

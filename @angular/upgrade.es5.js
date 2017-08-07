@@ -1,9 +1,9 @@
 /**
- * @license Angular v5.0.0-beta.2-685cc26
+ * @license Angular v5.0.0-beta.2-fcadbf4
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version } from '@angular/core';
+import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, Version } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @fileoverview added by tsickle
@@ -24,7 +24,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('5.0.0-beta.2-685cc26');
+var VERSION = new Version('5.0.0-beta.2-fcadbf4');
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -394,7 +394,7 @@ var DowngradeComponentAdapter = (function () {
      * @return {?}
      */
     DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
-        var /** @type {?} */ childInjector = ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        var /** @type {?} */ childInjector = Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;

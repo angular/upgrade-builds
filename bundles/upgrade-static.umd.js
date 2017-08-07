@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.2-685cc26
+ * @license Angular v5.0.0-beta.2-fcadbf4
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.2-685cc26
+ * @license Angular v5.0.0-beta.2-fcadbf4
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -220,7 +220,7 @@ var DowngradeComponentAdapter = (function () {
         return compiledProjectableNodes;
     };
     DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
-        var childInjector = _angular_core.ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        var childInjector = _angular_core.Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
@@ -649,7 +649,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.2-685cc26');
+var VERSION = new _angular_core.Version('5.0.0-beta.2-fcadbf4');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -687,7 +687,7 @@ var angular1Providers = [
     // > Metadata collected contains an error that will be reported at runtime:
     // >   Function calls are not supported.
     // >   Consider replacing the function or lambda with a reference to an exported function
-    { provide: '$injector', useFactory: injectorFactory },
+    { provide: '$injector', useFactory: injectorFactory, deps: [] },
     { provide: '$rootScope', useFactory: rootScopeFactory, deps: ['$injector'] },
     { provide: '$compile', useFactory: compileFactory, deps: ['$injector'] },
     { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
