@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.3.3-3212f8c
+ * @license Angular v4.3.3-e0660b1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('4.3.3-3212f8c');
+var VERSION = new Version('4.3.3-e0660b1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
