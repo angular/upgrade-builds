@@ -1,9 +1,9 @@
 /**
- * @license Angular v5.0.0-beta.2-f69561b
+ * @license Angular v5.0.0-beta.2-f0a5501
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { ApplicationRef, ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, ReflectiveInjector, SimpleChange, Testability, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, SimpleChange, Testability, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -223,7 +223,7 @@ var DowngradeComponentAdapter = (function () {
         return compiledProjectableNodes;
     };
     DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
-        var childInjector = ReflectiveInjector.resolveAndCreate([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        var childInjector = Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
@@ -649,7 +649,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('5.0.0-beta.2-f69561b');
+var VERSION = new Version('5.0.0-beta.2-f0a5501');
 
 /**
  * @license
@@ -688,7 +688,7 @@ var angular1Providers = [
     // > Metadata collected contains an error that will be reported at runtime:
     // >   Function calls are not supported.
     // >   Consider replacing the function or lambda with a reference to an exported function
-    { provide: '$injector', useFactory: injectorFactory },
+    { provide: '$injector', useFactory: injectorFactory, deps: [] },
     { provide: '$rootScope', useFactory: rootScopeFactory, deps: ['$injector'] },
     { provide: '$compile', useFactory: compileFactory, deps: ['$injector'] },
     { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
