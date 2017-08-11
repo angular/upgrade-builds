@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.3-679608d
+ * @license Angular v5.0.0-beta.3-cac130e
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.3-679608d
+ * @license Angular v5.0.0-beta.3-cac130e
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,7 +33,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.3-679608d');
+var VERSION = new _angular_core.Version('5.0.0-beta.3-cac130e');
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -1191,21 +1191,48 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
         this.directive = null;
         var /** @type {?} */ selector = name.replace(CAMEL_CASE, function (all, next) { return '-' + next.toLowerCase(); });
         var /** @type {?} */ self = this;
-        this.type =
-            _angular_core.Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
-                .Class({
-                constructor: [
-                    new _angular_core.Inject($SCOPE), _angular_core.Injector, _angular_core.ElementRef,
-                    function (scope, injector, elementRef) {
-                        var /** @type {?} */ helper = new UpgradeHelper(injector, name, elementRef, this.directive);
-                        return new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
-                    }
-                ],
-                ngOnInit: function () { },
-                ngOnChanges: function () { },
-                ngDoCheck: function () { },
-                ngOnDestroy: function () { },
-            });
+        var MyClass = (function () {
+            /**
+             * @param {?} scope
+             * @param {?} injector
+             * @param {?} elementRef
+             */
+            function MyClass(scope, injector, elementRef) {
+                var /** @type {?} */ helper = new UpgradeHelper(injector, name, elementRef, this.directive);
+                return (new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap));
+            }
+            /**
+             * @return {?}
+             */
+            MyClass.prototype.ngOnInit = function () {
+            };
+            /**
+             * @return {?}
+             */
+            MyClass.prototype.ngOnChanges = function () {
+            };
+            /**
+             * @return {?}
+             */
+            MyClass.prototype.ngDoCheck = function () {
+            };
+            /**
+             * @return {?}
+             */
+            MyClass.prototype.ngOnDestroy = function () {
+            };
+            return MyClass;
+        }());
+        MyClass.decorators = [
+            { type: _angular_core.Directive, args: [{ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename },] },
+        ];
+        /** @nocollapse */
+        MyClass.ctorParameters = function () { return [
+            { type: undefined, decorators: [{ type: _angular_core.Inject, args: [$SCOPE,] },] },
+            { type: _angular_core.Injector, },
+            { type: _angular_core.ElementRef, },
+        ]; };
+        this.type = MyClass;
     }
     /**
      * @return {?}
@@ -1959,20 +1986,28 @@ var UpgradeAdapter = (function () {
             function (ng1Injector, rootScope) {
                 UpgradeNg1ComponentAdapterBuilder.resolve(_this.ng1ComponentsToBeUpgraded, ng1Injector)
                     .then(function () {
-                    // At this point we have ng1 injector and we have prepared
-                    // ng1 components to be upgraded, we now can bootstrap ng2.
-                    var /** @type {?} */ DynamicNgUpgradeModule = _angular_core.NgModule({
-                        providers: [
-                            { provide: $INJECTOR, useFactory: function () { return ng1Injector; } },
-                            { provide: $COMPILE, useFactory: function () { return ng1Injector.get($COMPILE); } },
-                            _this.upgradedProviders
-                        ],
-                        imports: [_this.ng2AppModule],
-                        entryComponents: _this.downgradedComponents
-                    }).Class({
-                        constructor: function DynamicNgUpgradeModule() { },
-                        ngDoBootstrap: function () { }
-                    });
+                    var DynamicNgUpgradeModule = (function () {
+                        function DynamicNgUpgradeModule() {
+                        }
+                        /**
+                         * @return {?}
+                         */
+                        DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
+                        return DynamicNgUpgradeModule;
+                    }());
+                    DynamicNgUpgradeModule.decorators = [
+                        { type: _angular_core.NgModule, args: [{
+                                    providers: [
+                                        { provide: $INJECTOR, useFactory: function () { return ng1Injector; } },
+                                        { provide: $COMPILE, useFactory: function () { return ng1Injector.get($COMPILE); } },
+                                        _this.upgradedProviders
+                                    ],
+                                    imports: [_this.ng2AppModule],
+                                    entryComponents: _this.downgradedComponents
+                                },] },
+                    ];
+                    /** @nocollapse */
+                    DynamicNgUpgradeModule.ctorParameters = function () { return []; };
                     ((platformRef))
                         ._bootstrapModuleWithZone(DynamicNgUpgradeModule, _this.compilerOptions, _this.ngZone)
                         .then(function (ref) {

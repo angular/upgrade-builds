@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.3-679608d
+ * @license Angular v5.0.0-beta.3-cac130e
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.0.0-beta.3-679608d');
+const VERSION = new Version('5.0.0-beta.3-cac130e');
 
 /**
  * @fileoverview added by tsickle
@@ -1210,21 +1210,48 @@ class UpgradeNg1ComponentAdapterBuilder {
         this.directive = null;
         const /** @type {?} */ selector = name.replace(CAMEL_CASE, (all, next) => '-' + next.toLowerCase());
         const /** @type {?} */ self = this;
-        this.type =
-            Directive({ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename })
-                .Class({
-                constructor: [
-                    new Inject($SCOPE), Injector, ElementRef,
-                    function (scope, injector, elementRef) {
-                        const /** @type {?} */ helper = new UpgradeHelper(injector, name, elementRef, this.directive);
-                        return new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
-                    }
-                ],
-                ngOnInit: function () { },
-                ngOnChanges: function () { },
-                ngDoCheck: function () { },
-                ngOnDestroy: function () { },
-            });
+        class MyClass {
+            /**
+             * @param {?} scope
+             * @param {?} injector
+             * @param {?} elementRef
+             */
+            constructor(scope, injector, elementRef) {
+                const /** @type {?} */ helper = new UpgradeHelper(injector, name, elementRef, this.directive);
+                return (new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap));
+            }
+            /**
+             * @return {?}
+             */
+            ngOnInit() {
+            }
+            /**
+             * @return {?}
+             */
+            ngOnChanges() {
+            }
+            /**
+             * @return {?}
+             */
+            ngDoCheck() {
+            }
+            /**
+             * @return {?}
+             */
+            ngOnDestroy() {
+            }
+        }
+        MyClass.decorators = [
+            { type: Directive, args: [{ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename },] },
+        ];
+        /** @nocollapse */
+        MyClass.ctorParameters = () => [
+            { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] },] },
+            { type: Injector, },
+            { type: ElementRef, },
+        ];
+        
+        this.type = MyClass;
     }
     /**
      * @return {?}
@@ -1969,20 +1996,26 @@ class UpgradeAdapter {
             (ng1Injector, rootScope) => {
                 UpgradeNg1ComponentAdapterBuilder.resolve(this.ng1ComponentsToBeUpgraded, ng1Injector)
                     .then(() => {
-                    // At this point we have ng1 injector and we have prepared
-                    // ng1 components to be upgraded, we now can bootstrap ng2.
-                    const /** @type {?} */ DynamicNgUpgradeModule = NgModule({
-                        providers: [
-                            { provide: $INJECTOR, useFactory: () => ng1Injector },
-                            { provide: $COMPILE, useFactory: () => ng1Injector.get($COMPILE) },
-                            this.upgradedProviders
-                        ],
-                        imports: [this.ng2AppModule],
-                        entryComponents: this.downgradedComponents
-                    }).Class({
-                        constructor: function DynamicNgUpgradeModule() { },
-                        ngDoBootstrap: function () { }
-                    });
+                    class DynamicNgUpgradeModule {
+                        constructor() { }
+                        /**
+                         * @return {?}
+                         */
+                        ngDoBootstrap() { }
+                    }
+                    DynamicNgUpgradeModule.decorators = [
+                        { type: NgModule, args: [{
+                                    providers: [
+                                        { provide: $INJECTOR, useFactory: () => ng1Injector },
+                                        { provide: $COMPILE, useFactory: () => ng1Injector.get($COMPILE) },
+                                        this.upgradedProviders
+                                    ],
+                                    imports: [this.ng2AppModule],
+                                    entryComponents: this.downgradedComponents
+                                },] },
+                    ];
+                    /** @nocollapse */
+                    DynamicNgUpgradeModule.ctorParameters = () => [];
                     ((platformRef))
                         ._bootstrapModuleWithZone(DynamicNgUpgradeModule, this.compilerOptions, this.ngZone)
                         .then((ref) => {
