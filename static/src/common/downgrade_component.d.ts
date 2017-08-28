@@ -9,7 +9,7 @@ import { Type } from '@angular/core';
 /**
  * @whatItDoes
  *
- * *Part of the [upgrade/static](/docs/ts/latest/api/#!?query=upgrade%2Fstatic)
+ * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
  * Allows an Angular component to be used from AngularJS.
@@ -41,6 +41,8 @@ import { Type } from '@angular/core';
  */
 export declare function downgradeComponent(info: {
     component: Type<any>;
+    /** @experimental */
+    propagateDigest?: boolean;
     /** @deprecated since v4. This parameter is no longer used */
     inputs?: string[];
     /** @deprecated since v4. This parameter is no longer used */
