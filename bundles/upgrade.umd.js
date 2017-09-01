@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.5-56238fe
+ * @license Angular v5.0.0-beta.5-450a13d
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.5-56238fe
+ * @license Angular v5.0.0-beta.5-450a13d
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,7 +33,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.5-56238fe');
+var VERSION = new _angular_core.Version('5.0.0-beta.5-450a13d');
 
 /**
  * @fileoverview added by tsickle
@@ -1587,7 +1587,8 @@ var upgradeCount = 0;
  *
  * ```
  *
- * \@stable
+ * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
+ * [Ahead-of-Time compilation](guide/aot-compiler).
  */
 var UpgradeAdapter = (function () {
     /**
@@ -2094,7 +2095,8 @@ var UpgradeAdapter = (function () {
 /**
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.
  *
- * \@stable
+ * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
+ * [Ahead-of-Time compilation](guide/aot-compiler).
  */
 var UpgradeAdapterRef = (function () {
     function UpgradeAdapterRef() {
