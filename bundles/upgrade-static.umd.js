@@ -1,16 +1,16 @@
 /**
- * @license Angular v5.0.0-beta.5-ee04217
+ * @license Angular v5.0.0-beta.5-fd701b0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser'], factory) :
-	(factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = global.ng.upgrade.static || {}),global.ng.core,global._angular_platformBrowser));
+	(factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = {}),global.ng.core,global._angular_platformBrowser));
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.5-ee04217
+ * @license Angular v5.0.0-beta.5-fd701b0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -65,6 +65,7 @@ var module$1 = function (prefix, dependencies) {
     return angular.module(prefix, dependencies);
 };
 var element = function (e) { return angular.element(e); };
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -86,14 +87,20 @@ var $INJECTOR = '$injector';
 var $INTERVAL = '$interval';
 var $PARSE = '$parse';
 var $PROVIDE = '$provide';
+
 var $SCOPE = '$scope';
 var $TEMPLATE_CACHE = '$templateCache';
+
 var $$TESTABILITY = '$$testability';
+
+
 var INJECTOR_KEY = '$$angularInjector';
 var LAZY_MODULE_REF = '$$angularLazyModuleRef';
+
 var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 var REQUIRE_NG_MODEL = '?ngModel';
 var UPGRADE_MODULE_NAME = '$$UpgradeModule';
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -124,6 +131,7 @@ var PropertyBinding = (function () {
     };
     return PropertyBinding;
 }());
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -133,6 +141,7 @@ var PropertyBinding = (function () {
  */
 var DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
 var DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
+
 function controllerKey(name) {
     return '$' + name + 'Controller';
 }
@@ -140,6 +149,7 @@ function directiveNormalize(name) {
     return name.replace(DIRECTIVE_PREFIX_REGEXP, '')
         .replace(DIRECTIVE_SPECIAL_CHARS_REGEXP, function (_, letter) { return letter.toUpperCase(); });
 }
+
 function getComponentName(component) {
     // Return the name of the component or the first line of its stringified version.
     return component.overriddenName || component.name || component.toString().split('\n')[0];
@@ -175,6 +185,7 @@ function hookupNgModel(ngModel, component) {
 function strictEquals(val1, val2) {
     return val1 === val2 || (val1 !== val1 && val2 !== val2);
 }
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -229,9 +240,7 @@ var DowngradeComponentAdapter = (function () {
     };
     DowngradeComponentAdapter.prototype.setupInputs = function (needsNgZone, propagateDigest) {
         var _this = this;
-        if (propagateDigest === void 0) {
-            propagateDigest = true;
-        }
+        if (propagateDigest === void 0) { propagateDigest = true; }
         var attrs = this.attrs;
         var inputs = this.componentFactory.inputs || [];
         var _loop_1 = function (i) {
@@ -274,11 +283,9 @@ var DowngradeComponentAdapter = (function () {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var watchFn = (function (prop) {
-                    return function (currValue, prevValue) {
-                        return _this.updateInput(prop, prevValue, currValue);
-                    };
-                })(input.prop);
+                var watchFn = (function (prop) { return function (currValue, prevValue) {
+                    return _this.updateInput(prop, prevValue, currValue);
+                }; })(input.prop);
                 this_1.componentScope.$watch(expr, watchFn);
             }
         };
@@ -430,6 +437,7 @@ function matchesSelector(el, selector) {
     }
     return el.nodeType === Node.ELEMENT_NODE ? _matches.call(el, selector) : false;
 }
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -523,11 +531,9 @@ function downgradeComponent(info) {
                 var downgradeFn = !needsNgZone ? doDowngrade : function (injector) {
                     if (!ngZone) {
                         ngZone = injector.get(_angular_core.NgZone);
-                        wrapCallback = function (cb) {
-                            return function () {
-                                return _angular_core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
-                            };
-                        };
+                        wrapCallback = function (cb) { return function () {
+                            return _angular_core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
+                        }; };
                     }
                     wrapCallback(function () { return doDowngrade(injector); })();
                 };
@@ -580,6 +586,7 @@ var ParentInjectorPromise = (function () {
 function isThenable(obj) {
     return isFunction(obj.then);
 }
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -634,6 +641,7 @@ function downgradeInjectable(token) {
     factory['$inject'] = [INJECTOR_KEY];
     return factory;
 }
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -649,7 +657,8 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.5-ee04217');
+var VERSION = new _angular_core.Version('5.0.0-beta.5-fd701b0');
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -692,6 +701,7 @@ var angular1Providers = [
     { provide: '$compile', useFactory: compileFactory, deps: ['$injector'] },
     { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
 ];
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -715,6 +725,7 @@ var NgAdapterInjector = (function () {
     };
     return NgAdapterInjector;
 }());
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -756,6 +767,7 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
     ]);
     return LAZY_MODULE_NAME;
 }
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -794,9 +806,7 @@ var UpgradeHelper = (function () {
         return directive;
     };
     UpgradeHelper.getTemplate = function ($injector, directive, fetchRemoteTemplate) {
-        if (fetchRemoteTemplate === void 0) {
-            fetchRemoteTemplate = false;
-        }
+        if (fetchRemoteTemplate === void 0) { fetchRemoteTemplate = false; }
         if (directive.template !== undefined) {
             return getOrCall(directive.template);
         }
@@ -990,6 +1000,7 @@ function isMap(value) {
 function notSupported(name, feature) {
     throw new Error("Upgraded directive '" + name + "' contains unsupported feature: '" + feature + "'.");
 }
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1235,6 +1246,7 @@ var UpgradeComponent = (function () {
     };
     return UpgradeComponent;
 }());
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -1373,9 +1385,7 @@ var UpgradeModule = (function () {
      */
     UpgradeModule.prototype.bootstrap = function (element$$1, modules, config /*angular.IAngularBootstrapConfig*/) {
         var _this = this;
-        if (modules === void 0) {
-            modules = [];
-        }
+        if (modules === void 0) { modules = []; }
         var INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
         // Create an ng1 module to bootstrap
         var initModule = module$1(INIT_MODULE_NAME, [])
@@ -1483,12 +1493,10 @@ UpgradeModule.decorators = [
     { type: _angular_core.NgModule, args: [{ providers: [angular1Providers] },] },
 ];
 /** @nocollapse */
-UpgradeModule.ctorParameters = function () {
-    return [
-        { type: _angular_core.Injector, },
-        { type: _angular_core.NgZone, },
-    ];
-};
+UpgradeModule.ctorParameters = function () { return [
+    { type: _angular_core.Injector, },
+    { type: _angular_core.NgZone, },
+]; };
 
 exports.ɵe = angular1Providers;
 exports.ɵc = compileFactory;

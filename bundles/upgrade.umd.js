@@ -1,16 +1,16 @@
 /**
- * @license Angular v5.0.0-beta.5-ee04217
+ * @license Angular v5.0.0-beta.5-fd701b0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser-dynamic')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser-dynamic'], factory) :
-	(factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}),global.ng.core,global.ng.platformBrowserDynamic));
+	(factory((global.ng = global.ng || {}, global.ng.upgrade = {}),global.ng.core,global.ng.platformBrowserDynamic));
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.5-ee04217
+ * @license Angular v5.0.0-beta.5-fd701b0
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,7 +33,8 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.5-ee04217');
+var VERSION = new _angular_core.Version('5.0.0-beta.5-fd701b0');
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -41,90 +42,119 @@ var VERSION = new _angular_core.Version('5.0.0-beta.5-ee04217');
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 /**
  * @return {?}
  */
@@ -156,15 +186,22 @@ catch (e) {
  * @param {?} ng
  * @return {?}
  */
+
 /**
  * Returns the current version of the AngularJS library.
  *
  * \@stable
  * @return {?}
  */
-var bootstrap = function (e, modules, config) { return angular.bootstrap(e, modules, config); };
-var module$1 = function (prefix, dependencies) { return angular.module(prefix, dependencies); };
+
+var bootstrap = function (e, modules, config) {
+    return angular.bootstrap(e, modules, config);
+};
+var module$1 = function (prefix, dependencies) {
+    return angular.module(prefix, dependencies);
+};
 var element = function (e) { return angular.element(e); };
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -181,19 +218,25 @@ var element = function (e) { return angular.element(e); };
  * @suppress {checkTypes} checked by tsc
  */ var $COMPILE = '$compile';
 var $CONTROLLER = '$controller';
+
 var $HTTP_BACKEND = '$httpBackend';
 var $INJECTOR = '$injector';
+
 var $PARSE = '$parse';
+
 var $ROOT_SCOPE = '$rootScope';
 var $SCOPE = '$scope';
 var $TEMPLATE_CACHE = '$templateCache';
+
 var $$TESTABILITY = '$$testability';
 var COMPILER_KEY = '$$angularCompiler';
+
 var INJECTOR_KEY = '$$angularInjector';
 var LAZY_MODULE_REF = '$$angularLazyModuleRef';
 var NG_ZONE_KEY = '$$angularNgZone';
 var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 var REQUIRE_NG_MODEL = '?ngModel';
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -204,10 +247,7 @@ var REQUIRE_NG_MODEL = '?ngModel';
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */ var PropertyBinding = (function () {
+var PropertyBinding = (function () {
     /**
      * @param {?} prop
      * @param {?} attr
@@ -231,6 +271,7 @@ var REQUIRE_NG_MODEL = '?ngModel';
     };
     return PropertyBinding;
 }());
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -271,6 +312,7 @@ function directiveNormalize(name) {
  * @param {?} node
  * @return {?}
  */
+
 /**
  * @param {?} component
  * @return {?}
@@ -299,6 +341,7 @@ var Deferred = (function () {
 /**
  * @record
  */
+
 /**
  * @param {?} component
  * @return {?} Whether the passed-in component implements the subset of the
@@ -334,6 +377,7 @@ function hookupNgModel(ngModel, component) {
 function strictEquals(val1, val2) {
     return val1 === val2 || (val1 !== val1 && val2 !== val2);
 }
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -460,7 +504,9 @@ var DowngradeComponentAdapter = (function () {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var /** @type {?} */ watchFn = (function (prop) { return function (currValue, prevValue) { return _this.updateInput(prop, prevValue, currValue); }; })(input.prop);
+                var /** @type {?} */ watchFn = (function (prop) { return function (currValue, prevValue) {
+                    return _this.updateInput(prop, prevValue, currValue);
+                }; })(input.prop);
                 this_1.componentScope.$watch(expr, watchFn);
             }
         };
@@ -530,7 +576,7 @@ var DowngradeComponentAdapter = (function () {
                 var /** @type {?} */ emitter = (this_2.component[output.prop]);
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ? function (v) { return ((setter_1))(_this.scope, v); } :
+                        next: assignExpr ? function (v) { /** @type {?} */ return ((setter_1))(_this.scope, v); } :
                             function (v) { return getter_1(_this.scope, { '$event': v }); }
                     });
                 }
@@ -644,6 +690,7 @@ function matchesSelector(el, selector) {
     }
     return el.nodeType === Node.ELEMENT_NODE ? _matches.call(el, selector) : false;
 }
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -743,7 +790,9 @@ function downgradeComponent(info) {
                 var /** @type {?} */ downgradeFn = !needsNgZone ? doDowngrade : function (injector) {
                     if (!ngZone) {
                         ngZone = injector.get(_angular_core.NgZone);
-                        wrapCallback = function (cb) { return function () { return _angular_core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb); }; };
+                        wrapCallback = function (cb) { return function () {
+                            return _angular_core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
+                        }; };
                     }
                     wrapCallback(function () { return doDowngrade(injector); })();
                 };
@@ -769,7 +818,7 @@ var ParentInjectorPromise$1 = (function () {
     /**
      * @param {?} element
      */
-    function ParentInjectorPromise$1(element) {
+    function ParentInjectorPromise(element) {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
@@ -781,7 +830,7 @@ var ParentInjectorPromise$1 = (function () {
      * @param {?} callback
      * @return {?}
      */
-    ParentInjectorPromise$1.prototype.then = function (callback) {
+    ParentInjectorPromise.prototype.then = function (callback) {
         if (this.injector) {
             callback(this.injector);
         }
@@ -793,7 +842,7 @@ var ParentInjectorPromise$1 = (function () {
      * @param {?} injector
      * @return {?}
      */
-    ParentInjectorPromise$1.prototype.resolve = function (injector) {
+    ParentInjectorPromise.prototype.resolve = function (injector) {
         this.injector = injector; /** @type {?} */
         ((
         // Store the real injector on the element.
@@ -804,7 +853,7 @@ var ParentInjectorPromise$1 = (function () {
         this.callbacks.forEach(function (callback) { return callback(injector); });
         this.callbacks.length = 0;
     };
-    return ParentInjectorPromise$1;
+    return ParentInjectorPromise;
 }());
 /**
  * @template T
@@ -814,6 +863,7 @@ var ParentInjectorPromise$1 = (function () {
 function isThenable(obj) {
     return isFunction(((obj)).then);
 }
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -867,6 +917,7 @@ function downgradeInjectable(token) {
     ((factory))['$inject'] = [INJECTOR_KEY];
     return factory;
 }
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -876,9 +927,11 @@ var REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 /**
  * @record
  */
+
 /**
  * @record
  */
+
 var UpgradeHelper = (function () {
     /**
      * @param {?} injector
@@ -985,7 +1038,7 @@ var UpgradeHelper = (function () {
         var /** @type {?} */ transclude = this.directive.transclude;
         var /** @type {?} */ contentChildNodes = this.extractChildNodes();
         var /** @type {?} */ $template = contentChildNodes;
-        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttach) { return ((cloneAttach))($template, scope); };
+        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttach) { /** @type {?} */ return ((cloneAttach))($template, scope); };
         if (transclude) {
             var /** @type {?} */ slots_1 = Object.create(null);
             if (typeof transclude === 'object') {
@@ -1021,7 +1074,7 @@ var UpgradeHelper = (function () {
                 });
                 Object.keys(slots_1).filter(function (slotName) { return slots_1[slotName]; }).forEach(function (slotName) {
                     var /** @type {?} */ nodes = slots_1[slotName];
-                    slots_1[slotName] = function (scope, cloneAttach) { return ((cloneAttach))(nodes, scope); };
+                    slots_1[slotName] = function (scope, cloneAttach) { /** @type {?} */ return ((cloneAttach))(nodes, scope); };
                 });
             }
             // Attach `$$slots` to default slot transclude fn.
@@ -1117,11 +1170,11 @@ var UpgradeHelper = (function () {
         else if (typeof require === 'string') {
             var /** @type {?} */ match = ((require.match(REQUIRE_PREFIX_RE)));
             var /** @type {?} */ inheritType = match[1] || match[3];
-            var /** @type {?} */ name = require.substring(match[0].length);
+            var /** @type {?} */ name_1 = require.substring(match[0].length);
             var /** @type {?} */ isOptional = !!match[2];
             var /** @type {?} */ searchParents = !!inheritType;
             var /** @type {?} */ startOnParent = inheritType === '^^';
-            var /** @type {?} */ ctrlKey = controllerKey(name);
+            var /** @type {?} */ ctrlKey = controllerKey(name_1);
             var /** @type {?} */ elem = startOnParent ? ((this.$element.parent))() : this.$element;
             var /** @type {?} */ value = searchParents ? ((elem.inheritedData))(ctrlKey) : ((elem.data))(ctrlKey);
             if (!value && !isOptional) {
@@ -1159,6 +1212,7 @@ function isMap(value) {
 function notSupported(name, feature) {
     throw new Error("Upgraded directive '" + name + "' contains unsupported feature: '" + feature + "'.");
 }
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -1232,6 +1286,7 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
             { type: _angular_core.Injector, },
             { type: _angular_core.ElementRef, },
         ]; };
+        
         this.type = MyClass;
     }
     /**
@@ -1442,6 +1497,7 @@ var UpgradeNg1ComponentAdapter = (function () {
     };
     return UpgradeNg1ComponentAdapter;
 }());
+
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
@@ -1934,10 +1990,10 @@ var UpgradeAdapter = (function () {
         var /** @type {?} */ platformRef = _angular_platformBrowserDynamic.platformBrowserDynamic();
         this.ngZone = new _angular_core.NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
-        ng1Module.factory(INJECTOR_KEY, function () { return ((_this.moduleRef)).injector.get(_angular_core.Injector); })
+        ng1Module.factory(INJECTOR_KEY, function () { /** @type {?} */ return ((_this.moduleRef)).injector.get(_angular_core.Injector); })
             .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector, needsInNgZone: false }); }])
             .constant(NG_ZONE_KEY, this.ngZone)
-            .factory(COMPILER_KEY, function () { return ((_this.moduleRef)).injector.get(_angular_core.Compiler); })
+            .factory(COMPILER_KEY, function () { /** @type {?} */ return ((_this.moduleRef)).injector.get(_angular_core.Compiler); })
             .config([
             '$provide', '$injector',
             function (provide, ng1Injector) {
