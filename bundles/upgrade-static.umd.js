@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.6-3c480e4
+ * @license Angular v5.0.0-beta.6-b6833d1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.6-3c480e4
+ * @license Angular v5.0.0-beta.6-b6833d1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -197,8 +197,7 @@ var INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 var DowngradeComponentAdapter = (function () {
-    function DowngradeComponentAdapter(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
-        this.id = id;
+    function DowngradeComponentAdapter(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
@@ -212,7 +211,6 @@ var DowngradeComponentAdapter = (function () {
         this.implementsOnChanges = false;
         this.inputChangeCount = 0;
         this.inputChanges = {};
-        this.element[0].id = id;
         this.componentScope = scope.$new();
         this.appRef = parentInjector.get(_angular_core.ApplicationRef);
     }
@@ -445,7 +443,6 @@ function matchesSelector(el, selector) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var downgradeCount = 0;
 /**
  * @whatItDoes
  *
@@ -480,8 +477,6 @@ var downgradeCount = 0;
  * @experimental
  */
 function downgradeComponent(info) {
-    var idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
-    var idCount = 0;
     var directiveFactory = function ($compile, $injector, $parse) {
         // When using `UpgradeModule`, we don't need to ensure callbacks to Angular APIs (e.g. change
         // detection) are run inside the Angular zone, because `$digest()` will be run inside the zone
@@ -513,9 +508,8 @@ function downgradeComponent(info) {
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
-                    var id = idPrefix + (idCount++);
                     var injectorPromise = new ParentInjectorPromise(element);
-                    var facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
+                    var facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
                     var projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
                     facade.setupInputs(needsNgZone, info.propagateDigest);
@@ -657,7 +651,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.6-3c480e4');
+var VERSION = new _angular_core.Version('5.0.0-beta.6-b6833d1');
 
 /**
  * @license

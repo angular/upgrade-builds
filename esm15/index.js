@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.6-3c480e4
+ * @license Angular v5.0.0-beta.6-b6833d1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.0.0-beta.6-3c480e4');
+const VERSION = new Version('5.0.0-beta.6-b6833d1');
 
 /**
  * @fileoverview added by tsickle
@@ -382,7 +382,6 @@ const INITIAL_VALUE = {
 };
 class DowngradeComponentAdapter {
     /**
-     * @param {?} id
      * @param {?} element
      * @param {?} attrs
      * @param {?} scope
@@ -394,8 +393,7 @@ class DowngradeComponentAdapter {
      * @param {?} componentFactory
      * @param {?} wrapCallback
      */
-    constructor(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
-        this.id = id;
+    constructor(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
@@ -409,7 +407,6 @@ class DowngradeComponentAdapter {
         this.implementsOnChanges = false;
         this.inputChangeCount = 0;
         this.inputChanges = {};
-        ((this.element[0])).id = id;
         this.componentScope = scope.$new();
         this.appRef = parentInjector.get(ApplicationRef);
     }
@@ -674,7 +671,6 @@ function matchesSelector(el, selector) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-let downgradeCount = 0;
 /**
  * \@whatItDoes
  *
@@ -711,8 +707,6 @@ let downgradeCount = 0;
  * @return {?}
  */
 function downgradeComponent(info) {
-    const /** @type {?} */ idPrefix = `NG2_UPGRADE_${downgradeCount++}_`;
-    let /** @type {?} */ idCount = 0;
     const /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
         // When using `UpgradeModule`, we don't need to ensure callbacks to Angular APIs (e.g. change
         // detection) are run inside the Angular zone, because `$digest()` will be run inside the zone
@@ -744,9 +738,8 @@ function downgradeComponent(info) {
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
-                    const /** @type {?} */ id = idPrefix + (idCount++);
                     const /** @type {?} */ injectorPromise = new ParentInjectorPromise$1(element);
-                    const /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
+                    const /** @type {?} */ facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
                     const /** @type {?} */ projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
                     facade.setupInputs(needsNgZone, info.propagateDigest);

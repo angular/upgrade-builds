@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.6-3c480e4
+ * @license Angular v5.0.0-beta.6-b6833d1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -191,8 +191,7 @@ const INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 class DowngradeComponentAdapter {
-    constructor(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
-        this.id = id;
+    constructor(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
@@ -206,7 +205,6 @@ class DowngradeComponentAdapter {
         this.implementsOnChanges = false;
         this.inputChangeCount = 0;
         this.inputChanges = {};
-        this.element[0].id = id;
         this.componentScope = scope.$new();
         this.appRef = parentInjector.get(ApplicationRef);
     }
@@ -423,7 +421,6 @@ function matchesSelector(el, selector) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-let downgradeCount = 0;
 /**
  * @whatItDoes
  *
@@ -458,8 +455,6 @@ let downgradeCount = 0;
  * @experimental
  */
 function downgradeComponent(info) {
-    const idPrefix = `NG2_UPGRADE_${downgradeCount++}_`;
-    let idCount = 0;
     const directiveFactory = function ($compile, $injector, $parse) {
         // When using `UpgradeModule`, we don't need to ensure callbacks to Angular APIs (e.g. change
         // detection) are run inside the Angular zone, because `$digest()` will be run inside the zone
@@ -491,9 +486,8 @@ function downgradeComponent(info) {
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
-                    const id = idPrefix + (idCount++);
                     const injectorPromise = new ParentInjectorPromise(element);
-                    const facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
+                    const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
                     const projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
                     facade.setupInputs(needsNgZone, info.propagateDigest);
@@ -632,7 +626,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-const VERSION = new Version('5.0.0-beta.6-3c480e4');
+const VERSION = new Version('5.0.0-beta.6-b6833d1');
 
 /**
  * @license
