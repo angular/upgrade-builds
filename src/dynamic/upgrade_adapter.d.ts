@@ -84,7 +84,8 @@ import * as angular from '../common/angular1';
  *
  * ```
  *
- * @stable
+ * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
+ * [Ahead-of-Time compilation](guide/aot-compiler).
  */
 export declare class UpgradeAdapter {
     private ng2AppModule;
@@ -399,7 +400,8 @@ export declare class UpgradeAdapter {
 /**
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.
  *
- * @stable
+ * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
+ * [Ahead-of-Time compilation](guide/aot-compiler).
  */
 export declare class UpgradeAdapterRef {
     ng1RootScope: angular.IRootScopeService;
@@ -413,7 +415,7 @@ export declare class UpgradeAdapterRef {
      * The `ready` callback function is invoked inside the Angular zone, therefore it does not
      * require a call to `$apply()`.
      */
-    ready(fn: (upgradeAdapterRef?: UpgradeAdapterRef) => void): void;
+    ready(fn: (upgradeAdapterRef: UpgradeAdapterRef) => void): void;
     /**
      * Dispose of running hybrid AngularJS / Angular application.
      */
