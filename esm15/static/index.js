@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.6-112e777
+ * @license Angular v5.0.0-beta.6-ca5aeba
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -61,13 +61,7 @@ const element = (e) => angular.element(e);
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */ const $COMPILE = '$compile';
+const $COMPILE = '$compile';
 const $CONTROLLER = '$controller';
 const $DELEGATE = '$delegate';
 const $HTTP_BACKEND = '$httpBackend';
@@ -102,13 +96,7 @@ const UPGRADE_MODULE_NAME = '$$UpgradeModule';
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */ class PropertyBinding {
+class PropertyBinding {
     constructor(prop, attr) {
         this.prop = prop;
         this.attr = attr;
@@ -285,7 +273,7 @@ class DowngradeComponentAdapter {
             if (this.implementsOnChanges) {
                 const inputChanges = this.inputChanges;
                 this.inputChanges = {};
-                this.component.ngOnChanges(inputChanges);
+                this.component.ngOnChanges((inputChanges));
             }
             // If opted out of propagating digests, invoke change detection
             // when inputs change
@@ -482,7 +470,7 @@ function downgradeComponent(info) {
                 }
                 const doDowngrade = (injector) => {
                     const componentFactoryResolver = injector.get(ComponentFactoryResolver);
-                    const componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
+                    const componentFactory = (componentFactoryResolver.resolveComponentFactory(info.component));
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
@@ -531,6 +519,7 @@ class ParentInjectorPromise {
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
         // Store the promise on the element.
+        // Store the promise on the element.
         element.data(this.injectorKey, this);
     }
     then(callback) {
@@ -544,9 +533,10 @@ class ParentInjectorPromise {
     resolve(injector) {
         this.injector = injector;
         // Store the real injector on the element.
+        // Store the real injector on the element.
         this.element.data(this.injectorKey, injector);
         // Release the element to prevent memory leaks.
-        this.element = null;
+        this.element = (null);
         // Run the queued callbacks.
         this.callbacks.forEach(callback => callback(injector));
         this.callbacks.length = 0;
@@ -626,7 +616,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-const VERSION = new Version('5.0.0-beta.6-112e777');
+const VERSION = new Version('5.0.0-beta.6-ca5aeba');
 
 /**
  * @license
@@ -806,7 +796,7 @@ class UpgradeHelper {
         // Quoted properties below so that this code can be optimized with Closure Compiler.
         const locals = { '$scope': $scope, '$element': this.$element };
         const controller = this.$controller(controllerType, locals, null, this.directive.controllerAs);
-        this.$element.data(controllerKey(this.directive.name), controller);
+        this.$element.data(controllerKey((this.directive.name)), controller);
         return controller;
     }
     compileTemplate(template) {
@@ -903,11 +893,11 @@ class UpgradeHelper {
         return childNodes;
     }
     getDirectiveRequire() {
-        const require = this.directive.require || (this.directive.controller && this.directive.name);
+        const require = this.directive.require || ((this.directive.controller && this.directive.name));
         if (isMap(require)) {
             Object.keys(require).forEach(key => {
                 const value = require[key];
-                const match = value.match(REQUIRE_PREFIX_RE);
+                const match = (value.match(REQUIRE_PREFIX_RE));
                 const name = value.substring(match[0].length);
                 if (!name) {
                     require[key] = match[0] + key;
@@ -925,11 +915,11 @@ class UpgradeHelper {
         }
         else if (typeof require === 'object') {
             const value = {};
-            Object.keys(require).forEach(key => value[key] = this.resolveRequire(require[key]));
+            Object.keys(require).forEach(key => value[key] = (this.resolveRequire(require[key])));
             return value;
         }
         else if (typeof require === 'string') {
-            const match = require.match(REQUIRE_PREFIX_RE);
+            const match = (require.match(REQUIRE_PREFIX_RE));
             const inheritType = match[1] || match[3];
             const name = require.substring(match[0].length);
             const isOptional = !!match[2];
@@ -1020,21 +1010,21 @@ class Bindings {
  */
 class UpgradeComponent {
     /**
-     * Create a new `UpgradeComponent` instance. You should not normally need to do this.
-     * Instead you should derive a new class from this one and call the super constructor
-     * from the base class.
-     *
-     * {@example upgrade/static/ts/module.ts region="ng1-hero-wrapper" }
-     *
-     * * The `name` parameter should be the name of the AngularJS directive.
-     * * The `elementRef` and `injector` parameters should be acquired from Angular by dependency
-     *   injection into the base class constructor.
-     *
-     * Note that we must manually implement lifecycle hooks that call through to the super class.
-     * This is because, at the moment, the AoT compiler is not able to tell that the
-     * `UpgradeComponent`
-     * already implements them and so does not wire up calls to them at runtime.
-     */
+       * Create a new `UpgradeComponent` instance. You should not normally need to do this.
+       * Instead you should derive a new class from this one and call the super constructor
+       * from the base class.
+       *
+       * {@example upgrade/static/ts/module.ts region="ng1-hero-wrapper" }
+       *
+       * * The `name` parameter should be the name of the AngularJS directive.
+       * * The `elementRef` and `injector` parameters should be acquired from Angular by dependency
+       *   injection into the base class constructor.
+       *
+       * Note that we must manually implement lifecycle hooks that call through to the super class.
+       * This is because, at the moment, the AoT compiler is not able to tell that the
+       * `UpgradeComponent`
+       * already implements them and so does not wire up calls to them at runtime.
+       */
     constructor(name, elementRef, injector) {
         this.name = name;
         this.elementRef = elementRef;
@@ -1095,7 +1085,7 @@ class UpgradeComponent {
         if (preLink) {
             preLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
-        linkFn(this.$componentScope, null, { parentBoundTranscludeFn: attachChildNodes });
+        linkFn(this.$componentScope, (null), { parentBoundTranscludeFn: attachChildNodes });
         if (postLink) {
             postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
@@ -1319,20 +1309,19 @@ class UpgradeComponent {
  * @experimental
  */
 class UpgradeModule {
-    constructor(
+    constructor(/** The root {@link Injector} for the upgrade application. */
         /** The root {@link Injector} for the upgrade application. */
-        injector, 
-        /** The bootstrap zone for the upgrade application */
+        injector, /** The bootstrap zone for the upgrade application */
         ngZone) {
         this.ngZone = ngZone;
         this.injector = new NgAdapterInjector(injector);
     }
     /**
-     * Bootstrap an AngularJS application from this NgModule
-     * @param element the element on which to bootstrap the AngularJS application
-     * @param [modules] the AngularJS modules to bootstrap for this application
-     * @param [config] optional extra AngularJS bootstrap configuration
-     */
+       * Bootstrap an AngularJS application from this NgModule
+       * @param element the element on which to bootstrap the AngularJS application
+       * @param [modules] the AngularJS modules to bootstrap for this application
+       * @param [config] optional extra AngularJS bootstrap configuration
+       */
     bootstrap(element$$1, modules = [], config /*angular.IAngularBootstrapConfig*/) {
         const INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
         // Create an ng1 module to bootstrap
@@ -1397,6 +1386,7 @@ class UpgradeModule {
                 // Initialize the ng1 $injector provider
                 setTempInjectorRef($injector);
                 this.injector.get($INJECTOR);
+                // Put the injector on the DOM, so that it can be "required"
                 // Put the injector on the DOM, so that it can be "required"
                 element(element$$1).data(controllerKey(INJECTOR_KEY), this.injector);
                 // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles

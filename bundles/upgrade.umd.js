@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.6-112e777
+ * @license Angular v5.0.0-beta.6-ca5aeba
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.6-112e777
+ * @license Angular v5.0.0-beta.6-ca5aeba
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,7 +33,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.6-112e777');
+var VERSION = new _angular_core.Version('5.0.0-beta.6-ca5aeba');
 
 /**
  * @fileoverview added by tsickle
@@ -161,7 +161,7 @@ var VERSION = new _angular_core.Version('5.0.0-beta.6-112e777');
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
-var angular = ({
+var angular = /** @type {?} */ ({
     bootstrap: noNg,
     module: noNg,
     element: noNg,
@@ -171,10 +171,10 @@ var angular = ({
 });
 try {
     if (window.hasOwnProperty('angular')) {
-        angular = ((window)).angular;
+        angular = (/** @type {?} */ (window)).angular;
     }
 }
-catch (e) {
+catch (/** @type {?} */ e) {
     // ignore in CJS mode.
 }
 /**
@@ -213,10 +213,7 @@ var element = function (e) { return angular.element(e); };
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
- */ var $COMPILE = '$compile';
+var $COMPILE = '$compile';
 var $CONTROLLER = '$controller';
 
 var $HTTP_BACKEND = '$httpBackend';
@@ -248,10 +245,6 @@ var REQUIRE_NG_MODEL = '?ngModel';
  * and attribute have the same identifier.
  */
 var PropertyBinding = (function () {
-    /**
-     * @param {?} prop
-     * @param {?} attr
-     */
     function PropertyBinding(prop, attr) {
         this.prop = prop;
         this.attr = attr;
@@ -260,7 +253,10 @@ var PropertyBinding = (function () {
     /**
      * @return {?}
      */
-    PropertyBinding.prototype.parseBinding = function () {
+    PropertyBinding.prototype.parseBinding = /**
+     * @return {?}
+     */
+    function () {
         this.bracketAttr = "[" + this.attr + "]";
         this.parenAttr = "(" + this.attr + ")";
         this.bracketParenAttr = "[(" + this.attr + ")]";
@@ -319,7 +315,7 @@ function directiveNormalize(name) {
  */
 function getComponentName(component) {
     // Return the name of the component or the first line of its stringified version.
-    return ((component)).overriddenName || component.name || component.toString().split('\n')[0];
+    return (/** @type {?} */ (component)).overriddenName || component.name || component.toString().split('\n')[0];
 }
 /**
  * @param {?} value
@@ -393,18 +389,6 @@ var INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 var DowngradeComponentAdapter = (function () {
-    /**
-     * @param {?} element
-     * @param {?} attrs
-     * @param {?} scope
-     * @param {?} ngModel
-     * @param {?} parentInjector
-     * @param {?} $injector
-     * @param {?} $compile
-     * @param {?} $parse
-     * @param {?} componentFactory
-     * @param {?} wrapCallback
-     */
     function DowngradeComponentAdapter(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
         this.element = element;
         this.attrs = attrs;
@@ -425,7 +409,10 @@ var DowngradeComponentAdapter = (function () {
     /**
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.compileContents = function () {
+    DowngradeComponentAdapter.prototype.compileContents = /**
+     * @return {?}
+     */
+    function () {
         var _this = this;
         var /** @type {?} */ compiledProjectableNodes = [];
         var /** @type {?} */ projectableNodes = this.groupProjectableNodes();
@@ -443,7 +430,11 @@ var DowngradeComponentAdapter = (function () {
      * @param {?} projectableNodes
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
+    DowngradeComponentAdapter.prototype.createComponent = /**
+     * @param {?} projectableNodes
+     * @return {?}
+     */
+    function (projectableNodes) {
         var /** @type {?} */ childInjector = _angular_core.Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
@@ -456,7 +447,12 @@ var DowngradeComponentAdapter = (function () {
      * @param {?=} propagateDigest
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.setupInputs = function (needsNgZone, propagateDigest) {
+    DowngradeComponentAdapter.prototype.setupInputs = /**
+     * @param {?} needsNgZone
+     * @param {?=} propagateDigest
+     * @return {?}
+     */
+    function (needsNgZone, propagateDigest) {
         var _this = this;
         if (propagateDigest === void 0) { propagateDigest = true; }
         var /** @type {?} */ attrs = this.attrs;
@@ -483,7 +479,7 @@ var DowngradeComponentAdapter = (function () {
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 var /** @type {?} */ unwatch_1 = this_1.componentScope.$watch(function () {
-                    ((unwatch_1))();
+                    /** @type {?} */ ((unwatch_1))();
                     unwatch_1 = null;
                     observeFn_1(attrs[input.attr]);
                 });
@@ -501,26 +497,28 @@ var DowngradeComponentAdapter = (function () {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var /** @type {?} */ watchFn = (function (prop) { return function (currValue, prevValue) {
-                    return _this.updateInput(prop, prevValue, currValue);
-                }; })(input.prop);
+                var /** @type {?} */ watchFn = (function (prop) {
+                    return function (currValue, prevValue) {
+                        return _this.updateInput(prop, prevValue, currValue);
+                    };
+                })(input.prop);
                 this_1.componentScope.$watch(expr, watchFn);
             }
         };
         var this_1 = this;
         for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
-            _loop_1(/** @type {?} */ i);
+            _loop_1(i);
         }
         // Invoke `ngOnChanges()` and Change Detection (when necessary)
         var /** @type {?} */ detectChanges = function () { return _this.changeDetector.detectChanges(); };
         var /** @type {?} */ prototype = this.componentFactory.componentType.prototype;
-        this.implementsOnChanges = !!(prototype && ((prototype)).ngOnChanges);
+        this.implementsOnChanges = !!(prototype && (/** @type {?} */ (prototype)).ngOnChanges);
         this.componentScope.$watch(function () { return _this.inputChangeCount; }, this.wrapCallback(function () {
             // Invoke `ngOnChanges()`
             if (_this.implementsOnChanges) {
                 var /** @type {?} */ inputChanges = _this.inputChanges;
                 _this.inputChanges = {};
-                ((_this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
+                (/** @type {?} */ (_this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
             }
             // If opted out of propagating digests, invoke change detection
             // when inputs change
@@ -540,7 +538,10 @@ var DowngradeComponentAdapter = (function () {
     /**
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.setupOutputs = function () {
+    DowngradeComponentAdapter.prototype.setupOutputs = /**
+     * @return {?}
+     */
+    function () {
         var _this = this;
         var /** @type {?} */ attrs = this.attrs;
         var /** @type {?} */ outputs = this.componentFactory.outputs || [];
@@ -570,10 +571,10 @@ var DowngradeComponentAdapter = (function () {
                 if (assignExpr && !setter_1) {
                     throw new Error("Expression '" + expr + "' is not assignable!");
                 }
-                var /** @type {?} */ emitter = (this_2.component[output.prop]);
+                var /** @type {?} */ emitter = /** @type {?} */ (this_2.component[output.prop]);
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ? function (v) { /** @type {?} */ return ((setter_1))(_this.scope, v); } :
+                        next: assignExpr ? function (v) { return /** @type {?} */ ((setter_1))(_this.scope, v); } :
                             function (v) { return getter_1(_this.scope, { '$event': v }); }
                     });
                 }
@@ -584,16 +585,20 @@ var DowngradeComponentAdapter = (function () {
         };
         var this_2 = this;
         for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
-            _loop_2(/** @type {?} */ j);
+            _loop_2(j);
         }
     };
     /**
      * @param {?} needsNgZone
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.registerCleanup = function (needsNgZone) {
+    DowngradeComponentAdapter.prototype.registerCleanup = /**
+     * @param {?} needsNgZone
+     * @return {?}
+     */
+    function (needsNgZone) {
         var _this = this;
-        ((this.element.on))('$destroy', function () {
+        /** @type {?} */ ((this.element.on))('$destroy', function () {
             _this.componentScope.$destroy();
             _this.componentRef.destroy();
             if (needsNgZone) {
@@ -604,14 +609,23 @@ var DowngradeComponentAdapter = (function () {
     /**
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
+    DowngradeComponentAdapter.prototype.getInjector = /**
+     * @return {?}
+     */
+    function () { return this.componentRef.injector; };
     /**
      * @param {?} prop
      * @param {?} prevValue
      * @param {?} currValue
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
+    DowngradeComponentAdapter.prototype.updateInput = /**
+     * @param {?} prop
+     * @param {?} prevValue
+     * @param {?} currValue
+     * @return {?}
+     */
+    function (prop, prevValue, currValue) {
         if (this.implementsOnChanges) {
             this.inputChanges[prop] = new _angular_core.SimpleChange(prevValue, currValue, prevValue === currValue);
         }
@@ -621,7 +635,10 @@ var DowngradeComponentAdapter = (function () {
     /**
      * @return {?}
      */
-    DowngradeComponentAdapter.prototype.groupProjectableNodes = function () {
+    DowngradeComponentAdapter.prototype.groupProjectableNodes = /**
+     * @return {?}
+     */
+    function () {
         var /** @type {?} */ ngContentSelectors = this.componentFactory.ngContentSelectors;
         return groupNodesBySelector(ngContentSelectors, /** @type {?} */ ((this.element.contents))());
     };
@@ -681,7 +698,7 @@ var _matches;
  */
 function matchesSelector(el, selector) {
     if (!_matches) {
-        var /** @type {?} */ elProto = (Element.prototype);
+        var /** @type {?} */ elProto = /** @type {?} */ (Element.prototype);
         _matches = elProto.matches || elProto.matchesSelector || elProto.mozMatchesSelector ||
             elProto.msMatchesSelector || elProto.oMatchesSelector || elProto.webkitMatchesSelector;
     }
@@ -756,13 +773,13 @@ function downgradeComponent(info) {
                 var /** @type {?} */ parentInjector = required[0];
                 var /** @type {?} */ ranAsync = false;
                 if (!parentInjector) {
-                    var /** @type {?} */ lazyModuleRef = ($injector.get(LAZY_MODULE_REF));
+                    var /** @type {?} */ lazyModuleRef = /** @type {?} */ ($injector.get(LAZY_MODULE_REF));
                     needsNgZone = lazyModuleRef.needsNgZone;
-                    parentInjector = lazyModuleRef.injector || (lazyModuleRef.promise);
+                    parentInjector = lazyModuleRef.injector || /** @type {?} */ (lazyModuleRef.promise);
                 }
                 var /** @type {?} */ doDowngrade = function (injector) {
                     var /** @type {?} */ componentFactoryResolver = injector.get(_angular_core.ComponentFactoryResolver);
-                    var /** @type {?} */ componentFactory = ((componentFactoryResolver.resolveComponentFactory(info.component)));
+                    var /** @type {?} */ componentFactory = /** @type {?} */ ((componentFactoryResolver.resolveComponentFactory(info.component)));
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
@@ -783,9 +800,11 @@ function downgradeComponent(info) {
                 var /** @type {?} */ downgradeFn = !needsNgZone ? doDowngrade : function (injector) {
                     if (!ngZone) {
                         ngZone = injector.get(_angular_core.NgZone);
-                        wrapCallback = function (cb) { return function () {
-                            return _angular_core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
-                        }; };
+                        wrapCallback = function (cb) {
+                            return function () {
+                                return _angular_core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
+                            };
+                        };
                     }
                     wrapCallback(function () { return doDowngrade(injector); })();
                 };
@@ -808,14 +827,11 @@ function downgradeComponent(info) {
  * to preserve the synchronous nature of Angular 1's $compile.
  */
 var ParentInjectorPromise$1 = (function () {
-    /**
-     * @param {?} element
-     */
     function ParentInjectorPromise(element) {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
-        ((
+        /** @type {?} */ ((
         // Store the promise on the element.
         element.data))(this.injectorKey, this);
     }
@@ -823,7 +839,11 @@ var ParentInjectorPromise$1 = (function () {
      * @param {?} callback
      * @return {?}
      */
-    ParentInjectorPromise.prototype.then = function (callback) {
+    ParentInjectorPromise.prototype.then = /**
+     * @param {?} callback
+     * @return {?}
+     */
+    function (callback) {
         if (this.injector) {
             callback(this.injector);
         }
@@ -835,13 +855,17 @@ var ParentInjectorPromise$1 = (function () {
      * @param {?} injector
      * @return {?}
      */
-    ParentInjectorPromise.prototype.resolve = function (injector) {
+    ParentInjectorPromise.prototype.resolve = /**
+     * @param {?} injector
+     * @return {?}
+     */
+    function (injector) {
         this.injector = injector; /** @type {?} */
         ((
         // Store the real injector on the element.
         this.element.data))(this.injectorKey, injector);
         // Release the element to prevent memory leaks.
-        this.element = ((null));
+        this.element = /** @type {?} */ ((null));
         // Run the queued callbacks.
         this.callbacks.forEach(function (callback) { return callback(injector); });
         this.callbacks.length = 0;
@@ -854,7 +878,7 @@ var ParentInjectorPromise$1 = (function () {
  * @return {?}
  */
 function isThenable(obj) {
-    return isFunction(((obj)).then);
+    return isFunction((/** @type {?} */ (obj)).then);
 }
 
 /**
@@ -907,7 +931,7 @@ function isThenable(obj) {
  */
 function downgradeInjectable(token) {
     var /** @type {?} */ factory = function (i) { return i.get(token); };
-    ((factory))['$inject'] = [INJECTOR_KEY];
+    (/** @type {?} */ (factory))['$inject'] = [INJECTOR_KEY];
     return factory;
 }
 
@@ -926,12 +950,6 @@ var REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
  */
 
 var UpgradeHelper = (function () {
-    /**
-     * @param {?} injector
-     * @param {?} name
-     * @param {?} elementRef
-     * @param {?=} directive
-     */
     function UpgradeHelper(injector, name, elementRef, directive) {
         this.injector = injector;
         this.name = name;
@@ -947,7 +965,12 @@ var UpgradeHelper = (function () {
      * @param {?} name
      * @return {?}
      */
-    UpgradeHelper.getDirective = function ($injector, name) {
+    UpgradeHelper.getDirective = /**
+     * @param {?} $injector
+     * @param {?} name
+     * @return {?}
+     */
+    function ($injector, name) {
         var /** @type {?} */ directives = $injector.get(name + 'Directive');
         if (directives.length > 1) {
             throw new Error("Only support single directive definition for: " + name);
@@ -969,13 +992,19 @@ var UpgradeHelper = (function () {
      * @param {?=} fetchRemoteTemplate
      * @return {?}
      */
-    UpgradeHelper.getTemplate = function ($injector, directive, fetchRemoteTemplate) {
+    UpgradeHelper.getTemplate = /**
+     * @param {?} $injector
+     * @param {?} directive
+     * @param {?=} fetchRemoteTemplate
+     * @return {?}
+     */
+    function ($injector, directive, fetchRemoteTemplate) {
         if (fetchRemoteTemplate === void 0) { fetchRemoteTemplate = false; }
         if (directive.template !== undefined) {
             return getOrCall(directive.template);
         }
         else if (directive.templateUrl) {
-            var /** @type {?} */ $templateCache_1 = ($injector.get($TEMPLATE_CACHE));
+            var /** @type {?} */ $templateCache_1 = /** @type {?} */ ($injector.get($TEMPLATE_CACHE));
             var /** @type {?} */ url_1 = getOrCall(directive.templateUrl);
             var /** @type {?} */ template = $templateCache_1.get(url_1);
             if (template !== undefined) {
@@ -985,7 +1014,7 @@ var UpgradeHelper = (function () {
                 throw new Error('loading directive templates asynchronously is not supported');
             }
             return new Promise(function (resolve, reject) {
-                var /** @type {?} */ $httpBackend = ($injector.get($HTTP_BACKEND));
+                var /** @type {?} */ $httpBackend = /** @type {?} */ ($injector.get($HTTP_BACKEND));
                 $httpBackend('GET', url_1, null, function (status, response) {
                     if (status === 200) {
                         resolve($templateCache_1.put(url_1, response));
@@ -1005,7 +1034,12 @@ var UpgradeHelper = (function () {
      * @param {?} $scope
      * @return {?}
      */
-    UpgradeHelper.prototype.buildController = function (controllerType, $scope) {
+    UpgradeHelper.prototype.buildController = /**
+     * @param {?} controllerType
+     * @param {?} $scope
+     * @return {?}
+     */
+    function (controllerType, $scope) {
         // TODO: Document that we do not pre-assign bindings on the controller instance.
         // Quoted properties below so that this code can be optimized with Closure Compiler.
         var /** @type {?} */ locals = { '$scope': $scope, '$element': this.$element };
@@ -1017,21 +1051,28 @@ var UpgradeHelper = (function () {
      * @param {?=} template
      * @return {?}
      */
-    UpgradeHelper.prototype.compileTemplate = function (template) {
+    UpgradeHelper.prototype.compileTemplate = /**
+     * @param {?=} template
+     * @return {?}
+     */
+    function (template) {
         if (template === undefined) {
-            template = (UpgradeHelper.getTemplate(this.$injector, this.directive));
+            template = /** @type {?} */ (UpgradeHelper.getTemplate(this.$injector, this.directive));
         }
         return this.compileHtml(template);
     };
     /**
      * @return {?}
      */
-    UpgradeHelper.prototype.prepareTransclusion = function () {
+    UpgradeHelper.prototype.prepareTransclusion = /**
+     * @return {?}
+     */
+    function () {
         var _this = this;
         var /** @type {?} */ transclude = this.directive.transclude;
         var /** @type {?} */ contentChildNodes = this.extractChildNodes();
         var /** @type {?} */ $template = contentChildNodes;
-        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttach) { /** @type {?} */ return ((cloneAttach))($template, scope); };
+        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttach) { return /** @type {?} */ ((cloneAttach))($template, scope); };
         if (transclude) {
             var /** @type {?} */ slots_1 = Object.create(null);
             if (typeof transclude === 'object') {
@@ -1067,7 +1108,7 @@ var UpgradeHelper = (function () {
                 });
                 Object.keys(slots_1).filter(function (slotName) { return slots_1[slotName]; }).forEach(function (slotName) {
                     var /** @type {?} */ nodes = slots_1[slotName];
-                    slots_1[slotName] = function (scope, cloneAttach) { /** @type {?} */ return ((cloneAttach))(nodes, scope); };
+                    slots_1[slotName] = function (scope, cloneAttach) { return /** @type {?} */ ((cloneAttach))(nodes, scope); };
                 });
             }
             // Attach `$$slots` to default slot transclude fn.
@@ -1094,11 +1135,15 @@ var UpgradeHelper = (function () {
      * @param {?} controllerInstance
      * @return {?}
      */
-    UpgradeHelper.prototype.resolveAndBindRequiredControllers = function (controllerInstance) {
+    UpgradeHelper.prototype.resolveAndBindRequiredControllers = /**
+     * @param {?} controllerInstance
+     * @return {?}
+     */
+    function (controllerInstance) {
         var /** @type {?} */ directiveRequire = this.getDirectiveRequire();
         var /** @type {?} */ requiredControllers = this.resolveRequire(directiveRequire);
         if (controllerInstance && this.directive.bindToController && isMap(directiveRequire)) {
-            var /** @type {?} */ requiredControllersMap_1 = (requiredControllers);
+            var /** @type {?} */ requiredControllersMap_1 = /** @type {?} */ (requiredControllers);
             Object.keys(requiredControllersMap_1).forEach(function (key) {
                 controllerInstance[key] = requiredControllersMap_1[key];
             });
@@ -1109,14 +1154,21 @@ var UpgradeHelper = (function () {
      * @param {?} html
      * @return {?}
      */
-    UpgradeHelper.prototype.compileHtml = function (html) {
+    UpgradeHelper.prototype.compileHtml = /**
+     * @param {?} html
+     * @return {?}
+     */
+    function (html) {
         this.element.innerHTML = html;
         return this.$compile(this.element.childNodes);
     };
     /**
      * @return {?}
      */
-    UpgradeHelper.prototype.extractChildNodes = function () {
+    UpgradeHelper.prototype.extractChildNodes = /**
+     * @return {?}
+     */
+    function () {
         var /** @type {?} */ childNodes = [];
         var /** @type {?} */ childNode;
         while (childNode = this.element.firstChild) {
@@ -1128,12 +1180,15 @@ var UpgradeHelper = (function () {
     /**
      * @return {?}
      */
-    UpgradeHelper.prototype.getDirectiveRequire = function () {
-        var /** @type {?} */ require = this.directive.require || (((this.directive.controller && this.directive.name)));
+    UpgradeHelper.prototype.getDirectiveRequire = /**
+     * @return {?}
+     */
+    function () {
+        var /** @type {?} */ require = this.directive.require || /** @type {?} */ (((this.directive.controller && this.directive.name)));
         if (isMap(require)) {
             Object.keys(require).forEach(function (key) {
                 var /** @type {?} */ value = require[key];
-                var /** @type {?} */ match = ((value.match(REQUIRE_PREFIX_RE)));
+                var /** @type {?} */ match = /** @type {?} */ ((value.match(REQUIRE_PREFIX_RE)));
                 var /** @type {?} */ name = value.substring(match[0].length);
                 if (!name) {
                     require[key] = match[0] + key;
@@ -1147,7 +1202,12 @@ var UpgradeHelper = (function () {
      * @param {?=} controllerInstance
      * @return {?}
      */
-    UpgradeHelper.prototype.resolveRequire = function (require, controllerInstance) {
+    UpgradeHelper.prototype.resolveRequire = /**
+     * @param {?} require
+     * @param {?=} controllerInstance
+     * @return {?}
+     */
+    function (require, controllerInstance) {
         var _this = this;
         if (!require) {
             return null;
@@ -1157,19 +1217,19 @@ var UpgradeHelper = (function () {
         }
         else if (typeof require === 'object') {
             var /** @type {?} */ value_1 = {};
-            Object.keys(require).forEach(function (key) { return value_1[key] = ((_this.resolveRequire(require[key]))); });
+            Object.keys(require).forEach(function (key) { return value_1[key] = /** @type {?} */ ((_this.resolveRequire(require[key]))); });
             return value_1;
         }
         else if (typeof require === 'string') {
-            var /** @type {?} */ match = ((require.match(REQUIRE_PREFIX_RE)));
+            var /** @type {?} */ match = /** @type {?} */ ((require.match(REQUIRE_PREFIX_RE)));
             var /** @type {?} */ inheritType = match[1] || match[3];
             var /** @type {?} */ name_1 = require.substring(match[0].length);
             var /** @type {?} */ isOptional = !!match[2];
             var /** @type {?} */ searchParents = !!inheritType;
             var /** @type {?} */ startOnParent = inheritType === '^^';
             var /** @type {?} */ ctrlKey = controllerKey(name_1);
-            var /** @type {?} */ elem = startOnParent ? ((this.$element.parent))() : this.$element;
-            var /** @type {?} */ value = searchParents ? ((elem.inheritedData))(ctrlKey) : ((elem.data))(ctrlKey);
+            var /** @type {?} */ elem = startOnParent ? /** @type {?} */ ((this.$element.parent))() : this.$element;
+            var /** @type {?} */ value = searchParents ? /** @type {?} */ ((elem.inheritedData))(ctrlKey) : /** @type {?} */ ((elem.data))(ctrlKey);
             if (!value && !isOptional) {
                 throw new Error("Unable to find required '" + require + "' in upgraded directive '" + this.name + "'.");
             }
@@ -1223,9 +1283,6 @@ var INITIAL_VALUE$1 = {
 };
 var NOT_SUPPORTED = 'NOT_SUPPORTED';
 var UpgradeNg1ComponentAdapterBuilder = (function () {
-    /**
-     * @param {?} name
-     */
     function UpgradeNg1ComponentAdapterBuilder(name) {
         this.name = name;
         this.inputs = [];
@@ -1238,60 +1295,78 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
         this.directive = null;
         var /** @type {?} */ selector = name.replace(CAMEL_CASE, function (all, next) { return '-' + next.toLowerCase(); });
         var /** @type {?} */ self = this;
+        // Note: There is a bug in TS 2.4 that prevents us from
+        // inlining this into @Directive
+        // TODO(tbosch): find or file a bug against TypeScript for this.
+        var /** @type {?} */ directive = { selector: selector, inputs: this.inputsRename, outputs: this.outputsRename };
         var MyClass = (function () {
-            /**
-             * @param {?} scope
-             * @param {?} injector
-             * @param {?} elementRef
-             */
             function MyClass(scope, injector, elementRef) {
                 var /** @type {?} */ helper = new UpgradeHelper(injector, name, elementRef, this.directive);
-                return (new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap));
+                return /** @type {?} */ (new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap));
             }
             /**
              * @return {?}
              */
-            MyClass.prototype.ngOnInit = function () {
+            MyClass.prototype.ngOnInit = /**
+             * @return {?}
+             */
+            function () {
+                /* needs to be here for ng2 to properly detect it */
             };
             /**
              * @return {?}
              */
-            MyClass.prototype.ngOnChanges = function () {
+            MyClass.prototype.ngOnChanges = /**
+             * @return {?}
+             */
+            function () {
+                /* needs to be here for ng2 to properly detect it */
             };
             /**
              * @return {?}
              */
-            MyClass.prototype.ngDoCheck = function () {
+            MyClass.prototype.ngDoCheck = /**
+             * @return {?}
+             */
+            function () {
+                /* needs to be here for ng2 to properly detect it */
             };
             /**
              * @return {?}
              */
-            MyClass.prototype.ngOnDestroy = function () {
+            MyClass.prototype.ngOnDestroy = /**
+             * @return {?}
+             */
+            function () {
+                /* needs to be here for ng2 to properly detect it */
             };
+            MyClass.decorators = [
+                { type: _angular_core.Directive, args: [directive,] },
+            ];
+            /** @nocollapse */
+            MyClass.ctorParameters = function () { return [
+                { type: undefined, decorators: [{ type: _angular_core.Inject, args: [$SCOPE,] },] },
+                { type: _angular_core.Injector, },
+                { type: _angular_core.ElementRef, },
+            ]; };
             return MyClass;
         }());
-        MyClass.decorators = [
-            { type: _angular_core.Directive, args: [{ selector: selector, inputs: this.inputsRename, outputs: this.outputsRename },] },
-        ];
-        /** @nocollapse */
-        MyClass.ctorParameters = function () { return [
-            { type: undefined, decorators: [{ type: _angular_core.Inject, args: [$SCOPE,] },] },
-            { type: _angular_core.Injector, },
-            { type: _angular_core.ElementRef, },
-        ]; };
         
         this.type = MyClass;
     }
     /**
      * @return {?}
      */
-    UpgradeNg1ComponentAdapterBuilder.prototype.extractBindings = function () {
+    UpgradeNg1ComponentAdapterBuilder.prototype.extractBindings = /**
+     * @return {?}
+     */
+    function () {
         var _this = this;
-        var /** @type {?} */ btcIsObject = typeof ((this.directive)).bindToController === 'object';
+        var /** @type {?} */ btcIsObject = typeof /** @type {?} */ ((this.directive)).bindToController === 'object';
         if (btcIsObject && Object.keys(/** @type {?} */ ((this.directive)).scope).length) {
             throw new Error("Binding definitions on scope and controller at the same time are not supported.");
         }
-        var /** @type {?} */ context = (btcIsObject) ? ((this.directive)).bindToController : ((this.directive)).scope;
+        var /** @type {?} */ context = (btcIsObject) ? /** @type {?} */ ((this.directive)).bindToController : /** @type {?} */ ((this.directive)).scope;
         if (typeof context == 'object') {
             Object.keys(context).forEach(function (propName) {
                 var /** @type {?} */ definition = context[propName];
@@ -1335,11 +1410,20 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
     };
     /**
      * Upgrade ng1 components into Angular.
+     */
+    /**
+     * Upgrade ng1 components into Angular.
      * @param {?} exportedComponents
      * @param {?} $injector
      * @return {?}
      */
-    UpgradeNg1ComponentAdapterBuilder.resolve = function (exportedComponents, $injector) {
+    UpgradeNg1ComponentAdapterBuilder.resolve = /**
+     * Upgrade ng1 components into Angular.
+     * @param {?} exportedComponents
+     * @param {?} $injector
+     * @return {?}
+     */
+    function (exportedComponents, $injector) {
         var /** @type {?} */ promises = Object.keys(exportedComponents).map(function (name) {
             var /** @type {?} */ exportedComponent = exportedComponents[name];
             exportedComponent.directive = UpgradeHelper.getDirective($injector, name);
@@ -1353,16 +1437,6 @@ var UpgradeNg1ComponentAdapterBuilder = (function () {
     return UpgradeNg1ComponentAdapterBuilder;
 }());
 var UpgradeNg1ComponentAdapter = (function () {
-    /**
-     * @param {?} helper
-     * @param {?} scope
-     * @param {?} template
-     * @param {?} inputs
-     * @param {?} outputs
-     * @param {?} propOuts
-     * @param {?} checkProperties
-     * @param {?} propertyMap
-     */
     function UpgradeNg1ComponentAdapter(helper, scope, template, inputs, outputs, propOuts, checkProperties, propertyMap) {
         this.helper = helper;
         this.template = template;
@@ -1388,10 +1462,10 @@ var UpgradeNg1ComponentAdapter = (function () {
             this.destinationObj = this.componentScope;
         }
         for (var /** @type {?} */ i = 0; i < inputs.length; i++) {
-            ((this))[inputs[i]] = null;
+            (/** @type {?} */ (this))[inputs[i]] = null;
         }
         for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
-            var /** @type {?} */ emitter = ((this))[outputs[j]] = new _angular_core.EventEmitter();
+            var /** @type {?} */ emitter = (/** @type {?} */ (this))[outputs[j]] = new _angular_core.EventEmitter();
             this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
         }
         for (var /** @type {?} */ k = 0; k < propOuts.length; k++) {
@@ -1401,7 +1475,10 @@ var UpgradeNg1ComponentAdapter = (function () {
     /**
      * @return {?}
      */
-    UpgradeNg1ComponentAdapter.prototype.ngOnInit = function () {
+    UpgradeNg1ComponentAdapter.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
         // Collect contents, insert and compile template
         var /** @type {?} */ attachChildNodes = this.helper.prepareTransclusion();
         var /** @type {?} */ linkFn = this.helper.compileTemplate(this.template);
@@ -1419,8 +1496,8 @@ var UpgradeNg1ComponentAdapter = (function () {
         }
         // Linking
         var /** @type {?} */ link = this.directive.link;
-        var /** @type {?} */ preLink = (typeof link == 'object') && ((link)).pre;
-        var /** @type {?} */ postLink = (typeof link == 'object') ? ((link)).post : link;
+        var /** @type {?} */ preLink = (typeof link == 'object') && (/** @type {?} */ (link)).pre;
+        var /** @type {?} */ postLink = (typeof link == 'object') ? (/** @type {?} */ (link)).post : link;
         var /** @type {?} */ attrs = NOT_SUPPORTED;
         var /** @type {?} */ transcludeFn = NOT_SUPPORTED;
         if (preLink) {
@@ -1439,7 +1516,11 @@ var UpgradeNg1ComponentAdapter = (function () {
      * @param {?} changes
      * @return {?}
      */
-    UpgradeNg1ComponentAdapter.prototype.ngOnChanges = function (changes) {
+    UpgradeNg1ComponentAdapter.prototype.ngOnChanges = /**
+     * @param {?} changes
+     * @return {?}
+     */
+    function (changes) {
         var _this = this;
         var /** @type {?} */ ng1Changes = {};
         Object.keys(changes).forEach(function (name) {
@@ -1448,23 +1529,26 @@ var UpgradeNg1ComponentAdapter = (function () {
             ng1Changes[_this.propertyMap[name]] = change;
         });
         if (isFunction(/** @type {?} */ ((this.destinationObj)).$onChanges)) {
-            ((((this.destinationObj)).$onChanges))(ng1Changes);
+            /** @type {?} */ ((/** @type {?} */ ((this.destinationObj)).$onChanges))(ng1Changes);
         }
     };
     /**
      * @return {?}
      */
-    UpgradeNg1ComponentAdapter.prototype.ngDoCheck = function () {
+    UpgradeNg1ComponentAdapter.prototype.ngDoCheck = /**
+     * @return {?}
+     */
+    function () {
         var _this = this;
         var /** @type {?} */ destinationObj = this.destinationObj;
         var /** @type {?} */ lastValues = this.checkLastValues;
         var /** @type {?} */ checkProperties = this.checkProperties;
         var /** @type {?} */ propOuts = this.propOuts;
         checkProperties.forEach(function (propName, i) {
-            var /** @type {?} */ value = ((destinationObj))[propName];
+            var /** @type {?} */ value = /** @type {?} */ ((destinationObj))[propName];
             var /** @type {?} */ last = lastValues[i];
             if (!strictEquals(last, value)) {
-                var /** @type {?} */ eventEmitter = ((_this))[propOuts[i]];
+                var /** @type {?} */ eventEmitter = (/** @type {?} */ (_this))[propOuts[i]];
                 eventEmitter.emit(lastValues[i] = value);
             }
         });
@@ -1475,7 +1559,10 @@ var UpgradeNg1ComponentAdapter = (function () {
     /**
      * @return {?}
      */
-    UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () {
+    UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
         if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
@@ -1485,8 +1572,13 @@ var UpgradeNg1ComponentAdapter = (function () {
      * @param {?} value
      * @return {?}
      */
-    UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
-        ((this.destinationObj))[this.propertyMap[name]] = value;
+    UpgradeNg1ComponentAdapter.prototype.setComponentProperty = /**
+     * @param {?} name
+     * @param {?} value
+     * @return {?}
+     */
+    function (name, value) {
+        /** @type {?} */ ((this.destinationObj))[this.propertyMap[name]] = value;
     };
     return UpgradeNg1ComponentAdapter;
 }());
@@ -1584,10 +1676,6 @@ var upgradeCount = 0;
  * [Ahead-of-Time compilation](guide/aot-compiler).
  */
 var UpgradeAdapter = (function () {
-    /**
-     * @param {?} ng2AppModule
-     * @param {?=} compilerOptions
-     */
     function UpgradeAdapter(ng2AppModule, compilerOptions) {
         this.ng2AppModule = ng2AppModule;
         this.compilerOptions = compilerOptions;
@@ -1608,6 +1696,65 @@ var UpgradeAdapter = (function () {
             throw new Error('UpgradeAdapter cannot be instantiated without an NgModule of the Angular app.');
         }
     }
+    /**
+     * Allows Angular Component to be used from AngularJS.
+     *
+     * Use `downgradeNg2Component` to create an AngularJS Directive Definition Factory from
+     * Angular Component. The adapter will bootstrap Angular component from within the
+     * AngularJS template.
+     *
+     * ## Mental Model
+     *
+     * 1. The component is instantiated by being listed in AngularJS template. This means that the
+     *    host element is controlled by AngularJS, but the component's view will be controlled by
+     *    Angular.
+     * 2. Even thought the component is instantiated in AngularJS, it will be using Angular
+     *    syntax. This has to be done, this way because we must follow Angular components do not
+     *    declare how the attributes should be interpreted.
+     * 3. `ng-model` is controlled by AngularJS and communicates with the downgraded Angular component
+     *    by way of the `ControlValueAccessor` interface from @angular/forms. Only components that
+     *    implement this interface are eligible.
+     *
+     * ## Supported Features
+     *
+     * - Bindings:
+     *   - Attribute: `<comp name="World">`
+     *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
+     *   - Expression:  `<comp [name]="username">`
+     *   - Event:  `<comp (close)="doSomething()">`
+     *   - ng-model: `<comp ng-model="name">`
+     * - Content projection: yes
+     *
+     * ### Example
+     *
+     * ```
+     * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
+     * const module = angular.module('myExample', []);
+     * module.directive('greet', adapter.downgradeNg2Component(Greeter));
+     *
+     * @Component({
+     *   selector: 'greet',
+     *   template: '{{salutation}} {{name}}! - <ng-content></ng-content>'
+     * })
+     * class Greeter {
+     *   @Input() salutation: string;
+     *   @Input() name: string;
+     * }
+     *
+     * @NgModule({
+     *   declarations: [Greeter],
+     *   imports: [BrowserModule]
+     * })
+     * class MyNg2Module {}
+     *
+     * document.body.innerHTML =
+     *   'ng1 template: <greet salutation="Hello" [name]="world">text</greet>';
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready(function() {
+     *   expect(document.body.textContent).toEqual("ng1 template: Hello world! - text");
+     * });
+     * ```
+     */
     /**
      * Allows Angular Component to be used from AngularJS.
      *
@@ -1669,10 +1816,148 @@ var UpgradeAdapter = (function () {
      * @param {?} component
      * @return {?}
      */
-    UpgradeAdapter.prototype.downgradeNg2Component = function (component) {
+    UpgradeAdapter.prototype.downgradeNg2Component = /**
+     * Allows Angular Component to be used from AngularJS.
+     *
+     * Use `downgradeNg2Component` to create an AngularJS Directive Definition Factory from
+     * Angular Component. The adapter will bootstrap Angular component from within the
+     * AngularJS template.
+     *
+     * ## Mental Model
+     *
+     * 1. The component is instantiated by being listed in AngularJS template. This means that the
+     *    host element is controlled by AngularJS, but the component's view will be controlled by
+     *    Angular.
+     * 2. Even thought the component is instantiated in AngularJS, it will be using Angular
+     *    syntax. This has to be done, this way because we must follow Angular components do not
+     *    declare how the attributes should be interpreted.
+     * 3. `ng-model` is controlled by AngularJS and communicates with the downgraded Angular component
+     *    by way of the `ControlValueAccessor` interface from \@angular/forms. Only components that
+     *    implement this interface are eligible.
+     *
+     * ## Supported Features
+     *
+     * - Bindings:
+     *   - Attribute: `<comp name="World">`
+     *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
+     *   - Expression:  `<comp [name]="username">`
+     *   - Event:  `<comp (close)="doSomething()">`
+     *   - ng-model: `<comp ng-model="name">`
+     * - Content projection: yes
+     *
+     * ### Example
+     *
+     * ```
+     * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
+     * const module = angular.module('myExample', []);
+     * module.directive('greet', adapter.downgradeNg2Component(Greeter));
+     *
+     * \@Component({
+     *   selector: 'greet',
+     *   template: '{{salutation}} {{name}}! - <ng-content></ng-content>'
+     * })
+     * class Greeter {
+     *   \@Input() salutation: string;
+     *   \@Input() name: string;
+     * }
+     *
+     * \@NgModule({
+     *   declarations: [Greeter],
+     *   imports: [BrowserModule]
+     * })
+     * class MyNg2Module {}
+     *
+     * document.body.innerHTML =
+     *   'ng1 template: <greet salutation="Hello" [name]="world">text</greet>';
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready(function() {
+     *   expect(document.body.textContent).toEqual("ng1 template: Hello world! - text");
+     * });
+     * ```
+     * @param {?} component
+     * @return {?}
+     */
+    function (component) {
         this.downgradedComponents.push(component);
         return downgradeComponent({ component: component });
     };
+    /**
+     * Allows AngularJS Component to be used from Angular.
+     *
+     * Use `upgradeNg1Component` to create an Angular component from AngularJS Component
+     * directive. The adapter will bootstrap AngularJS component from within the Angular
+     * template.
+     *
+     * ## Mental Model
+     *
+     * 1. The component is instantiated by being listed in Angular template. This means that the
+     *    host element is controlled by Angular, but the component's view will be controlled by
+     *    AngularJS.
+     *
+     * ## Supported Features
+     *
+     * - Bindings:
+     *   - Attribute: `<comp name="World">`
+     *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
+     *   - Expression:  `<comp [name]="username">`
+     *   - Event:  `<comp (close)="doSomething()">`
+     * - Transclusion: yes
+     * - Only some of the features of
+     *   [Directive Definition Object](https://docs.angularjs.org/api/ng/service/$compile) are
+     *   supported:
+     *   - `compile`: not supported because the host element is owned by Angular, which does
+     *     not allow modifying DOM structure during compilation.
+     *   - `controller`: supported. (NOTE: injection of `$attrs` and `$transclude` is not supported.)
+     *   - `controllerAs`: supported.
+     *   - `bindToController`: supported.
+     *   - `link`: supported. (NOTE: only pre-link function is supported.)
+     *   - `name`: supported.
+     *   - `priority`: ignored.
+     *   - `replace`: not supported.
+     *   - `require`: supported.
+     *   - `restrict`: must be set to 'E'.
+     *   - `scope`: supported.
+     *   - `template`: supported.
+     *   - `templateUrl`: supported.
+     *   - `terminal`: ignored.
+     *   - `transclude`: supported.
+     *
+     *
+     * ### Example
+     *
+     * ```
+     * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
+     * const module = angular.module('myExample', []);
+     *
+     * module.directive('greet', function() {
+     *   return {
+     *     scope: {salutation: '=', name: '=' },
+     *     template: '{{salutation}} {{name}}! - <span ng-transclude></span>'
+     *   };
+     * });
+     *
+     * module.directive('ng2', adapter.downgradeNg2Component(Ng2Component));
+     *
+     * @Component({
+     *   selector: 'ng2',
+     *   template: 'ng2 template: <greet salutation="Hello" [name]="world">text</greet>'
+     * })
+     * class Ng2Component {
+     * }
+     *
+     * @NgModule({
+     *   declarations: [Ng2Component, adapter.upgradeNg1Component('greet')],
+     *   imports: [BrowserModule]
+     * })
+     * class MyNg2Module {}
+     *
+     * document.body.innerHTML = '<ng2></ng2>';
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready(function() {
+     *   expect(document.body.textContent).toEqual("ng2 template: Hello world! - text");
+     * });
+     * ```
+     */
     /**
      * Allows AngularJS Component to be used from Angular.
      *
@@ -1752,8 +2037,87 @@ var UpgradeAdapter = (function () {
      * @param {?} name
      * @return {?}
      */
-    UpgradeAdapter.prototype.upgradeNg1Component = function (name) {
-        if (((this.ng1ComponentsToBeUpgraded)).hasOwnProperty(name)) {
+    UpgradeAdapter.prototype.upgradeNg1Component = /**
+     * Allows AngularJS Component to be used from Angular.
+     *
+     * Use `upgradeNg1Component` to create an Angular component from AngularJS Component
+     * directive. The adapter will bootstrap AngularJS component from within the Angular
+     * template.
+     *
+     * ## Mental Model
+     *
+     * 1. The component is instantiated by being listed in Angular template. This means that the
+     *    host element is controlled by Angular, but the component's view will be controlled by
+     *    AngularJS.
+     *
+     * ## Supported Features
+     *
+     * - Bindings:
+     *   - Attribute: `<comp name="World">`
+     *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
+     *   - Expression:  `<comp [name]="username">`
+     *   - Event:  `<comp (close)="doSomething()">`
+     * - Transclusion: yes
+     * - Only some of the features of
+     *   [Directive Definition Object](https://docs.angularjs.org/api/ng/service/$compile) are
+     *   supported:
+     *   - `compile`: not supported because the host element is owned by Angular, which does
+     *     not allow modifying DOM structure during compilation.
+     *   - `controller`: supported. (NOTE: injection of `$attrs` and `$transclude` is not supported.)
+     *   - `controllerAs`: supported.
+     *   - `bindToController`: supported.
+     *   - `link`: supported. (NOTE: only pre-link function is supported.)
+     *   - `name`: supported.
+     *   - `priority`: ignored.
+     *   - `replace`: not supported.
+     *   - `require`: supported.
+     *   - `restrict`: must be set to 'E'.
+     *   - `scope`: supported.
+     *   - `template`: supported.
+     *   - `templateUrl`: supported.
+     *   - `terminal`: ignored.
+     *   - `transclude`: supported.
+     *
+     *
+     * ### Example
+     *
+     * ```
+     * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
+     * const module = angular.module('myExample', []);
+     *
+     * module.directive('greet', function() {
+     *   return {
+     *     scope: {salutation: '=', name: '=' },
+     *     template: '{{salutation}} {{name}}! - <span ng-transclude></span>'
+     *   };
+     * });
+     *
+     * module.directive('ng2', adapter.downgradeNg2Component(Ng2Component));
+     *
+     * \@Component({
+     *   selector: 'ng2',
+     *   template: 'ng2 template: <greet salutation="Hello" [name]="world">text</greet>'
+     * })
+     * class Ng2Component {
+     * }
+     *
+     * \@NgModule({
+     *   declarations: [Ng2Component, adapter.upgradeNg1Component('greet')],
+     *   imports: [BrowserModule]
+     * })
+     * class MyNg2Module {}
+     *
+     * document.body.innerHTML = '<ng2></ng2>';
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready(function() {
+     *   expect(document.body.textContent).toEqual("ng2 template: Hello world! - text");
+     * });
+     * ```
+     * @param {?} name
+     * @return {?}
+     */
+    function (name) {
+        if ((/** @type {?} */ (this.ng1ComponentsToBeUpgraded)).hasOwnProperty(name)) {
             return this.ng1ComponentsToBeUpgraded[name].type;
         }
         else {
@@ -1798,22 +2162,148 @@ var UpgradeAdapter = (function () {
      *
      * ```
      *
+     * @param modules any AngularJS modules that the upgrade module should depend upon
+     * @returns an {@link UpgradeAdapterRef}, which lets you register a `ready()` callback to
+     * run assertions once the Angular components are ready to test through AngularJS.
+     */
+    /**
+     * Registers the adapter's AngularJS upgrade module for unit testing in AngularJS.
+     * Use this instead of `angular.mock.module()` to load the upgrade module into
+     * the AngularJS testing injector.
+     *
+     * ### Example
+     *
+     * ```
+     * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
+     *
+     * // configure the adapter with upgrade/downgrade components and services
+     * upgradeAdapter.downgradeNg2Component(MyComponent);
+     *
+     * let upgradeAdapterRef: UpgradeAdapterRef;
+     * let $compile, $rootScope;
+     *
+     * // We must register the adapter before any calls to `inject()`
+     * beforeEach(() => {
+     *   upgradeAdapterRef = upgradeAdapter.registerForNg1Tests(['heroApp']);
+     * });
+     *
+     * beforeEach(inject((_$compile_, _$rootScope_) => {
+     *   $compile = _$compile_;
+     *   $rootScope = _$rootScope_;
+     * }));
+     *
+     * it("says hello", (done) => {
+     *   upgradeAdapterRef.ready(() => {
+     *     const element = $compile("<my-component></my-component>")($rootScope);
+     *     $rootScope.$apply();
+     *     expect(element.html()).toContain("Hello World");
+     *     done();
+     *   })
+     * });
+     *
+     * ```
+     *
      * @param {?=} modules any AngularJS modules that the upgrade module should depend upon
      * @return {?} an {\@link UpgradeAdapterRef}, which lets you register a `ready()` callback to
      * run assertions once the Angular components are ready to test through AngularJS.
      */
-    UpgradeAdapter.prototype.registerForNg1Tests = function (modules) {
+    UpgradeAdapter.prototype.registerForNg1Tests = /**
+     * Registers the adapter's AngularJS upgrade module for unit testing in AngularJS.
+     * Use this instead of `angular.mock.module()` to load the upgrade module into
+     * the AngularJS testing injector.
+     *
+     * ### Example
+     *
+     * ```
+     * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
+     *
+     * // configure the adapter with upgrade/downgrade components and services
+     * upgradeAdapter.downgradeNg2Component(MyComponent);
+     *
+     * let upgradeAdapterRef: UpgradeAdapterRef;
+     * let $compile, $rootScope;
+     *
+     * // We must register the adapter before any calls to `inject()`
+     * beforeEach(() => {
+     *   upgradeAdapterRef = upgradeAdapter.registerForNg1Tests(['heroApp']);
+     * });
+     *
+     * beforeEach(inject((_$compile_, _$rootScope_) => {
+     *   $compile = _$compile_;
+     *   $rootScope = _$rootScope_;
+     * }));
+     *
+     * it("says hello", (done) => {
+     *   upgradeAdapterRef.ready(() => {
+     *     const element = $compile("<my-component></my-component>")($rootScope);
+     *     $rootScope.$apply();
+     *     expect(element.html()).toContain("Hello World");
+     *     done();
+     *   })
+     * });
+     *
+     * ```
+     *
+     * @param {?=} modules any AngularJS modules that the upgrade module should depend upon
+     * @return {?} an {\@link UpgradeAdapterRef}, which lets you register a `ready()` callback to
+     * run assertions once the Angular components are ready to test through AngularJS.
+     */
+    function (modules) {
         var _this = this;
-        var /** @type {?} */ windowNgMock = ((window))['angular'].mock;
+        var /** @type {?} */ windowNgMock = (/** @type {?} */ (window))['angular'].mock;
         if (!windowNgMock || !windowNgMock.module) {
             throw new Error('Failed to find \'angular.mock.module\'.');
         }
         this.declareNg1Module(modules);
         windowNgMock.module(this.ng1Module.name);
         var /** @type {?} */ upgrade = new UpgradeAdapterRef();
-        this.ng2BootstrapDeferred.promise.then(function (ng1Injector) { ((upgrade))._bootstrapDone(_this.moduleRef, ng1Injector); }, onError);
+        this.ng2BootstrapDeferred.promise.then(function (ng1Injector) { (/** @type {?} */ (upgrade))._bootstrapDone(_this.moduleRef, ng1Injector); }, onError);
         return upgrade;
     };
+    /**
+     * Bootstrap a hybrid AngularJS / Angular application.
+     *
+     * This `bootstrap` method is a direct replacement (takes same arguments) for AngularJS
+     * [`bootstrap`](https://docs.angularjs.org/api/ng/function/angular.bootstrap) method. Unlike
+     * AngularJS, this bootstrap is asynchronous.
+     *
+     * ### Example
+     *
+     * ```
+     * const adapter = new UpgradeAdapter(MyNg2Module);
+     * const module = angular.module('myExample', []);
+     * module.directive('ng2', adapter.downgradeNg2Component(Ng2));
+     *
+     * module.directive('ng1', function() {
+     *   return {
+     *      scope: { title: '=' },
+     *      template: 'ng1[Hello {{title}}!](<span ng-transclude></span>)'
+     *   };
+     * });
+     *
+     *
+     * @Component({
+     *   selector: 'ng2',
+     *   inputs: ['name'],
+     *   template: 'ng2[<ng1 [title]="name">transclude</ng1>](<ng-content></ng-content>)'
+     * })
+     * class Ng2 {
+     * }
+     *
+     * @NgModule({
+     *   declarations: [Ng2, adapter.upgradeNg1Component('ng1')],
+     *   imports: [BrowserModule]
+     * })
+     * class MyNg2Module {}
+     *
+     * document.body.innerHTML = '<ng2 name="World">project</ng2>';
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready(function() {
+     *   expect(document.body.textContent).toEqual(
+     *       "ng2[ng1[Hello World!](transclude)](project)");
+     * });
+     * ```
+     */
     /**
      * Bootstrap a hybrid AngularJS / Angular application.
      *
@@ -1862,12 +2352,60 @@ var UpgradeAdapter = (function () {
      * @param {?=} config
      * @return {?}
      */
-    UpgradeAdapter.prototype.bootstrap = function (element$$1, modules, config) {
+    UpgradeAdapter.prototype.bootstrap = /**
+     * Bootstrap a hybrid AngularJS / Angular application.
+     *
+     * This `bootstrap` method is a direct replacement (takes same arguments) for AngularJS
+     * [`bootstrap`](https://docs.angularjs.org/api/ng/function/angular.bootstrap) method. Unlike
+     * AngularJS, this bootstrap is asynchronous.
+     *
+     * ### Example
+     *
+     * ```
+     * const adapter = new UpgradeAdapter(MyNg2Module);
+     * const module = angular.module('myExample', []);
+     * module.directive('ng2', adapter.downgradeNg2Component(Ng2));
+     *
+     * module.directive('ng1', function() {
+     *   return {
+     *      scope: { title: '=' },
+     *      template: 'ng1[Hello {{title}}!](<span ng-transclude></span>)'
+     *   };
+     * });
+     *
+     *
+     * \@Component({
+     *   selector: 'ng2',
+     *   inputs: ['name'],
+     *   template: 'ng2[<ng1 [title]="name">transclude</ng1>](<ng-content></ng-content>)'
+     * })
+     * class Ng2 {
+     * }
+     *
+     * \@NgModule({
+     *   declarations: [Ng2, adapter.upgradeNg1Component('ng1')],
+     *   imports: [BrowserModule]
+     * })
+     * class MyNg2Module {}
+     *
+     * document.body.innerHTML = '<ng2 name="World">project</ng2>';
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready(function() {
+     *   expect(document.body.textContent).toEqual(
+     *       "ng2[ng1[Hello World!](transclude)](project)");
+     * });
+     * ```
+     * @param {?} element
+     * @param {?=} modules
+     * @param {?=} config
+     * @return {?}
+     */
+    function (element$$1, modules, config) {
         var _this = this;
         this.declareNg1Module(modules);
         var /** @type {?} */ upgrade = new UpgradeAdapterRef();
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
-        var /** @type {?} */ windowAngular = ((window) /** TODO #???? */)['angular'];
+        var /** @type {?} */ windowAngular = (/** @type {?} */ (window /** TODO #???? */) /** TODO #???? */)['angular'];
         windowAngular.resumeBootstrap = undefined;
         this.ngZone.run(function () { bootstrap(element$$1, [_this.ng1Module.name], /** @type {?} */ ((config))); });
         var /** @type {?} */ ng1BootstrapPromise = new Promise(function (resolve) {
@@ -1885,11 +2423,42 @@ var UpgradeAdapter = (function () {
         });
         Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(function (_a) {
             var ng1Injector = _a[0];
-            ((element(element$$1).data))(controllerKey(INJECTOR_KEY), /** @type {?} */ ((_this.moduleRef)).injector); /** @type {?} */
-            ((_this.moduleRef)).injector.get(_angular_core.NgZone).run(function () { ((upgrade))._bootstrapDone(_this.moduleRef, ng1Injector); });
+            /** @type {?} */ ((element(element$$1).data))(controllerKey(INJECTOR_KEY), /** @type {?} */ ((_this.moduleRef)).injector); /** @type {?} */
+            ((_this.moduleRef)).injector.get(_angular_core.NgZone).run(function () { (/** @type {?} */ (upgrade))._bootstrapDone(_this.moduleRef, ng1Injector); });
         }, onError);
         return upgrade;
     };
+    /**
+     * Allows AngularJS service to be accessible from Angular.
+     *
+     *
+     * ### Example
+     *
+     * ```
+     * class Login { ... }
+     * class Server { ... }
+     *
+     * @Injectable()
+     * class Example {
+     *   constructor(@Inject('server') server, login: Login) {
+     *     ...
+     *   }
+     * }
+     *
+     * const module = angular.module('myExample', []);
+     * module.service('server', Server);
+     * module.service('login', Login);
+     *
+     * const adapter = new UpgradeAdapter(MyNg2Module);
+     * adapter.upgradeNg1Provider('server');
+     * adapter.upgradeNg1Provider('login', {asToken: Login});
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
+     *   const example: Example = ref.ng2Injector.get(Example);
+     * });
+     *
+     * ```
+     */
     /**
      * Allows AngularJS service to be accessible from Angular.
      *
@@ -1924,7 +2493,41 @@ var UpgradeAdapter = (function () {
      * @param {?=} options
      * @return {?}
      */
-    UpgradeAdapter.prototype.upgradeNg1Provider = function (name, options) {
+    UpgradeAdapter.prototype.upgradeNg1Provider = /**
+     * Allows AngularJS service to be accessible from Angular.
+     *
+     *
+     * ### Example
+     *
+     * ```
+     * class Login { ... }
+     * class Server { ... }
+     *
+     * \@Injectable()
+     * class Example {
+     *   constructor(\@Inject('server') server, login: Login) {
+     *     ...
+     *   }
+     * }
+     *
+     * const module = angular.module('myExample', []);
+     * module.service('server', Server);
+     * module.service('login', Login);
+     *
+     * const adapter = new UpgradeAdapter(MyNg2Module);
+     * adapter.upgradeNg1Provider('server');
+     * adapter.upgradeNg1Provider('login', {asToken: Login});
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
+     *   const example: Example = ref.ng2Injector.get(Example);
+     * });
+     *
+     * ```
+     * @param {?} name
+     * @param {?=} options
+     * @return {?}
+     */
+    function (name, options) {
         var /** @type {?} */ token = options && options.asToken || name;
         this.upgradedProviders.push({
             provide: token,
@@ -1952,10 +2555,54 @@ var UpgradeAdapter = (function () {
      * });
      *
      * ```
+     */
+    /**
+     * Allows Angular service to be accessible from AngularJS.
+     *
+     *
+     * ### Example
+     *
+     * ```
+     * class Example {
+     * }
+     *
+     * const adapter = new UpgradeAdapter(MyNg2Module);
+     *
+     * const module = angular.module('myExample', []);
+     * module.factory('example', adapter.downgradeNg2Provider(Example));
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
+     *   const example: Example = ref.ng1Injector.get('example');
+     * });
+     *
+     * ```
      * @param {?} token
      * @return {?}
      */
-    UpgradeAdapter.prototype.downgradeNg2Provider = function (token) { return downgradeInjectable(token); };
+    UpgradeAdapter.prototype.downgradeNg2Provider = /**
+     * Allows Angular service to be accessible from AngularJS.
+     *
+     *
+     * ### Example
+     *
+     * ```
+     * class Example {
+     * }
+     *
+     * const adapter = new UpgradeAdapter(MyNg2Module);
+     *
+     * const module = angular.module('myExample', []);
+     * module.factory('example', adapter.downgradeNg2Provider(Example));
+     *
+     * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
+     *   const example: Example = ref.ng1Injector.get('example');
+     * });
+     *
+     * ```
+     * @param {?} token
+     * @return {?}
+     */
+    function (token) { return downgradeInjectable(token); };
     /**
      * Declare the AngularJS upgrade module for this adapter without bootstrapping the whole
      * hybrid application.
@@ -1972,7 +2619,23 @@ var UpgradeAdapter = (function () {
      * upgradeAdapter.declareNg1Module(['heroApp']);
      * ```
      */
-    UpgradeAdapter.prototype.declareNg1Module = function (modules) {
+    UpgradeAdapter.prototype.declareNg1Module = /**
+     * Declare the AngularJS upgrade module for this adapter without bootstrapping the whole
+     * hybrid application.
+     *
+     * This method is automatically called by `bootstrap()` and `registerForNg1Tests()`.
+     *
+     * @param {?=} modules The AngularJS modules that this upgrade module should depend upon.
+     * @return {?} The AngularJS upgrade module that is declared by this method
+     *
+     * ### Example
+     *
+     * ```
+     * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
+     * upgradeAdapter.declareNg1Module(['heroApp']);
+     * ```
+     */
+    function (modules) {
         var _this = this;
         if (modules === void 0) { modules = []; }
         var /** @type {?} */ delayApplyExps = [];
@@ -1984,10 +2647,10 @@ var UpgradeAdapter = (function () {
         var /** @type {?} */ platformRef = _angular_platformBrowserDynamic.platformBrowserDynamic();
         this.ngZone = new _angular_core.NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
-        ng1Module.factory(INJECTOR_KEY, function () { /** @type {?} */ return ((_this.moduleRef)).injector.get(_angular_core.Injector); })
+        ng1Module.factory(INJECTOR_KEY, function () { return /** @type {?} */ ((_this.moduleRef)).injector.get(_angular_core.Injector); })
             .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector, needsInNgZone: false }); }])
             .constant(NG_ZONE_KEY, this.ngZone)
-            .factory(COMPILER_KEY, function () { /** @type {?} */ return ((_this.moduleRef)).injector.get(_angular_core.Compiler); })
+            .factory(COMPILER_KEY, function () { return /** @type {?} */ ((_this.moduleRef)).injector.get(_angular_core.Compiler); })
             .config([
             '$provide', '$injector',
             function (provide, ng1Injector) {
@@ -2015,7 +2678,7 @@ var UpgradeAdapter = (function () {
                             // Cannot use arrow function below because we need the context
                             var /** @type {?} */ newWhenStable = function (callback) {
                                 originalWhenStable.call(this, function () {
-                                    var /** @type {?} */ ng2Testability = ((upgradeAdapter.moduleRef)).injector.get(_angular_core.Testability);
+                                    var /** @type {?} */ ng2Testability = /** @type {?} */ ((upgradeAdapter.moduleRef)).injector.get(_angular_core.Testability);
                                     if (ng2Testability.isStable()) {
                                         callback.apply(this, arguments);
                                     }
@@ -2036,29 +2699,36 @@ var UpgradeAdapter = (function () {
             function (ng1Injector, rootScope) {
                 UpgradeNg1ComponentAdapterBuilder.resolve(_this.ng1ComponentsToBeUpgraded, ng1Injector)
                     .then(function () {
+                    // Note: There is a bug in TS 2.4 that prevents us from
+                    // inlining this into @NgModule
+                    // TODO(tbosch): find or file a bug against TypeScript for this.
+                    var /** @type {?} */ ngModule = {
+                        providers: [
+                            { provide: $INJECTOR, useFactory: function () { return ng1Injector; } },
+                            { provide: $COMPILE, useFactory: function () { return ng1Injector.get($COMPILE); } },
+                            _this.upgradedProviders
+                        ],
+                        imports: [_this.ng2AppModule],
+                        entryComponents: _this.downgradedComponents
+                    };
                     var DynamicNgUpgradeModule = (function () {
                         function DynamicNgUpgradeModule() {
                         }
                         /**
                          * @return {?}
                          */
-                        DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
+                        DynamicNgUpgradeModule.prototype.ngDoBootstrap = /**
+                         * @return {?}
+                         */
+                        function () { };
+                        DynamicNgUpgradeModule.decorators = [
+                            { type: _angular_core.NgModule, args: [ngModule,] },
+                        ];
+                        /** @nocollapse */
+                        DynamicNgUpgradeModule.ctorParameters = function () { return []; };
                         return DynamicNgUpgradeModule;
                     }());
-                    DynamicNgUpgradeModule.decorators = [
-                        { type: _angular_core.NgModule, args: [{
-                                    providers: [
-                                        { provide: $INJECTOR, useFactory: function () { return ng1Injector; } },
-                                        { provide: $COMPILE, useFactory: function () { return ng1Injector.get($COMPILE); } },
-                                        _this.upgradedProviders
-                                    ],
-                                    imports: [_this.ng2AppModule],
-                                    entryComponents: _this.downgradedComponents
-                                },] },
-                    ];
-                    /** @nocollapse */
-                    DynamicNgUpgradeModule.ctorParameters = function () { return []; };
-                    ((platformRef))
+                    (/** @type {?} */ (platformRef))
                         ._bootstrapModuleWithZone(DynamicNgUpgradeModule, _this.compilerOptions, _this.ngZone)
                         .then(function (ref) {
                         _this.moduleRef = ref;
@@ -2094,17 +2764,22 @@ var UpgradeAdapter = (function () {
 var UpgradeAdapterRef = (function () {
     function UpgradeAdapterRef() {
         this._readyFn = null;
-        this.ng1RootScope = ((null));
-        this.ng1Injector = ((null));
-        this.ng2ModuleRef = ((null));
-        this.ng2Injector = ((null));
+        this.ng1RootScope = /** @type {?} */ ((null));
+        this.ng1Injector = /** @type {?} */ ((null));
+        this.ng2ModuleRef = /** @type {?} */ ((null));
+        this.ng2Injector = /** @type {?} */ ((null));
     }
     /**
      * @param {?} ngModuleRef
      * @param {?} ng1Injector
      * @return {?}
      */
-    UpgradeAdapterRef.prototype._bootstrapDone = function (ngModuleRef, ng1Injector) {
+    UpgradeAdapterRef.prototype._bootstrapDone = /**
+     * @param {?} ngModuleRef
+     * @param {?} ng1Injector
+     * @return {?}
+     */
+    function (ngModuleRef, ng1Injector) {
         this.ng2ModuleRef = ngModuleRef;
         this.ng2Injector = ngModuleRef.injector;
         this.ng1Injector = ng1Injector;
@@ -2120,13 +2795,26 @@ var UpgradeAdapterRef = (function () {
      * @param {?} fn
      * @return {?}
      */
-    UpgradeAdapterRef.prototype.ready = function (fn) { this._readyFn = fn; };
+    UpgradeAdapterRef.prototype.ready = /**
+     * Register a callback function which is notified upon successful hybrid AngularJS / Angular
+     * application has been bootstrapped.
+     *
+     * The `ready` callback function is invoked inside the Angular zone, therefore it does not
+     * require a call to `$apply()`.
+     * @param {?} fn
+     * @return {?}
+     */
+    function (fn) { this._readyFn = fn; };
     /**
      * Dispose of running hybrid AngularJS / Angular application.
      * @return {?}
      */
-    UpgradeAdapterRef.prototype.dispose = function () {
-        ((this.ng1Injector)).get($ROOT_SCOPE).$destroy(); /** @type {?} */
+    UpgradeAdapterRef.prototype.dispose = /**
+     * Dispose of running hybrid AngularJS / Angular application.
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */ ((this.ng1Injector)).get($ROOT_SCOPE).$destroy(); /** @type {?} */
         ((this.ng2ModuleRef)).destroy();
     };
     return UpgradeAdapterRef;

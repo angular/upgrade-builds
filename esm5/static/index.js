@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.6-112e777
+ * @license Angular v5.0.0-beta.6-ca5aeba
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -65,13 +65,7 @@ var element = function (e) { return angular.element(e); };
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */ var $COMPILE = '$compile';
+var $COMPILE = '$compile';
 var $CONTROLLER = '$controller';
 var $DELEGATE = '$delegate';
 var $HTTP_BACKEND = '$httpBackend';
@@ -273,9 +267,11 @@ var DowngradeComponentAdapter = (function () {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var watchFn = (function (prop) { return function (currValue, prevValue) {
-                    return _this.updateInput(prop, prevValue, currValue);
-                }; })(input.prop);
+                var watchFn = (function (prop) {
+                    return function (currValue, prevValue) {
+                        return _this.updateInput(prop, prevValue, currValue);
+                    };
+                })(input.prop);
                 this_1.componentScope.$watch(expr, watchFn);
             }
         };
@@ -292,7 +288,7 @@ var DowngradeComponentAdapter = (function () {
             if (_this.implementsOnChanges) {
                 var inputChanges = _this.inputChanges;
                 _this.inputChanges = {};
-                _this.component.ngOnChanges(inputChanges);
+                _this.component.ngOnChanges((inputChanges));
             }
             // If opted out of propagating digests, invoke change detection
             // when inputs change
@@ -496,7 +492,7 @@ function downgradeComponent(info) {
                 }
                 var doDowngrade = function (injector) {
                     var componentFactoryResolver = injector.get(ComponentFactoryResolver);
-                    var componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
+                    var componentFactory = (componentFactoryResolver.resolveComponentFactory(info.component));
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
@@ -517,9 +513,11 @@ function downgradeComponent(info) {
                 var downgradeFn = !needsNgZone ? doDowngrade : function (injector) {
                     if (!ngZone) {
                         ngZone = injector.get(NgZone);
-                        wrapCallback = function (cb) { return function () {
-                            return NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
-                        }; };
+                        wrapCallback = function (cb) {
+                            return function () {
+                                return NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
+                            };
+                        };
                     }
                     wrapCallback(function () { return doDowngrade(injector); })();
                 };
@@ -547,6 +545,7 @@ var ParentInjectorPromise = (function () {
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
         // Store the promise on the element.
+        // Store the promise on the element.
         element.data(this.injectorKey, this);
     }
     ParentInjectorPromise.prototype.then = function (callback) {
@@ -560,9 +559,10 @@ var ParentInjectorPromise = (function () {
     ParentInjectorPromise.prototype.resolve = function (injector) {
         this.injector = injector;
         // Store the real injector on the element.
+        // Store the real injector on the element.
         this.element.data(this.injectorKey, injector);
         // Release the element to prevent memory leaks.
-        this.element = null;
+        this.element = (null);
         // Run the queued callbacks.
         this.callbacks.forEach(function (callback) { return callback(injector); });
         this.callbacks.length = 0;
@@ -643,7 +643,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('5.0.0-beta.6-112e777');
+var VERSION = new Version('5.0.0-beta.6-ca5aeba');
 
 /**
  * @license
@@ -703,7 +703,16 @@ var NgAdapterInjector = (function () {
     // `NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR`. In such a case we should not walk up to the module
     // injector.
     // AngularJS only supports a single tree and should always check the module injector.
-    NgAdapterInjector.prototype.get = function (token, notFoundValue) {
+    // When Angular locate a service in the component injector tree, the not found value is set to
+    // `NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR`. In such a case we should not walk up to the module
+    // injector.
+    // AngularJS only supports a single tree and should always check the module injector.
+    NgAdapterInjector.prototype.get = 
+    // When Angular locate a service in the component injector tree, the not found value is set to
+    // `NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR`. In such a case we should not walk up to the module
+    // injector.
+    // AngularJS only supports a single tree and should always check the module injector.
+    function (token, notFoundValue) {
         if (notFoundValue === ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR) {
             return notFoundValue;
         }
@@ -827,7 +836,7 @@ var UpgradeHelper = (function () {
         // Quoted properties below so that this code can be optimized with Closure Compiler.
         var locals = { '$scope': $scope, '$element': this.$element };
         var controller = this.$controller(controllerType, locals, null, this.directive.controllerAs);
-        this.$element.data(controllerKey(this.directive.name), controller);
+        this.$element.data(controllerKey((this.directive.name)), controller);
         return controller;
     };
     UpgradeHelper.prototype.compileTemplate = function (template) {
@@ -929,11 +938,11 @@ var UpgradeHelper = (function () {
         return childNodes;
     };
     UpgradeHelper.prototype.getDirectiveRequire = function () {
-        var require = this.directive.require || (this.directive.controller && this.directive.name);
+        var require = this.directive.require || ((this.directive.controller && this.directive.name));
         if (isMap(require)) {
             Object.keys(require).forEach(function (key) {
                 var value = require[key];
-                var match = value.match(REQUIRE_PREFIX_RE);
+                var match = (value.match(REQUIRE_PREFIX_RE));
                 var name = value.substring(match[0].length);
                 if (!name) {
                     require[key] = match[0] + key;
@@ -952,11 +961,11 @@ var UpgradeHelper = (function () {
         }
         else if (typeof require === 'object') {
             var value_1 = {};
-            Object.keys(require).forEach(function (key) { return value_1[key] = _this.resolveRequire(require[key]); });
+            Object.keys(require).forEach(function (key) { return value_1[key] = (_this.resolveRequire(require[key])); });
             return value_1;
         }
         else if (typeof require === 'string') {
-            var match = require.match(REQUIRE_PREFIX_RE);
+            var match = (require.match(REQUIRE_PREFIX_RE));
             var inheritType = match[1] || match[3];
             var name_1 = require.substring(match[0].length);
             var isOptional = !!match[2];
@@ -1125,7 +1134,7 @@ var UpgradeComponent = (function () {
         if (preLink) {
             preLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
-        linkFn(this.$componentScope, null, { parentBoundTranscludeFn: attachChildNodes });
+        linkFn(this.$componentScope, (null), { parentBoundTranscludeFn: attachChildNodes });
         if (postLink) {
             postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
@@ -1355,10 +1364,9 @@ var UpgradeComponent = (function () {
  * @experimental
  */
 var UpgradeModule = (function () {
-    function UpgradeModule(
+    function UpgradeModule(/** The root {@link Injector} for the upgrade application. */
         /** The root {@link Injector} for the upgrade application. */
-        injector, 
-        /** The bootstrap zone for the upgrade application */
+        injector, /** The bootstrap zone for the upgrade application */
         ngZone) {
         this.ngZone = ngZone;
         this.injector = new NgAdapterInjector(injector);
@@ -1369,7 +1377,19 @@ var UpgradeModule = (function () {
      * @param [modules] the AngularJS modules to bootstrap for this application
      * @param [config] optional extra AngularJS bootstrap configuration
      */
-    UpgradeModule.prototype.bootstrap = function (element$$1, modules, config /*angular.IAngularBootstrapConfig*/) {
+    /**
+       * Bootstrap an AngularJS application from this NgModule
+       * @param element the element on which to bootstrap the AngularJS application
+       * @param [modules] the AngularJS modules to bootstrap for this application
+       * @param [config] optional extra AngularJS bootstrap configuration
+       */
+    UpgradeModule.prototype.bootstrap = /**
+       * Bootstrap an AngularJS application from this NgModule
+       * @param element the element on which to bootstrap the AngularJS application
+       * @param [modules] the AngularJS modules to bootstrap for this application
+       * @param [config] optional extra AngularJS bootstrap configuration
+       */
+    function (element$$1, modules, config /*angular.IAngularBootstrapConfig*/) {
         var _this = this;
         if (modules === void 0) { modules = []; }
         var INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
@@ -1444,6 +1464,7 @@ var UpgradeModule = (function () {
                 setTempInjectorRef($injector);
                 _this.injector.get($INJECTOR);
                 // Put the injector on the DOM, so that it can be "required"
+                // Put the injector on the DOM, so that it can be "required"
                 element(element$$1).data(controllerKey(INJECTOR_KEY), _this.injector);
                 // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles
                 // We need to do this in the next tick so that we don't prevent the bootup
@@ -1473,16 +1494,16 @@ var UpgradeModule = (function () {
             };
         }
     };
+    UpgradeModule.decorators = [
+        { type: NgModule, args: [{ providers: [angular1Providers] },] },
+    ];
+    /** @nocollapse */
+    UpgradeModule.ctorParameters = function () { return [
+        { type: Injector, },
+        { type: NgZone, },
+    ]; };
     return UpgradeModule;
 }());
-UpgradeModule.decorators = [
-    { type: NgModule, args: [{ providers: [angular1Providers] },] },
-];
-/** @nocollapse */
-UpgradeModule.ctorParameters = function () { return [
-    { type: Injector, },
-    { type: NgZone, },
-]; };
 
 /**
  * @license
