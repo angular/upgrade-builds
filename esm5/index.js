@@ -1,9 +1,9 @@
 /**
- * @license Angular v5.0.0-beta.6-9ab9437
+ * @license Angular v5.0.0-beta.6-c8f742e
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, Version } from '@angular/core';
+import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('5.0.0-beta.6-9ab9437');
+var VERSION = new Version('5.0.0-beta.6-c8f742e');
 
 /**
  * @fileoverview added by tsickle
@@ -432,6 +432,15 @@ var DowngradeComponentAdapter = (function () {
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
+        // testability hook is commonly added during component bootstrap in
+        // packages/core/src/application_ref.bootstrap()
+        // in downgraded application, component creation will take place here as well as adding the
+        // testability hook.
+        var /** @type {?} */ testability = this.componentRef.injector.get(Testability, null);
+        if (testability) {
+            this.componentRef.injector.get(TestabilityRegistry)
+                .registerApplication(this.componentRef.location.nativeElement, testability);
+        }
         hookupNgModel(this.ngModel, this.component);
     };
     /**
@@ -592,6 +601,8 @@ var DowngradeComponentAdapter = (function () {
         var _this = this;
         /** @type {?} */ ((this.element.on))('$destroy', function () {
             _this.componentScope.$destroy();
+            _this.componentRef.injector.get(TestabilityRegistry)
+                .unregisterApplication(_this.componentRef.location.nativeElement);
             _this.componentRef.destroy();
             if (needsNgZone) {
                 _this.appRef.detachView(_this.componentRef.hostView);

@@ -134,6 +134,7 @@ export declare type IAugmentedJQuery = Node[] & {
     controller?: (name: string) => any;
     isolateScope?: () => IScope;
     injector?: () => IInjectorService;
+    remove?: () => void;
 };
 export interface IProvider {
     $get: IInjectable;

@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.6-9ab9437
+ * @license Angular v5.0.0-beta.6-c8f742e
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.6-9ab9437
+ * @license Angular v5.0.0-beta.6-c8f742e
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,7 +33,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.6-9ab9437');
+var VERSION = new _angular_core.Version('5.0.0-beta.6-c8f742e');
 
 /**
  * @fileoverview added by tsickle
@@ -440,6 +440,15 @@ var DowngradeComponentAdapter = (function () {
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
+        // testability hook is commonly added during component bootstrap in
+        // packages/core/src/application_ref.bootstrap()
+        // in downgraded application, component creation will take place here as well as adding the
+        // testability hook.
+        var /** @type {?} */ testability = this.componentRef.injector.get(_angular_core.Testability, null);
+        if (testability) {
+            this.componentRef.injector.get(_angular_core.TestabilityRegistry)
+                .registerApplication(this.componentRef.location.nativeElement, testability);
+        }
         hookupNgModel(this.ngModel, this.component);
     };
     /**
@@ -600,6 +609,8 @@ var DowngradeComponentAdapter = (function () {
         var _this = this;
         /** @type {?} */ ((this.element.on))('$destroy', function () {
             _this.componentScope.$destroy();
+            _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
+                .unregisterApplication(_this.componentRef.location.nativeElement);
             _this.componentRef.destroy();
             if (needsNgZone) {
                 _this.appRef.detachView(_this.componentRef.hostView);

@@ -1,9 +1,9 @@
 /**
- * @license Angular v5.0.0-beta.6-9ab9437
+ * @license Angular v5.0.0-beta.6-c8f742e
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { ApplicationRef, ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, SimpleChange, Testability, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -220,6 +220,15 @@ var DowngradeComponentAdapter = (function () {
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
+        // testability hook is commonly added during component bootstrap in
+        // packages/core/src/application_ref.bootstrap()
+        // in downgraded application, component creation will take place here as well as adding the
+        // testability hook.
+        var testability = this.componentRef.injector.get(Testability, null);
+        if (testability) {
+            this.componentRef.injector.get(TestabilityRegistry)
+                .registerApplication(this.componentRef.location.nativeElement, testability);
+        }
         hookupNgModel(this.ngModel, this.component);
     };
     DowngradeComponentAdapter.prototype.setupInputs = function (needsNgZone, propagateDigest) {
@@ -356,6 +365,8 @@ var DowngradeComponentAdapter = (function () {
         var _this = this;
         this.element.on('$destroy', function () {
             _this.componentScope.$destroy();
+            _this.componentRef.injector.get(TestabilityRegistry)
+                .unregisterApplication(_this.componentRef.location.nativeElement);
             _this.componentRef.destroy();
             if (needsNgZone) {
                 _this.appRef.detachView(_this.componentRef.hostView);
@@ -643,7 +654,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('5.0.0-beta.6-9ab9437');
+var VERSION = new Version('5.0.0-beta.6-c8f742e');
 
 /**
  * @license
