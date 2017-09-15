@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.4.0-RC.0-0bafd03
+ * @license Angular v4.4.0-RC.0-b20c5d2
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -184,8 +184,7 @@ var INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 var DowngradeComponentAdapter = (function () {
-    function DowngradeComponentAdapter(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
-        this.id = id;
+    function DowngradeComponentAdapter(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
@@ -200,7 +199,6 @@ var DowngradeComponentAdapter = (function () {
         this.componentRef = null;
         this.component = null;
         this.changeDetector = null;
-        this.element[0].id = id;
         this.componentScope = scope.$new();
     }
     DowngradeComponentAdapter.prototype.compileContents = function () {
@@ -414,7 +412,6 @@ function matchesSelector(el, selector) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var downgradeCount = 0;
 /**
  * @whatItDoes
  *
@@ -449,8 +446,6 @@ var downgradeCount = 0;
  * @experimental
  */
 function downgradeComponent(info) {
-    var idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
-    var idCount = 0;
     var directiveFactory = function ($compile, $injector, $parse) {
         return {
             restrict: 'E',
@@ -468,9 +463,8 @@ function downgradeComponent(info) {
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
-                    var id = idPrefix + (idCount++);
                     var injectorPromise = new ParentInjectorPromise(element);
-                    var facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
+                    var facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
                     var projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
                     facade.setupInputs();
@@ -594,7 +588,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('4.4.0-RC.0-0bafd03');
+var VERSION = new Version('4.4.0-RC.0-b20c5d2');
 
 /**
  * @license

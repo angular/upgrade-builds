@@ -8,7 +8,6 @@
 import { ComponentFactory, Injector } from '@angular/core';
 import * as angular from './angular1';
 export declare class DowngradeComponentAdapter {
-    private id;
     private element;
     private attrs;
     private scope;
@@ -24,7 +23,7 @@ export declare class DowngradeComponentAdapter {
     private componentRef;
     private component;
     private changeDetector;
-    constructor(id: string, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>);
+    constructor(element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>);
     compileContents(): Node[][];
     createComponent(projectableNodes: Node[][]): void;
     setupInputs(): void;

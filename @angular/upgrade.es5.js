@@ -1,5 +1,5 @@
 /**
- * @license Angular v4.4.0-RC.0-0bafd03
+ * @license Angular v4.4.0-RC.0-b20c5d2
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('4.4.0-RC.0-0bafd03');
+var VERSION = new Version('4.4.0-RC.0-b20c5d2');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -231,7 +231,6 @@ var INITIAL_VALUE = {
 };
 var DowngradeComponentAdapter = (function () {
     /**
-     * @param {?} id
      * @param {?} element
      * @param {?} attrs
      * @param {?} scope
@@ -242,8 +241,7 @@ var DowngradeComponentAdapter = (function () {
      * @param {?} $parse
      * @param {?} componentFactory
      */
-    function DowngradeComponentAdapter(id, element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
-        this.id = id;
+    function DowngradeComponentAdapter(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory) {
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
@@ -258,7 +256,6 @@ var DowngradeComponentAdapter = (function () {
         this.componentRef = null;
         this.component = null;
         this.changeDetector = null;
-        this.element[0].id = id;
         this.componentScope = scope.$new();
     }
     /**
@@ -510,7 +507,6 @@ function matchesSelector(el, selector) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var downgradeCount = 0;
 /**
  * \@whatItDoes
  *
@@ -547,8 +543,6 @@ var downgradeCount = 0;
  * @return {?}
  */
 function downgradeComponent(info) {
-    var /** @type {?} */ idPrefix = "NG2_UPGRADE_" + downgradeCount++ + "_";
-    var /** @type {?} */ idCount = 0;
     var /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
         return {
             restrict: 'E',
@@ -566,9 +560,8 @@ function downgradeComponent(info) {
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
-                    var /** @type {?} */ id = idPrefix + (idCount++);
                     var /** @type {?} */ injectorPromise = new ParentInjectorPromise$1(element);
-                    var /** @type {?} */ facade = new DowngradeComponentAdapter(id, element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
+                    var /** @type {?} */ facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory);
                     var /** @type {?} */ projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
                     facade.setupInputs();
