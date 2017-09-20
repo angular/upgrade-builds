@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.7-9d2236a
+ * @license Angular v5.0.0-beta.7-5751865
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('5.0.0-beta.7-9d2236a');
+var VERSION = new Version('5.0.0-beta.7-5751865');
 
 /**
  * @fileoverview added by tsickle
@@ -2852,4 +2852,4 @@ var UpgradeAdapterRef = (function () {
  */
 
 export { VERSION, UpgradeAdapter, UpgradeAdapterRef };
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=upgrade.js.map
