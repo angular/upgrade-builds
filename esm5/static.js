@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.7-9e84719
+ * @license Angular v5.0.0-beta.7-4586fcc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -654,7 +654,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('5.0.0-beta.7-9e84719');
+var VERSION = new Version('5.0.0-beta.7-4586fcc');
 
 /**
  * @license
@@ -1407,7 +1407,10 @@ var UpgradeModule = (function () {
         // Create an ng1 module to bootstrap
         var initModule = module$1(INIT_MODULE_NAME, [])
             .value(INJECTOR_KEY, this.injector)
-            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector, needsNgZone: false }); }])
+            .factory(LAZY_MODULE_REF, [
+            INJECTOR_KEY,
+            function (injector) { return ({ injector: injector, needsNgZone: false }); }
+        ])
             .config([
             $PROVIDE, $INJECTOR,
             function ($provide, $injector) {

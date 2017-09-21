@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.7-9e84719
+ * @license Angular v5.0.0-beta.7-4586fcc
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('5.0.0-beta.7-9e84719');
+var VERSION = new Version('5.0.0-beta.7-4586fcc');
 
 /**
  * @fileoverview added by tsickle
@@ -2651,7 +2651,10 @@ var UpgradeAdapter = (function () {
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, function () { return /** @type {?} */ ((_this.moduleRef)).injector.get(Injector); })
-            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector, needsInNgZone: false }); }])
+            .factory(LAZY_MODULE_REF, [
+            INJECTOR_KEY,
+            function (injector) { return (/** @type {?} */ ({ injector: injector, needsNgZone: false })); }
+        ])
             .constant(NG_ZONE_KEY, this.ngZone)
             .factory(COMPILER_KEY, function () { return /** @type {?} */ ((_this.moduleRef)).injector.get(Compiler); })
             .config([
