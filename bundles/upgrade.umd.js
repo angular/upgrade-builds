@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.7-6e1896b
+ * @license Angular v5.0.0-beta.7-9bbf009
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.7-6e1896b
+ * @license Angular v5.0.0-beta.7-9bbf009
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,7 +33,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.7-6e1896b');
+var VERSION = new _angular_core.Version('5.0.0-beta.7-9bbf009');
 
 /**
  * @fileoverview added by tsickle
@@ -2742,8 +2742,8 @@ var UpgradeAdapter = (function () {
                         DynamicNgUpgradeModule.ctorParameters = function () { return []; };
                         return DynamicNgUpgradeModule;
                     }());
-                    (/** @type {?} */ (platformRef))
-                        ._bootstrapModuleWithZone(DynamicNgUpgradeModule, _this.compilerOptions, _this.ngZone)
+                    platformRef
+                        .bootstrapModule(DynamicNgUpgradeModule, [/** @type {?} */ ((_this.compilerOptions)), { ngZone: _this.ngZone }])
                         .then(function (ref) {
                         _this.moduleRef = ref;
                         _this.ngZone.run(function () {

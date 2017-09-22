@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.7-6e1896b
+ * @license Angular v5.0.0-beta.7-9bbf009
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.0.0-beta.7-6e1896b');
+const VERSION = new Version('5.0.0-beta.7-9bbf009');
 
 /**
  * @fileoverview added by tsickle
@@ -2030,8 +2030,8 @@ class UpgradeAdapter {
                     ];
                     /** @nocollapse */
                     DynamicNgUpgradeModule.ctorParameters = () => [];
-                    (/** @type {?} */ (platformRef))
-                        ._bootstrapModuleWithZone(DynamicNgUpgradeModule, this.compilerOptions, this.ngZone)
+                    platformRef
+                        .bootstrapModule(DynamicNgUpgradeModule, [/** @type {?} */ ((this.compilerOptions)), { ngZone: this.ngZone }])
                         .then((ref) => {
                         this.moduleRef = ref;
                         this.ngZone.run(() => {
