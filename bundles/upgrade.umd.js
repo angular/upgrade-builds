@@ -1,16 +1,16 @@
 /**
- * @license Angular v5.0.0-beta.7-8dbe2af
+ * @license Angular v5.0.0-beta.7-82e4923
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser-dynamic')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser-dynamic'], factory) :
+	typeof define === 'function' && define.amd ? define('@angular/upgrade', ['exports', '@angular/core', '@angular/platform-browser-dynamic'], factory) :
 	(factory((global.ng = global.ng || {}, global.ng.upgrade = {}),global.ng.core,global.ng.platformBrowserDynamic));
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.7-8dbe2af
+ * @license Angular v5.0.0-beta.7-82e4923
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,7 +33,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.7-8dbe2af');
+var VERSION = new _angular_core.Version('5.0.0-beta.7-82e4923');
 
 /**
  * @fileoverview added by tsickle
