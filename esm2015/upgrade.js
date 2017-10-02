@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-rc.0-745b59f
+ * @license Angular v5.0.0-rc.0-eef7d8a
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.0.0-rc.0-745b59f');
+const VERSION = new Version('5.0.0-rc.0-eef7d8a');
 
 /**
  * @fileoverview added by tsickle
@@ -402,7 +402,6 @@ class DowngradeComponentAdapter {
         this.inputChangeCount = 0;
         this.inputChanges = {};
         this.componentScope = scope.$new();
-        this.appRef = parentInjector.get(ApplicationRef);
     }
     /**
      * @return {?}
@@ -467,7 +466,7 @@ class DowngradeComponentAdapter {
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn);
-                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input  in time
+                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input in time
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 let /** @type {?} */ unwatch = this.componentScope.$watch(() => {
@@ -504,8 +503,7 @@ class DowngradeComponentAdapter {
                 this.inputChanges = {};
                 (/** @type {?} */ (this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
             }
-            // If opted out of propagating digests, invoke change detection
-            // when inputs change
+            // If opted out of propagating digests, invoke change detection when inputs change.
             if (!propagateDigest) {
                 detectChanges();
             }
@@ -514,9 +512,15 @@ class DowngradeComponentAdapter {
         if (propagateDigest) {
             this.componentScope.$watch(this.wrapCallback(detectChanges));
         }
-        // Attach the view so that it will be dirty-checked.
-        if (needsNgZone) {
-            this.appRef.attachView(this.componentRef.hostView);
+        // If necessary, attach the view so that it will be dirty-checked.
+        // (Allow time for the initial input values to be set and `ngOnChanges()` to be called.)
+        if (needsNgZone || !propagateDigest) {
+            let /** @type {?} */ unwatch = this.componentScope.$watch(() => {
+                /** @type {?} */ ((unwatch))();
+                unwatch = null;
+                const /** @type {?} */ appRef = this.parentInjector.get(ApplicationRef);
+                appRef.attachView(this.componentRef.hostView);
+            });
         }
     }
     /**
@@ -565,18 +569,15 @@ class DowngradeComponentAdapter {
         }
     }
     /**
-     * @param {?} needsNgZone
      * @return {?}
      */
-    registerCleanup(needsNgZone) {
-        /** @type {?} */ ((this.element.on))('$destroy', () => {
+    registerCleanup() {
+        const /** @type {?} */ destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy()); /** @type {?} */
+        ((this.element.on))('$destroy', () => {
             this.componentScope.$destroy();
             this.componentRef.injector.get(TestabilityRegistry)
                 .unregisterApplication(this.componentRef.location.nativeElement);
-            this.componentRef.destroy();
-            if (needsNgZone) {
-                this.appRef.detachView(this.componentRef.hostView);
-            }
+            destroyComponentRef();
         });
     }
     /**
@@ -749,7 +750,7 @@ function downgradeComponent(info) {
                     facade.createComponent(projectableNodes);
                     facade.setupInputs(needsNgZone, info.propagateDigest);
                     facade.setupOutputs();
-                    facade.registerCleanup(needsNgZone);
+                    facade.registerCleanup();
                     injectorPromise.resolve(facade.getInjector());
                     if (ranAsync) {
                         // If this is run async, it is possible that it is not run inside a

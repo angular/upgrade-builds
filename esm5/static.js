@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-rc.0-745b59f
+ * @license Angular v5.0.0-rc.0-eef7d8a
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -198,7 +198,6 @@ var DowngradeComponentAdapter = (function () {
         this.inputChangeCount = 0;
         this.inputChanges = {};
         this.componentScope = scope.$new();
-        this.appRef = parentInjector.get(ApplicationRef);
     }
     DowngradeComponentAdapter.prototype.compileContents = function () {
         var _this = this;
@@ -254,7 +253,7 @@ var DowngradeComponentAdapter = (function () {
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn_1);
-                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input  in time
+                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input in time
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 var unwatch_1 = this_1.componentScope.$watch(function () {
@@ -299,8 +298,7 @@ var DowngradeComponentAdapter = (function () {
                 _this.inputChanges = {};
                 _this.component.ngOnChanges((inputChanges));
             }
-            // If opted out of propagating digests, invoke change detection
-            // when inputs change
+            // If opted out of propagating digests, invoke change detection when inputs change.
             if (!propagateDigest) {
                 detectChanges();
             }
@@ -309,9 +307,15 @@ var DowngradeComponentAdapter = (function () {
         if (propagateDigest) {
             this.componentScope.$watch(this.wrapCallback(detectChanges));
         }
-        // Attach the view so that it will be dirty-checked.
-        if (needsNgZone) {
-            this.appRef.attachView(this.componentRef.hostView);
+        // If necessary, attach the view so that it will be dirty-checked.
+        // (Allow time for the initial input values to be set and `ngOnChanges()` to be called.)
+        if (needsNgZone || !propagateDigest) {
+            var unwatch_2 = this.componentScope.$watch(function () {
+                unwatch_2();
+                unwatch_2 = null;
+                var appRef = _this.parentInjector.get(ApplicationRef);
+                appRef.attachView(_this.componentRef.hostView);
+            });
         }
     };
     DowngradeComponentAdapter.prototype.setupOutputs = function () {
@@ -361,16 +365,14 @@ var DowngradeComponentAdapter = (function () {
             _loop_2(j);
         }
     };
-    DowngradeComponentAdapter.prototype.registerCleanup = function (needsNgZone) {
+    DowngradeComponentAdapter.prototype.registerCleanup = function () {
         var _this = this;
+        var destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
         this.element.on('$destroy', function () {
             _this.componentScope.$destroy();
             _this.componentRef.injector.get(TestabilityRegistry)
                 .unregisterApplication(_this.componentRef.location.nativeElement);
-            _this.componentRef.destroy();
-            if (needsNgZone) {
-                _this.appRef.detachView(_this.componentRef.hostView);
-            }
+            destroyComponentRef();
         });
     };
     DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
@@ -513,7 +515,7 @@ function downgradeComponent(info) {
                     facade.createComponent(projectableNodes);
                     facade.setupInputs(needsNgZone, info.propagateDigest);
                     facade.setupOutputs();
-                    facade.registerCleanup(needsNgZone);
+                    facade.registerCleanup();
                     injectorPromise.resolve(facade.getInjector());
                     if (ranAsync) {
                         // If this is run async, it is possible that it is not run inside a
@@ -654,7 +656,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('5.0.0-rc.0-745b59f');
+var VERSION = new Version('5.0.0-rc.0-eef7d8a');
 
 /**
  * @license
