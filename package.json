@@ -1,0 +1,24 @@
+{
+  "name": "@angular/upgrade",
+  "version": "5.0.0-rc.9-f5b7f2b",
+  "description": "Angular - the library for easing update from v1 to v2",
+  "main": "./bundles/upgrade.umd.js",
+  "module": "./esm5/upgrade.js",
+  "es2015": "./esm2015/upgrade.js",
+  "typings": "./upgrade.d.ts",
+  "author": "angular",
+  "license": "MIT",
+  "dependencies": {
+    "tslib": "^1.7.1"
+  },
+  "peerDependencies": {
+    "@angular/core": "5.0.0-rc.9-f5b7f2b",
+    "@angular/compiler": "5.0.0-rc.9-f5b7f2b",
+    "@angular/platform-browser": "5.0.0-rc.9-f5b7f2b",
+    "@angular/platform-browser-dynamic": "5.0.0-rc.9-f5b7f2b"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angular/angular.git"
+  }
+}
