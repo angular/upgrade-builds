@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.1.0-beta.0-a99eb16
+ * @license Angular v5.1.0-beta.0-f076401
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('5.1.0-beta.0-a99eb16');
+var VERSION = new Version('5.1.0-beta.0-f076401');
 
 /**
  * @fileoverview added by tsickle
@@ -426,8 +426,7 @@ var DowngradeComponentAdapter = (function () {
      * @return {?}
      */
     function (projectableNodes) {
-        var /** @type {?} */ providers = [{ provide: $SCOPE, useValue: this.componentScope }];
-        var /** @type {?} */ childInjector = Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
+        var /** @type {?} */ childInjector = Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
