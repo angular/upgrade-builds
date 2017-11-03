@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.1.0-beta.0-567cc26
+ * @license Angular v5.1.0-beta.0-faa6212
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.1.0-beta.0-567cc26
+ * @license Angular v5.1.0-beta.0-faa6212
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,7 +33,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.1.0-beta.0-567cc26');
+var VERSION = new _angular_core.Version('5.1.0-beta.0-faa6212');
 
 /**
  * @fileoverview added by tsickle
@@ -434,7 +434,8 @@ var DowngradeComponentAdapter = (function () {
      * @return {?}
      */
     function (projectableNodes) {
-        var /** @type {?} */ childInjector = _angular_core.Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        var /** @type {?} */ providers = [{ provide: $SCOPE, useValue: this.componentScope }];
+        var /** @type {?} */ childInjector = _angular_core.Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
