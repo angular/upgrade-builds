@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.1.0-beta.0-f8658cd
+ * @license Angular v5.1.0-beta.0-336041a
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v5.1.0-beta.0-f8658cd
+ * @license Angular v5.1.0-beta.0-336041a
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -108,7 +108,7 @@ var UPGRADE_MODULE_NAME = '$$UpgradeModule';
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-var PropertyBinding = (function () {
+var PropertyBinding = /** @class */ (function () {
     function PropertyBinding(prop, attr) {
         this.prop = prop;
         this.attr = attr;
@@ -190,7 +190,7 @@ function strictEquals(val1, val2) {
 var INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
-var DowngradeComponentAdapter = (function () {
+var DowngradeComponentAdapter = /** @class */ (function () {
     function DowngradeComponentAdapter(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
         this.element = element;
         this.attrs = attrs;
@@ -560,7 +560,7 @@ function downgradeComponent(info) {
  * Synchronous promise-like object to wrap parent injectors,
  * to preserve the synchronous nature of Angular 1's $compile.
  */
-var ParentInjectorPromise = (function () {
+var ParentInjectorPromise = /** @class */ (function () {
     function ParentInjectorPromise(element) {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
@@ -664,7 +664,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('5.1.0-beta.0-f8658cd');
+var VERSION = new _angular_core.Version('5.1.0-beta.0-336041a');
 
 /**
  * @license
@@ -716,7 +716,7 @@ var angular1Providers = [
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var NgAdapterInjector = (function () {
+var NgAdapterInjector = /** @class */ (function () {
     function NgAdapterInjector(modInjector) {
         this.modInjector = modInjector;
     }
@@ -794,7 +794,7 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
 // Constants
 var REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 // Classes
-var UpgradeHelper = (function () {
+var UpgradeHelper = /** @class */ (function () {
     function UpgradeHelper(injector, name, elementRef, directive) {
         this.injector = injector;
         this.name = name;
@@ -1028,7 +1028,7 @@ var NOT_SUPPORTED = 'NOT_SUPPORTED';
 var INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true
 };
-var Bindings = (function () {
+var Bindings = /** @class */ (function () {
     function Bindings() {
         this.twoWayBoundProperties = [];
         this.twoWayBoundLastValues = [];
@@ -1077,7 +1077,7 @@ var Bindings = (function () {
  *
  * @experimental
  */
-var UpgradeComponent = (function () {
+var UpgradeComponent = /** @class */ (function () {
     /**
      * Create a new `UpgradeComponent` instance. You should not normally need to do this.
      * Instead you should derive a new class from this one and call the super constructor
@@ -1200,7 +1200,7 @@ var UpgradeComponent = (function () {
     UpgradeComponent.prototype.initializeBindings = function (directive) {
         var _this = this;
         var btcIsObject = typeof directive.bindToController === 'object';
-        if (btcIsObject && Object.keys(directive.scope).length) {
+        if (btcIsObject && Object.keys((directive.scope)).length) {
             throw new Error("Binding definitions on scope and controller at the same time is not supported.");
         }
         var context = (btcIsObject) ? directive.bindToController : directive.scope;
@@ -1384,7 +1384,7 @@ var UpgradeComponent = (function () {
  *
  * @experimental
  */
-var UpgradeModule = (function () {
+var UpgradeModule = /** @class */ (function () {
     function UpgradeModule(/** The root {@link Injector} for the upgrade application. */
         /** The root {@link Injector} for the upgrade application. */
         injector, /** The bootstrap zone for the upgrade application */
