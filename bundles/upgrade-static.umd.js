@@ -1,16 +1,16 @@
 /**
- * @license Angular v5.0.0-beta.7-3215c4b
+ * @license Angular v5.1.0-5a0076f
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/platform-browser'], factory) :
+	typeof define === 'function' && define.amd ? define('@angular/upgrade/static', ['exports', '@angular/core', '@angular/platform-browser'], factory) :
 	(factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = {}),global.ng.core,global._angular_platformBrowser));
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v5.0.0-beta.7-3215c4b
+ * @license Angular v5.1.0-5a0076f
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -108,7 +108,7 @@ var UPGRADE_MODULE_NAME = '$$UpgradeModule';
  * `"prop: attr"`; or simply `"propAndAttr" where the property
  * and attribute have the same identifier.
  */
-var PropertyBinding = (function () {
+var PropertyBinding = /** @class */ (function () {
     function PropertyBinding(prop, attr) {
         this.prop = prop;
         this.attr = attr;
@@ -190,7 +190,7 @@ function strictEquals(val1, val2) {
 var INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
-var DowngradeComponentAdapter = (function () {
+var DowngradeComponentAdapter = /** @class */ (function () {
     function DowngradeComponentAdapter(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
         this.element = element;
         this.attrs = attrs;
@@ -206,7 +206,6 @@ var DowngradeComponentAdapter = (function () {
         this.inputChangeCount = 0;
         this.inputChanges = {};
         this.componentScope = scope.$new();
-        this.appRef = parentInjector.get(_angular_core.ApplicationRef);
     }
     DowngradeComponentAdapter.prototype.compileContents = function () {
         var _this = this;
@@ -262,7 +261,7 @@ var DowngradeComponentAdapter = (function () {
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn_1);
-                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input  in time
+                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input in time
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 var unwatch_1 = this_1.componentScope.$watch(function () {
@@ -307,8 +306,7 @@ var DowngradeComponentAdapter = (function () {
                 _this.inputChanges = {};
                 _this.component.ngOnChanges((inputChanges));
             }
-            // If opted out of propagating digests, invoke change detection
-            // when inputs change
+            // If opted out of propagating digests, invoke change detection when inputs change.
             if (!propagateDigest) {
                 detectChanges();
             }
@@ -317,9 +315,15 @@ var DowngradeComponentAdapter = (function () {
         if (propagateDigest) {
             this.componentScope.$watch(this.wrapCallback(detectChanges));
         }
-        // Attach the view so that it will be dirty-checked.
-        if (needsNgZone) {
-            this.appRef.attachView(this.componentRef.hostView);
+        // If necessary, attach the view so that it will be dirty-checked.
+        // (Allow time for the initial input values to be set and `ngOnChanges()` to be called.)
+        if (needsNgZone || !propagateDigest) {
+            var unwatch_2 = this.componentScope.$watch(function () {
+                unwatch_2();
+                unwatch_2 = null;
+                var appRef = _this.parentInjector.get(_angular_core.ApplicationRef);
+                appRef.attachView(_this.componentRef.hostView);
+            });
         }
     };
     DowngradeComponentAdapter.prototype.setupOutputs = function () {
@@ -369,16 +373,14 @@ var DowngradeComponentAdapter = (function () {
             _loop_2(j);
         }
     };
-    DowngradeComponentAdapter.prototype.registerCleanup = function (needsNgZone) {
+    DowngradeComponentAdapter.prototype.registerCleanup = function () {
         var _this = this;
+        var destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
         this.element.on('$destroy', function () {
             _this.componentScope.$destroy();
             _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
                 .unregisterApplication(_this.componentRef.location.nativeElement);
-            _this.componentRef.destroy();
-            if (needsNgZone) {
-                _this.appRef.detachView(_this.componentRef.hostView);
-            }
+            destroyComponentRef();
         });
     };
     DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
@@ -521,7 +523,7 @@ function downgradeComponent(info) {
                     facade.createComponent(projectableNodes);
                     facade.setupInputs(needsNgZone, info.propagateDigest);
                     facade.setupOutputs();
-                    facade.registerCleanup(needsNgZone);
+                    facade.registerCleanup();
                     injectorPromise.resolve(facade.getInjector());
                     if (ranAsync) {
                         // If this is run async, it is possible that it is not run inside a
@@ -558,7 +560,7 @@ function downgradeComponent(info) {
  * Synchronous promise-like object to wrap parent injectors,
  * to preserve the synchronous nature of Angular 1's $compile.
  */
-var ParentInjectorPromise = (function () {
+var ParentInjectorPromise = /** @class */ (function () {
     function ParentInjectorPromise(element) {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
@@ -662,7 +664,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('5.0.0-beta.7-3215c4b');
+var VERSION = new _angular_core.Version('5.1.0-5a0076f');
 
 /**
  * @license
@@ -714,7 +716,7 @@ var angular1Providers = [
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var NgAdapterInjector = (function () {
+var NgAdapterInjector = /** @class */ (function () {
     function NgAdapterInjector(modInjector) {
         this.modInjector = modInjector;
     }
@@ -792,7 +794,7 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
 // Constants
 var REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 // Classes
-var UpgradeHelper = (function () {
+var UpgradeHelper = /** @class */ (function () {
     function UpgradeHelper(injector, name, elementRef, directive) {
         this.injector = injector;
         this.name = name;
@@ -1026,7 +1028,7 @@ var NOT_SUPPORTED = 'NOT_SUPPORTED';
 var INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true
 };
-var Bindings = (function () {
+var Bindings = /** @class */ (function () {
     function Bindings() {
         this.twoWayBoundProperties = [];
         this.twoWayBoundLastValues = [];
@@ -1075,7 +1077,7 @@ var Bindings = (function () {
  *
  * @experimental
  */
-var UpgradeComponent = (function () {
+var UpgradeComponent = /** @class */ (function () {
     /**
      * Create a new `UpgradeComponent` instance. You should not normally need to do this.
      * Instead you should derive a new class from this one and call the super constructor
@@ -1198,7 +1200,7 @@ var UpgradeComponent = (function () {
     UpgradeComponent.prototype.initializeBindings = function (directive) {
         var _this = this;
         var btcIsObject = typeof directive.bindToController === 'object';
-        if (btcIsObject && Object.keys(directive.scope).length) {
+        if (btcIsObject && Object.keys((directive.scope)).length) {
             throw new Error("Binding definitions on scope and controller at the same time is not supported.");
         }
         var context = (btcIsObject) ? directive.bindToController : directive.scope;
@@ -1382,7 +1384,7 @@ var UpgradeComponent = (function () {
  *
  * @experimental
  */
-var UpgradeModule = (function () {
+var UpgradeModule = /** @class */ (function () {
     function UpgradeModule(/** The root {@link Injector} for the upgrade application. */
         /** The root {@link Injector} for the upgrade application. */
         injector, /** The bootstrap zone for the upgrade application */
@@ -1415,7 +1417,10 @@ var UpgradeModule = (function () {
         // Create an ng1 module to bootstrap
         var initModule = module$1(INIT_MODULE_NAME, [])
             .value(INJECTOR_KEY, this.injector)
-            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector, needsNgZone: false }); }])
+            .factory(LAZY_MODULE_REF, [
+            INJECTOR_KEY,
+            function (injector) { return ({ injector: injector, needsNgZone: false }); }
+        ])
             .config([
             $PROVIDE, $INJECTOR,
             function ($provide, $injector) {

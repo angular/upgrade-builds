@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.0.0-beta.7-3215c4b
+ * @license Angular v5.1.0-5a0076f
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,11 +25,18 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.0.0-beta.7-3215c4b');
+const VERSION = new Version('5.1.0-5a0076f');
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
  */
 /**
  * @record
@@ -227,6 +234,13 @@ const REQUIRE_NG_MODEL = '?ngModel';
  * @suppress {checkTypes} checked by tsc
  */
 /**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
  * A `PropertyBinding` represents a mapping between a property name
  * and an attribute name. It is parsed from a string of the form
  * `"prop: attr"`; or simply `"propAndAttr" where the property
@@ -259,6 +273,13 @@ class PropertyBinding {
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
  */
 const DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
 const DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
@@ -402,7 +423,6 @@ class DowngradeComponentAdapter {
         this.inputChangeCount = 0;
         this.inputChanges = {};
         this.componentScope = scope.$new();
-        this.appRef = parentInjector.get(ApplicationRef);
     }
     /**
      * @return {?}
@@ -467,7 +487,7 @@ class DowngradeComponentAdapter {
                     };
                 })(input.prop);
                 attrs.$observe(input.attr, observeFn);
-                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input  in time
+                // Use `$watch()` (in addition to `$observe()`) in order to initialize the input in time
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
                 // `ngOnChanges()` (which is called by a watcher) will run before the `$observe()` callback.
                 let /** @type {?} */ unwatch = this.componentScope.$watch(() => {
@@ -504,8 +524,7 @@ class DowngradeComponentAdapter {
                 this.inputChanges = {};
                 (/** @type {?} */ (this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
             }
-            // If opted out of propagating digests, invoke change detection
-            // when inputs change
+            // If opted out of propagating digests, invoke change detection when inputs change.
             if (!propagateDigest) {
                 detectChanges();
             }
@@ -514,9 +533,15 @@ class DowngradeComponentAdapter {
         if (propagateDigest) {
             this.componentScope.$watch(this.wrapCallback(detectChanges));
         }
-        // Attach the view so that it will be dirty-checked.
-        if (needsNgZone) {
-            this.appRef.attachView(this.componentRef.hostView);
+        // If necessary, attach the view so that it will be dirty-checked.
+        // (Allow time for the initial input values to be set and `ngOnChanges()` to be called.)
+        if (needsNgZone || !propagateDigest) {
+            let /** @type {?} */ unwatch = this.componentScope.$watch(() => {
+                /** @type {?} */ ((unwatch))();
+                unwatch = null;
+                const /** @type {?} */ appRef = this.parentInjector.get(ApplicationRef);
+                appRef.attachView(this.componentRef.hostView);
+            });
         }
     }
     /**
@@ -565,18 +590,15 @@ class DowngradeComponentAdapter {
         }
     }
     /**
-     * @param {?} needsNgZone
      * @return {?}
      */
-    registerCleanup(needsNgZone) {
-        /** @type {?} */ ((this.element.on))('$destroy', () => {
+    registerCleanup() {
+        const /** @type {?} */ destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy()); /** @type {?} */
+        ((this.element.on))('$destroy', () => {
             this.componentScope.$destroy();
             this.componentRef.injector.get(TestabilityRegistry)
                 .unregisterApplication(this.componentRef.location.nativeElement);
-            this.componentRef.destroy();
-            if (needsNgZone) {
-                this.appRef.detachView(this.componentRef.hostView);
-            }
+            destroyComponentRef();
         });
     }
     /**
@@ -749,7 +771,7 @@ function downgradeComponent(info) {
                     facade.createComponent(projectableNodes);
                     facade.setupInputs(needsNgZone, info.propagateDigest);
                     facade.setupOutputs();
-                    facade.registerCleanup(needsNgZone);
+                    facade.registerCleanup();
                     injectorPromise.resolve(facade.getInjector());
                     if (ranAsync) {
                         // If this is run async, it is possible that it is not run inside a
@@ -836,6 +858,13 @@ function isThenable(obj) {
  * @suppress {checkTypes} checked by tsc
  */
 /**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
  * \@whatItDoes
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
@@ -888,6 +917,13 @@ function downgradeInjectable(token) {
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
  */
 // Constants
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
@@ -1256,7 +1292,6 @@ class UpgradeNg1ComponentAdapterBuilder {
             { type: Injector, },
             { type: ElementRef, },
         ];
-        
         this.type = MyClass;
     }
     /**
@@ -1264,7 +1299,7 @@ class UpgradeNg1ComponentAdapterBuilder {
      */
     extractBindings() {
         const /** @type {?} */ btcIsObject = typeof /** @type {?} */ ((this.directive)).bindToController === 'object';
-        if (btcIsObject && Object.keys(/** @type {?} */ ((this.directive)).scope).length) {
+        if (btcIsObject && Object.keys(/** @type {?} */ ((/** @type {?} */ ((this.directive)).scope))).length) {
             throw new Error(`Binding definitions on scope and controller at the same time are not supported.`);
         }
         const /** @type {?} */ context = (btcIsObject) ? /** @type {?} */ ((this.directive)).bindToController : /** @type {?} */ ((this.directive)).scope;
@@ -1952,7 +1987,10 @@ class UpgradeAdapter {
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, () => /** @type {?} */ ((this.moduleRef)).injector.get(Injector))
-            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (injector) => ({ injector, needsInNgZone: false })])
+            .factory(LAZY_MODULE_REF, [
+            INJECTOR_KEY,
+            (injector) => (/** @type {?} */ ({ injector, needsNgZone: false }))
+        ])
             .constant(NG_ZONE_KEY, this.ngZone)
             .factory(COMPILER_KEY, () => /** @type {?} */ ((this.moduleRef)).injector.get(Compiler))
             .config([
@@ -2027,8 +2065,8 @@ class UpgradeAdapter {
                     ];
                     /** @nocollapse */
                     DynamicNgUpgradeModule.ctorParameters = () => [];
-                    (/** @type {?} */ (platformRef))
-                        ._bootstrapModuleWithZone(DynamicNgUpgradeModule, this.compilerOptions, this.ngZone)
+                    platformRef
+                        .bootstrapModule(DynamicNgUpgradeModule, [/** @type {?} */ ((this.compilerOptions)), { ngZone: this.ngZone }])
                         .then((ref) => {
                         this.moduleRef = ref;
                         this.ngZone.run(() => {
@@ -2128,4 +2166,4 @@ class UpgradeAdapterRef {
  */
 
 export { VERSION, UpgradeAdapter, UpgradeAdapterRef };
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=upgrade.js.map
