@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.1.0-7fd441e
+ * @license Angular v5.2.0-beta.0-57e0535
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -209,7 +209,8 @@ class DowngradeComponentAdapter {
         return compiledProjectableNodes;
     }
     createComponent(projectableNodes) {
-        const childInjector = Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        const providers = [{ provide: $SCOPE, useValue: this.componentScope }];
+        const childInjector = Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
@@ -629,7 +630,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-const VERSION = new Version('5.1.0-7fd441e');
+const VERSION = new Version('5.2.0-beta.0-57e0535');
 
 /**
  * @license
