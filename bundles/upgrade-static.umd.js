@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.1.0-43868d2
+ * @license Angular v5.2.0-beta.0-057b357
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v5.1.0-43868d2
+ * @license Angular v5.2.0-beta.0-057b357
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -41,21 +41,33 @@ catch (e) {
     // ignore in CJS mode.
 }
 /**
- * Resets the AngularJS library.
+ * @deprecated Use {@link setAngularJSGlobal} instead.
+ */
+function setAngularLib(ng) {
+    setAngularJSGlobal(ng);
+}
+/**
+ * @deprecated Use {@link getAngularJSGlobal} instead.
+ */
+function getAngularLib() {
+    return getAngularJSGlobal();
+}
+/**
+ * Resets the AngularJS global.
  *
- * Used when angularjs is loaded lazily, and not available on `window`.
+ * Used when AngularJS is loaded lazily, and not available on `window`.
  *
  * @stable
  */
-function setAngularLib(ng) {
+function setAngularJSGlobal(ng) {
     angular = ng;
 }
 /**
- * Returns the current version of the AngularJS library.
+ * Returns the current AngularJS global.
  *
  * @stable
  */
-function getAngularLib() {
+function getAngularJSGlobal() {
     return angular;
 }
 var bootstrap = function (e, modules, config) {
@@ -222,7 +234,8 @@ var DowngradeComponentAdapter = /** @class */ (function () {
         return compiledProjectableNodes;
     };
     DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
-        var childInjector = _angular_core.Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        var providers = [{ provide: $SCOPE, useValue: this.componentScope }];
+        var childInjector = _angular_core.Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
@@ -664,7 +677,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('5.1.0-43868d2');
+var VERSION = new _angular_core.Version('5.2.0-beta.0-057b357');
 
 /**
  * @license
@@ -1534,7 +1547,9 @@ exports.ɵc = compileFactory;
 exports.ɵa = injectorFactory;
 exports.ɵd = parseFactory;
 exports.ɵb = rootScopeFactory;
+exports.getAngularJSGlobal = getAngularJSGlobal;
 exports.getAngularLib = getAngularLib;
+exports.setAngularJSGlobal = setAngularJSGlobal;
 exports.setAngularLib = setAngularLib;
 exports.downgradeComponent = downgradeComponent;
 exports.downgradeInjectable = downgradeInjectable;

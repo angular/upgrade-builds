@@ -221,19 +221,27 @@ export interface INgModelController {
     $name: string;
 }
 /**
- * Resets the AngularJS library.
- *
- * Used when angularjs is loaded lazily, and not available on `window`.
- *
- * @stable
+ * @deprecated Use {@link setAngularJSGlobal} instead.
  */
 export declare function setAngularLib(ng: any): void;
 /**
- * Returns the current version of the AngularJS library.
+ * @deprecated Use {@link getAngularJSGlobal} instead.
+ */
+export declare function getAngularLib(): any;
+/**
+ * Resets the AngularJS global.
+ *
+ * Used when AngularJS is loaded lazily, and not available on `window`.
  *
  * @stable
  */
-export declare function getAngularLib(): any;
+export declare function setAngularJSGlobal(ng: any): void;
+/**
+ * Returns the current AngularJS global.
+ *
+ * @stable
+ */
+export declare function getAngularJSGlobal(): any;
 export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config?: IAngularBootstrapConfig | undefined) => IInjectorService;
 export declare const module: (prefix: string, dependencies?: string[] | undefined) => IModule;
 export declare const element: (e: string | Element) => IAugmentedJQuery;
