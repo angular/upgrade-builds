@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.1.1-57bed3f
+ * @license Angular v5.1.1-a36dfd4
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33,21 +33,33 @@ catch (e) {
     // ignore in CJS mode.
 }
 /**
- * Resets the AngularJS library.
+ * @deprecated Use {@link setAngularJSGlobal} instead.
+ */
+function setAngularLib(ng) {
+    setAngularJSGlobal(ng);
+}
+/**
+ * @deprecated Use {@link getAngularJSGlobal} instead.
+ */
+function getAngularLib() {
+    return getAngularJSGlobal();
+}
+/**
+ * Resets the AngularJS global.
  *
- * Used when angularjs is loaded lazily, and not available on `window`.
+ * Used when AngularJS is loaded lazily, and not available on `window`.
  *
  * @stable
  */
-function setAngularLib(ng) {
+function setAngularJSGlobal(ng) {
     angular = ng;
 }
 /**
- * Returns the current version of the AngularJS library.
+ * Returns the current AngularJS global.
  *
  * @stable
  */
-function getAngularLib() {
+function getAngularJSGlobal() {
     return angular;
 }
 var bootstrap = function (e, modules, config) {
@@ -656,7 +668,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('5.1.1-57bed3f');
+var VERSION = new Version('5.1.1-a36dfd4');
 
 /**
  * @license
@@ -1541,5 +1553,5 @@ var UpgradeModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { angular1Providers as ɵe, compileFactory as ɵc, injectorFactory as ɵa, parseFactory as ɵd, rootScopeFactory as ɵb, getAngularLib, setAngularLib, downgradeComponent, downgradeInjectable, VERSION, downgradeModule, UpgradeComponent, UpgradeModule };
+export { angular1Providers as ɵe, compileFactory as ɵc, injectorFactory as ɵa, parseFactory as ɵd, rootScopeFactory as ɵb, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, downgradeComponent, downgradeInjectable, VERSION, downgradeModule, UpgradeComponent, UpgradeModule };
 //# sourceMappingURL=static.js.map

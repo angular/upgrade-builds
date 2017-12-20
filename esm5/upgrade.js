@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.1.1-57bed3f
+ * @license Angular v5.1.1-a36dfd4
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -25,7 +25,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('5.1.1-57bed3f');
+var VERSION = new Version('5.1.1-a36dfd4');
 
 /**
  * @fileoverview added by tsickle
@@ -177,9 +177,20 @@ catch (/** @type {?} */ e) {
     // ignore in CJS mode.
 }
 /**
- * Resets the AngularJS library.
+ * @deprecated Use {\@link setAngularJSGlobal} instead.
+ * @param {?} ng
+ * @return {?}
+ */
+
+/**
+ * @deprecated Use {\@link getAngularJSGlobal} instead.
+ * @return {?}
+ */
+
+/**
+ * Resets the AngularJS global.
  *
- * Used when angularjs is loaded lazily, and not available on `window`.
+ * Used when AngularJS is loaded lazily, and not available on `window`.
  *
  * \@stable
  * @param {?} ng
@@ -187,7 +198,7 @@ catch (/** @type {?} */ e) {
  */
 
 /**
- * Returns the current version of the AngularJS library.
+ * Returns the current AngularJS global.
  *
  * \@stable
  * @return {?}
