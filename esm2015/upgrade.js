@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.0-beta.1-83c1383
+ * @license Angular v5.2.0-beta.1-83d207d
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18,14 +18,9 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * @module
- * @description
- * Entry point for all public APIs of the common package.
- */
-/**
  * \@stable
  */
-const VERSION = new Version('5.2.0-beta.1-83c1383');
+const VERSION = new Version('5.2.0-beta.1-83d207d');
 
 /**
  * @fileoverview added by tsickle
@@ -2159,12 +2154,6 @@ class UpgradeAdapterRef {
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @module
- * @description
- * Entry point for all public APIs of this package. allowing
- * Angular 1 and Angular 2+ to run side by side in the same application.
  */
 
 // This file only re-exports content of the `src` folder. Keep it that way.
