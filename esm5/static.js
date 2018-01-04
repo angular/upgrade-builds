@@ -1,6 +1,6 @@
 /**
- * @license Angular v5.2.0-rc.0-b5934fc
- * (c) 2010-2018 Google, Inc. https://angular.io/
+ * @license Angular v5.2.0-rc.0-03d16fc
+ * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
 import { ApplicationRef, ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
@@ -664,7 +664,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('5.2.0-rc.0-b5934fc');
+var VERSION = new Version('5.2.0-rc.0-03d16fc');
 
 /**
  * @license
