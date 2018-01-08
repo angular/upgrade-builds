@@ -1,6 +1,6 @@
 /**
- * @license Angular v5.2.0-beta.0-057b357
- * (c) 2010-2017 Google, Inc. https://angular.io/
+ * @license Angular v5.2.0-rc.0-d2808aa
+ * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 import { ApplicationRef, ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
@@ -662,14 +662,9 @@ function downgradeInjectable(token) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * @module
- * @description
- * Entry point for all public APIs of the common package.
- */
-/**
  * @stable
  */
-var VERSION = new Version('5.2.0-beta.0-057b357');
+var VERSION = new Version('5.2.0-rc.0-d2808aa');
 
 /**
  * @license
@@ -1540,12 +1535,6 @@ var UpgradeModule = /** @class */ (function () {
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @module
- * @description
- * Entry point for all public APIs of this package. allowing
- * Angular 1 and Angular 2+ to run side by side in the same application.
  */
 
 // This file only re-exports content of the `src` folder. Keep it that way.
