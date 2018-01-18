@@ -21,6 +21,7 @@ export declare const $$TESTABILITY = "$$testability";
 export declare const COMPILER_KEY = "$$angularCompiler";
 export declare const GROUP_PROJECTABLE_NODES_KEY = "$$angularGroupProjectableNodes";
 export declare const INJECTOR_KEY = "$$angularInjector";
+export declare const LAZY_MODULE_REF = "$$angularLazyModuleRef";
 export declare const NG_ZONE_KEY = "$$angularNgZone";
 export declare const REQUIRE_INJECTOR: string;
 export declare const REQUIRE_NG_MODEL = "?ngModel";

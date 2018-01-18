@@ -50,11 +50,8 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private name;
     private elementRef;
     private injector;
+    private helper;
     private $injector;
-    private $compile;
-    private $templateCache;
-    private $httpBackend;
-    private $controller;
     private element;
     private $element;
     private $componentScope;
@@ -85,16 +82,8 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     ngOnChanges(changes: SimpleChanges): void;
     ngDoCheck(): void;
     ngOnDestroy(): void;
-    private getDirective(name);
-    private getDirectiveRequire(directive);
     private initializeBindings(directive);
-    private extractChildNodes(element);
-    private compileTemplate(directive);
-    private buildController(controllerType, $scope, $element, controllerAs);
-    private resolveRequire(directiveName, $element, require);
     private initializeOutputs();
     private bindOutputs();
     private forwardChanges(changes);
-    private notSupported(feature);
-    private compileHtml(html);
 }
