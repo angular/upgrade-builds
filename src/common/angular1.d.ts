@@ -31,6 +31,9 @@ export interface ICompileService {
 }
 export interface ILinkFn {
     (scope: IScope, cloneAttachFn?: ICloneAttachFunction, options?: ILinkFnOptions): IAugmentedJQuery;
+    $$slots?: {
+        [slotName: string]: ILinkFn;
+    };
 }
 export interface ILinkFnOptions {
     parentBoundTranscludeFn?: Function;
@@ -49,7 +52,7 @@ export interface IRootScopeService {
     $destroy(): any;
     $apply(exp?: Ng1Expression): any;
     $digest(): any;
-    $evalAsync(): any;
+    $evalAsync(exp: Ng1Expression, locals?: any): void;
     $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
     $$childTail: IScope;
     $$childHead: IScope;
@@ -81,11 +84,12 @@ export interface IDirective {
     templateUrl?: string | Function;
     templateNamespace?: string;
     terminal?: boolean;
-    transclude?: boolean | 'element' | {
-        [key: string]: string;
-    };
+    transclude?: DirectiveTranscludeProperty;
 }
 export declare type DirectiveRequireProperty = SingleOrListOrMap<string>;
+export declare type DirectiveTranscludeProperty = boolean | 'element' | {
+    [key: string]: string;
+};
 export interface IDirectiveCompileFn {
     (templateElement: IAugmentedJQuery, templateAttributes: IAttributes, transclude: ITranscludeFunction): IDirectivePrePost;
 }
@@ -105,10 +109,11 @@ export interface IComponent {
     require?: DirectiveRequireProperty;
     template?: string | Function;
     templateUrl?: string | Function;
-    transclude?: boolean;
+    transclude?: DirectiveTranscludeProperty;
 }
 export interface IAttributes {
     $observe(attr: string, fn: (v: string) => void): void;
+    [key: string]: any;
 }
 export interface ITranscludeFunction {
     (scope: IScope, cloneAttachFn: ICloneAttachFunction): IAugmentedJQuery;
@@ -118,7 +123,7 @@ export interface ICloneAttachFunction {
     (clonedElement?: IAugmentedJQuery, scope?: IScope): any;
 }
 export declare type IAugmentedJQuery = Node[] & {
-    bind?: (name: string, fn: () => void) => void;
+    on?: (name: string, fn: () => void) => void;
     data?: (name: string, value?: any) => any;
     text?: () => string;
     inheritedData?: (name: string, value?: any) => any;
@@ -129,6 +134,7 @@ export declare type IAugmentedJQuery = Node[] & {
     controller?: (name: string) => any;
     isolateScope?: () => IScope;
     injector?: () => IInjectorService;
+    remove?: () => void;
 };
 export interface IProvider {
     $get: IInjectable;
@@ -145,7 +151,8 @@ export interface IParseService {
     (expression: string): ICompiledExpression;
 }
 export interface ICompiledExpression {
-    assign(context: any, value: any): any;
+    (context: any, locals: any): any;
+    assign?: (context: any, value: any) => any;
 }
 export interface IHttpBackendService {
     (method: string, url: string, post?: any, callback?: Function, headers?: any, timeout?: number, withCredentials?: boolean): void;
@@ -168,6 +175,10 @@ export interface IControllerService {
 export interface IInjectorService {
     get(key: string): any;
     has(key: string): boolean;
+}
+export interface IIntervalService {
+    (func: Function, delay: number, count?: number, invokeApply?: boolean, ...args: any[]): Promise<any>;
+    cancel(promise: Promise<any>): boolean;
 }
 export interface ITestabilityService {
     findBindings(element: Element, expression: string, opt_exactMatch?: boolean): Element[];
@@ -209,11 +220,33 @@ export interface INgModelController {
     $invalid: boolean;
     $name: string;
 }
-export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config: IAngularBootstrapConfig) => void;
-export declare const module: (prefix: string, dependencies?: string[]) => IModule;
+/**
+ * @deprecated Use {@link setAngularJSGlobal} instead.
+ */
+export declare function setAngularLib(ng: any): void;
+/**
+ * @deprecated Use {@link getAngularJSGlobal} instead.
+ */
+export declare function getAngularLib(): any;
+/**
+ * Resets the AngularJS global.
+ *
+ * Used when AngularJS is loaded lazily, and not available on `window`.
+ *
+ * @stable
+ */
+export declare function setAngularJSGlobal(ng: any): void;
+/**
+ * Returns the current AngularJS global.
+ *
+ * @stable
+ */
+export declare function getAngularJSGlobal(): any;
+export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config?: IAngularBootstrapConfig | undefined) => IInjectorService;
+export declare const module: (prefix: string, dependencies?: string[] | undefined) => IModule;
 export declare const element: (e: string | Element) => IAugmentedJQuery;
+export declare const resumeBootstrap: () => void;
+export declare const getTestability: (e: Element) => ITestabilityService;
 export declare const version: {
     major: number;
 };
-export declare const resumeBootstrap: () => void;
-export declare const getTestability: (e: Element) => ITestabilityService;
