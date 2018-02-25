@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.6-4a08745
+ * @license Angular v5.2.6-a9a0e27
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ let angular = {
     bootstrap: noNg,
     module: noNg,
     element: noNg,
-    version: noNg,
+    version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
 };
@@ -53,6 +53,7 @@ function getAngularLib() {
  */
 function setAngularJSGlobal(ng) {
     angular = ng;
+    version = ng && ng.version;
 }
 /**
  * Returns the current AngularJS global.
@@ -65,6 +66,9 @@ function getAngularJSGlobal() {
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e) => angular.element(e);
+
+
+let version = angular.version;
 
 /**
  * @license
@@ -637,7 +641,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-const VERSION = new Version('5.2.6-4a08745');
+const VERSION = new Version('5.2.6-a9a0e27');
 
 /**
  * @license
@@ -829,8 +833,15 @@ class UpgradeHelper {
     prepareTransclusion() {
         const transclude = this.directive.transclude;
         const contentChildNodes = this.extractChildNodes();
+        const attachChildrenFn = (scope, cloneAttachFn) => {
+            // Since AngularJS v1.5.8, `cloneAttachFn` will try to destroy the transclusion scope if
+            // `$template` is empty. Since the transcluded content comes from Angular, not AngularJS,
+            // there will be no transclusion scope here.
+            // Provide a dummy `scope.$destroy()` method to prevent `cloneAttachFn` from throwing.
+            scope = scope || { $destroy: () => undefined };
+            return cloneAttachFn($template, scope);
+        };
         let $template = contentChildNodes;
-        let attachChildrenFn = (scope, cloneAttach) => cloneAttach($template, scope);
         if (transclude) {
             const slots = Object.create(null);
             if (typeof transclude === 'object') {

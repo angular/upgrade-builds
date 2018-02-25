@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.6-4a08745
+ * @license Angular v5.2.6-a9a0e27
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ var angular = {
     bootstrap: noNg,
     module: noNg,
     element: noNg,
-    version: noNg,
+    version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
 };
@@ -53,6 +53,7 @@ function getAngularLib() {
  */
 function setAngularJSGlobal(ng) {
     angular = ng;
+    version = ng && ng.version;
 }
 /**
  * Returns the current AngularJS global.
@@ -69,6 +70,9 @@ var module$1 = function (prefix, dependencies) {
     return angular.module(prefix, dependencies);
 };
 var element = function (e) { return angular.element(e); };
+
+
+var version = angular.version;
 
 /**
  * @license
@@ -664,7 +668,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new Version('5.2.6-4a08745');
+var VERSION = new Version('5.2.6-a9a0e27');
 
 /**
  * @license
@@ -870,10 +874,15 @@ var UpgradeHelper = /** @class */ (function () {
         var _this = this;
         var transclude = this.directive.transclude;
         var contentChildNodes = this.extractChildNodes();
-        var $template = contentChildNodes;
-        var attachChildrenFn = function (scope, cloneAttach) {
-            return cloneAttach($template, scope);
+        var attachChildrenFn = function (scope, cloneAttachFn) {
+            // Since AngularJS v1.5.8, `cloneAttachFn` will try to destroy the transclusion scope if
+            // `$template` is empty. Since the transcluded content comes from Angular, not AngularJS,
+            // there will be no transclusion scope here.
+            // Provide a dummy `scope.$destroy()` method to prevent `cloneAttachFn` from throwing.
+            scope = scope || { $destroy: function () { return undefined; } };
+            return cloneAttachFn($template, scope);
         };
+        var $template = contentChildNodes;
         if (transclude) {
             var slots_1 = Object.create(null);
             if (typeof transclude === 'object') {

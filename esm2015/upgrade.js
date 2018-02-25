@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.6-4a08745
+ * @license Angular v5.2.6-a9a0e27
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.2.6-4a08745');
+const VERSION = new Version('5.2.6-a9a0e27');
 
 /**
  * @fileoverview added by tsickle
@@ -159,7 +159,7 @@ let angular = /** @type {?} */ ({
     bootstrap: noNg,
     module: noNg,
     element: noNg,
-    version: noNg,
+    version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
 });
@@ -1045,8 +1045,15 @@ class UpgradeHelper {
     prepareTransclusion() {
         const /** @type {?} */ transclude = this.directive.transclude;
         const /** @type {?} */ contentChildNodes = this.extractChildNodes();
+        const /** @type {?} */ attachChildrenFn = (scope, cloneAttachFn) => {
+            // Since AngularJS v1.5.8, `cloneAttachFn` will try to destroy the transclusion scope if
+            // `$template` is empty. Since the transcluded content comes from Angular, not AngularJS,
+            // there will be no transclusion scope here.
+            // Provide a dummy `scope.$destroy()` method to prevent `cloneAttachFn` from throwing.
+            scope = scope || { $destroy: () => undefined };
+            return /** @type {?} */ ((cloneAttachFn))($template, scope);
+        };
         let /** @type {?} */ $template = contentChildNodes;
-        let /** @type {?} */ attachChildrenFn = (scope, cloneAttach) => /** @type {?} */ ((cloneAttach))($template, scope);
         if (transclude) {
             const /** @type {?} */ slots = Object.create(null);
             if (typeof transclude === 'object') {
@@ -1409,7 +1416,9 @@ class UpgradeNg1ComponentAdapter {
         }
         for (let /** @type {?} */ j = 0; j < outputs.length; j++) {
             const /** @type {?} */ emitter = (/** @type {?} */ (this))[outputs[j]] = new EventEmitter();
-            this.setComponentProperty(outputs[j], (emitter => (value) => emitter.emit(value))(emitter));
+            if (this.propOuts.indexOf(outputs[j]) === -1) {
+                this.setComponentProperty(outputs[j], (emitter => (value) => emitter.emit(value))(emitter));
+            }
         }
         for (let /** @type {?} */ k = 0; k < propOuts.length; k++) {
             this.checkLastValues.push(INITIAL_VALUE$1);
