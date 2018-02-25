@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-beta.5-a403229
+ * @license Angular v6.0.0-beta.5-13ab91e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v6.0.0-beta.5-a403229
+ * @license Angular v6.0.0-beta.5-13ab91e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -28,7 +28,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('6.0.0-beta.5-a403229');
+var VERSION = new _angular_core.Version('6.0.0-beta.5-13ab91e');
 
 /**
  * @fileoverview added by tsickle
@@ -167,7 +167,7 @@ var angular = /** @type {?} */ ({
     bootstrap: noNg,
     module: noNg,
     element: noNg,
-    version: noNg,
+    version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
 });
@@ -1124,8 +1124,15 @@ var UpgradeHelper = /** @class */ (function () {
         var _this = this;
         var /** @type {?} */ transclude = this.directive.transclude;
         var /** @type {?} */ contentChildNodes = this.extractChildNodes();
+        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttachFn) {
+            // Since AngularJS v1.5.8, `cloneAttachFn` will try to destroy the transclusion scope if
+            // `$template` is empty. Since the transcluded content comes from Angular, not AngularJS,
+            // there will be no transclusion scope here.
+            // Provide a dummy `scope.$destroy()` method to prevent `cloneAttachFn` from throwing.
+            scope = scope || { $destroy: function () { return undefined; } };
+            return /** @type {?} */ ((cloneAttachFn))($template, scope);
+        };
         var /** @type {?} */ $template = contentChildNodes;
-        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttach) { return ((cloneAttach))($template, scope); };
         if (transclude) {
             var /** @type {?} */ slots_1 = Object.create(null);
             if (typeof transclude === 'object') {
@@ -1518,7 +1525,9 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
         }
         for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
             var /** @type {?} */ emitter = (/** @type {?} */ (this))[outputs[j]] = new _angular_core.EventEmitter();
-            this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
+            if (this.propOuts.indexOf(outputs[j]) === -1) {
+                this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
+            }
         }
         for (var /** @type {?} */ k = 0; k < propOuts.length; k++) {
             this.checkLastValues.push(INITIAL_VALUE$1);
