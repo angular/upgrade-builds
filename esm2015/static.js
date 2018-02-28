@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.6-f2fa7a2
+ * @license Angular v5.2.6-4aef9de
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -364,11 +364,15 @@ class DowngradeComponentAdapter {
     }
     registerCleanup() {
         const destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy());
-        this.element.on('$destroy', () => {
-            this.componentScope.$destroy();
-            this.componentRef.injector.get(TestabilityRegistry)
-                .unregisterApplication(this.componentRef.location.nativeElement);
-            destroyComponentRef();
+        let destroyed = false;
+        this.element.on('$destroy', () => this.componentScope.$destroy());
+        this.componentScope.$on('$destroy', () => {
+            if (!destroyed) {
+                destroyed = true;
+                this.componentRef.injector.get(TestabilityRegistry)
+                    .unregisterApplication(this.componentRef.location.nativeElement);
+                destroyComponentRef();
+            }
         });
     }
     getInjector() { return this.componentRef.injector; }
@@ -641,7 +645,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-const VERSION = new Version('5.2.6-f2fa7a2');
+const VERSION = new Version('5.2.6-4aef9de');
 
 /**
  * @license

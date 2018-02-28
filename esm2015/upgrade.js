@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.6-f2fa7a2
+ * @license Angular v5.2.6-4aef9de
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('5.2.6-f2fa7a2');
+const VERSION = new Version('5.2.6-4aef9de');
 
 /**
  * @fileoverview added by tsickle
@@ -600,12 +600,16 @@ class DowngradeComponentAdapter {
      * @return {?}
      */
     registerCleanup() {
-        const /** @type {?} */ destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy()); /** @type {?} */
-        ((this.element.on))('$destroy', () => {
-            this.componentScope.$destroy();
-            this.componentRef.injector.get(TestabilityRegistry)
-                .unregisterApplication(this.componentRef.location.nativeElement);
-            destroyComponentRef();
+        const /** @type {?} */ destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy());
+        let /** @type {?} */ destroyed = false; /** @type {?} */
+        ((this.element.on))('$destroy', () => this.componentScope.$destroy());
+        this.componentScope.$on('$destroy', () => {
+            if (!destroyed) {
+                destroyed = true;
+                this.componentRef.injector.get(TestabilityRegistry)
+                    .unregisterApplication(this.componentRef.location.nativeElement);
+                destroyComponentRef();
+            }
         });
     }
     /**
@@ -1503,6 +1507,7 @@ class UpgradeNg1ComponentAdapter {
         if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
+        this.componentScope.$destroy();
     }
     /**
      * @param {?} name
