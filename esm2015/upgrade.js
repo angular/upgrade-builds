@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-beta.5-83b32a0
+ * @license Angular v6.0.0-beta.5-8a85888
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('6.0.0-beta.5-83b32a0');
+const VERSION = new Version('6.0.0-beta.5-8a85888');
 
 /**
  * @fileoverview added by tsickle
@@ -600,12 +600,16 @@ class DowngradeComponentAdapter {
      * @return {?}
      */
     registerCleanup() {
-        const /** @type {?} */ destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy()); /** @type {?} */
-        ((this.element.on))('$destroy', () => {
-            this.componentScope.$destroy();
-            this.componentRef.injector.get(TestabilityRegistry)
-                .unregisterApplication(this.componentRef.location.nativeElement);
-            destroyComponentRef();
+        const /** @type {?} */ destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy());
+        let /** @type {?} */ destroyed = false; /** @type {?} */
+        ((this.element.on))('$destroy', () => this.componentScope.$destroy());
+        this.componentScope.$on('$destroy', () => {
+            if (!destroyed) {
+                destroyed = true;
+                this.componentRef.injector.get(TestabilityRegistry)
+                    .unregisterApplication(this.componentRef.location.nativeElement);
+                destroyComponentRef();
+            }
         });
     }
     /**
@@ -1503,6 +1507,7 @@ class UpgradeNg1ComponentAdapter {
         if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
+        this.componentScope.$destroy();
     }
     /**
      * @param {?} name

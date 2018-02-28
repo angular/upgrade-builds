@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-beta.5-83b32a0
+ * @license Angular v6.0.0-beta.5-8a85888
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v6.0.0-beta.5-83b32a0
+ * @license Angular v6.0.0-beta.5-8a85888
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -393,11 +393,15 @@ var DowngradeComponentAdapter = /** @class */ (function () {
     DowngradeComponentAdapter.prototype.registerCleanup = function () {
         var _this = this;
         var destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
-        this.element.on('$destroy', function () {
-            _this.componentScope.$destroy();
-            _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
-                .unregisterApplication(_this.componentRef.location.nativeElement);
-            destroyComponentRef();
+        var destroyed = false;
+        this.element.on('$destroy', function () { return _this.componentScope.$destroy(); });
+        this.componentScope.$on('$destroy', function () {
+            if (!destroyed) {
+                destroyed = true;
+                _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
+                    .unregisterApplication(_this.componentRef.location.nativeElement);
+                destroyComponentRef();
+            }
         });
     };
     DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
@@ -676,7 +680,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('6.0.0-beta.5-83b32a0');
+var VERSION = new _angular_core.Version('6.0.0-beta.5-8a85888');
 
 /**
  * @license

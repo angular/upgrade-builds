@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-beta.5-83b32a0
+ * @license Angular v6.0.0-beta.5-8a85888
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v6.0.0-beta.5-83b32a0
+ * @license Angular v6.0.0-beta.5-8a85888
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -28,7 +28,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('6.0.0-beta.5-83b32a0');
+var VERSION = new _angular_core.Version('6.0.0-beta.5-8a85888');
 
 /**
  * @fileoverview added by tsickle
@@ -637,12 +637,16 @@ var DowngradeComponentAdapter = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        var /** @type {?} */ destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); }); /** @type {?} */
-        ((this.element.on))('$destroy', function () {
-            _this.componentScope.$destroy();
-            _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
-                .unregisterApplication(_this.componentRef.location.nativeElement);
-            destroyComponentRef();
+        var /** @type {?} */ destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
+        var /** @type {?} */ destroyed = false; /** @type {?} */
+        ((this.element.on))('$destroy', function () { return _this.componentScope.$destroy(); });
+        this.componentScope.$on('$destroy', function () {
+            if (!destroyed) {
+                destroyed = true;
+                _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
+                    .unregisterApplication(_this.componentRef.location.nativeElement);
+                destroyComponentRef();
+            }
         });
     };
     /**
@@ -1627,6 +1631,7 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
         if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
+        this.componentScope.$destroy();
     };
     /**
      * @param {?} name
