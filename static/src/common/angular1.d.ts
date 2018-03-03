@@ -135,6 +135,7 @@ export declare type IAugmentedJQuery = Node[] & {
     isolateScope?: () => IScope;
     injector?: () => IInjectorService;
     remove?: () => void;
+    removeData?: () => void;
 };
 export interface IProvider {
     $get: IInjectable;
@@ -247,6 +248,6 @@ export declare const module: (prefix: string, dependencies?: string[] | undefine
 export declare const element: (e: string | Element) => IAugmentedJQuery;
 export declare const resumeBootstrap: () => void;
 export declare const getTestability: (e: Element) => ITestabilityService;
-export declare const version: {
+export declare let version: {
     major: number;
 };

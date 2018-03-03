@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.0-2717a3e
+ * @license Angular v6.0.0-beta.6-371ec91
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ let angular = {
     bootstrap: noNg,
     module: noNg,
     element: noNg,
-    version: noNg,
+    version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
 };
@@ -53,6 +53,7 @@ function getAngularLib() {
  */
 function setAngularJSGlobal(ng) {
     angular = ng;
+    version = ng && ng.version;
 }
 /**
  * Returns the current AngularJS global.
@@ -65,6 +66,9 @@ function getAngularJSGlobal() {
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e) => angular.element(e);
+
+
+let version = angular.version;
 
 /**
  * @license
@@ -360,11 +364,15 @@ class DowngradeComponentAdapter {
     }
     registerCleanup() {
         const destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy());
-        this.element.on('$destroy', () => {
-            this.componentScope.$destroy();
-            this.componentRef.injector.get(TestabilityRegistry)
-                .unregisterApplication(this.componentRef.location.nativeElement);
-            destroyComponentRef();
+        let destroyed = false;
+        this.element.on('$destroy', () => this.componentScope.$destroy());
+        this.componentScope.$on('$destroy', () => {
+            if (!destroyed) {
+                destroyed = true;
+                this.componentRef.injector.get(TestabilityRegistry)
+                    .unregisterApplication(this.componentRef.location.nativeElement);
+                destroyComponentRef();
+            }
         });
     }
     getInjector() { return this.componentRef.injector; }
@@ -637,7 +645,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-const VERSION = new Version('5.2.0-2717a3e');
+const VERSION = new Version('6.0.0-beta.6-371ec91');
 
 /**
  * @license
@@ -829,8 +837,15 @@ class UpgradeHelper {
     prepareTransclusion() {
         const transclude = this.directive.transclude;
         const contentChildNodes = this.extractChildNodes();
+        const attachChildrenFn = (scope, cloneAttachFn) => {
+            // Since AngularJS v1.5.8, `cloneAttachFn` will try to destroy the transclusion scope if
+            // `$template` is empty. Since the transcluded content comes from Angular, not AngularJS,
+            // there will be no transclusion scope here.
+            // Provide a dummy `scope.$destroy()` method to prevent `cloneAttachFn` from throwing.
+            scope = scope || { $destroy: () => undefined };
+            return cloneAttachFn($template, scope);
+        };
         let $template = contentChildNodes;
-        let attachChildrenFn = (scope, cloneAttach) => cloneAttach($template, scope);
         if (transclude) {
             const slots = Object.create(null);
             if (typeof transclude === 'object') {

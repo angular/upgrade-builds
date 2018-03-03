@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.0-2717a3e
+ * @license Angular v6.0.0-beta.6-371ec91
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('5.2.0-2717a3e');
+var VERSION = new Version('6.0.0-beta.6-371ec91');
 
 /**
  * @fileoverview added by tsickle
@@ -159,7 +159,7 @@ var angular = /** @type {?} */ ({
     bootstrap: noNg,
     module: noNg,
     element: noNg,
-    version: noNg,
+    version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
 });
@@ -629,12 +629,16 @@ var DowngradeComponentAdapter = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        var /** @type {?} */ destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); }); /** @type {?} */
-        ((this.element.on))('$destroy', function () {
-            _this.componentScope.$destroy();
-            _this.componentRef.injector.get(TestabilityRegistry)
-                .unregisterApplication(_this.componentRef.location.nativeElement);
-            destroyComponentRef();
+        var /** @type {?} */ destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
+        var /** @type {?} */ destroyed = false; /** @type {?} */
+        ((this.element.on))('$destroy', function () { return _this.componentScope.$destroy(); });
+        this.componentScope.$on('$destroy', function () {
+            if (!destroyed) {
+                destroyed = true;
+                _this.componentRef.injector.get(TestabilityRegistry)
+                    .unregisterApplication(_this.componentRef.location.nativeElement);
+                destroyComponentRef();
+            }
         });
     };
     /**
@@ -1116,8 +1120,15 @@ var UpgradeHelper = /** @class */ (function () {
         var _this = this;
         var /** @type {?} */ transclude = this.directive.transclude;
         var /** @type {?} */ contentChildNodes = this.extractChildNodes();
+        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttachFn) {
+            // Since AngularJS v1.5.8, `cloneAttachFn` will try to destroy the transclusion scope if
+            // `$template` is empty. Since the transcluded content comes from Angular, not AngularJS,
+            // there will be no transclusion scope here.
+            // Provide a dummy `scope.$destroy()` method to prevent `cloneAttachFn` from throwing.
+            scope = scope || { $destroy: function () { return undefined; } };
+            return /** @type {?} */ ((cloneAttachFn))($template, scope);
+        };
         var /** @type {?} */ $template = contentChildNodes;
-        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttach) { return ((cloneAttach))($template, scope); };
         if (transclude) {
             var /** @type {?} */ slots_1 = Object.create(null);
             if (typeof transclude === 'object') {
@@ -1510,7 +1521,9 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
         }
         for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
             var /** @type {?} */ emitter = (/** @type {?} */ (this))[outputs[j]] = new EventEmitter();
-            this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
+            if (this.propOuts.indexOf(outputs[j]) === -1) {
+                this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
+            }
         }
         for (var /** @type {?} */ k = 0; k < propOuts.length; k++) {
             this.checkLastValues.push(INITIAL_VALUE$1);
@@ -1610,6 +1623,7 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
         if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
+        this.componentScope.$destroy();
     };
     /**
      * @param {?} name
