@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-beta.7-0bf6fa5
+ * @license Angular v6.0.0-beta.7-3f70aba
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v6.0.0-beta.7-0bf6fa5
+ * @license Angular v6.0.0-beta.7-3f70aba
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -680,7 +680,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('6.0.0-beta.7-0bf6fa5');
+var VERSION = new _angular_core.Version('6.0.0-beta.7-3f70aba');
 
 /**
  * @license
@@ -1407,9 +1407,9 @@ var UpgradeComponent = /** @class */ (function () {
  */
 var UpgradeModule = /** @class */ (function () {
     function UpgradeModule(/** The root {@link Injector} for the upgrade application. */
-        /** The root {@link Injector} for the upgrade application. */
-        injector, /** The bootstrap zone for the upgrade application */
-        ngZone) {
+    /** The root {@link Injector} for the upgrade application. */
+    injector, /** The bootstrap zone for the upgrade application */
+    ngZone) {
         this.ngZone = ngZone;
         this.injector = new NgAdapterInjector(injector);
     }
