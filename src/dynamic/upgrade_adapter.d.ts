@@ -97,7 +97,7 @@ export declare class UpgradeAdapter {
     private ng1Module;
     private moduleRef;
     private ng2BootstrapDeferred;
-    constructor(ng2AppModule: Type<any>, compilerOptions?: CompilerOptions);
+    constructor(ng2AppModule: Type<any>, compilerOptions?: CompilerOptions | undefined);
     /**
      * Allows Angular Component to be used from AngularJS.
      *

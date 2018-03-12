@@ -13,6 +13,6 @@ export declare function compileFactory(i: angular.IInjectorService): any;
 export declare function parseFactory(i: angular.IInjectorService): any;
 export declare const angular1Providers: {
     provide: string;
-    useFactory: (i: angular.IInjectorService) => any;
+    useFactory: typeof rootScopeFactory;
     deps: string[];
 }[];
