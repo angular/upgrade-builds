@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-beta.7-88b3198
+ * @license Angular v6.0.0-beta.7-a011654
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('6.0.0-beta.7-88b3198');
+const VERSION = new Version('6.0.0-beta.7-a011654');
 
 /**
  * @fileoverview added by tsickle
@@ -339,6 +339,9 @@ function getComponentName(component) {
 function isFunction(value) {
     return typeof value === 'function';
 }
+/**
+ * @template R
+ */
 class Deferred {
     constructor() {
         this.promise = new Promise((res, rej) => {
