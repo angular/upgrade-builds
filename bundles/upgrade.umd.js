@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.9-7d9de17
+ * @license Angular v5.2.9-aca4735
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.2.9-7d9de17
+ * @license Angular v5.2.9-aca4735
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -28,7 +28,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.2.9-7d9de17');
+var VERSION = new _angular_core.Version('5.2.9-aca4735');
 
 /**
  * @fileoverview added by tsickle
@@ -351,6 +351,9 @@ function getComponentName(component) {
 function isFunction(value) {
     return typeof value === 'function';
 }
+/**
+ * @template R
+ */
 var Deferred = /** @class */ (function () {
     function Deferred() {
         var _this = this;
