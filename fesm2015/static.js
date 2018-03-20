@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-beta.7-5c387a7
+ * @license Angular v6.0.0-beta.7-2b3de63
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -325,41 +325,38 @@ class DowngradeComponentAdapter {
         const outputs = this.componentFactory.outputs || [];
         for (let j = 0; j < outputs.length; j++) {
             const output = new PropertyBinding(outputs[j].propName, outputs[j].templateName);
-            let expr = null;
-            let assignExpr = false;
             const bindonAttr = output.bindonAttr.substring(0, output.bindonAttr.length - 6);
             const bracketParenAttr = `[(${output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8)})]`;
+            // order below is important - first update bindings then evaluate expressions
+            if (attrs.hasOwnProperty(bindonAttr)) {
+                this.subscribeToOutput(output, attrs[bindonAttr], true);
+            }
+            if (attrs.hasOwnProperty(bracketParenAttr)) {
+                this.subscribeToOutput(output, attrs[bracketParenAttr], true);
+            }
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = attrs[output.onAttr];
+                this.subscribeToOutput(output, attrs[output.onAttr]);
             }
-            else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = attrs[output.parenAttr];
+            if (attrs.hasOwnProperty(output.parenAttr)) {
+                this.subscribeToOutput(output, attrs[output.parenAttr]);
             }
-            else if (attrs.hasOwnProperty(bindonAttr)) {
-                expr = attrs[bindonAttr];
-                assignExpr = true;
-            }
-            else if (attrs.hasOwnProperty(bracketParenAttr)) {
-                expr = attrs[bracketParenAttr];
-                assignExpr = true;
-            }
-            if (expr != null && assignExpr != null) {
-                const getter = this.$parse(expr);
-                const setter = getter.assign;
-                if (assignExpr && !setter) {
-                    throw new Error(`Expression '${expr}' is not assignable!`);
-                }
-                const emitter = this.component[output.prop];
-                if (emitter) {
-                    emitter.subscribe({
-                        next: assignExpr ? (v) => setter(this.scope, v) :
-                            (v) => getter(this.scope, { '$event': v })
-                    });
-                }
-                else {
-                    throw new Error(`Missing emitter '${output.prop}' on component '${getComponentName(this.componentFactory.componentType)}'!`);
-                }
-            }
+        }
+    }
+    subscribeToOutput(output, expr, isAssignment = false) {
+        const getter = this.$parse(expr);
+        const setter = getter.assign;
+        if (isAssignment && !setter) {
+            throw new Error(`Expression '${expr}' is not assignable!`);
+        }
+        const emitter = this.component[output.prop];
+        if (emitter) {
+            emitter.subscribe({
+                next: isAssignment ? (v) => setter(this.scope, v) :
+                    (v) => getter(this.scope, { '$event': v })
+            });
+        }
+        else {
+            throw new Error(`Missing emitter '${output.prop}' on component '${getComponentName(this.componentFactory.componentType)}'!`);
         }
     }
     registerCleanup() {
@@ -645,7 +642,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-const VERSION = new Version('6.0.0-beta.7-5c387a7');
+const VERSION = new Version('6.0.0-beta.7-2b3de63');
 
 /**
  * @license
