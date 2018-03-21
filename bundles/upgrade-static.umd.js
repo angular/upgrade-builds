@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-beta.7-63cad11
+ * @license Angular v6.0.0-rc.0-0f31b2d
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v6.0.0-beta.7-63cad11
+ * @license Angular v6.0.0-rc.0-0f31b2d
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -344,50 +344,44 @@ var DowngradeComponentAdapter = /** @class */ (function () {
         }
     };
     DowngradeComponentAdapter.prototype.setupOutputs = function () {
-        var _this = this;
         var attrs = this.attrs;
         var outputs = this.componentFactory.outputs || [];
-        var _loop_2 = function (j) {
+        for (var j = 0; j < outputs.length; j++) {
             var output = new PropertyBinding(outputs[j].propName, outputs[j].templateName);
-            var expr = null;
-            var assignExpr = false;
             var bindonAttr = output.bindonAttr.substring(0, output.bindonAttr.length - 6);
             var bracketParenAttr = "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]";
+            // order below is important - first update bindings then evaluate expressions
+            if (attrs.hasOwnProperty(bindonAttr)) {
+                this.subscribeToOutput(output, attrs[bindonAttr], true);
+            }
+            if (attrs.hasOwnProperty(bracketParenAttr)) {
+                this.subscribeToOutput(output, attrs[bracketParenAttr], true);
+            }
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = attrs[output.onAttr];
+                this.subscribeToOutput(output, attrs[output.onAttr]);
             }
-            else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = attrs[output.parenAttr];
+            if (attrs.hasOwnProperty(output.parenAttr)) {
+                this.subscribeToOutput(output, attrs[output.parenAttr]);
             }
-            else if (attrs.hasOwnProperty(bindonAttr)) {
-                expr = attrs[bindonAttr];
-                assignExpr = true;
-            }
-            else if (attrs.hasOwnProperty(bracketParenAttr)) {
-                expr = attrs[bracketParenAttr];
-                assignExpr = true;
-            }
-            if (expr != null && assignExpr != null) {
-                var getter_1 = this_2.$parse(expr);
-                var setter_1 = getter_1.assign;
-                if (assignExpr && !setter_1) {
-                    throw new Error("Expression '" + expr + "' is not assignable!");
-                }
-                var emitter = this_2.component[output.prop];
-                if (emitter) {
-                    emitter.subscribe({
-                        next: assignExpr ? function (v) { return setter_1(_this.scope, v); } :
-                            function (v) { return getter_1(_this.scope, { '$event': v }); }
-                    });
-                }
-                else {
-                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this_2.componentFactory.componentType) + "'!");
-                }
-            }
-        };
-        var this_2 = this;
-        for (var j = 0; j < outputs.length; j++) {
-            _loop_2(j);
+        }
+    };
+    DowngradeComponentAdapter.prototype.subscribeToOutput = function (output, expr, isAssignment) {
+        var _this = this;
+        if (isAssignment === void 0) { isAssignment = false; }
+        var getter = this.$parse(expr);
+        var setter = getter.assign;
+        if (isAssignment && !setter) {
+            throw new Error("Expression '" + expr + "' is not assignable!");
+        }
+        var emitter = this.component[output.prop];
+        if (emitter) {
+            emitter.subscribe({
+                next: isAssignment ? function (v) { return setter(_this.scope, v); } :
+                    function (v) { return getter(_this.scope, { '$event': v }); }
+            });
+        }
+        else {
+            throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.componentFactory.componentType) + "'!");
         }
     };
     DowngradeComponentAdapter.prototype.registerCleanup = function () {
@@ -680,7 +674,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('6.0.0-beta.7-63cad11');
+var VERSION = new _angular_core.Version('6.0.0-rc.0-0f31b2d');
 
 /**
  * @license
