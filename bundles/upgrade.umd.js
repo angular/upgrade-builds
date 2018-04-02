@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.1-85d3b59
+ * @license Angular v6.0.0-rc.1-ff34d5e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v6.0.0-rc.1-85d3b59
+ * @license Angular v6.0.0-rc.1-ff34d5e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -28,7 +28,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('6.0.0-rc.1-85d3b59');
+var VERSION = new _angular_core.Version('6.0.0-rc.1-ff34d5e');
 
 /**
  * @fileoverview added by tsickle
@@ -468,6 +468,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
         var /** @type {?} */ childInjector = _angular_core.Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
+        this.viewChangeDetector = this.componentRef.injector.get(_angular_core.ChangeDetectorRef);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
         // testability hook is commonly added during component bootstrap in
@@ -559,6 +560,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
                 _this.inputChanges = {};
                 (/** @type {?} */ (_this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
             }
+            _this.viewChangeDetector.markForCheck();
             // If opted out of propagating digests, invoke change detection when inputs change.
             if (!propagateDigest) {
                 detectChanges();

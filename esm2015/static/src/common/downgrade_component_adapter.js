@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { ApplicationRef, Injector, SimpleChange, Testability, TestabilityRegistry } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry } from '@angular/core';
 import { PropertyBinding } from './component_info';
 import { $SCOPE } from './constants';
 import { getComponentName, hookupNgModel, strictEquals } from './util';
@@ -47,6 +47,7 @@ export class DowngradeComponentAdapter {
         const childInjector = Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
+        this.viewChangeDetector = this.componentRef.injector.get(ChangeDetectorRef);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
         // testability hook is commonly added during component bootstrap in
@@ -118,6 +119,7 @@ export class DowngradeComponentAdapter {
                 this.inputChanges = {};
                 this.component.ngOnChanges((inputChanges));
             }
+            this.viewChangeDetector.markForCheck();
             // If opted out of propagating digests, invoke change detection when inputs change.
             if (!propagateDigest) {
                 detectChanges();

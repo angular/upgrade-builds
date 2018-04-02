@@ -1,9 +1,9 @@
 /**
- * @license Angular v6.0.0-rc.1-85d3b59
+ * @license Angular v6.0.0-rc.1-ff34d5e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
-import { ApplicationRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-var VERSION = new Version('6.0.0-rc.1-85d3b59');
+var VERSION = new Version('6.0.0-rc.1-ff34d5e');
 
 /**
  * @fileoverview added by tsickle
@@ -460,6 +460,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
         var /** @type {?} */ childInjector = Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
+        this.viewChangeDetector = this.componentRef.injector.get(ChangeDetectorRef);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
         // testability hook is commonly added during component bootstrap in
@@ -551,6 +552,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
                 _this.inputChanges = {};
                 (/** @type {?} */ (_this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
             }
+            _this.viewChangeDetector.markForCheck();
             // If opted out of propagating digests, invoke change detection when inputs change.
             if (!propagateDigest) {
                 detectChanges();
