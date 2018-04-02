@@ -388,8 +388,9 @@ export class UpgradeAdapter {
                 const /** @type {?} */ originalResumeBootstrap = windowAngular.resumeBootstrap;
                 windowAngular.resumeBootstrap = function () {
                     windowAngular.resumeBootstrap = originalResumeBootstrap;
-                    windowAngular.resumeBootstrap.apply(this, arguments);
+                    const /** @type {?} */ r = windowAngular.resumeBootstrap.apply(this, arguments);
                     resolve();
+                    return r;
                 };
             }
             else {

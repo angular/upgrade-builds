@@ -233,7 +233,7 @@ export class UpgradeModule {
             windowAngular.resumeBootstrap = function () {
                 let args = arguments;
                 windowAngular.resumeBootstrap = originalResumeBootstrap;
-                ngZone.run(() => { windowAngular.resumeBootstrap.apply(this, args); });
+                return ngZone.run(() => windowAngular.resumeBootstrap.apply(this, args));
             };
         }
     }

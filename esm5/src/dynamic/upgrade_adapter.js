@@ -916,8 +916,9 @@ UpgradeAdapter = /** @class */ (function () {
                 var /** @type {?} */ originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
                 windowAngular.resumeBootstrap = function () {
                     windowAngular.resumeBootstrap = originalResumeBootstrap_1;
-                    windowAngular.resumeBootstrap.apply(this, arguments);
+                    var /** @type {?} */ r = windowAngular.resumeBootstrap.apply(this, arguments);
                     resolve();
+                    return r;
                 };
             }
             else {

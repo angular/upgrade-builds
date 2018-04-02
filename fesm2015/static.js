@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.1-ff34d5e
+ * @license Angular v6.0.0-rc.1-a2330ff
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -644,7 +644,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-const VERSION = new Version('6.0.0-rc.1-ff34d5e');
+const VERSION = new Version('6.0.0-rc.1-a2330ff');
 
 /**
  * @license
@@ -1450,7 +1450,7 @@ class UpgradeModule {
             windowAngular.resumeBootstrap = function () {
                 let args = arguments;
                 windowAngular.resumeBootstrap = originalResumeBootstrap;
-                ngZone.run(() => { windowAngular.resumeBootstrap.apply(this, args); });
+                return ngZone.run(() => windowAngular.resumeBootstrap.apply(this, args));
             };
         }
     }

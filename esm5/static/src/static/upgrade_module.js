@@ -256,7 +256,7 @@ var UpgradeModule = /** @class */ (function () {
                 var _this = this;
                 var args = arguments;
                 windowAngular.resumeBootstrap = originalResumeBootstrap_1;
-                ngZone_1.run(function () { windowAngular.resumeBootstrap.apply(_this, args); });
+                return ngZone_1.run(function () { return windowAngular.resumeBootstrap.apply(_this, args); });
             };
         }
     };

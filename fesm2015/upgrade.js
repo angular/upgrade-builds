@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.1-ff34d5e
+ * @license Angular v6.0.0-rc.1-a2330ff
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('6.0.0-rc.1-ff34d5e');
+const VERSION = new Version('6.0.0-rc.1-a2330ff');
 
 /**
  * @fileoverview added by tsickle
@@ -1909,8 +1909,9 @@ class UpgradeAdapter {
                 const /** @type {?} */ originalResumeBootstrap = windowAngular.resumeBootstrap;
                 windowAngular.resumeBootstrap = function () {
                     windowAngular.resumeBootstrap = originalResumeBootstrap;
-                    windowAngular.resumeBootstrap.apply(this, arguments);
+                    const /** @type {?} */ r = windowAngular.resumeBootstrap.apply(this, arguments);
                     resolve();
+                    return r;
                 };
             }
             else {
