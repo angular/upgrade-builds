@@ -1,5 +1,5 @@
 /**
- * @license Angular v5.2.9-f43fba6
+ * @license Angular v5.2.9-ae76eec
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.2.9-f43fba6
+ * @license Angular v5.2.9-ae76eec
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -28,7 +28,7 @@
 /**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.2.9-f43fba6');
+var VERSION = new _angular_core.Version('5.2.9-ae76eec');
 
 /**
  * @fileoverview added by tsickle
@@ -2490,8 +2490,9 @@ var UpgradeAdapter = /** @class */ (function () {
                 var /** @type {?} */ originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
                 windowAngular.resumeBootstrap = function () {
                     windowAngular.resumeBootstrap = originalResumeBootstrap_1;
-                    windowAngular.resumeBootstrap.apply(this, arguments);
+                    var /** @type {?} */ r = windowAngular.resumeBootstrap.apply(this, arguments);
                     resolve();
+                    return r;
                 };
             }
             else {
