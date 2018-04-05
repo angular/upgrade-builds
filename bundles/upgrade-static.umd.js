@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.1-9141424
+ * @license Angular v6.0.0-rc.1-b8053f1
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v6.0.0-rc.1-9141424
+ * @license Angular v6.0.0-rc.1-b8053f1
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -41,13 +41,13 @@ catch (e) {
     // ignore in CJS mode.
 }
 /**
- * @deprecated Use {@link setAngularJSGlobal} instead.
+ * @deprecated Use `setAngularJSGlobal` instead.
  */
 function setAngularLib(ng) {
     setAngularJSGlobal(ng);
 }
 /**
- * @deprecated Use {@link getAngularJSGlobal} instead.
+ * @deprecated Use `getAngularJSGlobal` instead.
  */
 function getAngularLib() {
     return getAngularJSGlobal();
@@ -470,14 +470,17 @@ function matchesSelector(el, selector) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * @whatItDoes
+ * @description
+ *
+ * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allows an Angular component to be used from AngularJS.
+ * This helper function returns a factory function to be used for registering
+ * an AngularJS wrapper directive for "downgrading" an Angular component.
  *
- * @howToUse
+ * ### Examples
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
  * to be made available in AngularJS templates.
@@ -491,14 +494,12 @@ function matchesSelector(el, selector) {
  *
  * {@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
  *
- * @description
- *
- * A helper function that returns a factory function to be used for registering an
- * AngularJS wrapper directive for "downgrading" an Angular component.
- *
- * The parameter contains information about the Component that is being downgraded:
+ * @param info contains information about the Component that is being downgraded:
  *
  * * `component: Type<any>`: The type of the Component that will be downgraded
+ *
+ * @returns a factory function that can be used to register the component in an
+ * AngularJS module.
  *
  * @experimental
  */
@@ -619,22 +620,25 @@ function isThenable(obj) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * @whatItDoes
+ * @description
+ *
+ * A helper function to allow an Angular service to be accessible from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allow an Angular service to be accessible from AngularJS.
+ * This helper function returns a factory function that provides access to the Angular
+ * service identified by the `token` parameter.
  *
- * @howToUse
+ * ### Examples
  *
- * First ensure that the service to be downgraded is provided in an {@link NgModule}
+ * First ensure that the service to be downgraded is provided in an `NgModule`
  * that will be part of the upgrade application. For example, let's assume we have
  * defined `HeroesService`
  *
  * {@example upgrade/static/ts/module.ts region="ng2-heroes-service"}
  *
- * and that we have included this in our upgrade app {@link NgModule}
+ * and that we have included this in our upgrade app `NgModule`
  *
  * {@example upgrade/static/ts/module.ts region="ng2-module"}
  *
@@ -648,15 +652,10 @@ function isThenable(obj) {
  *
  * {@example upgrade/static/ts/module.ts region="example-app"}
  *
- * @description
+ * @param token an `InjectionToken` that identifies a service provided from Angular.
  *
- * Takes a `token` that identifies a service provided from Angular.
- *
- * Returns a [factory function](https://docs.angularjs.org/guide/di) that can be
+ * @returns a [factory function](https://docs.angularjs.org/guide/di) that can be
  * used to register the service on an AngularJS module.
- *
- * The factory function provides access to the Angular service that
- * is identified by the `token` parameter.
  *
  * @experimental
  */
@@ -676,7 +675,7 @@ function downgradeInjectable(token) {
 /**
  * @stable
  */
-var VERSION = new _angular_core.Version('6.0.0-rc.1-9141424');
+var VERSION = new _angular_core.Version('6.0.0-rc.1-b8053f1');
 
 /**
  * @license
@@ -1055,26 +1054,29 @@ var Bindings = /** @class */ (function () {
     return Bindings;
 }());
 /**
- * @whatItDoes
+ * @description
+ *
+ * A helper class that allows an AngularJS component to be used from Angular.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allows an AngularJS component to be used from Angular.
+ * This helper class should be used as a base class for creating Angular directives
+ * that wrap AngularJS components that need to be "upgraded".
  *
- * @howToUse
+ * ### Examples
  *
  * Let's assume that you have an AngularJS component called `ng1Hero` that needs
  * to be made available in Angular templates.
  *
  * {@example upgrade/static/ts/module.ts region="ng1-hero"}
  *
- * We must create a {@link Directive} that will make this AngularJS component
+ * We must create a `Directive` that will make this AngularJS component
  * available inside Angular templates.
  *
  * {@example upgrade/static/ts/module.ts region="ng1-hero-wrapper"}
  *
- * In this example you can see that we must derive from the {@link UpgradeComponent}
+ * In this example you can see that we must derive from the `UpgradeComponent`
  * base class but also provide an {@link Directive `@Directive`} decorator. This is
  * because the AoT compiler requires that this information is statically available at
  * compile time.
@@ -1085,12 +1087,7 @@ var Bindings = /** @class */ (function () {
  * * derive from `UpgradeComponent`
  * * call the base class from the constructor, passing
  *   * the AngularJS name of the component (`ng1Hero`)
- *   * the {@link ElementRef} and {@link Injector} for the component wrapper
- *
- * @description
- *
- * A helper class that should be used as a base class for creating Angular directives
- * that wrap AngularJS components that need to be "upgraded".
+ *   * the `ElementRef` and `Injector` for the component wrapper
  *
  * @experimental
  */
@@ -1288,29 +1285,32 @@ var UpgradeComponent = /** @class */ (function () {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * @whatItDoes
+ * @description
+ *
+ * An `NgModule`, which you import to provide AngularJS core services,
+ * and has an instance method used to bootstrap the hybrid upgrade application.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allows AngularJS and Angular components to be used together inside a hybrid upgrade
- * application, which supports AoT compilation.
+ * The `upgrade/static` package contains helpers that allow AngularJS and Angular components
+ * to be used together inside a hybrid upgrade application, which supports AoT compilation.
  *
  * Specifically, the classes and functions in the `upgrade/static` module allow the following:
  * 1. Creation of an Angular directive that wraps and exposes an AngularJS component so
- *    that it can be used in an Angular template. See {@link UpgradeComponent}.
+ *    that it can be used in an Angular template. See `UpgradeComponent`.
  * 2. Creation of an AngularJS directive that wraps and exposes an Angular component so
- *    that it can be used in an AngularJS template. See {@link downgradeComponent}.
+ *    that it can be used in an AngularJS template. See `downgradeComponent`.
  * 3. Creation of an Angular root injector provider that wraps and exposes an AngularJS
  *    service so that it can be injected into an Angular context. See
  *    {@link UpgradeModule#upgrading-an-angular-1-service Upgrading an AngularJS service} below.
  * 4. Creation of an AngularJS service that wraps and exposes an Angular injectable
- *    so that it can be injected into an AngularJS context. See {@link downgradeInjectable}.
+ *    so that it can be injected into an AngularJS context. See `downgradeInjectable`.
  * 3. Bootstrapping of a hybrid Angular application which contains both of the frameworks
  *    coexisting in a single application. See the
- *    {@link UpgradeModule#example example} below.
+ *    {@link UpgradeModule#examples example} below.
  *
- * ## Mental Model
+ * ### Mental Model
  *
  * When reasoning about how a hybrid application works it is useful to have a mental model which
  * describes what is happening and explains what is happening at the lowest level.
@@ -1326,35 +1326,44 @@ var UpgradeComponent = /** @class */ (function () {
  *    where they are instantiated.
  * 5. An AngularJS component can be "upgraded"" to an Angular component. This is achieved by
  *    defining an Angular directive, which bootstraps the AngularJS component at its location
- *    in the DOM. See {@link UpgradeComponent}.
+ *    in the DOM. See `UpgradeComponent`.
  * 6. An Angular component can be "downgraded"" to an AngularJS component. This is achieved by
  *    defining an AngularJS directive, which bootstraps the Angular component at its location
- *    in the DOM. See {@link downgradeComponent}.
+ *    in the DOM. See `downgradeComponent`.
  * 7. Whenever an "upgraded"/"downgraded" component is instantiated the host element is owned by
  *    the framework doing the instantiation. The other framework then instantiates and owns the
  *    view for that component.
  *    a. This implies that the component bindings will always follow the semantics of the
  *       instantiation framework.
  *    b. The DOM attributes are parsed by the framework that owns the current template. So
- * attributes
- *       in AngularJS templates must use kebab-case, while AngularJS templates must use camelCase.
+ *       attributes in AngularJS templates must use kebab-case, while AngularJS templates must
+ *       use camelCase.
  *    c. However the template binding syntax will always use the Angular style, e.g. square
  *       brackets (`[...]`) for property binding.
  * 8. AngularJS is always bootstrapped first and owns the root component.
  * 9. The new application is running in an Angular zone, and therefore it no longer needs calls
- * to
- *    `$apply()`.
+ *    to `$apply()`.
  *
- * @howToUse
+ * ### Core AngularJS services
+ * Importing this `NgModule` will add providers for the core
+ * [AngularJS services](https://docs.angularjs.org/api/ng/service) to the root injector.
  *
- * `import {UpgradeModule} from '@angular/upgrade/static';`
+ * ### Bootstrap
+ * The runtime instance of this class contains a {@link UpgradeModule#bootstrap `bootstrap()`}
+ * method, which you use to bootstrap the top level AngularJS module onto an element in the
+ * DOM for the hybrid upgrade app.
  *
- * ## Example
- * Import the {@link UpgradeModule} into your top level {@link NgModule Angular `NgModule`}.
+ * It also contains properties to access the {@link UpgradeModule#injector root injector}, the
+ * bootstrap `NgZone` and the
+ * [AngularJS $injector](https://docs.angularjs.org/api/auto/service/$injector).
+ *
+ * ### Examples
+ *
+ * Import the `UpgradeModule` into your top level {@link NgModule Angular `NgModule`}.
  *
  * {@example upgrade/static/ts/module.ts region='ng2-module'}
  *
- * Then bootstrap the hybrid upgrade app's module, get hold of the {@link UpgradeModule} instance
+ * Then bootstrap the hybrid upgrade app's module, get hold of the `UpgradeModule` instance
  * and use it to bootstrap the top level [AngularJS
  * module](https://docs.angularjs.org/api/ng/type/angular.Module).
  *
@@ -1362,7 +1371,7 @@ var UpgradeComponent = /** @class */ (function () {
  *
  * {@a upgrading-an-angular-1-service}
  *
- * ## Upgrading an AngularJS service
+ * ### Upgrading an AngularJS service
  *
  * There is no specific API for upgrading an AngularJS service. Instead you should just follow the
  * following recipe:
@@ -1371,7 +1380,7 @@ var UpgradeComponent = /** @class */ (function () {
  *
  * {@example upgrade/static/ts/module.ts region="ng1-title-case-service"}
  *
- * Then you should define an Angular provider to be included in your {@link NgModule} `providers`
+ * Then you should define an Angular provider to be included in your `NgModule` `providers`
  * property.
  *
  * {@example upgrade/static/ts/module.ts region="upgrade-ng1-service"}
@@ -1381,29 +1390,11 @@ var UpgradeComponent = /** @class */ (function () {
  *
  * {@example upgrade/static/ts/module.ts region="use-ng1-upgraded-service"}
  *
- * @description
- *
- * This class is an `NgModule`, which you import to provide AngularJS core services,
- * and has an instance method used to bootstrap the hybrid upgrade application.
- *
- * ## Core AngularJS services
- * Importing this {@link NgModule} will add providers for the core
- * [AngularJS services](https://docs.angularjs.org/api/ng/service) to the root injector.
- *
- * ## Bootstrap
- * The runtime instance of this class contains a {@link UpgradeModule#bootstrap `bootstrap()`}
- * method, which you use to bootstrap the top level AngularJS module onto an element in the
- * DOM for the hybrid upgrade app.
- *
- * It also contains properties to access the {@link UpgradeModule#injector root injector}, the
- * bootstrap {@link NgZone} and the
- * [AngularJS $injector](https://docs.angularjs.org/api/auto/service/$injector).
- *
  * @experimental
  */
 var UpgradeModule = /** @class */ (function () {
-    function UpgradeModule(/** The root {@link Injector} for the upgrade application. */
-    /** The root {@link Injector} for the upgrade application. */
+    function UpgradeModule(/** The root `Injector` for the upgrade application. */
+    /** The root `Injector` for the upgrade application. */
     injector, /** The bootstrap zone for the upgrade application */
     ngZone) {
         this.ngZone = ngZone;

@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.1-9141424
+ * @license Angular v6.0.0-rc.1-b8053f1
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * \@stable
  */
-const VERSION = new Version('6.0.0-rc.1-9141424');
+const VERSION = new Version('6.0.0-rc.1-b8053f1');
 
 /**
  * @fileoverview added by tsickle
@@ -172,13 +172,13 @@ catch (/** @type {?} */ e) {
     // ignore in CJS mode.
 }
 /**
- * @deprecated Use {\@link setAngularJSGlobal} instead.
+ * @deprecated Use `setAngularJSGlobal` instead.
  * @param {?} ng
  * @return {?}
  */
 
 /**
- * @deprecated Use {\@link getAngularJSGlobal} instead.
+ * @deprecated Use `getAngularJSGlobal` instead.
  * @return {?}
  */
 
@@ -718,14 +718,17 @@ function matchesSelector(el, selector) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * \@whatItDoes
+ * \@description
+ *
+ * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allows an Angular component to be used from AngularJS.
+ * This helper function returns a factory function to be used for registering
+ * an AngularJS wrapper directive for "downgrading" an Angular component.
  *
- * \@howToUse
+ * ### Examples
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
  * to be made available in AngularJS templates.
@@ -739,18 +742,14 @@ function matchesSelector(el, selector) {
  *
  * {\@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
  *
- * \@description
- *
- * A helper function that returns a factory function to be used for registering an
- * AngularJS wrapper directive for "downgrading" an Angular component.
- *
- * The parameter contains information about the Component that is being downgraded:
+ * \@experimental
+ * @param {?} info contains information about the Component that is being downgraded:
  *
  * * `component: Type<any>`: The type of the Component that will be downgraded
  *
- * \@experimental
- * @param {?} info
- * @return {?}
+ * @return {?} a factory function that can be used to register the component in an
+ * AngularJS module.
+ *
  */
 function downgradeComponent(info) {
     const /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
@@ -884,22 +883,25 @@ function isThenable(obj) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * \@whatItDoes
+ * \@description
+ *
+ * A helper function to allow an Angular service to be accessible from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allow an Angular service to be accessible from AngularJS.
+ * This helper function returns a factory function that provides access to the Angular
+ * service identified by the `token` parameter.
  *
- * \@howToUse
+ * ### Examples
  *
- * First ensure that the service to be downgraded is provided in an {\@link NgModule}
+ * First ensure that the service to be downgraded is provided in an `NgModule`
  * that will be part of the upgrade application. For example, let's assume we have
  * defined `HeroesService`
  *
  * {\@example upgrade/static/ts/module.ts region="ng2-heroes-service"}
  *
- * and that we have included this in our upgrade app {\@link NgModule}
+ * and that we have included this in our upgrade app `NgModule`
  *
  * {\@example upgrade/static/ts/module.ts region="ng2-module"}
  *
@@ -913,19 +915,12 @@ function isThenable(obj) {
  *
  * {\@example upgrade/static/ts/module.ts region="example-app"}
  *
- * \@description
+ * \@experimental
+ * @param {?} token an `InjectionToken` that identifies a service provided from Angular.
  *
- * Takes a `token` that identifies a service provided from Angular.
- *
- * Returns a [factory function](https://docs.angularjs.org/guide/di) that can be
+ * @return {?} a [factory function](https://docs.angularjs.org/guide/di) that can be
  * used to register the service on an AngularJS module.
  *
- * The factory function provides access to the Angular service that
- * is identified by the `token` parameter.
- *
- * \@experimental
- * @param {?} token
- * @return {?}
  */
 function downgradeInjectable(token) {
     const /** @type {?} */ factory = function (i) { return i.get(token); };
@@ -1835,7 +1830,7 @@ class UpgradeAdapter {
      * ```
      *
      * @param {?=} modules any AngularJS modules that the upgrade module should depend upon
-     * @return {?} an {\@link UpgradeAdapterRef}, which lets you register a `ready()` callback to
+     * @return {?} an `UpgradeAdapterRef`, which lets you register a `ready()` callback to
      * run assertions once the Angular components are ready to test through AngularJS.
      */
     registerForNg1Tests(modules) {

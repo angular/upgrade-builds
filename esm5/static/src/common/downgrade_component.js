@@ -10,14 +10,17 @@ import { $COMPILE, $INJECTOR, $PARSE, INJECTOR_KEY, LAZY_MODULE_REF, REQUIRE_INJ
 import { DowngradeComponentAdapter } from './downgrade_component_adapter';
 import { controllerKey, getComponentName, isFunction } from './util';
 /**
- * @whatItDoes
+ * @description
+ *
+ * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allows an Angular component to be used from AngularJS.
+ * This helper function returns a factory function to be used for registering
+ * an AngularJS wrapper directive for "downgrading" an Angular component.
  *
- * @howToUse
+ * ### Examples
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
  * to be made available in AngularJS templates.
@@ -31,14 +34,12 @@ import { controllerKey, getComponentName, isFunction } from './util';
  *
  * {@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
  *
- * @description
- *
- * A helper function that returns a factory function to be used for registering an
- * AngularJS wrapper directive for "downgrading" an Angular component.
- *
- * The parameter contains information about the Component that is being downgraded:
+ * @param info contains information about the Component that is being downgraded:
  *
  * * `component: Type<any>`: The type of the Component that will be downgraded
+ *
+ * @returns a factory function that can be used to register the component in an
+ * AngularJS module.
  *
  * @experimental
  */

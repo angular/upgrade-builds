@@ -462,7 +462,7 @@ catch (/** @type {?} */ e) {
     // ignore in CJS mode.
 }
 /**
- * @deprecated Use {\@link setAngularJSGlobal} instead.
+ * @deprecated Use `setAngularJSGlobal` instead.
  * @param {?} ng
  * @return {?}
  */
@@ -470,7 +470,7 @@ export function setAngularLib(ng) {
     setAngularJSGlobal(ng);
 }
 /**
- * @deprecated Use {\@link getAngularJSGlobal} instead.
+ * @deprecated Use `getAngularJSGlobal` instead.
  * @return {?}
  */
 export function getAngularLib() {

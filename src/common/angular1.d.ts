@@ -222,11 +222,11 @@ export interface INgModelController {
     $name: string;
 }
 /**
- * @deprecated Use {@link setAngularJSGlobal} instead.
+ * @deprecated Use `setAngularJSGlobal` instead.
  */
 export declare function setAngularLib(ng: any): void;
 /**
- * @deprecated Use {@link getAngularJSGlobal} instead.
+ * @deprecated Use `getAngularJSGlobal` instead.
  */
 export declare function getAngularLib(): any;
 /**
