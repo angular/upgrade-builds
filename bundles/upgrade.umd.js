@@ -1,6 +1,6 @@
 /**
- * @license Angular v5.1.0-5a0076f
- * (c) 2010-2017 Google, Inc. https://angular.io/
+ * @license Angular v6.0.0-rc.3-5992fe6
+ * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 (function (global, factory) {
@@ -10,8 +10,8 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v5.1.0-5a0076f
- * (c) 2010-2017 Google, Inc. https://angular.io/
+ * @license Angular v6.0.0-rc.3-5992fe6
+ * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 /**
@@ -26,14 +26,9 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * @module
- * @description
- * Entry point for all public APIs of the common package.
- */
-/**
  * \@stable
  */
-var VERSION = new _angular_core.Version('5.1.0-5a0076f');
+var VERSION = new _angular_core.Version('6.0.0-rc.3-5992fe6');
 
 /**
  * @fileoverview added by tsickle
@@ -172,7 +167,7 @@ var angular = /** @type {?} */ ({
     bootstrap: noNg,
     module: noNg,
     element: noNg,
-    version: noNg,
+    version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
 });
@@ -185,9 +180,20 @@ catch (/** @type {?} */ e) {
     // ignore in CJS mode.
 }
 /**
- * Resets the AngularJS library.
+ * @deprecated Use `setAngularJSGlobal` instead.
+ * @param {?} ng
+ * @return {?}
+ */
+
+/**
+ * @deprecated Use `getAngularJSGlobal` instead.
+ * @return {?}
+ */
+
+/**
+ * Resets the AngularJS global.
  *
- * Used when angularjs is loaded lazily, and not available on `window`.
+ * Used when AngularJS is loaded lazily, and not available on `window`.
  *
  * \@stable
  * @param {?} ng
@@ -195,7 +201,7 @@ catch (/** @type {?} */ e) {
  */
 
 /**
- * Returns the current version of the AngularJS library.
+ * Returns the current AngularJS global.
  *
  * \@stable
  * @return {?}
@@ -345,6 +351,9 @@ function getComponentName(component) {
 function isFunction(value) {
     return typeof value === 'function';
 }
+/**
+ * @template R
+ */
 var Deferred = /** @class */ (function () {
     function Deferred() {
         var _this = this;
@@ -455,9 +464,11 @@ var DowngradeComponentAdapter = /** @class */ (function () {
      * @return {?}
      */
     function (projectableNodes) {
-        var /** @type {?} */ childInjector = _angular_core.Injector.create([{ provide: $SCOPE, useValue: this.componentScope }], this.parentInjector);
+        var /** @type {?} */ providers = [{ provide: $SCOPE, useValue: this.componentScope }];
+        var /** @type {?} */ childInjector = _angular_core.Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
+        this.viewChangeDetector = this.componentRef.injector.get(_angular_core.ChangeDetectorRef);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
         // testability hook is commonly added during component bootstrap in
@@ -549,6 +560,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
                 _this.inputChanges = {};
                 (/** @type {?} */ (_this.component)).ngOnChanges(/** @type {?} */ ((inputChanges)));
             }
+            _this.viewChangeDetector.markForCheck();
             // If opted out of propagating digests, invoke change detection when inputs change.
             if (!propagateDigest) {
                 detectChanges();
@@ -576,50 +588,56 @@ var DowngradeComponentAdapter = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        var _this = this;
         var /** @type {?} */ attrs = this.attrs;
         var /** @type {?} */ outputs = this.componentFactory.outputs || [];
-        var _loop_2 = function (j) {
+        for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
             var /** @type {?} */ output = new PropertyBinding(outputs[j].propName, outputs[j].templateName);
-            var /** @type {?} */ expr = null;
-            var /** @type {?} */ assignExpr = false;
             var /** @type {?} */ bindonAttr = output.bindonAttr.substring(0, output.bindonAttr.length - 6);
             var /** @type {?} */ bracketParenAttr = "[(" + output.bracketParenAttr.substring(2, output.bracketParenAttr.length - 8) + ")]";
+            // order below is important - first update bindings then evaluate expressions
+            if (attrs.hasOwnProperty(bindonAttr)) {
+                this.subscribeToOutput(output, attrs[bindonAttr], true);
+            }
+            if (attrs.hasOwnProperty(bracketParenAttr)) {
+                this.subscribeToOutput(output, attrs[bracketParenAttr], true);
+            }
             if (attrs.hasOwnProperty(output.onAttr)) {
-                expr = attrs[output.onAttr];
+                this.subscribeToOutput(output, attrs[output.onAttr]);
             }
-            else if (attrs.hasOwnProperty(output.parenAttr)) {
-                expr = attrs[output.parenAttr];
+            if (attrs.hasOwnProperty(output.parenAttr)) {
+                this.subscribeToOutput(output, attrs[output.parenAttr]);
             }
-            else if (attrs.hasOwnProperty(bindonAttr)) {
-                expr = attrs[bindonAttr];
-                assignExpr = true;
-            }
-            else if (attrs.hasOwnProperty(bracketParenAttr)) {
-                expr = attrs[bracketParenAttr];
-                assignExpr = true;
-            }
-            if (expr != null && assignExpr != null) {
-                var /** @type {?} */ getter_1 = this_2.$parse(expr);
-                var /** @type {?} */ setter_1 = getter_1.assign;
-                if (assignExpr && !setter_1) {
-                    throw new Error("Expression '" + expr + "' is not assignable!");
-                }
-                var /** @type {?} */ emitter = /** @type {?} */ (this_2.component[output.prop]);
-                if (emitter) {
-                    emitter.subscribe({
-                        next: assignExpr ? function (v) { return ((setter_1))(_this.scope, v); } :
-                            function (v) { return getter_1(_this.scope, { '$event': v }); }
-                    });
-                }
-                else {
-                    throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this_2.componentFactory.componentType) + "'!");
-                }
-            }
-        };
-        var this_2 = this;
-        for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
-            _loop_2(j);
+        }
+    };
+    /**
+     * @param {?} output
+     * @param {?} expr
+     * @param {?=} isAssignment
+     * @return {?}
+     */
+    DowngradeComponentAdapter.prototype.subscribeToOutput = /**
+     * @param {?} output
+     * @param {?} expr
+     * @param {?=} isAssignment
+     * @return {?}
+     */
+    function (output, expr, isAssignment) {
+        var _this = this;
+        if (isAssignment === void 0) { isAssignment = false; }
+        var /** @type {?} */ getter = this.$parse(expr);
+        var /** @type {?} */ setter = getter.assign;
+        if (isAssignment && !setter) {
+            throw new Error("Expression '" + expr + "' is not assignable!");
+        }
+        var /** @type {?} */ emitter = /** @type {?} */ (this.component[output.prop]);
+        if (emitter) {
+            emitter.subscribe({
+                next: isAssignment ? function (v) { return ((setter))(_this.scope, v); } :
+                    function (v) { return getter(_this.scope, { '$event': v }); }
+            });
+        }
+        else {
+            throw new Error("Missing emitter '" + output.prop + "' on component '" + getComponentName(this.componentFactory.componentType) + "'!");
         }
     };
     /**
@@ -630,12 +648,16 @@ var DowngradeComponentAdapter = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        var /** @type {?} */ destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); }); /** @type {?} */
-        ((this.element.on))('$destroy', function () {
-            _this.componentScope.$destroy();
-            _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
-                .unregisterApplication(_this.componentRef.location.nativeElement);
-            destroyComponentRef();
+        var /** @type {?} */ destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
+        var /** @type {?} */ destroyed = false; /** @type {?} */
+        ((this.element.on))('$destroy', function () { return _this.componentScope.$destroy(); });
+        this.componentScope.$on('$destroy', function () {
+            if (!destroyed) {
+                destroyed = true;
+                _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
+                    .unregisterApplication(_this.componentRef.location.nativeElement);
+                destroyComponentRef();
+            }
         });
     };
     /**
@@ -749,14 +771,17 @@ function matchesSelector(el, selector) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * \@whatItDoes
+ * \@description
+ *
+ * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allows an Angular component to be used from AngularJS.
+ * This helper function returns a factory function to be used for registering
+ * an AngularJS wrapper directive for "downgrading" an Angular component.
  *
- * \@howToUse
+ * ### Examples
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
  * to be made available in AngularJS templates.
@@ -770,18 +795,14 @@ function matchesSelector(el, selector) {
  *
  * {\@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
  *
- * \@description
- *
- * A helper function that returns a factory function to be used for registering an
- * AngularJS wrapper directive for "downgrading" an Angular component.
- *
- * The parameter contains information about the Component that is being downgraded:
+ * \@experimental
+ * @param {?} info contains information about the Component that is being downgraded:
  *
  * * `component: Type<any>`: The type of the Component that will be downgraded
  *
- * \@experimental
- * @param {?} info
- * @return {?}
+ * @return {?} a factory function that can be used to register the component in an
+ * AngularJS module.
+ *
  */
 function downgradeComponent(info) {
     var /** @type {?} */ directiveFactory = function ($compile, $injector, $parse) {
@@ -925,22 +946,25 @@ function isThenable(obj) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * \@whatItDoes
+ * \@description
+ *
+ * A helper function to allow an Angular service to be accessible from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allow an Angular service to be accessible from AngularJS.
+ * This helper function returns a factory function that provides access to the Angular
+ * service identified by the `token` parameter.
  *
- * \@howToUse
+ * ### Examples
  *
- * First ensure that the service to be downgraded is provided in an {\@link NgModule}
+ * First ensure that the service to be downgraded is provided in an `NgModule`
  * that will be part of the upgrade application. For example, let's assume we have
  * defined `HeroesService`
  *
  * {\@example upgrade/static/ts/module.ts region="ng2-heroes-service"}
  *
- * and that we have included this in our upgrade app {\@link NgModule}
+ * and that we have included this in our upgrade app `NgModule`
  *
  * {\@example upgrade/static/ts/module.ts region="ng2-module"}
  *
@@ -954,19 +978,12 @@ function isThenable(obj) {
  *
  * {\@example upgrade/static/ts/module.ts region="example-app"}
  *
- * \@description
+ * \@experimental
+ * @param {?} token an `InjectionToken` that identifies a service provided from Angular.
  *
- * Takes a `token` that identifies a service provided from Angular.
- *
- * Returns a [factory function](https://docs.angularjs.org/guide/di) that can be
+ * @return {?} a [factory function](https://docs.angularjs.org/guide/di) that can be
  * used to register the service on an AngularJS module.
  *
- * The factory function provides access to the Angular service that
- * is identified by the `token` parameter.
- *
- * \@experimental
- * @param {?} token
- * @return {?}
  */
 function downgradeInjectable(token) {
     var /** @type {?} */ factory = function (i) { return i.get(token); };
@@ -1117,8 +1134,15 @@ var UpgradeHelper = /** @class */ (function () {
         var _this = this;
         var /** @type {?} */ transclude = this.directive.transclude;
         var /** @type {?} */ contentChildNodes = this.extractChildNodes();
+        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttachFn) {
+            // Since AngularJS v1.5.8, `cloneAttachFn` will try to destroy the transclusion scope if
+            // `$template` is empty. Since the transcluded content comes from Angular, not AngularJS,
+            // there will be no transclusion scope here.
+            // Provide a dummy `scope.$destroy()` method to prevent `cloneAttachFn` from throwing.
+            scope = scope || { $destroy: function () { return undefined; } };
+            return /** @type {?} */ ((cloneAttachFn))($template, scope);
+        };
         var /** @type {?} */ $template = contentChildNodes;
-        var /** @type {?} */ attachChildrenFn = function (scope, cloneAttach) { return ((cloneAttach))($template, scope); };
         if (transclude) {
             var /** @type {?} */ slots_1 = Object.create(null);
             if (typeof transclude === 'object') {
@@ -1511,7 +1535,9 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
         }
         for (var /** @type {?} */ j = 0; j < outputs.length; j++) {
             var /** @type {?} */ emitter = (/** @type {?} */ (this))[outputs[j]] = new _angular_core.EventEmitter();
-            this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
+            if (this.propOuts.indexOf(outputs[j]) === -1) {
+                this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
+            }
         }
         for (var /** @type {?} */ k = 0; k < propOuts.length; k++) {
             this.checkLastValues.push(INITIAL_VALUE$1);
@@ -1611,6 +1637,7 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
         if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
             this.controllerInstance.$onDestroy();
         }
+        this.componentScope.$destroy();
     };
     /**
      * @param {?} name
@@ -2208,7 +2235,7 @@ var UpgradeAdapter = /** @class */ (function () {
      * ```
      *
      * @param modules any AngularJS modules that the upgrade module should depend upon
-     * @returns an {@link UpgradeAdapterRef}, which lets you register a `ready()` callback to
+     * @returns an `UpgradeAdapterRef`, which lets you register a `ready()` callback to
      * run assertions once the Angular components are ready to test through AngularJS.
      */
     /**
@@ -2249,7 +2276,7 @@ var UpgradeAdapter = /** @class */ (function () {
      * ```
      *
      * @param {?=} modules any AngularJS modules that the upgrade module should depend upon
-     * @return {?} an {\@link UpgradeAdapterRef}, which lets you register a `ready()` callback to
+     * @return {?} an `UpgradeAdapterRef`, which lets you register a `ready()` callback to
      * run assertions once the Angular components are ready to test through AngularJS.
      */
     UpgradeAdapter.prototype.registerForNg1Tests = /**
@@ -2290,7 +2317,7 @@ var UpgradeAdapter = /** @class */ (function () {
      * ```
      *
      * @param {?=} modules any AngularJS modules that the upgrade module should depend upon
-     * @return {?} an {\@link UpgradeAdapterRef}, which lets you register a `ready()` callback to
+     * @return {?} an `UpgradeAdapterRef`, which lets you register a `ready()` callback to
      * run assertions once the Angular components are ready to test through AngularJS.
      */
     function (modules) {
@@ -2458,8 +2485,9 @@ var UpgradeAdapter = /** @class */ (function () {
                 var /** @type {?} */ originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
                 windowAngular.resumeBootstrap = function () {
                     windowAngular.resumeBootstrap = originalResumeBootstrap_1;
-                    windowAngular.resumeBootstrap.apply(this, arguments);
+                    var /** @type {?} */ r = windowAngular.resumeBootstrap.apply(this, arguments);
                     resolve();
+                    return r;
                 };
             }
             else {

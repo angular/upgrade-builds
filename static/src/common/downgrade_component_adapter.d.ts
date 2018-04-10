@@ -25,11 +25,13 @@ export declare class DowngradeComponentAdapter {
     private componentRef;
     private component;
     private changeDetector;
+    private viewChangeDetector;
     constructor(element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>, wrapCallback: <T>(cb: () => T) => () => T);
     compileContents(): Node[][];
     createComponent(projectableNodes: Node[][]): void;
     setupInputs(needsNgZone: boolean, propagateDigest?: boolean): void;
     setupOutputs(): void;
+    private subscribeToOutput(output, expr, isAssignment?);
     registerCleanup(): void;
     getInjector(): Injector;
     private updateInput(prop, prevValue, currValue);
