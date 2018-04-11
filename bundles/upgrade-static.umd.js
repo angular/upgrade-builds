@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.3-5992fe6
+ * @license Angular v6.0.0-rc.3-fb4513c
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v6.0.0-rc.3-5992fe6
+ * @license Angular v6.0.0-rc.3-fb4513c
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -57,7 +57,7 @@ function getAngularLib() {
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
  *
- * @stable
+ *
  */
 function setAngularJSGlobal(ng) {
     angular = ng;
@@ -66,7 +66,7 @@ function setAngularJSGlobal(ng) {
 /**
  * Returns the current AngularJS global.
  *
- * @stable
+ *
  */
 function getAngularJSGlobal() {
     return angular;
@@ -673,9 +673,9 @@ function downgradeInjectable(token) {
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * @stable
+ *
  */
-var VERSION = new _angular_core.Version('6.0.0-rc.3-5992fe6');
+var VERSION = new _angular_core.Version('6.0.0-rc.3-fb4513c');
 
 /**
  * @license
