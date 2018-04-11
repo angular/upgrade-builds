@@ -234,13 +234,13 @@ export declare function getAngularLib(): any;
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
  *
- * @stable
+ *
  */
 export declare function setAngularJSGlobal(ng: any): void;
 /**
  * Returns the current AngularJS global.
  *
- * @stable
+ *
  */
 export declare function getAngularJSGlobal(): any;
 export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config?: IAngularBootstrapConfig | undefined) => IInjectorService;

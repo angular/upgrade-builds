@@ -481,7 +481,7 @@ export function getAngularLib() {
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
  *
- * \@stable
+ *
  * @param {?} ng
  * @return {?}
  */
@@ -492,7 +492,7 @@ export function setAngularJSGlobal(ng) {
 /**
  * Returns the current AngularJS global.
  *
- * \@stable
+ *
  * @return {?}
  */
 export function getAngularJSGlobal() {

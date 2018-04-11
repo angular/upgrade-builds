@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.3-ee14579
+ * @license Angular v6.0.0-rc.3-0cb4f12
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowserDynamic) { 'use strict';
 
 /**
- * @license Angular v6.0.0-rc.3-ee14579
+ * @license Angular v6.0.0-rc.3-0cb4f12
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -26,9 +26,9 @@
  * found in the LICENSE file at https://angular.io/license
  */
 /**
- * \@stable
+ *
  */
-var VERSION = new _angular_core.Version('6.0.0-rc.3-ee14579');
+var VERSION = new _angular_core.Version('6.0.0-rc.3-0cb4f12');
 
 /**
  * @fileoverview added by tsickle
@@ -195,7 +195,7 @@ catch (/** @type {?} */ e) {
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
  *
- * \@stable
+ *
  * @param {?} ng
  * @return {?}
  */
@@ -203,7 +203,7 @@ catch (/** @type {?} */ e) {
 /**
  * Returns the current AngularJS global.
  *
- * \@stable
+ *
  * @return {?}
  */
 
