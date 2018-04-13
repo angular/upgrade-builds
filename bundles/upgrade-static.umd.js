@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.4-b8f4e43
+ * @license Angular v6.0.0-rc.4-993eeab
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -10,7 +10,7 @@
 }(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
 
 /**
- * @license Angular v6.0.0-rc.4-b8f4e43
+ * @license Angular v6.0.0-rc.4-993eeab
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -675,7 +675,7 @@ function downgradeInjectable(token) {
 /**
  *
  */
-var VERSION = new _angular_core.Version('6.0.0-rc.4-b8f4e43');
+var VERSION = new _angular_core.Version('6.0.0-rc.4-993eeab');
 
 /**
  * @license
@@ -1340,7 +1340,8 @@ var UpgradeComponent = /** @class */ (function () {
  *       use camelCase.
  *    c. However the template binding syntax will always use the Angular style, e.g. square
  *       brackets (`[...]`) for property binding.
- * 8. AngularJS is always bootstrapped first and owns the root component.
+ * 8. Angular is bootstrapped first; AngularJS is bootstrapped second. AngularJS always owns the
+ *    root component of the application.
  * 9. The new application is running in an Angular zone, and therefore it no longer needs calls
  *    to `$apply()`.
  *
