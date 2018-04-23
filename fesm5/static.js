@@ -1,10 +1,12 @@
 /**
- * @license Angular v6.0.0-rc.5-60e5507
+ * @license Angular v6.0.0-rc.5+73.sha-ace6440
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
+
 import { ApplicationRef, ChangeDetectorRef, ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
-import { platformBrowser } from '@angular/platform-browser';
+import { platformBrowser as platformBrowser$1 } from '@angular/platform-browser';
+import { __spread } from 'tslib';
 
 /**
  * @license
@@ -411,7 +413,6 @@ var DowngradeComponentAdapter = /** @class */ (function () {
  */
 function groupNodesBySelector(ngContentSelectors, nodes) {
     var projectableNodes = [];
-    var wildcardNgContentIndex;
     for (var i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -667,7 +668,7 @@ function downgradeInjectable(token) {
 /**
  *
  */
-var VERSION = new Version('6.0.0-rc.5-60e5507');
+var VERSION = new Version('6.0.0-rc.5+73.sha-ace6440');
 
 /**
  * @license
@@ -758,7 +759,7 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
     var bootstrapFn = isFunction(moduleFactoryOrBootstrapFn) ?
         moduleFactoryOrBootstrapFn :
         function (extraProviders) {
-            return platformBrowser(extraProviders).bootstrapModuleFactory(moduleFactoryOrBootstrapFn);
+            return platformBrowser$1(extraProviders).bootstrapModuleFactory(moduleFactoryOrBootstrapFn);
         };
     var injector;
     // Create an ng1 module to bootstrap.
@@ -1461,7 +1462,7 @@ var UpgradeModule = /** @class */ (function () {
                                     pass[_i - 4] = arguments[_i];
                                 }
                                 return _this.ngZone.runOutsideAngular(function () {
-                                    return intervalDelegate.apply(void 0, [function () {
+                                    return intervalDelegate.apply(void 0, __spread([function () {
                                             var args = [];
                                             for (var _i = 0; _i < arguments.length; _i++) {
                                                 args[_i] = arguments[_i];
@@ -1470,8 +1471,8 @@ var UpgradeModule = /** @class */ (function () {
                                             // $rootScope.$apply, and running the callback in NgZone will
                                             // cause a '$digest already in progress' error if it's in the
                                             // same vm turn.
-                                            setTimeout(function () { _this.ngZone.run(function () { return fn.apply(void 0, args); }); });
-                                        }, delay, count, invokeApply].concat(pass));
+                                            setTimeout(function () { _this.ngZone.run(function () { return fn.apply(void 0, __spread(args)); }); });
+                                        }, delay, count, invokeApply], pass));
                                 });
                             };
                             wrappedInterval['cancel'] = intervalDelegate.cancel;
@@ -1520,7 +1521,7 @@ var UpgradeModule = /** @class */ (function () {
         }
     };
     UpgradeModule.decorators = [
-        { type: NgModule, args: [{ providers: [angular1Providers] },] },
+        { type: NgModule, args: [{ providers: [angular1Providers] },] }
     ];
     /** @nocollapse */
     UpgradeModule.ctorParameters = function () { return [
@@ -1541,8 +1542,16 @@ var UpgradeModule = /** @class */ (function () {
 // This file only re-exports content of the `src` folder. Keep it that way.
 
 /**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+/**
  * Generated bundle index. Do not edit.
  */
 
-export { angular1Providers as ɵe, compileFactory as ɵc, injectorFactory as ɵa, parseFactory as ɵd, rootScopeFactory as ɵb, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, downgradeComponent, downgradeInjectable, VERSION, downgradeModule, UpgradeComponent, UpgradeModule };
+export { angular1Providers as ɵangular_packages_upgrade_static_static_e, compileFactory as ɵangular_packages_upgrade_static_static_c, injectorFactory as ɵangular_packages_upgrade_static_static_a, parseFactory as ɵangular_packages_upgrade_static_static_d, rootScopeFactory as ɵangular_packages_upgrade_static_static_b, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, downgradeComponent, downgradeInjectable, VERSION, downgradeModule, UpgradeComponent, UpgradeModule };
 //# sourceMappingURL=static.js.map
