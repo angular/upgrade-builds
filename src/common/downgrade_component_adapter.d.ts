@@ -8,7 +8,6 @@
 import { ComponentFactory, Injector } from '@angular/core';
 import * as angular from './angular1';
 export declare class DowngradeComponentAdapter {
-    private id;
     private element;
     private attrs;
     private scope;
@@ -18,17 +17,21 @@ export declare class DowngradeComponentAdapter {
     private $compile;
     private $parse;
     private componentFactory;
+    private wrapCallback;
+    private implementsOnChanges;
     private inputChangeCount;
     private inputChanges;
     private componentScope;
     private componentRef;
     private component;
     private changeDetector;
-    constructor(id: string, element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>);
+    private viewChangeDetector;
+    constructor(element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>, wrapCallback: <T>(cb: () => T) => () => T);
     compileContents(): Node[][];
     createComponent(projectableNodes: Node[][]): void;
-    setupInputs(): void;
+    setupInputs(needsNgZone: boolean, propagateDigest?: boolean): void;
     setupOutputs(): void;
+    private subscribeToOutput(output, expr, isAssignment?);
     registerCleanup(): void;
     getInjector(): Injector;
     private updateInput(prop, prevValue, currValue);
