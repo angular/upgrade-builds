@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.6-983e5f2
+ * @license Angular v6.0.0-rc.6-ecde152
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  *
  */
-const VERSION = new Version('6.0.0-rc.6-983e5f2');
+const VERSION = new Version('6.0.0-rc.6-ecde152');
 
 /**
  * @fileoverview added by tsickle
