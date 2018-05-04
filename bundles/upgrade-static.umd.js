@@ -1,19 +1,15 @@
 /**
- * @license Angular v6.0.0-373a47d
+ * @license Angular v6.0.0+23.sha-5eb9c01
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
+
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser')) :
 	typeof define === 'function' && define.amd ? define('@angular/upgrade/static', ['exports', '@angular/core', '@angular/platform-browser'], factory) :
-	(factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = {}),global.ng.core,global._angular_platformBrowser));
-}(this, (function (exports,_angular_core,_angular_platformBrowser) { 'use strict';
+	(factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = {}),global.ng.core,global.ng.platformBrowser));
+}(this, (function (exports,core,platformBrowser) { 'use strict';
 
-/**
- * @license Angular v6.0.0-373a47d
- * (c) 2010-2018 Google, Inc. https://angular.io/
- * License: MIT
- */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -239,19 +235,19 @@ var DowngradeComponentAdapter = /** @class */ (function () {
     };
     DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
         var providers = [{ provide: $SCOPE, useValue: this.componentScope }];
-        var childInjector = _angular_core.Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
+        var childInjector = core.Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
         this.componentRef =
             this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
-        this.viewChangeDetector = this.componentRef.injector.get(_angular_core.ChangeDetectorRef);
+        this.viewChangeDetector = this.componentRef.injector.get(core.ChangeDetectorRef);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
         // testability hook is commonly added during component bootstrap in
         // packages/core/src/application_ref.bootstrap()
         // in downgraded application, component creation will take place here as well as adding the
         // testability hook.
-        var testability = this.componentRef.injector.get(_angular_core.Testability, null);
+        var testability = this.componentRef.injector.get(core.Testability, null);
         if (testability) {
-            this.componentRef.injector.get(_angular_core.TestabilityRegistry)
+            this.componentRef.injector.get(core.TestabilityRegistry)
                 .registerApplication(this.componentRef.location.nativeElement, testability);
         }
         hookupNgModel(this.ngModel, this.component);
@@ -340,7 +336,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
             var unwatch_2 = this.componentScope.$watch(function () {
                 unwatch_2();
                 unwatch_2 = null;
-                var appRef = _this.parentInjector.get(_angular_core.ApplicationRef);
+                var appRef = _this.parentInjector.get(core.ApplicationRef);
                 appRef.attachView(_this.componentRef.hostView);
             });
         }
@@ -394,7 +390,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
         this.componentScope.$on('$destroy', function () {
             if (!destroyed) {
                 destroyed = true;
-                _this.componentRef.injector.get(_angular_core.TestabilityRegistry)
+                _this.componentRef.injector.get(core.TestabilityRegistry)
                     .unregisterApplication(_this.componentRef.location.nativeElement);
                 destroyComponentRef();
             }
@@ -403,7 +399,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
     DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
     DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
         if (this.implementsOnChanges) {
-            this.inputChanges[prop] = new _angular_core.SimpleChange(prevValue, currValue, prevValue === currValue);
+            this.inputChanges[prop] = new core.SimpleChange(prevValue, currValue, prevValue === currValue);
         }
         this.inputChangeCount++;
         this.component[prop] = currValue;
@@ -419,7 +415,6 @@ var DowngradeComponentAdapter = /** @class */ (function () {
  */
 function groupNodesBySelector(ngContentSelectors, nodes) {
     var projectableNodes = [];
-    var wildcardNgContentIndex;
     for (var i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -530,7 +525,7 @@ function downgradeComponent(info) {
                     parentInjector = lazyModuleRef.injector || lazyModuleRef.promise;
                 }
                 var doDowngrade = function (injector) {
-                    var componentFactoryResolver = injector.get(_angular_core.ComponentFactoryResolver);
+                    var componentFactoryResolver = injector.get(core.ComponentFactoryResolver);
                     var componentFactory = (componentFactoryResolver.resolveComponentFactory(info.component));
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
@@ -551,10 +546,10 @@ function downgradeComponent(info) {
                 };
                 var downgradeFn = !needsNgZone ? doDowngrade : function (injector) {
                     if (!ngZone) {
-                        ngZone = injector.get(_angular_core.NgZone);
+                        ngZone = injector.get(core.NgZone);
                         wrapCallback = function (cb) {
                             return function () {
-                                return _angular_core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
+                                return core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
                             };
                         };
                     }
@@ -675,7 +670,7 @@ function downgradeInjectable(token) {
 /**
  *
  */
-var VERSION = new _angular_core.Version('6.0.0-373a47d');
+var VERSION = new core.Version('6.0.0+23.sha-5eb9c01');
 
 /**
  * @license
@@ -745,7 +740,7 @@ var NgAdapterInjector = /** @class */ (function () {
     // injector.
     // AngularJS only supports a single tree and should always check the module injector.
     function (token, notFoundValue) {
-        if (notFoundValue === _angular_core.ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR) {
+        if (notFoundValue === core.ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR) {
             return notFoundValue;
         }
         return this.modInjector.get(token, notFoundValue);
@@ -766,7 +761,7 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
     var bootstrapFn = isFunction(moduleFactoryOrBootstrapFn) ?
         moduleFactoryOrBootstrapFn :
         function (extraProviders) {
-            return _angular_platformBrowser.platformBrowser(extraProviders).bootstrapModuleFactory(moduleFactoryOrBootstrapFn);
+            return platformBrowser.platformBrowser(extraProviders).bootstrapModuleFactory(moduleFactoryOrBootstrapFn);
         };
     var injector;
     // Create an ng1 module to bootstrap.
@@ -1194,7 +1189,7 @@ var UpgradeComponent = /** @class */ (function () {
         twoWayBoundProperties.forEach(function (propName, idx) {
             var newValue = _this.bindingDestination[propName];
             var oldValue = twoWayBoundLastValues[idx];
-            if (!_angular_core.ɵlooseIdentical(newValue, oldValue)) {
+            if (!core.ɵlooseIdentical(newValue, oldValue)) {
                 var outputName = propertyToOutputMap[propName];
                 var eventEmitter = _this[outputName];
                 eventEmitter.emit(newValue);
@@ -1254,7 +1249,7 @@ var UpgradeComponent = /** @class */ (function () {
         this.bindings.twoWayBoundProperties.concat(this.bindings.expressionBoundProperties)
             .forEach(function (propName) {
             var outputName = _this.bindings.propertyToOutputMap[propName];
-            _this[outputName] = new _angular_core.EventEmitter();
+            _this[outputName] = new core.EventEmitter();
         });
     };
     UpgradeComponent.prototype.bindOutputs = function () {
@@ -1276,6 +1271,65 @@ var UpgradeComponent = /** @class */ (function () {
     };
     return UpgradeComponent;
 }());
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
 
 /**
  * @license
@@ -1442,7 +1496,7 @@ var UpgradeModule = /** @class */ (function () {
                             // Cannot use arrow function below because we need the context
                             var newWhenStable = function (callback) {
                                 originalWhenStable.call(testabilityDelegate, function () {
-                                    var ng2Testability = injector.get(_angular_core.Testability);
+                                    var ng2Testability = injector.get(core.Testability);
                                     if (ng2Testability.isStable()) {
                                         callback();
                                     }
@@ -1469,7 +1523,7 @@ var UpgradeModule = /** @class */ (function () {
                                     pass[_i - 4] = arguments[_i];
                                 }
                                 return _this.ngZone.runOutsideAngular(function () {
-                                    return intervalDelegate.apply(void 0, [function () {
+                                    return intervalDelegate.apply(void 0, __spread([function () {
                                             var args = [];
                                             for (var _i = 0; _i < arguments.length; _i++) {
                                                 args[_i] = arguments[_i];
@@ -1478,8 +1532,8 @@ var UpgradeModule = /** @class */ (function () {
                                             // $rootScope.$apply, and running the callback in NgZone will
                                             // cause a '$digest already in progress' error if it's in the
                                             // same vm turn.
-                                            setTimeout(function () { _this.ngZone.run(function () { return fn.apply(void 0, args); }); });
-                                        }, delay, count, invokeApply].concat(pass));
+                                            setTimeout(function () { _this.ngZone.run(function () { return fn.apply(void 0, __spread(args)); }); });
+                                        }, delay, count, invokeApply], pass));
                                 });
                             };
                             wrappedInterval['cancel'] = intervalDelegate.cancel;
@@ -1528,21 +1582,43 @@ var UpgradeModule = /** @class */ (function () {
         }
     };
     UpgradeModule.decorators = [
-        { type: _angular_core.NgModule, args: [{ providers: [angular1Providers] },] },
+        { type: core.NgModule, args: [{ providers: [angular1Providers] },] }
     ];
     /** @nocollapse */
     UpgradeModule.ctorParameters = function () { return [
-        { type: _angular_core.Injector, },
-        { type: _angular_core.NgZone, },
+        { type: core.Injector, },
+        { type: core.NgZone, },
     ]; };
     return UpgradeModule;
 }());
 
-exports.ɵe = angular1Providers;
-exports.ɵc = compileFactory;
-exports.ɵa = injectorFactory;
-exports.ɵd = parseFactory;
-exports.ɵb = rootScopeFactory;
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+// This file only re-exports content of the `src` folder. Keep it that way.
+
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+exports.ɵangular_packages_upgrade_static_static_e = angular1Providers;
+exports.ɵangular_packages_upgrade_static_static_c = compileFactory;
+exports.ɵangular_packages_upgrade_static_static_a = injectorFactory;
+exports.ɵangular_packages_upgrade_static_static_d = parseFactory;
+exports.ɵangular_packages_upgrade_static_static_b = rootScopeFactory;
 exports.getAngularJSGlobal = getAngularJSGlobal;
 exports.getAngularLib = getAngularLib;
 exports.setAngularJSGlobal = setAngularJSGlobal;

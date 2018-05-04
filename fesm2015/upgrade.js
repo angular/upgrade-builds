@@ -1,10 +1,11 @@
 /**
- * @license Angular v6.0.0-373a47d
+ * @license Angular v6.0.0+23.sha-5eb9c01
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
+
 import { ApplicationRef, ChangeDetectorRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/platform-browser-dynamic';
 
 /**
  * @fileoverview added by tsickle
@@ -20,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  *
  */
-const VERSION = new Version('6.0.0-373a47d');
+const VERSION = new Version('6.0.0+23.sha-5eb9c01');
 
 /**
  * @fileoverview added by tsickle
@@ -202,6 +203,9 @@ catch (/** @type {?} */ e) {
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e) => angular.element(e);
+
+
+let version = angular.version;
 
 /**
  * @fileoverview added by tsickle
@@ -653,7 +657,6 @@ class DowngradeComponentAdapter {
  */
 function groupNodesBySelector(ngContentSelectors, nodes) {
     const /** @type {?} */ projectableNodes = [];
-    let /** @type {?} */ wildcardNgContentIndex;
     for (let /** @type {?} */ i = 0, /** @type {?} */ ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -2008,7 +2011,7 @@ class UpgradeAdapter {
         let /** @type {?} */ rootScope;
         const /** @type {?} */ upgradeAdapter = this;
         const /** @type {?} */ ng1Module = this.ng1Module = module$1(this.idPrefix, modules);
-        const /** @type {?} */ platformRef = platformBrowserDynamic();
+        const /** @type {?} */ platformRef = platformBrowserDynamic$1();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, () => /** @type {?} */ ((this.moduleRef)).injector.get(Injector))
@@ -2180,6 +2183,18 @@ class UpgradeAdapterRef {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+// This file is not used to build this module. It is only used during editing
+// by the TypeScript language service and during build for verification. `ngc`
+// replaces this file with production index.ts when it rewrites private symbol
+// names.
+
 /**
  * Generated bundle index. Do not edit.
  */
