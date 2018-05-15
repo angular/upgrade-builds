@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.5+184.sha-e5e5c24
+ * @license Angular v6.0.0-rc.5+185.sha-5cf82f8
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/pla
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('6.0.0-rc.5+184.sha-e5e5c24');
+const VERSION = new Version('6.0.0-rc.5+185.sha-5cf82f8');
 
 /**
  * @fileoverview added by tsickle
@@ -320,11 +320,6 @@ function directiveNormalize(name) {
     return name.replace(DIRECTIVE_PREFIX_REGEXP, '')
         .replace(DIRECTIVE_SPECIAL_CHARS_REGEXP, (_, letter) => letter.toUpperCase());
 }
-/**
- * @param {?} node
- * @return {?}
- */
-
 /**
  * @param {?} component
  * @return {?}

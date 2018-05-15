@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.5+184.sha-e5e5c24
+ * @license Angular v6.0.0-rc.5+185.sha-5cf82f8
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -155,7 +155,6 @@ function directiveNormalize(name) {
     return name.replace(DIRECTIVE_PREFIX_REGEXP, '')
         .replace(DIRECTIVE_SPECIAL_CHARS_REGEXP, function (_, letter) { return letter.toUpperCase(); });
 }
-
 function getComponentName(component) {
     // Return the name of the component or the first line of its stringified version.
     return component.overriddenName || component.name || component.toString().split('\n')[0];
@@ -667,7 +666,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new core.Version('6.0.0-rc.5+184.sha-e5e5c24');
+var VERSION = new core.Version('6.0.0-rc.5+185.sha-5cf82f8');
 
 /**
  * @license
