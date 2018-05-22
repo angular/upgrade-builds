@@ -10,7 +10,6 @@ import * as angular from './angular1';
 export declare function onError(e: any): void;
 export declare function controllerKey(name: string): string;
 export declare function directiveNormalize(name: string): string;
-export declare function getAttributesAsArray(node: Node): [string, string][];
 export declare function getComponentName(component: Type<any>): string;
 export declare function isFunction(value: any): value is Function;
 export declare class Deferred<R> {
