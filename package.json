@@ -1,24 +1,51 @@
 {
   "name": "@angular/upgrade",
-  "version": "5.1.0-b20e271",
+  "version": "6.0.0-rc.5+285.sha-438547c",
   "description": "Angular - the library for easing update from v1 to v2",
   "main": "./bundles/upgrade.umd.js",
-  "module": "./esm5/upgrade.js",
-  "es2015": "./esm2015/upgrade.js",
+  "module": "./fesm5/upgrade.js",
+  "es2015": "./fesm2015/upgrade.js",
+  "esm5": "./esm5/upgrade.js",
+  "esm2015": "./esm2015/upgrade.js",
+  "fesm5": "./fesm5/upgrade.js",
+  "fesm2015": "./fesm2015/upgrade.js",
   "typings": "./upgrade.d.ts",
   "author": "angular",
   "license": "MIT",
   "dependencies": {
-    "tslib": "^1.7.1"
+    "tslib": "^1.9.0"
   },
   "peerDependencies": {
-    "@angular/core": "5.1.0-b20e271",
-    "@angular/compiler": "5.1.0-b20e271",
-    "@angular/platform-browser": "5.1.0-b20e271",
-    "@angular/platform-browser-dynamic": "5.1.0-b20e271"
+    "@angular/core": "6.0.0-rc.5+285.sha-438547c",
+    "@angular/compiler": "6.0.0-rc.5+285.sha-438547c",
+    "@angular/platform-browser": "6.0.0-rc.5+285.sha-438547c",
+    "@angular/platform-browser-dynamic": "6.0.0-rc.5+285.sha-438547c"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/angular/angular.git"
-  }
+  },
+  "ng-update": {
+    "packageGroup": [
+      "@angular/core",
+      "@angular/bazel",
+      "@angular/common",
+      "@angular/compiler",
+      "@angular/compiler-cli",
+      "@angular/animations",
+      "@angular/elements",
+      "@angular/platform-browser",
+      "@angular/platform-browser-dynamic",
+      "@angular/forms",
+      "@angular/http",
+      "@angular/platform-server",
+      "@angular/platform-webworker",
+      "@angular/platform-webworker-dynamic",
+      "@angular/upgrade",
+      "@angular/router",
+      "@angular/language-service",
+      "@angular/service-worker"
+    ]
+  },
+  "sideEffects": false
 }
