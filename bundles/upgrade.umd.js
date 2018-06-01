@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.5+294.sha-60aa943
+ * @license Angular v6.0.0-rc.5+295.sha-f69ac67
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,12 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new core.Version('6.0.0-rc.5+294.sha-60aa943');
+/**
+ * @module
+ * @description
+ * Entry point for all public APIs of the common package.
+ */
+var VERSION = new core.Version('6.0.0-rc.5+295.sha-f69ac67');
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -368,11 +373,9 @@ var DowngradeComponentAdapter = /** @class */ (function () {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var watchFn = (function (prop) {
-                    return function (currValue, prevValue) {
-                        return _this.updateInput(prop, prevValue, currValue);
-                    };
-                })(input.prop);
+                var watchFn = (function (prop) { return function (currValue, prevValue) {
+                    return _this.updateInput(prop, prevValue, currValue);
+                }; })(input.prop);
                 this_1.componentScope.$watch(expr, watchFn);
             }
         };
@@ -389,7 +392,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
             if (_this.implementsOnChanges) {
                 var inputChanges = _this.inputChanges;
                 _this.inputChanges = {};
-                _this.component.ngOnChanges((inputChanges));
+                _this.component.ngOnChanges(inputChanges);
             }
             _this.viewChangeDetector.markForCheck();
             // If opted out of propagating digests, invoke change detection when inputs change.
@@ -597,7 +600,7 @@ function downgradeComponent(info) {
                 }
                 var doDowngrade = function (injector) {
                     var componentFactoryResolver = injector.get(core.ComponentFactoryResolver);
-                    var componentFactory = (componentFactoryResolver.resolveComponentFactory(info.component));
+                    var componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
@@ -618,11 +621,9 @@ function downgradeComponent(info) {
                 var downgradeFn = !needsNgZone ? doDowngrade : function (injector) {
                     if (!ngZone) {
                         ngZone = injector.get(core.NgZone);
-                        wrapCallback = function (cb) {
-                            return function () {
-                                return core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
-                            };
-                        };
+                        wrapCallback = function (cb) { return function () {
+                            return core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
+                        }; };
                     }
                     wrapCallback(function () { return doDowngrade(injector); })();
                 };
@@ -650,7 +651,6 @@ var ParentInjectorPromise$1 = /** @class */ (function () {
         this.injectorKey = controllerKey(INJECTOR_KEY);
         this.callbacks = [];
         // Store the promise on the element.
-        // Store the promise on the element.
         element.data(this.injectorKey, this);
     }
     ParentInjectorPromise.prototype.then = function (callback) {
@@ -664,10 +664,9 @@ var ParentInjectorPromise$1 = /** @class */ (function () {
     ParentInjectorPromise.prototype.resolve = function (injector) {
         this.injector = injector;
         // Store the real injector on the element.
-        // Store the real injector on the element.
         this.element.data(this.injectorKey, injector);
         // Release the element to prevent memory leaks.
-        this.element = (null);
+        this.element = null;
         // Run the queued callbacks.
         this.callbacks.forEach(function (callback) { return callback(injector); });
         this.callbacks.length = 0;
@@ -804,7 +803,7 @@ var UpgradeHelper = /** @class */ (function () {
         // Quoted properties below so that this code can be optimized with Closure Compiler.
         var locals = { '$scope': $scope, '$element': this.$element };
         var controller = this.$controller(controllerType, locals, null, this.directive.controllerAs);
-        this.$element.data(controllerKey((this.directive.name)), controller);
+        this.$element.data(controllerKey(this.directive.name), controller);
         return controller;
     };
     UpgradeHelper.prototype.compileTemplate = function (template) {
@@ -911,11 +910,11 @@ var UpgradeHelper = /** @class */ (function () {
         return childNodes;
     };
     UpgradeHelper.prototype.getDirectiveRequire = function () {
-        var require = this.directive.require || ((this.directive.controller && this.directive.name));
+        var require = this.directive.require || (this.directive.controller && this.directive.name);
         if (isMap(require)) {
             Object.keys(require).forEach(function (key) {
                 var value = require[key];
-                var match = (value.match(REQUIRE_PREFIX_RE));
+                var match = value.match(REQUIRE_PREFIX_RE);
                 var name = value.substring(match[0].length);
                 if (!name) {
                     require[key] = match[0] + key;
@@ -934,11 +933,11 @@ var UpgradeHelper = /** @class */ (function () {
         }
         else if (typeof require === 'object') {
             var value_1 = {};
-            Object.keys(require).forEach(function (key) { return value_1[key] = (_this.resolveRequire(require[key])); });
+            Object.keys(require).forEach(function (key) { return value_1[key] = _this.resolveRequire(require[key]); });
             return value_1;
         }
         else if (typeof require === 'string') {
-            var match = (require.match(REQUIRE_PREFIX_RE));
+            var match = require.match(REQUIRE_PREFIX_RE);
             var inheritType = match[1] || match[3];
             var name_1 = require.substring(match[0].length);
             var isOptional = !!match[2];
@@ -1004,25 +1003,21 @@ var UpgradeNg1ComponentAdapterBuilder = /** @class */ (function () {
                 return new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
             }
             MyClass.prototype.ngOnInit = function () {
-                /* needs to be here for ng2 to properly detect it */
             };
             MyClass.prototype.ngOnChanges = function () {
-                /* needs to be here for ng2 to properly detect it */
             };
             MyClass.prototype.ngDoCheck = function () {
-                /* needs to be here for ng2 to properly detect it */
             };
             MyClass.prototype.ngOnDestroy = function () {
-                /* needs to be here for ng2 to properly detect it */
             };
             MyClass.decorators = [
                 { type: core.Directive, args: [directive,] },
             ];
             /** @nocollapse */
             MyClass.ctorParameters = function () { return [
-                { type: undefined, decorators: [{ type: core.Inject, args: [$SCOPE,] },] },
-                { type: core.Injector, },
-                { type: core.ElementRef, },
+                { type: undefined, decorators: [{ type: core.Inject, args: [$SCOPE,] }] },
+                { type: core.Injector },
+                { type: core.ElementRef }
             ]; };
             return MyClass;
         }());
@@ -1031,7 +1026,7 @@ var UpgradeNg1ComponentAdapterBuilder = /** @class */ (function () {
     UpgradeNg1ComponentAdapterBuilder.prototype.extractBindings = function () {
         var _this = this;
         var btcIsObject = typeof this.directive.bindToController === 'object';
-        if (btcIsObject && Object.keys((this.directive.scope)).length) {
+        if (btcIsObject && Object.keys(this.directive.scope).length) {
             throw new Error("Binding definitions on scope and controller at the same time are not supported.");
         }
         var context = (btcIsObject) ? this.directive.bindToController : this.directive.scope;
@@ -1079,13 +1074,7 @@ var UpgradeNg1ComponentAdapterBuilder = /** @class */ (function () {
     /**
      * Upgrade ng1 components into Angular.
      */
-    /**
-       * Upgrade ng1 components into Angular.
-       */
-    UpgradeNg1ComponentAdapterBuilder.resolve = /**
-       * Upgrade ng1 components into Angular.
-       */
-    function (exportedComponents, $injector) {
+    UpgradeNg1ComponentAdapterBuilder.resolve = function (exportedComponents, $injector) {
         var promises = Object.keys(exportedComponents).map(function (name) {
             var exportedComponent = exportedComponents[name];
             exportedComponent.directive = UpgradeHelper.getDirective($injector, name);
@@ -1161,7 +1150,7 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
         if (preLink) {
             preLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
-        linkFn(this.componentScope, (null), { parentBoundTranscludeFn: attachChildNodes });
+        linkFn(this.componentScope, null, { parentBoundTranscludeFn: attachChildNodes });
         if (postLink) {
             postLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
         }
@@ -1307,13 +1296,13 @@ var UpgradeAdapter = /** @class */ (function () {
         this.idPrefix = "NG2_UPGRADE_" + upgradeCount++ + "_";
         this.downgradedComponents = [];
         /**
-           * An internal map of ng1 components which need to up upgraded to ng2.
-           *
-           * We can't upgrade until injector is instantiated and we can retrieve the component metadata.
-           * For this reason we keep a list of components to upgrade until ng1 injector is bootstrapped.
-           *
-           * @internal
-           */
+         * An internal map of ng1 components which need to up upgraded to ng2.
+         *
+         * We can't upgrade until injector is instantiated and we can retrieve the component metadata.
+         * For this reason we keep a list of components to upgrade until ng1 injector is bootstrapped.
+         *
+         * @internal
+         */
         this.ng1ComponentsToBeUpgraded = {};
         this.upgradedProviders = [];
         this.moduleRef = null;
@@ -1380,125 +1369,7 @@ var UpgradeAdapter = /** @class */ (function () {
      * });
      * ```
      */
-    /**
-       * Allows Angular Component to be used from AngularJS.
-       *
-       * Use `downgradeNg2Component` to create an AngularJS Directive Definition Factory from
-       * Angular Component. The adapter will bootstrap Angular component from within the
-       * AngularJS template.
-       *
-       * ## Mental Model
-       *
-       * 1. The component is instantiated by being listed in AngularJS template. This means that the
-       *    host element is controlled by AngularJS, but the component's view will be controlled by
-       *    Angular.
-       * 2. Even thought the component is instantiated in AngularJS, it will be using Angular
-       *    syntax. This has to be done, this way because we must follow Angular components do not
-       *    declare how the attributes should be interpreted.
-       * 3. `ng-model` is controlled by AngularJS and communicates with the downgraded Angular component
-       *    by way of the `ControlValueAccessor` interface from @angular/forms. Only components that
-       *    implement this interface are eligible.
-       *
-       * ## Supported Features
-       *
-       * - Bindings:
-       *   - Attribute: `<comp name="World">`
-       *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
-       *   - Expression:  `<comp [name]="username">`
-       *   - Event:  `<comp (close)="doSomething()">`
-       *   - ng-model: `<comp ng-model="name">`
-       * - Content projection: yes
-       *
-       * ### Example
-       *
-       * ```
-       * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
-       * const module = angular.module('myExample', []);
-       * module.directive('greet', adapter.downgradeNg2Component(Greeter));
-       *
-       * @Component({
-       *   selector: 'greet',
-       *   template: '{{salutation}} {{name}}! - <ng-content></ng-content>'
-       * })
-       * class Greeter {
-       *   @Input() salutation: string;
-       *   @Input() name: string;
-       * }
-       *
-       * @NgModule({
-       *   declarations: [Greeter],
-       *   imports: [BrowserModule]
-       * })
-       * class MyNg2Module {}
-       *
-       * document.body.innerHTML =
-       *   'ng1 template: <greet salutation="Hello" [name]="world">text</greet>';
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready(function() {
-       *   expect(document.body.textContent).toEqual("ng1 template: Hello world! - text");
-       * });
-       * ```
-       */
-    UpgradeAdapter.prototype.downgradeNg2Component = /**
-       * Allows Angular Component to be used from AngularJS.
-       *
-       * Use `downgradeNg2Component` to create an AngularJS Directive Definition Factory from
-       * Angular Component. The adapter will bootstrap Angular component from within the
-       * AngularJS template.
-       *
-       * ## Mental Model
-       *
-       * 1. The component is instantiated by being listed in AngularJS template. This means that the
-       *    host element is controlled by AngularJS, but the component's view will be controlled by
-       *    Angular.
-       * 2. Even thought the component is instantiated in AngularJS, it will be using Angular
-       *    syntax. This has to be done, this way because we must follow Angular components do not
-       *    declare how the attributes should be interpreted.
-       * 3. `ng-model` is controlled by AngularJS and communicates with the downgraded Angular component
-       *    by way of the `ControlValueAccessor` interface from @angular/forms. Only components that
-       *    implement this interface are eligible.
-       *
-       * ## Supported Features
-       *
-       * - Bindings:
-       *   - Attribute: `<comp name="World">`
-       *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
-       *   - Expression:  `<comp [name]="username">`
-       *   - Event:  `<comp (close)="doSomething()">`
-       *   - ng-model: `<comp ng-model="name">`
-       * - Content projection: yes
-       *
-       * ### Example
-       *
-       * ```
-       * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
-       * const module = angular.module('myExample', []);
-       * module.directive('greet', adapter.downgradeNg2Component(Greeter));
-       *
-       * @Component({
-       *   selector: 'greet',
-       *   template: '{{salutation}} {{name}}! - <ng-content></ng-content>'
-       * })
-       * class Greeter {
-       *   @Input() salutation: string;
-       *   @Input() name: string;
-       * }
-       *
-       * @NgModule({
-       *   declarations: [Greeter],
-       *   imports: [BrowserModule]
-       * })
-       * class MyNg2Module {}
-       *
-       * document.body.innerHTML =
-       *   'ng1 template: <greet salutation="Hello" [name]="world">text</greet>';
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready(function() {
-       *   expect(document.body.textContent).toEqual("ng1 template: Hello world! - text");
-       * });
-       * ```
-       */
-    function (component) {
+    UpgradeAdapter.prototype.downgradeNg2Component = function (component) {
         this.downgradedComponents.push(component);
         return downgradeComponent({ component: component });
     };
@@ -1579,161 +1450,7 @@ var UpgradeAdapter = /** @class */ (function () {
      * });
      * ```
      */
-    /**
-       * Allows AngularJS Component to be used from Angular.
-       *
-       * Use `upgradeNg1Component` to create an Angular component from AngularJS Component
-       * directive. The adapter will bootstrap AngularJS component from within the Angular
-       * template.
-       *
-       * ## Mental Model
-       *
-       * 1. The component is instantiated by being listed in Angular template. This means that the
-       *    host element is controlled by Angular, but the component's view will be controlled by
-       *    AngularJS.
-       *
-       * ## Supported Features
-       *
-       * - Bindings:
-       *   - Attribute: `<comp name="World">`
-       *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
-       *   - Expression:  `<comp [name]="username">`
-       *   - Event:  `<comp (close)="doSomething()">`
-       * - Transclusion: yes
-       * - Only some of the features of
-       *   [Directive Definition Object](https://docs.angularjs.org/api/ng/service/$compile) are
-       *   supported:
-       *   - `compile`: not supported because the host element is owned by Angular, which does
-       *     not allow modifying DOM structure during compilation.
-       *   - `controller`: supported. (NOTE: injection of `$attrs` and `$transclude` is not supported.)
-       *   - `controllerAs`: supported.
-       *   - `bindToController`: supported.
-       *   - `link`: supported. (NOTE: only pre-link function is supported.)
-       *   - `name`: supported.
-       *   - `priority`: ignored.
-       *   - `replace`: not supported.
-       *   - `require`: supported.
-       *   - `restrict`: must be set to 'E'.
-       *   - `scope`: supported.
-       *   - `template`: supported.
-       *   - `templateUrl`: supported.
-       *   - `terminal`: ignored.
-       *   - `transclude`: supported.
-       *
-       *
-       * ### Example
-       *
-       * ```
-       * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
-       * const module = angular.module('myExample', []);
-       *
-       * module.directive('greet', function() {
-       *   return {
-       *     scope: {salutation: '=', name: '=' },
-       *     template: '{{salutation}} {{name}}! - <span ng-transclude></span>'
-       *   };
-       * });
-       *
-       * module.directive('ng2', adapter.downgradeNg2Component(Ng2Component));
-       *
-       * @Component({
-       *   selector: 'ng2',
-       *   template: 'ng2 template: <greet salutation="Hello" [name]="world">text</greet>'
-       * })
-       * class Ng2Component {
-       * }
-       *
-       * @NgModule({
-       *   declarations: [Ng2Component, adapter.upgradeNg1Component('greet')],
-       *   imports: [BrowserModule]
-       * })
-       * class MyNg2Module {}
-       *
-       * document.body.innerHTML = '<ng2></ng2>';
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready(function() {
-       *   expect(document.body.textContent).toEqual("ng2 template: Hello world! - text");
-       * });
-       * ```
-       */
-    UpgradeAdapter.prototype.upgradeNg1Component = /**
-       * Allows AngularJS Component to be used from Angular.
-       *
-       * Use `upgradeNg1Component` to create an Angular component from AngularJS Component
-       * directive. The adapter will bootstrap AngularJS component from within the Angular
-       * template.
-       *
-       * ## Mental Model
-       *
-       * 1. The component is instantiated by being listed in Angular template. This means that the
-       *    host element is controlled by Angular, but the component's view will be controlled by
-       *    AngularJS.
-       *
-       * ## Supported Features
-       *
-       * - Bindings:
-       *   - Attribute: `<comp name="World">`
-       *   - Interpolation:  `<comp greeting="Hello {{name}}!">`
-       *   - Expression:  `<comp [name]="username">`
-       *   - Event:  `<comp (close)="doSomething()">`
-       * - Transclusion: yes
-       * - Only some of the features of
-       *   [Directive Definition Object](https://docs.angularjs.org/api/ng/service/$compile) are
-       *   supported:
-       *   - `compile`: not supported because the host element is owned by Angular, which does
-       *     not allow modifying DOM structure during compilation.
-       *   - `controller`: supported. (NOTE: injection of `$attrs` and `$transclude` is not supported.)
-       *   - `controllerAs`: supported.
-       *   - `bindToController`: supported.
-       *   - `link`: supported. (NOTE: only pre-link function is supported.)
-       *   - `name`: supported.
-       *   - `priority`: ignored.
-       *   - `replace`: not supported.
-       *   - `require`: supported.
-       *   - `restrict`: must be set to 'E'.
-       *   - `scope`: supported.
-       *   - `template`: supported.
-       *   - `templateUrl`: supported.
-       *   - `terminal`: ignored.
-       *   - `transclude`: supported.
-       *
-       *
-       * ### Example
-       *
-       * ```
-       * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
-       * const module = angular.module('myExample', []);
-       *
-       * module.directive('greet', function() {
-       *   return {
-       *     scope: {salutation: '=', name: '=' },
-       *     template: '{{salutation}} {{name}}! - <span ng-transclude></span>'
-       *   };
-       * });
-       *
-       * module.directive('ng2', adapter.downgradeNg2Component(Ng2Component));
-       *
-       * @Component({
-       *   selector: 'ng2',
-       *   template: 'ng2 template: <greet salutation="Hello" [name]="world">text</greet>'
-       * })
-       * class Ng2Component {
-       * }
-       *
-       * @NgModule({
-       *   declarations: [Ng2Component, adapter.upgradeNg1Component('greet')],
-       *   imports: [BrowserModule]
-       * })
-       * class MyNg2Module {}
-       *
-       * document.body.innerHTML = '<ng2></ng2>';
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready(function() {
-       *   expect(document.body.textContent).toEqual("ng2 template: Hello world! - text");
-       * });
-       * ```
-       */
-    function (name) {
+    UpgradeAdapter.prototype.upgradeNg1Component = function (name) {
         if (this.ng1ComponentsToBeUpgraded.hasOwnProperty(name)) {
             return this.ng1ComponentsToBeUpgraded[name].type;
         }
@@ -1783,89 +1500,7 @@ var UpgradeAdapter = /** @class */ (function () {
      * @returns an `UpgradeAdapterRef`, which lets you register a `ready()` callback to
      * run assertions once the Angular components are ready to test through AngularJS.
      */
-    /**
-       * Registers the adapter's AngularJS upgrade module for unit testing in AngularJS.
-       * Use this instead of `angular.mock.module()` to load the upgrade module into
-       * the AngularJS testing injector.
-       *
-       * ### Example
-       *
-       * ```
-       * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
-       *
-       * // configure the adapter with upgrade/downgrade components and services
-       * upgradeAdapter.downgradeNg2Component(MyComponent);
-       *
-       * let upgradeAdapterRef: UpgradeAdapterRef;
-       * let $compile, $rootScope;
-       *
-       * // We must register the adapter before any calls to `inject()`
-       * beforeEach(() => {
-       *   upgradeAdapterRef = upgradeAdapter.registerForNg1Tests(['heroApp']);
-       * });
-       *
-       * beforeEach(inject((_$compile_, _$rootScope_) => {
-       *   $compile = _$compile_;
-       *   $rootScope = _$rootScope_;
-       * }));
-       *
-       * it("says hello", (done) => {
-       *   upgradeAdapterRef.ready(() => {
-       *     const element = $compile("<my-component></my-component>")($rootScope);
-       *     $rootScope.$apply();
-       *     expect(element.html()).toContain("Hello World");
-       *     done();
-       *   })
-       * });
-       *
-       * ```
-       *
-       * @param modules any AngularJS modules that the upgrade module should depend upon
-       * @returns an `UpgradeAdapterRef`, which lets you register a `ready()` callback to
-       * run assertions once the Angular components are ready to test through AngularJS.
-       */
-    UpgradeAdapter.prototype.registerForNg1Tests = /**
-       * Registers the adapter's AngularJS upgrade module for unit testing in AngularJS.
-       * Use this instead of `angular.mock.module()` to load the upgrade module into
-       * the AngularJS testing injector.
-       *
-       * ### Example
-       *
-       * ```
-       * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
-       *
-       * // configure the adapter with upgrade/downgrade components and services
-       * upgradeAdapter.downgradeNg2Component(MyComponent);
-       *
-       * let upgradeAdapterRef: UpgradeAdapterRef;
-       * let $compile, $rootScope;
-       *
-       * // We must register the adapter before any calls to `inject()`
-       * beforeEach(() => {
-       *   upgradeAdapterRef = upgradeAdapter.registerForNg1Tests(['heroApp']);
-       * });
-       *
-       * beforeEach(inject((_$compile_, _$rootScope_) => {
-       *   $compile = _$compile_;
-       *   $rootScope = _$rootScope_;
-       * }));
-       *
-       * it("says hello", (done) => {
-       *   upgradeAdapterRef.ready(() => {
-       *     const element = $compile("<my-component></my-component>")($rootScope);
-       *     $rootScope.$apply();
-       *     expect(element.html()).toContain("Hello World");
-       *     done();
-       *   })
-       * });
-       *
-       * ```
-       *
-       * @param modules any AngularJS modules that the upgrade module should depend upon
-       * @returns an `UpgradeAdapterRef`, which lets you register a `ready()` callback to
-       * run assertions once the Angular components are ready to test through AngularJS.
-       */
-    function (modules) {
+    UpgradeAdapter.prototype.registerForNg1Tests = function (modules) {
         var _this = this;
         var windowNgMock = window['angular'].mock;
         if (!windowNgMock || !windowNgMock.module) {
@@ -1921,102 +1556,14 @@ var UpgradeAdapter = /** @class */ (function () {
      * });
      * ```
      */
-    /**
-       * Bootstrap a hybrid AngularJS / Angular application.
-       *
-       * This `bootstrap` method is a direct replacement (takes same arguments) for AngularJS
-       * [`bootstrap`](https://docs.angularjs.org/api/ng/function/angular.bootstrap) method. Unlike
-       * AngularJS, this bootstrap is asynchronous.
-       *
-       * ### Example
-       *
-       * ```
-       * const adapter = new UpgradeAdapter(MyNg2Module);
-       * const module = angular.module('myExample', []);
-       * module.directive('ng2', adapter.downgradeNg2Component(Ng2));
-       *
-       * module.directive('ng1', function() {
-       *   return {
-       *      scope: { title: '=' },
-       *      template: 'ng1[Hello {{title}}!](<span ng-transclude></span>)'
-       *   };
-       * });
-       *
-       *
-       * @Component({
-       *   selector: 'ng2',
-       *   inputs: ['name'],
-       *   template: 'ng2[<ng1 [title]="name">transclude</ng1>](<ng-content></ng-content>)'
-       * })
-       * class Ng2 {
-       * }
-       *
-       * @NgModule({
-       *   declarations: [Ng2, adapter.upgradeNg1Component('ng1')],
-       *   imports: [BrowserModule]
-       * })
-       * class MyNg2Module {}
-       *
-       * document.body.innerHTML = '<ng2 name="World">project</ng2>';
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready(function() {
-       *   expect(document.body.textContent).toEqual(
-       *       "ng2[ng1[Hello World!](transclude)](project)");
-       * });
-       * ```
-       */
-    UpgradeAdapter.prototype.bootstrap = /**
-       * Bootstrap a hybrid AngularJS / Angular application.
-       *
-       * This `bootstrap` method is a direct replacement (takes same arguments) for AngularJS
-       * [`bootstrap`](https://docs.angularjs.org/api/ng/function/angular.bootstrap) method. Unlike
-       * AngularJS, this bootstrap is asynchronous.
-       *
-       * ### Example
-       *
-       * ```
-       * const adapter = new UpgradeAdapter(MyNg2Module);
-       * const module = angular.module('myExample', []);
-       * module.directive('ng2', adapter.downgradeNg2Component(Ng2));
-       *
-       * module.directive('ng1', function() {
-       *   return {
-       *      scope: { title: '=' },
-       *      template: 'ng1[Hello {{title}}!](<span ng-transclude></span>)'
-       *   };
-       * });
-       *
-       *
-       * @Component({
-       *   selector: 'ng2',
-       *   inputs: ['name'],
-       *   template: 'ng2[<ng1 [title]="name">transclude</ng1>](<ng-content></ng-content>)'
-       * })
-       * class Ng2 {
-       * }
-       *
-       * @NgModule({
-       *   declarations: [Ng2, adapter.upgradeNg1Component('ng1')],
-       *   imports: [BrowserModule]
-       * })
-       * class MyNg2Module {}
-       *
-       * document.body.innerHTML = '<ng2 name="World">project</ng2>';
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready(function() {
-       *   expect(document.body.textContent).toEqual(
-       *       "ng2[ng1[Hello World!](transclude)](project)");
-       * });
-       * ```
-       */
-    function (element$$1, modules, config) {
+    UpgradeAdapter.prototype.bootstrap = function (element$$1, modules, config) {
         var _this = this;
         this.declareNg1Module(modules);
         var upgrade = new UpgradeAdapterRef();
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
         var windowAngular = window /** TODO #???? */['angular'];
         windowAngular.resumeBootstrap = undefined;
-        this.ngZone.run(function () { bootstrap(element$$1, [_this.ng1Module.name], (config)); });
+        this.ngZone.run(function () { bootstrap(element$$1, [_this.ng1Module.name], config); });
         var ng1BootstrapPromise = new Promise(function (resolve) {
             if (windowAngular.resumeBootstrap) {
                 var originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
@@ -2069,69 +1616,7 @@ var UpgradeAdapter = /** @class */ (function () {
      *
      * ```
      */
-    /**
-       * Allows AngularJS service to be accessible from Angular.
-       *
-       *
-       * ### Example
-       *
-       * ```
-       * class Login { ... }
-       * class Server { ... }
-       *
-       * @Injectable()
-       * class Example {
-       *   constructor(@Inject('server') server, login: Login) {
-       *     ...
-       *   }
-       * }
-       *
-       * const module = angular.module('myExample', []);
-       * module.service('server', Server);
-       * module.service('login', Login);
-       *
-       * const adapter = new UpgradeAdapter(MyNg2Module);
-       * adapter.upgradeNg1Provider('server');
-       * adapter.upgradeNg1Provider('login', {asToken: Login});
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
-       *   const example: Example = ref.ng2Injector.get(Example);
-       * });
-       *
-       * ```
-       */
-    UpgradeAdapter.prototype.upgradeNg1Provider = /**
-       * Allows AngularJS service to be accessible from Angular.
-       *
-       *
-       * ### Example
-       *
-       * ```
-       * class Login { ... }
-       * class Server { ... }
-       *
-       * @Injectable()
-       * class Example {
-       *   constructor(@Inject('server') server, login: Login) {
-       *     ...
-       *   }
-       * }
-       *
-       * const module = angular.module('myExample', []);
-       * module.service('server', Server);
-       * module.service('login', Login);
-       *
-       * const adapter = new UpgradeAdapter(MyNg2Module);
-       * adapter.upgradeNg1Provider('server');
-       * adapter.upgradeNg1Provider('login', {asToken: Login});
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
-       *   const example: Example = ref.ng2Injector.get(Example);
-       * });
-       *
-       * ```
-       */
-    function (name, options) {
+    UpgradeAdapter.prototype.upgradeNg1Provider = function (name, options) {
         var token = options && options.asToken || name;
         this.upgradedProviders.push({
             provide: token,
@@ -2160,49 +1645,7 @@ var UpgradeAdapter = /** @class */ (function () {
      *
      * ```
      */
-    /**
-       * Allows Angular service to be accessible from AngularJS.
-       *
-       *
-       * ### Example
-       *
-       * ```
-       * class Example {
-       * }
-       *
-       * const adapter = new UpgradeAdapter(MyNg2Module);
-       *
-       * const module = angular.module('myExample', []);
-       * module.factory('example', adapter.downgradeNg2Provider(Example));
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
-       *   const example: Example = ref.ng1Injector.get('example');
-       * });
-       *
-       * ```
-       */
-    UpgradeAdapter.prototype.downgradeNg2Provider = /**
-       * Allows Angular service to be accessible from AngularJS.
-       *
-       *
-       * ### Example
-       *
-       * ```
-       * class Example {
-       * }
-       *
-       * const adapter = new UpgradeAdapter(MyNg2Module);
-       *
-       * const module = angular.module('myExample', []);
-       * module.factory('example', adapter.downgradeNg2Provider(Example));
-       *
-       * adapter.bootstrap(document.body, ['myExample']).ready((ref) => {
-       *   const example: Example = ref.ng1Injector.get('example');
-       * });
-       *
-       * ```
-       */
-    function (token) { return downgradeInjectable(token); };
+    UpgradeAdapter.prototype.downgradeNg2Provider = function (token) { return downgradeInjectable(token); };
     /**
      * Declare the AngularJS upgrade module for this adapter without bootstrapping the whole
      * hybrid application.
@@ -2219,39 +1662,7 @@ var UpgradeAdapter = /** @class */ (function () {
      * upgradeAdapter.declareNg1Module(['heroApp']);
      * ```
      */
-    /**
-       * Declare the AngularJS upgrade module for this adapter without bootstrapping the whole
-       * hybrid application.
-       *
-       * This method is automatically called by `bootstrap()` and `registerForNg1Tests()`.
-       *
-       * @param modules The AngularJS modules that this upgrade module should depend upon.
-       * @returns The AngularJS upgrade module that is declared by this method
-       *
-       * ### Example
-       *
-       * ```
-       * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
-       * upgradeAdapter.declareNg1Module(['heroApp']);
-       * ```
-       */
-    UpgradeAdapter.prototype.declareNg1Module = /**
-       * Declare the AngularJS upgrade module for this adapter without bootstrapping the whole
-       * hybrid application.
-       *
-       * This method is automatically called by `bootstrap()` and `registerForNg1Tests()`.
-       *
-       * @param modules The AngularJS modules that this upgrade module should depend upon.
-       * @returns The AngularJS upgrade module that is declared by this method
-       *
-       * ### Example
-       *
-       * ```
-       * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
-       * upgradeAdapter.declareNg1Module(['heroApp']);
-       * ```
-       */
-    function (modules) {
+    UpgradeAdapter.prototype.declareNg1Module = function (modules) {
         var _this = this;
         if (modules === void 0) { modules = []; }
         var delayApplyExps = [];
@@ -2344,7 +1755,7 @@ var UpgradeAdapter = /** @class */ (function () {
                         return DynamicNgUpgradeModule;
                     }());
                     platformRef
-                        .bootstrapModule(DynamicNgUpgradeModule, [(_this.compilerOptions), { ngZone: _this.ngZone }])
+                        .bootstrapModule(DynamicNgUpgradeModule, [_this.compilerOptions, { ngZone: _this.ngZone }])
                         .then(function (ref) {
                         _this.moduleRef = ref;
                         _this.ngZone.run(function () {
@@ -2386,9 +1797,7 @@ var UpgradeAdapterRef = /** @class */ (function () {
         this.ng2Injector = null;
     }
     /* @internal */
-    /* @internal */
-    UpgradeAdapterRef.prototype._bootstrapDone = /* @internal */
-    function (ngModuleRef, ng1Injector) {
+    UpgradeAdapterRef.prototype._bootstrapDone = function (ngModuleRef, ng1Injector) {
         this.ng2ModuleRef = ngModuleRef;
         this.ng2Injector = ngModuleRef.injector;
         this.ng1Injector = ng1Injector;
@@ -2402,31 +1811,11 @@ var UpgradeAdapterRef = /** @class */ (function () {
      * The `ready` callback function is invoked inside the Angular zone, therefore it does not
      * require a call to `$apply()`.
      */
-    /**
-       * Register a callback function which is notified upon successful hybrid AngularJS / Angular
-       * application has been bootstrapped.
-       *
-       * The `ready` callback function is invoked inside the Angular zone, therefore it does not
-       * require a call to `$apply()`.
-       */
-    UpgradeAdapterRef.prototype.ready = /**
-       * Register a callback function which is notified upon successful hybrid AngularJS / Angular
-       * application has been bootstrapped.
-       *
-       * The `ready` callback function is invoked inside the Angular zone, therefore it does not
-       * require a call to `$apply()`.
-       */
-    function (fn) { this._readyFn = fn; };
+    UpgradeAdapterRef.prototype.ready = function (fn) { this._readyFn = fn; };
     /**
      * Dispose of running hybrid AngularJS / Angular application.
      */
-    /**
-       * Dispose of running hybrid AngularJS / Angular application.
-       */
-    UpgradeAdapterRef.prototype.dispose = /**
-       * Dispose of running hybrid AngularJS / Angular application.
-       */
-    function () {
+    UpgradeAdapterRef.prototype.dispose = function () {
         this.ng1Injector.get($ROOT_SCOPE).$destroy();
         this.ng2ModuleRef.destroy();
     };
@@ -2440,6 +1829,12 @@ var UpgradeAdapterRef = /** @class */ (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+/**
+ * @module
+ * @description
+ * Entry point for all public APIs of this package. allowing
+ * Angular 1 and Angular 2+ to run side by side in the same application.
+ */
 
 // This file only re-exports content of the `src` folder. Keep it that way.
 
@@ -2450,6 +1845,10 @@ var UpgradeAdapterRef = /** @class */ (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+// This file is not used to build this module. It is only used during editing
+// by the TypeScript language service and during build for verification. `ngc`
+// replaces this file with production index.ts when it rewrites private symbol
+// names.
 
 /**
  * Generated bundle index. Do not edit.
