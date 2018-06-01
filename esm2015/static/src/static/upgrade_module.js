@@ -246,17 +246,10 @@ UpgradeModule.decorators = [
 ];
 /** @nocollapse */
 UpgradeModule.ctorParameters = () => [
-    { type: Injector, },
-    { type: NgZone, },
+    { type: Injector },
+    { type: NgZone }
 ];
 function UpgradeModule_tsickle_Closure_declarations() {
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    UpgradeModule.decorators;
-    /**
-     * @nocollapse
-     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
-     */
-    UpgradeModule.ctorParameters;
     /**
      * The AngularJS `$injector` for the upgrade application.
      * @type {?}
