@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.5+288.sha-7e3f8f7
+ * @license Angular v6.0.0-rc.5+297.sha-6948ef1
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -914,7 +914,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('6.0.0-rc.5+288.sha-7e3f8f7');
+const VERSION = new Version('6.0.0-rc.5+297.sha-6948ef1');
 
 /**
  * @fileoverview added by tsickle
@@ -1878,8 +1878,8 @@ UpgradeModule.decorators = [
 ];
 /** @nocollapse */
 UpgradeModule.ctorParameters = () => [
-    { type: Injector, },
-    { type: NgZone, },
+    { type: Injector },
+    { type: NgZone }
 ];
 
 /**

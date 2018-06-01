@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.5+288.sha-7e3f8f7
+ * @license Angular v6.0.0-rc.5+297.sha-6948ef1
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/pla
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('6.0.0-rc.5+288.sha-7e3f8f7');
+const VERSION = new Version('6.0.0-rc.5+297.sha-6948ef1');
 
 /**
  * @fileoverview added by tsickle
@@ -1304,9 +1304,9 @@ class UpgradeNg1ComponentAdapterBuilder {
         ];
         /** @nocollapse */
         MyClass.ctorParameters = () => [
-            { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] },] },
-            { type: Injector, },
-            { type: ElementRef, },
+            { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] }] },
+            { type: Injector },
+            { type: ElementRef }
         ];
         this.type = MyClass;
     }
@@ -1675,8 +1675,8 @@ class UpgradeAdapter {
      *   template: '{{salutation}} {{name}}! - <ng-content></ng-content>'
      * })
      * class Greeter {
-     *   \@Input() salutation: string;
-     *   \@Input() name: string;
+     * \@Input() salutation: string;
+     * \@Input() name: string;
      * }
      *
      * \@NgModule({
