@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.0-rc.5+311.sha-9c40375
+ * @license Angular v6.0.0-rc.5+318.sha-20c463e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -22,7 +22,7 @@
  * @description
  * Entry point for all public APIs of the common package.
  */
-var VERSION = new core.Version('6.0.0-rc.5+311.sha-9c40375');
+var VERSION = new core.Version('6.0.0-rc.5+318.sha-20c463e');
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
