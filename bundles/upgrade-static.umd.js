@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.0.4
+ * @license Angular v6.0.4+1.sha-cfa5b65
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -666,7 +666,7 @@ function downgradeInjectable(token) {
  * @description
  * Entry point for all public APIs of the common package.
  */
-var VERSION = new core.Version('6.0.4');
+var VERSION = new core.Version('6.0.4+1.sha-cfa5b65');
 
 /**
  * @license
