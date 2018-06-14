@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.0-beta.1+1.sha-03f93b3
+ * @license Angular v6.1.0-beta.1+22.sha-39af314
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -22,7 +22,7 @@
  * @description
  * Entry point for all public APIs of the common package.
  */
-var VERSION = new core.Version('6.1.0-beta.1+1.sha-03f93b3');
+var VERSION = new core.Version('6.1.0-beta.1+22.sha-39af314');
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
