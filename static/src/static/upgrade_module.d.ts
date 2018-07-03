@@ -141,10 +141,10 @@ export declare class UpgradeModule {
     /** The Angular Injector **/
     injector: Injector;
     constructor(
-        /** The root `Injector` for the upgrade application. */
-        injector: Injector, 
-        /** The bootstrap zone for the upgrade application */
-        ngZone: NgZone);
+    /** The root `Injector` for the upgrade application. */
+    injector: Injector, 
+    /** The bootstrap zone for the upgrade application */
+    ngZone: NgZone);
     /**
      * Bootstrap an AngularJS application from this NgModule
      * @param element the element on which to bootstrap the AngularJS application
