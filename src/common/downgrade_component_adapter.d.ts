@@ -31,10 +31,10 @@ export declare class DowngradeComponentAdapter {
     createComponent(projectableNodes: Node[][]): void;
     setupInputs(needsNgZone: boolean, propagateDigest?: boolean): void;
     setupOutputs(): void;
-    private subscribeToOutput;
+    private subscribeToOutput(output, expr, isAssignment?);
     registerCleanup(): void;
     getInjector(): Injector;
-    private updateInput;
+    private updateInput(prop, prevValue, currValue);
     groupProjectableNodes(): Node[][];
 }
 /**

@@ -21,5 +21,5 @@ export declare class PropertyBinding {
     bindAttr: string;
     bindonAttr: string;
     constructor(prop: string, attr: string);
-    private parseBinding;
+    private parseBinding();
 }
