@@ -35,8 +35,8 @@ export declare class UpgradeHelper {
     resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): IControllerInstance | {
         [key: string]: IControllerInstance;
     } | IControllerInstance[] | null;
-    private compileHtml;
-    private extractChildNodes;
-    private getDirectiveRequire;
-    private resolveRequire;
+    private compileHtml(html);
+    private extractChildNodes();
+    private getDirectiveRequire();
+    private resolveRequire(require, controllerInstance?);
 }

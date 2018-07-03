@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ * @suppress {checkTypes} checked by tsc
  */
 /**
  * @license
@@ -29,7 +29,7 @@ export class NgAdapterInjector {
         return this.modInjector.get(token, notFoundValue);
     }
 }
-if (false) {
+function NgAdapterInjector_tsickle_Closure_declarations() {
     /** @type {?} */
     NgAdapterInjector.prototype.modInjector;
 }
