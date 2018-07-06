@@ -1,12 +1,12 @@
 /**
- * @license Angular v6.1.0-beta.3+46.sha-f62876b
+ * @license Angular v6.1.0-beta.3+61.sha-3980640
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
-import { ApplicationRef, ChangeDetectorRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version } from '@angular/core';
-import { __decorate, __metadata, __param, __read } from 'tslib';
-import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/platform-browser-dynamic';
+import { Version, ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Directive, ElementRef, EventEmitter, Inject, Compiler, NgModule } from '@angular/core';
+import { __read, __decorate, __metadata, __param } from 'tslib';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
  * @license
@@ -15,12 +15,7 @@ import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/pla
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/**
- * @module
- * @description
- * Entry point for all public APIs of the common package.
- */
-var VERSION = new Version('6.1.0-beta.3+46.sha-f62876b');
+var VERSION = new Version('6.1.0-beta.3+61.sha-3980640');
 
 /**
  * @license
@@ -48,28 +43,6 @@ try {
 catch (e) {
     // ignore in CJS mode.
 }
-/**
- * @deprecated Use `setAngularJSGlobal` instead.
- */
-
-/**
- * @deprecated Use `getAngularJSGlobal` instead.
- */
-
-/**
- * Resets the AngularJS global.
- *
- * Used when AngularJS is loaded lazily, and not available on `window`.
- *
- *
- */
-
-/**
- * Returns the current AngularJS global.
- *
- *
- */
-
 var bootstrap = function (e, modules, config) {
     return angular.bootstrap(e, modules, config);
 };
@@ -77,8 +50,6 @@ var module$1 = function (prefix, dependencies) {
     return angular.module(prefix, dependencies);
 };
 var element = function (e) { return angular.element(e); };
-
-
 var version = angular.version;
 
 /**
@@ -90,19 +61,14 @@ var version = angular.version;
  */
 var $COMPILE = '$compile';
 var $CONTROLLER = '$controller';
-
 var $HTTP_BACKEND = '$httpBackend';
 var $INJECTOR = '$injector';
-
 var $PARSE = '$parse';
-
 var $ROOT_SCOPE = '$rootScope';
 var $SCOPE = '$scope';
 var $TEMPLATE_CACHE = '$templateCache';
-
 var $$TESTABILITY = '$$testability';
 var COMPILER_KEY = '$$angularCompiler';
-
 var INJECTOR_KEY = '$$angularInjector';
 var LAZY_MODULE_REF = '$$angularLazyModuleRef';
 var NG_ZONE_KEY = '$$angularNgZone';
@@ -554,7 +520,7 @@ function downgradeComponent(info) {
                     if (!componentFactory) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
-                    var injectorPromise = new ParentInjectorPromise$1(element);
+                    var injectorPromise = new ParentInjectorPromise(element);
                     var facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
                     var projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
@@ -595,7 +561,7 @@ function downgradeComponent(info) {
  * Synchronous promise-like object to wrap parent injectors,
  * to preserve the synchronous nature of Angular 1's $compile.
  */
-var ParentInjectorPromise$1 = /** @class */ (function () {
+var ParentInjectorPromise = /** @class */ (function () {
     function ParentInjectorPromise(element) {
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
@@ -1617,7 +1583,7 @@ var UpgradeAdapter = /** @class */ (function () {
         var rootScope;
         var upgradeAdapter = this;
         var ng1Module = this.ng1Module = module$1(this.idPrefix, modules);
-        var platformRef = platformBrowserDynamic$1();
+        var platformRef = platformBrowserDynamic();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, function () { return _this.moduleRef.injector.get(Injector); })
@@ -1774,13 +1740,6 @@ var UpgradeAdapterRef = /** @class */ (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/**
- * @module
- * @description
- * Entry point for all public APIs of this package. allowing
- * Angular 1 and Angular 2+ to run side by side in the same application.
- */
-
 // This file only re-exports content of the `src` folder. Keep it that way.
 
 /**
@@ -1790,10 +1749,6 @@ var UpgradeAdapterRef = /** @class */ (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-// This file is not used to build this module. It is only used during editing
-// by the TypeScript language service and during build for verification. `ngc`
-// replaces this file with production index.ts when it rewrites private symbol
-// names.
 
 export { VERSION, UpgradeAdapter, UpgradeAdapterRef };
 //# sourceMappingURL=upgrade.js.map
