@@ -1,154 +1,23 @@
 /**
- * @license Angular v6.1.0-beta.3+45.sha-fddd2af
+ * @license Angular v6.1.0-beta.3+47.sha-1e74ea9
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
-import { ApplicationRef, ChangeDetectorRef, Compiler, ComponentFactoryResolver, Directive, ElementRef, EventEmitter, Inject, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version } from '@angular/core';
-import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/platform-browser-dynamic';
+import { Version, ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Directive, ElementRef, EventEmitter, Inject, Compiler, NgModule } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
  */
 /** @type {?} */
-const VERSION = new Version('6.1.0-beta.3+45.sha-fddd2af');
+const VERSION = new Version('6.1.0-beta.3+47.sha-1e74ea9');
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/** @typedef {?} */
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
 /**
  * @return {?}
  */
@@ -172,44 +41,12 @@ try {
 catch (e) {
     // ignore in CJS mode.
 }
-/**
- * @deprecated Use `setAngularJSGlobal` instead.
- * @param {?} ng
- * @return {?}
- */
-
-/**
- * @deprecated Use `getAngularJSGlobal` instead.
- * @return {?}
- */
-
-/**
- * Resets the AngularJS global.
- *
- * Used when AngularJS is loaded lazily, and not available on `window`.
- *
- *
- * @param {?} ng
- * @return {?}
- */
-
-/**
- * Returns the current AngularJS global.
- *
- *
- * @return {?}
- */
-
 /** @type {?} */
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 /** @type {?} */
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
 /** @type {?} */
 const element = (e) => angular.element(e);
-/** @type {?} */
-
-/** @type {?} */
-
 /** @type {?} */
 let version = angular.version;
 
@@ -229,17 +66,11 @@ const $COMPILE = '$compile';
 /** @type {?} */
 const $CONTROLLER = '$controller';
 /** @type {?} */
-
-/** @type {?} */
 const $HTTP_BACKEND = '$httpBackend';
 /** @type {?} */
 const $INJECTOR = '$injector';
 /** @type {?} */
-
-/** @type {?} */
 const $PARSE = '$parse';
-/** @type {?} */
-
 /** @type {?} */
 const $ROOT_SCOPE = '$rootScope';
 /** @type {?} */
@@ -247,13 +78,9 @@ const $SCOPE = '$scope';
 /** @type {?} */
 const $TEMPLATE_CACHE = '$templateCache';
 /** @type {?} */
-
-/** @type {?} */
 const $$TESTABILITY = '$$testability';
 /** @type {?} */
 const COMPILER_KEY = '$$angularCompiler';
-/** @type {?} */
-
 /** @type {?} */
 const INJECTOR_KEY = '$$angularInjector';
 /** @type {?} */
@@ -264,7 +91,6 @@ const NG_ZONE_KEY = '$$angularNgZone';
 const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 /** @type {?} */
 const REQUIRE_NG_MODEL = '?ngModel';
-/** @type {?} */
 
 /**
  * @fileoverview added by tsickle
@@ -380,10 +206,6 @@ class Deferred {
     }
 }
 /**
- * @record
- */
-
-/**
  * @param {?} component
  * @return {?} Whether the passed-in component implements the subset of the
  *     `ControlValueAccessor` interface needed for AngularJS `ng-model`
@@ -422,13 +244,6 @@ function strictEquals(val1, val2) {
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
  */
 /** @type {?} */
 const INITIAL_VALUE = {
@@ -706,7 +521,6 @@ class DowngradeComponentAdapter {
 function groupNodesBySelector(ngContentSelectors, nodes) {
     /** @type {?} */
     const projectableNodes = [];
-    /** @type {?} */
     for (let i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -769,13 +583,6 @@ function matchesSelector(el, selector) {
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
  */
 /**
  * \@description
@@ -852,7 +659,7 @@ function downgradeComponent(info) {
                         throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
                     }
                     /** @type {?} */
-                    const injectorPromise = new ParentInjectorPromise$1(element);
+                    const injectorPromise = new ParentInjectorPromise(element);
                     /** @type {?} */
                     const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
                     /** @type {?} */
@@ -894,7 +701,7 @@ function downgradeComponent(info) {
  * Synchronous promise-like object to wrap parent injectors,
  * to preserve the synchronous nature of Angular 1's $compile.
  */
-class ParentInjectorPromise$1 {
+class ParentInjectorPromise {
     /**
      * @param {?} element
      */
@@ -948,13 +755,6 @@ function isThenable(obj) {
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
  * \@description
  *
  * A helper function to allow an Angular service to be accessible from AngularJS.
@@ -1005,23 +805,8 @@ function downgradeInjectable(token) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 /** @type {?} */
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
-/**
- * @record
- */
-
-/**
- * @record
- */
-
 class UpgradeHelper {
     /**
      * @param {?} injector
@@ -1346,13 +1131,6 @@ function notSupported(name, feature) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 /** @type {?} */
 const CAMEL_CASE = /([A-Z])/g;
 /** @type {?} */
@@ -1668,13 +1446,6 @@ class UpgradeNg1ComponentAdapter {
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
  */
 /** @type {?} */
 let upgradeCount = 0;
@@ -2166,7 +1937,7 @@ class UpgradeAdapter {
         /** @type {?} */
         const ng1Module = this.ng1Module = module$1(this.idPrefix, modules);
         /** @type {?} */
-        const platformRef = platformBrowserDynamic$1();
+        const platformRef = platformBrowserDynamic();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
         ng1Module.factory(INJECTOR_KEY, () => /** @type {?} */ ((this.moduleRef)).injector.get(Injector))
@@ -2325,31 +2096,12 @@ class UpgradeAdapterRef {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 // This file only re-exports content of the `src` folder. Keep it that way.
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-// This file is not used to build this module. It is only used during editing
-// by the TypeScript language service and during build for verification. `ngc`
-// replaces this file with production index.ts when it rewrites private symbol
-// names.
 
 /**
  * Generated bundle index. Do not edit.
