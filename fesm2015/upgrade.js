@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.0-beta.3+40.sha-5686123
+ * @license Angular v6.1.0-beta.3+41.sha-f974c48
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -19,7 +19,7 @@ import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/pla
  * found in the LICENSE file at https://angular.io/license
  */
 /** @type {?} */
-const VERSION = new Version('6.1.0-beta.3+40.sha-5686123');
+const VERSION = new Version('6.1.0-beta.3+41.sha-f974c48');
 
 /**
  * @fileoverview added by tsickle
