@@ -1,146 +1,23 @@
 /**
- * @license Angular v6.0.7+21.sha-0437598
+ * @license Angular v6.0.8+4.sha-48415ed
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
-import { ApplicationRef, ChangeDetectorRef, ComponentFactoryResolver, EventEmitter, Injector, NgModule, NgZone, SimpleChange, Testability, TestabilityRegistry, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical } from '@angular/core';
-import { platformBrowser as platformBrowser$1 } from '@angular/platform-browser';
+import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule } from '@angular/core';
+import { platformBrowser } from '@angular/platform-browser';
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
- * @record
- */
-
-/**
  * @return {?}
  */
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
-let angular = /** @type {?} */ ({
+let /** @type {?} */ angular = /** @type {?} */ ({
     bootstrap: noNg,
     module: noNg,
     element: noNg,
@@ -193,12 +70,10 @@ function setAngularJSGlobal(ng) {
 function getAngularJSGlobal() {
     return angular;
 }
-const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
-const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
-const element = (e) => angular.element(e);
-
-
-let version = angular.version;
+const /** @type {?} */ bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
+const /** @type {?} */ module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
+const /** @type {?} */ element = (e) => angular.element(e);
+let /** @type {?} */ version = angular.version;
 
 /**
  * @fileoverview added by tsickle
@@ -211,27 +86,22 @@ let version = angular.version;
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const $COMPILE = '$compile';
-const $CONTROLLER = '$controller';
-const $DELEGATE = '$delegate';
-const $HTTP_BACKEND = '$httpBackend';
-const $INJECTOR = '$injector';
-const $INTERVAL = '$interval';
-const $PARSE = '$parse';
-const $PROVIDE = '$provide';
-
-const $SCOPE = '$scope';
-const $TEMPLATE_CACHE = '$templateCache';
-
-const $$TESTABILITY = '$$testability';
-
-
-const INJECTOR_KEY = '$$angularInjector';
-const LAZY_MODULE_REF = '$$angularLazyModuleRef';
-
-const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
-const REQUIRE_NG_MODEL = '?ngModel';
-const UPGRADE_MODULE_NAME = '$$UpgradeModule';
+const /** @type {?} */ $COMPILE = '$compile';
+const /** @type {?} */ $CONTROLLER = '$controller';
+const /** @type {?} */ $DELEGATE = '$delegate';
+const /** @type {?} */ $HTTP_BACKEND = '$httpBackend';
+const /** @type {?} */ $INJECTOR = '$injector';
+const /** @type {?} */ $INTERVAL = '$interval';
+const /** @type {?} */ $PARSE = '$parse';
+const /** @type {?} */ $PROVIDE = '$provide';
+const /** @type {?} */ $SCOPE = '$scope';
+const /** @type {?} */ $TEMPLATE_CACHE = '$templateCache';
+const /** @type {?} */ $$TESTABILITY = '$$testability';
+const /** @type {?} */ INJECTOR_KEY = '$$angularInjector';
+const /** @type {?} */ LAZY_MODULE_REF = '$$angularLazyModuleRef';
+const /** @type {?} */ REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
+const /** @type {?} */ REQUIRE_NG_MODEL = '?ngModel';
+const /** @type {?} */ UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
  * @fileoverview added by tsickle
@@ -285,13 +155,8 @@ class PropertyBinding {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
-const DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
-/**
- * @param {?} e
- * @return {?}
- */
-
+const /** @type {?} */ DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
+const /** @type {?} */ DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
 /**
  * @param {?} name
  * @return {?}
@@ -308,11 +173,6 @@ function directiveNormalize(name) {
         .replace(DIRECTIVE_SPECIAL_CHARS_REGEXP, (_, letter) => letter.toUpperCase());
 }
 /**
- * @param {?} node
- * @return {?}
- */
-
-/**
  * @param {?} component
  * @return {?}
  */
@@ -327,14 +187,6 @@ function getComponentName(component) {
 function isFunction(value) {
     return typeof value === 'function';
 }
-/**
- * @template R
- */
-
-/**
- * @record
- */
-
 /**
  * @param {?} component
  * @return {?} Whether the passed-in component implements the subset of the
@@ -375,14 +227,7 @@ function strictEquals(val1, val2) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-const INITIAL_VALUE = {
+const /** @type {?} */ INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 class DowngradeComponentAdapter {
@@ -671,7 +516,7 @@ function findMatchingNgContentIndex(element, ngContentSelectors) {
     }
     return ngContentIndices.length ? ngContentIndices[0] : null;
 }
-let _matches;
+let /** @type {?} */ _matches;
 /**
  * @param {?} el
  * @param {?} selector
@@ -689,13 +534,6 @@ function matchesSelector(el, selector) {
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
  */
 /**
  * \@description
@@ -861,13 +699,6 @@ function isThenable(obj) {
  * @suppress {checkTypes} checked by tsc
  */
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
  * \@description
  *
  * A helper function to allow an Angular service to be accessible from AngularJS.
@@ -917,14 +748,7 @@ function downgradeInjectable(token) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-const VERSION = new Version('6.0.7+21.sha-0437598');
+const /** @type {?} */ VERSION = new Version('6.0.8+4.sha-48415ed');
 
 /**
  * @fileoverview added by tsickle
@@ -941,7 +765,7 @@ const VERSION = new Version('6.0.7+21.sha-0437598');
 // We store the ng1 injector so that the provider in the module injector can access it
 // Then we "get" the ng1 injector from the module injector, which triggers the provider to read
 // the stored injector and release the reference to it.
-let tempInjectorRef;
+let /** @type {?} */ tempInjectorRef;
 /**
  * @param {?} injector
  * @return {?}
@@ -981,7 +805,7 @@ function compileFactory(i) {
 function parseFactory(i) {
     return i.get('$parse');
 }
-const angular1Providers = [
+const /** @type {?} */ angular1Providers = [
     // We must use exported named functions for the ng2 factories to keep the compiler happy:
     // > Metadata collected contains an error that will be reported at runtime:
     // >   Function calls are not supported.
@@ -995,13 +819,6 @@ const angular1Providers = [
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
  */
 class NgAdapterInjector {
     /**
@@ -1026,13 +843,6 @@ class NgAdapterInjector {
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
- */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
  */
 /**
  * \@description
@@ -1125,7 +935,7 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
     const /** @type {?} */ LAZY_MODULE_NAME = UPGRADE_MODULE_NAME + '.lazy';
     const /** @type {?} */ bootstrapFn = isFunction(moduleFactoryOrBootstrapFn) ?
         moduleFactoryOrBootstrapFn :
-        (extraProviders) => platformBrowser$1(extraProviders).bootstrapModuleFactory(moduleFactoryOrBootstrapFn);
+        (extraProviders) => platformBrowser(extraProviders).bootstrapModuleFactory(moduleFactoryOrBootstrapFn);
     let /** @type {?} */ injector;
     // Create an ng1 module to bootstrap.
     module$1(LAZY_MODULE_NAME, [])
@@ -1157,23 +967,8 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 // Constants
-const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
-/**
- * @record
- */
-
-/**
- * @record
- */
-
+const /** @type {?} */ REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 class UpgradeHelper {
     /**
      * @param {?} injector
@@ -1462,15 +1257,8 @@ function notSupported(name, feature) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-const NOT_SUPPORTED = 'NOT_SUPPORTED';
-const INITIAL_VALUE$1 = {
+const /** @type {?} */ NOT_SUPPORTED = 'NOT_SUPPORTED';
+const /** @type {?} */ INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true
 };
 class Bindings {
@@ -1728,13 +1516,6 @@ class UpgradeComponent {
  * @suppress {checkTypes} checked by tsc
  */
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
  * \@description
  *
  * An `NgModule`, which you import to provide AngularJS core services,
@@ -1988,31 +1769,12 @@ UpgradeModule.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 // This file only re-exports content of the `src` folder. Keep it that way.
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-// This file is not used to build this module. It is only used during editing
-// by the TypeScript language service and during build for verification. `ngc`
-// replaces this file with production index.ts when it rewrites private symbol
-// names.
 
 /**
  * Generated bundle index. Do not edit.
