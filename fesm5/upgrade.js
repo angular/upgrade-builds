@@ -1,11 +1,11 @@
 /**
- * @license Angular v6.1.0-rc.3+17.sha-bb58138
+ * @license Angular v6.1.0-rc.3+41.sha-8620373
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
 import { Version, ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Directive, ElementRef, EventEmitter, Inject, Compiler, NgModule } from '@angular/core';
-import { __read, __decorate, __metadata, __param } from 'tslib';
+import { __read, __decorate, __assign, __metadata, __param } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new Version('6.1.0-rc.3+17.sha-bb58138');
+var VERSION = new Version('6.1.0-rc.3+41.sha-8620373');
 
 /**
  * @license
@@ -927,7 +927,7 @@ var UpgradeNg1ComponentAdapterBuilder = /** @class */ (function () {
             MyClass.prototype.ngOnDestroy = function () {
             };
             MyClass = __decorate([
-                Directive(directive),
+                Directive(__assign({ jit: true }, directive)),
                 __param(0, Inject($SCOPE)),
                 __metadata("design:paramtypes", [Object, Injector, ElementRef])
             ], MyClass);
@@ -1660,7 +1660,7 @@ var UpgradeAdapter = /** @class */ (function () {
                         }
                         DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
                         DynamicNgUpgradeModule = __decorate([
-                            NgModule(ngModule),
+                            NgModule(__assign({ jit: true }, ngModule)),
                             __metadata("design:paramtypes", [])
                         ], DynamicNgUpgradeModule);
                         return DynamicNgUpgradeModule;
