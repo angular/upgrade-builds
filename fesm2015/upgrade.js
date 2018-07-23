@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.0-beta.3+142.sha-082c994
+ * @license Angular v6.1.0-rc.3+70.sha-8a7b0e9
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('6.1.0-beta.3+142.sha-082c994');
+const VERSION = new Version('6.1.0-rc.3+70.sha-8a7b0e9');
 
 /**
  * @license
@@ -899,7 +899,7 @@ class UpgradeNg1ComponentAdapterBuilder {
             }
         };
         MyClass = __decorate([
-            Directive(directive),
+            Directive(Object.assign({ jit: true }, directive)),
             __param(0, Inject($SCOPE)),
             __metadata("design:paramtypes", [Object, Injector, ElementRef])
         ], MyClass);
@@ -1620,7 +1620,7 @@ class UpgradeAdapter {
                         ngDoBootstrap() { }
                     };
                     DynamicNgUpgradeModule = __decorate([
-                        NgModule(ngModule),
+                        NgModule(Object.assign({ jit: true }, ngModule)),
                         __metadata("design:paramtypes", [])
                     ], DynamicNgUpgradeModule);
                     platformRef
