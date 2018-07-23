@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.0-rc.3+47.sha-7729bb2
+ * @license Angular v6.1.0-rc.3+48.sha-168c2a6
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -12,7 +12,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('6.1.0-rc.3+47.sha-7729bb2');
+const VERSION = new Version('6.1.0-rc.3+48.sha-168c2a6');
 
 /**
  * @fileoverview added by tsickle
