@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.0-beta.3+142.sha-082c994
+ * @license Angular v6.1.0-rc.3+70.sha-8a7b0e9
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var VERSION = new core.Version('6.1.0-beta.3+142.sha-082c994');
+    var VERSION = new core.Version('6.1.0-rc.3+70.sha-8a7b0e9');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -33,6 +33,14 @@
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
     ***************************************************************************** */
+
+    var __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
 
     function __read(o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
@@ -961,7 +969,7 @@
                 MyClass.prototype.ngOnDestroy = function () {
                 };
                 MyClass.decorators = [
-                    { type: core.Directive, args: [directive,] },
+                    { type: core.Directive, args: [__assign({ jit: true }, directive),] },
                 ];
                 /** @nocollapse */
                 MyClass.ctorParameters = function () { return [
@@ -1698,7 +1706,7 @@
                             }
                             DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
                             DynamicNgUpgradeModule.decorators = [
-                                { type: core.NgModule, args: [ngModule,] },
+                                { type: core.NgModule, args: [__assign({ jit: true }, ngModule),] },
                             ];
                             /** @nocollapse */
                             DynamicNgUpgradeModule.ctorParameters = function () { return []; };

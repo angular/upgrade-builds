@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.0-beta.3+142.sha-082c994
+ * @license Angular v6.1.0-rc.3+70.sha-8a7b0e9
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -12,7 +12,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('6.1.0-beta.3+142.sha-082c994');
+const VERSION = new Version('6.1.0-rc.3+70.sha-8a7b0e9');
 
 /**
  * @fileoverview added by tsickle
@@ -1196,7 +1196,7 @@ class UpgradeNg1ComponentAdapterBuilder {
             }
         }
         MyClass.decorators = [
-            { type: Directive, args: [directive,] },
+            { type: Directive, args: [Object.assign({ jit: true }, directive),] },
         ];
         /** @nocollapse */
         MyClass.ctorParameters = () => [
@@ -2015,7 +2015,7 @@ class UpgradeAdapter {
                         ngDoBootstrap() { }
                     }
                     DynamicNgUpgradeModule.decorators = [
-                        { type: NgModule, args: [ngModule,] },
+                        { type: NgModule, args: [Object.assign({ jit: true }, ngModule),] },
                     ];
                     /** @nocollapse */
                     DynamicNgUpgradeModule.ctorParameters = () => [];
