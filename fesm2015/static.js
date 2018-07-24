@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.0-rc.3+44.sha-6b859da
+ * @license Angular v6.1.0-rc.3+54.sha-be3cca4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -633,7 +633,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('6.1.0-rc.3+44.sha-6b859da');
+const VERSION = new Version('6.1.0-rc.3+54.sha-be3cca4');
 
 /**
  * @license
