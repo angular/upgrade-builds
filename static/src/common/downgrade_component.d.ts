@@ -7,35 +7,41 @@
  */
 import { Type } from '@angular/core';
 /**
- * @whatItDoes
+ * @description
+ *
+ * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
  * library for hybrid upgrade apps that support AoT compilation*
  *
- * Allows an Angular component to be used from AngularJS.
+ * This helper function returns a factory function to be used for registering
+ * an AngularJS wrapper directive for "downgrading" an Angular component.
  *
- * @howToUse
+ * ### Examples
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
  * to be made available in AngularJS templates.
  *
- * {@example upgrade/static/ts/module.ts region="ng2-heroes"}
+ * {@example upgrade/static/ts/full/module.ts region="ng2-heroes"}
  *
  * We must create an AngularJS [directive](https://docs.angularjs.org/guide/directive)
  * that will make this Angular component available inside AngularJS templates.
  * The `downgradeComponent()` function returns a factory function that we
  * can use to define the AngularJS directive that wraps the "downgraded" component.
  *
- * {@example upgrade/static/ts/module.ts region="ng2-heroes-wrapper"}
+ * {@example upgrade/static/ts/full/module.ts region="ng2-heroes-wrapper"}
  *
- * @description
- *
- * A helper function that returns a factory function to be used for registering an
- * AngularJS wrapper directive for "downgrading" an Angular component.
- *
- * The parameter contains information about the Component that is being downgraded:
+ * @param info contains information about the Component that is being downgraded:
  *
  * * `component: Type<any>`: The type of the Component that will be downgraded
+ * * `propagateDigest?: boolean`: Whether to perform {@link ChangeDetectorRef#detectChanges
+ *   change detection} on the component on every
+ *   [$digest](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest). If set to `false`,
+ *   change detection will still be performed when any of the component's inputs changes.
+ *   (Default: true)
+ *
+ * @returns a factory function that can be used to register the component in an
+ * AngularJS module.
  *
  * @experimental
  */

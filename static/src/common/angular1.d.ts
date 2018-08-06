@@ -8,7 +8,7 @@
 export declare type Ng1Token = string;
 export declare type Ng1Expression = string | Function;
 export interface IAnnotatedFunction extends Function {
-    $inject?: Ng1Token[];
+    $inject?: ReadonlyArray<Ng1Token>;
 }
 export declare type IInjectable = (Ng1Token | Function)[] | IAnnotatedFunction;
 export declare type SingleOrListOrMap<T> = T | T[] | {
@@ -222,11 +222,11 @@ export interface INgModelController {
     $name: string;
 }
 /**
- * @deprecated Use {@link setAngularJSGlobal} instead.
+ * @deprecated Use `setAngularJSGlobal` instead.
  */
 export declare function setAngularLib(ng: any): void;
 /**
- * @deprecated Use {@link getAngularJSGlobal} instead.
+ * @deprecated Use `getAngularJSGlobal` instead.
  */
 export declare function getAngularLib(): any;
 /**
@@ -234,13 +234,13 @@ export declare function getAngularLib(): any;
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
  *
- * @stable
+ *
  */
 export declare function setAngularJSGlobal(ng: any): void;
 /**
  * Returns the current AngularJS global.
  *
- * @stable
+ *
  */
 export declare function getAngularJSGlobal(): any;
 export declare const bootstrap: (e: Element, modules: (string | IAnnotatedFunction | (string | Function)[])[], config?: IAngularBootstrapConfig | undefined) => IInjectorService;
