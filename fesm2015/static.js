@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.1+20.sha-415519a
+ * @license Angular v6.1.1+23.sha-b75a985
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -49,8 +49,6 @@ function getAngularLib() {
  * Resets the AngularJS global.
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
- *
- *
  */
 function setAngularJSGlobal(ng) {
     angular = ng;
@@ -58,15 +56,13 @@ function setAngularJSGlobal(ng) {
 }
 /**
  * Returns the current AngularJS global.
- *
- *
  */
 function getAngularJSGlobal() {
     return angular;
 }
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
-const element = (e) => angular.element(e);
+const element = e => angular.element(e);
 let version = angular.version;
 
 /**
@@ -633,7 +629,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('6.1.1+20.sha-415519a');
+const VERSION = new Version('6.1.1+23.sha-b75a985');
 
 /**
  * @license
