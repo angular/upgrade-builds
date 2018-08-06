@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.1+20.sha-415519a
+ * @license Angular v6.1.1+23.sha-b75a985
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -52,8 +52,6 @@
      * Resets the AngularJS global.
      *
      * Used when AngularJS is loaded lazily, and not available on `window`.
-     *
-     *
      */
     function setAngularJSGlobal(ng) {
         angular = ng;
@@ -61,8 +59,6 @@
     }
     /**
      * Returns the current AngularJS global.
-     *
-     *
      */
     function getAngularJSGlobal() {
         return angular;
@@ -657,7 +653,7 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var VERSION = new core.Version('6.1.1+20.sha-415519a');
+    var VERSION = new core.Version('6.1.1+23.sha-b75a985');
 
     /**
      * @license
