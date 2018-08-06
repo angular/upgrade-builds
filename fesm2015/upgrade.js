@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.0+37.sha-3355502
+ * @license Angular v7.0.0-beta.0+41.sha-2505c07
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -12,7 +12,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('7.0.0-beta.0+37.sha-3355502');
+const VERSION = new Version('7.0.0-beta.0+41.sha-2505c07');
 
 /**
  * @fileoverview added by tsickle
@@ -46,7 +46,7 @@ const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 /** @type {?} */
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
 /** @type {?} */
-const element = (e) => angular.element(e);
+const element = e => angular.element(e);
 /** @type {?} */
 let version = angular.version;
 
