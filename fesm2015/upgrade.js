@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.0+38.sha-16c03c0
+ * @license Angular v7.0.0-beta.0+50.sha-732026c
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('7.0.0-beta.0+38.sha-16c03c0');
+const VERSION = new Version('7.0.0-beta.0+50.sha-732026c');
 
 /**
  * @license
@@ -45,7 +45,7 @@ catch (e) {
 }
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
-const element = (e) => angular.element(e);
+const element = e => angular.element(e);
 let version = angular.version;
 
 /**
