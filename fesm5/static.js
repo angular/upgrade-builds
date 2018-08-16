@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.1+10.sha-b64fed1
+ * @license Angular v7.0.0-beta.1+52.sha-1f11039
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -651,7 +651,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new Version('7.0.0-beta.1+10.sha-b64fed1');
+var VERSION = new Version('7.0.0-beta.1+52.sha-1f11039');
 
 /**
  * @license
@@ -1570,7 +1570,7 @@ var UpgradeModule = /** @class */ (function () {
         }
     };
     UpgradeModule.ngModuleDef = ɵdefineNgModule({ type: UpgradeModule, bootstrap: [], declarations: [], imports: [], exports: [] });
-    UpgradeModule.ngInjectorDef = defineInjector({ factory: function UpgradeModule_Factory() { return new UpgradeModule(inject(INJECTOR), inject(NgZone)); }, providers: [angular1Providers], imports: [] });
+    UpgradeModule.ngInjectorDef = defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(inject(INJECTOR), inject(NgZone)); }, providers: [angular1Providers], imports: [] });
     return UpgradeModule;
 }());
 

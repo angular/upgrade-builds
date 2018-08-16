@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.1+10.sha-b64fed1
+ * @license Angular v7.0.0-beta.1+52.sha-1f11039
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -653,7 +653,7 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var VERSION = new i0.Version('7.0.0-beta.1+10.sha-b64fed1');
+    var VERSION = new i0.Version('7.0.0-beta.1+52.sha-1f11039');
 
     /**
      * @license
@@ -1610,7 +1610,7 @@
             }
         };
         UpgradeModule.ngModuleDef = i0.ɵdefineNgModule({ type: UpgradeModule, bootstrap: [], declarations: [], imports: [], exports: [] });
-        UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModule_Factory() { return new UpgradeModule(i0.inject(i0.INJECTOR), i0.inject(i0.NgZone)); }, providers: [angular1Providers], imports: [] });
+        UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.inject(i0.INJECTOR), i0.inject(i0.NgZone)); }, providers: [angular1Providers], imports: [] });
         return UpgradeModule;
     }());
 
