@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.3+30.sha-3d41739
+ * @license Angular v7.0.0-beta.3+39.sha-9bcd8c2
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var VERSION = new core.Version('7.0.0-beta.3+30.sha-3d41739');
+    var VERSION = new core.Version('7.0.0-beta.3+39.sha-9bcd8c2');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -44,6 +44,21 @@
         };
         return __assign.apply(this, arguments);
     };
+
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
 
     function __read(o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
@@ -971,15 +986,11 @@
                 };
                 MyClass.prototype.ngOnDestroy = function () {
                 };
-                MyClass.decorators = [
-                    { type: core.Directive, args: [__assign({ jit: true }, directive),] },
-                ];
-                /** @nocollapse */
-                MyClass.ctorParameters = function () { return [
-                    { type: undefined, decorators: [{ type: core.Inject, args: [$SCOPE,] }] },
-                    { type: core.Injector },
-                    { type: core.ElementRef }
-                ]; };
+                MyClass = __decorate([
+                    core.Directive(__assign({ jit: true }, directive)),
+                    __param(0, core.Inject($SCOPE)),
+                    __metadata("design:paramtypes", [Object, core.Injector, core.ElementRef])
+                ], MyClass);
                 return MyClass;
             }());
             this.type = MyClass;
@@ -1708,11 +1719,10 @@
                             function DynamicNgUpgradeModule() {
                             }
                             DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
-                            DynamicNgUpgradeModule.decorators = [
-                                { type: core.NgModule, args: [__assign({ jit: true }, ngModule),] },
-                            ];
-                            /** @nocollapse */
-                            DynamicNgUpgradeModule.ctorParameters = function () { return []; };
+                            DynamicNgUpgradeModule = __decorate([
+                                core.NgModule(__assign({ jit: true }, ngModule)),
+                                __metadata("design:paramtypes", [])
+                            ], DynamicNgUpgradeModule);
                             return DynamicNgUpgradeModule;
                         }());
                         platformRef

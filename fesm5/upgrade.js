@@ -1,11 +1,11 @@
 /**
- * @license Angular v7.0.0-beta.3+30.sha-3d41739
+ * @license Angular v7.0.0-beta.3+39.sha-9bcd8c2
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
 import { Version, ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Directive, ElementRef, EventEmitter, Inject, Compiler, NgModule } from '@angular/core';
-import { __read, __assign } from 'tslib';
+import { __read, __decorate, __assign, __metadata, __param } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new Version('7.0.0-beta.3+30.sha-3d41739');
+var VERSION = new Version('7.0.0-beta.3+39.sha-9bcd8c2');
 
 /**
  * @license
@@ -926,15 +926,11 @@ var UpgradeNg1ComponentAdapterBuilder = /** @class */ (function () {
             };
             MyClass.prototype.ngOnDestroy = function () {
             };
-            MyClass.decorators = [
-                { type: Directive, args: [__assign({ jit: true }, directive),] },
-            ];
-            /** @nocollapse */
-            MyClass.ctorParameters = function () { return [
-                { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] }] },
-                { type: Injector },
-                { type: ElementRef }
-            ]; };
+            MyClass = __decorate([
+                Directive(__assign({ jit: true }, directive)),
+                __param(0, Inject($SCOPE)),
+                __metadata("design:paramtypes", [Object, Injector, ElementRef])
+            ], MyClass);
             return MyClass;
         }());
         this.type = MyClass;
@@ -1663,11 +1659,10 @@ var UpgradeAdapter = /** @class */ (function () {
                         function DynamicNgUpgradeModule() {
                         }
                         DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
-                        DynamicNgUpgradeModule.decorators = [
-                            { type: NgModule, args: [__assign({ jit: true }, ngModule),] },
-                        ];
-                        /** @nocollapse */
-                        DynamicNgUpgradeModule.ctorParameters = function () { return []; };
+                        DynamicNgUpgradeModule = __decorate([
+                            NgModule(__assign({ jit: true }, ngModule)),
+                            __metadata("design:paramtypes", [])
+                        ], DynamicNgUpgradeModule);
                         return DynamicNgUpgradeModule;
                     }());
                     platformRef
