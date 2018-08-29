@@ -89,7 +89,7 @@ import * as angular from '../common/angular1';
  */
 export declare class UpgradeAdapter {
     private ng2AppModule;
-    private compilerOptions;
+    private compilerOptions?;
     private idPrefix;
     private downgradedComponents;
     private upgradedProviders;
@@ -395,7 +395,7 @@ export declare class UpgradeAdapter {
      * upgradeAdapter.declareNg1Module(['heroApp']);
      * ```
      */
-    private declareNg1Module(modules?);
+    private declareNg1Module;
 }
 /**
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.
