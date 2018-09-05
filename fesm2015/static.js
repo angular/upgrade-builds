@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.4+51.sha-1e7a873
+ * @license Angular v7.0.0-beta.4+54.sha-2a672a9
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -808,7 +808,7 @@ function downgradeInjectable(token) {
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('7.0.0-beta.4+51.sha-1e7a873');
+const VERSION = new Version('7.0.0-beta.4+54.sha-2a672a9');
 
 /**
  * @fileoverview added by tsickle
@@ -1134,6 +1134,18 @@ class UpgradeHelper {
             template = /** @type {?} */ (UpgradeHelper.getTemplate(this.$injector, this.directive));
         }
         return this.compileHtml(template);
+    }
+    /**
+     * @param {?} $scope
+     * @param {?=} controllerInstance
+     * @return {?}
+     */
+    onDestroy($scope, controllerInstance) {
+        if (controllerInstance && isFunction(controllerInstance.$onDestroy)) {
+            controllerInstance.$onDestroy();
+        }
+        $scope.$destroy(); /** @type {?} */
+        ((this.$element.triggerHandler))('$destroy');
     }
     /**
      * @return {?}
@@ -1545,10 +1557,7 @@ class UpgradeComponent {
         if (isFunction(this.unregisterDoCheckWatcher)) {
             this.unregisterDoCheckWatcher();
         }
-        if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
-            this.controllerInstance.$onDestroy();
-        }
-        this.$componentScope.$destroy();
+        this.helper.onDestroy(this.$componentScope, this.controllerInstance);
     }
     /**
      * @param {?} directive
