@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.6+20.sha-8f8c390
+ * @license Angular v6.1.6+23.sha-f0bcfd0
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new Version('6.1.6+20.sha-8f8c390');
+var VERSION = new Version('6.1.6+23.sha-f0bcfd0');
 
 /**
  * @license
@@ -728,6 +728,13 @@ var UpgradeHelper = /** @class */ (function () {
         }
         return this.compileHtml(template);
     };
+    UpgradeHelper.prototype.onDestroy = function ($scope, controllerInstance) {
+        if (controllerInstance && isFunction(controllerInstance.$onDestroy)) {
+            controllerInstance.$onDestroy();
+        }
+        $scope.$destroy();
+        this.$element.triggerHandler('$destroy');
+    };
     UpgradeHelper.prototype.prepareTransclusion = function () {
         var _this = this;
         var transclude = this.directive.transclude;
@@ -1105,12 +1112,7 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
             this.controllerInstance.$doCheck();
         }
     };
-    UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () {
-        if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
-            this.controllerInstance.$onDestroy();
-        }
-        this.componentScope.$destroy();
-    };
+    UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () { this.helper.onDestroy(this.componentScope, this.controllerInstance); };
     UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     };

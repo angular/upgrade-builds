@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.6+20.sha-8f8c390
+ * @license Angular v6.1.6+23.sha-f0bcfd0
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -12,7 +12,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('6.1.6+20.sha-8f8c390');
+const VERSION = new Version('6.1.6+23.sha-f0bcfd0');
 
 /**
  * @fileoverview added by tsickle
@@ -911,6 +911,18 @@ class UpgradeHelper {
         return this.compileHtml(template);
     }
     /**
+     * @param {?} $scope
+     * @param {?=} controllerInstance
+     * @return {?}
+     */
+    onDestroy($scope, controllerInstance) {
+        if (controllerInstance && isFunction(controllerInstance.$onDestroy)) {
+            controllerInstance.$onDestroy();
+        }
+        $scope.$destroy(); /** @type {?} */
+        ((this.$element.triggerHandler))('$destroy');
+    }
+    /**
      * @return {?}
      */
     prepareTransclusion() {
@@ -1427,12 +1439,7 @@ class UpgradeNg1ComponentAdapter {
     /**
      * @return {?}
      */
-    ngOnDestroy() {
-        if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
-            this.controllerInstance.$onDestroy();
-        }
-        this.componentScope.$destroy();
-    }
+    ngOnDestroy() { this.helper.onDestroy(this.componentScope, this.controllerInstance); }
     /**
      * @param {?} name
      * @param {?} value

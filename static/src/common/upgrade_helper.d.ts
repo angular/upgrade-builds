@@ -31,6 +31,7 @@ export declare class UpgradeHelper {
     static getTemplate($injector: angular.IInjectorService, directive: angular.IDirective, fetchRemoteTemplate?: boolean): string | Promise<string>;
     buildController(controllerType: angular.IController, $scope: angular.IScope): any;
     compileTemplate(template?: string): angular.ILinkFn;
+    onDestroy($scope: angular.IScope, controllerInstance?: any): void;
     prepareTransclusion(): angular.ILinkFn | undefined;
     resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): IControllerInstance | {
         [key: string]: IControllerInstance;
