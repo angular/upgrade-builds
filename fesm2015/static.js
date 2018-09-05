@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.6+20.sha-8f8c390
+ * @license Angular v6.1.6+23.sha-f0bcfd0
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -629,7 +629,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('6.1.6+20.sha-8f8c390');
+const VERSION = new Version('6.1.6+23.sha-f0bcfd0');
 
 /**
  * @license
@@ -900,6 +900,13 @@ class UpgradeHelper {
             template = UpgradeHelper.getTemplate(this.$injector, this.directive);
         }
         return this.compileHtml(template);
+    }
+    onDestroy($scope, controllerInstance) {
+        if (controllerInstance && isFunction(controllerInstance.$onDestroy)) {
+            controllerInstance.$onDestroy();
+        }
+        $scope.$destroy();
+        this.$element.triggerHandler('$destroy');
     }
     prepareTransclusion() {
         const transclude = this.directive.transclude;
@@ -1217,10 +1224,7 @@ class UpgradeComponent {
         if (isFunction(this.unregisterDoCheckWatcher)) {
             this.unregisterDoCheckWatcher();
         }
-        if (this.controllerInstance && isFunction(this.controllerInstance.$onDestroy)) {
-            this.controllerInstance.$onDestroy();
-        }
-        this.$componentScope.$destroy();
+        this.helper.onDestroy(this.$componentScope, this.controllerInstance);
     }
     initializeBindings(directive) {
         const btcIsObject = typeof directive.bindToController === 'object';
