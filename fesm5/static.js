@@ -1,12 +1,12 @@
 /**
- * @license Angular v6.1.6+28.sha-d1063c6
+ * @license Angular v6.1.7+8.sha-b9a5ce1
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
 import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
-import { __spread } from 'tslib';
+import { __spread, __decorate, __metadata } from 'tslib';
 
 /**
  * @license
@@ -651,7 +651,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new Version('6.1.6+28.sha-d1063c6');
+var VERSION = new Version('6.1.7+8.sha-b9a5ce1');
 
 /**
  * @license
@@ -1580,14 +1580,11 @@ var UpgradeModule = /** @class */ (function () {
             };
         }
     };
-    UpgradeModule.decorators = [
-        { type: NgModule, args: [{ providers: [angular1Providers] },] }
-    ];
-    /** @nocollapse */
-    UpgradeModule.ctorParameters = function () { return [
-        { type: Injector },
-        { type: NgZone }
-    ]; };
+    UpgradeModule = __decorate([
+        NgModule({ providers: [angular1Providers] }),
+        __metadata("design:paramtypes", [Injector,
+            NgZone])
+    ], UpgradeModule);
     return UpgradeModule;
 }());
 
