@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.6+37.sha-7f1cace
+ * @license Angular v7.0.0-beta.6+51.sha-b8422b4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -12,7 +12,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('7.0.0-beta.6+37.sha-7f1cace');
+const VERSION = new Version('7.0.0-beta.6+51.sha-b8422b4');
 
 /**
  * @fileoverview added by tsickle
@@ -595,6 +595,7 @@ function matchesSelector(el, selector) {
  * This helper function returns a factory function to be used for registering
  * an AngularJS wrapper directive for "downgrading" an Angular component.
  *
+ * \@usageNotes
  * ### Examples
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
@@ -765,6 +766,7 @@ function isThenable(obj) {
  * This helper function returns a factory function that provides access to the Angular
  * service identified by the `token` parameter.
  *
+ * \@usageNotes
  * ### Examples
  *
  * First ensure that the service to be downgraded is provided in an `NgModule`
@@ -1467,7 +1469,8 @@ let upgradeCount = 0;
  * 3. Bootstrapping of a hybrid Angular application which contains both of the frameworks
  *    coexisting in a single application.
  *
- * ## Mental Model
+ * \@usageNotes
+ * ### Mental Model
  *
  * When reasoning about how a hybrid application works it is useful to have a mental model which
  * describes what is happening and explains what is happening at the lowest level.
@@ -1568,7 +1571,8 @@ class UpgradeAdapter {
      * Angular Component. The adapter will bootstrap Angular component from within the
      * AngularJS template.
      *
-     * ## Mental Model
+     * \@usageNotes
+     * ### Mental Model
      *
      * 1. The component is instantiated by being listed in AngularJS template. This means that the
      *    host element is controlled by AngularJS, but the component's view will be controlled by
@@ -1580,7 +1584,7 @@ class UpgradeAdapter {
      *    by way of the `ControlValueAccessor` interface from \@angular/forms. Only components that
      *    implement this interface are eligible.
      *
-     * ## Supported Features
+     * ### Supported Features
      *
      * - Bindings:
      *   - Attribute: `<comp name="World">`
@@ -1633,13 +1637,14 @@ class UpgradeAdapter {
      * directive. The adapter will bootstrap AngularJS component from within the Angular
      * template.
      *
-     * ## Mental Model
+     * \@usageNotes
+     * ### Mental Model
      *
      * 1. The component is instantiated by being listed in Angular template. This means that the
      *    host element is controlled by Angular, but the component's view will be controlled by
      *    AngularJS.
      *
-     * ## Supported Features
+     * ### Supported Features
      *
      * - Bindings:
      *   - Attribute: `<comp name="World">`
@@ -1719,6 +1724,7 @@ class UpgradeAdapter {
      * Use this instead of `angular.mock.module()` to load the upgrade module into
      * the AngularJS testing injector.
      *
+     * \@usageNotes
      * ### Example
      *
      * ```
@@ -1775,6 +1781,7 @@ class UpgradeAdapter {
      * [`bootstrap`](https://docs.angularjs.org/api/ng/function/angular.bootstrap) method. Unlike
      * AngularJS, this bootstrap is asynchronous.
      *
+     * \@usageNotes
      * ### Example
      *
      * ```
@@ -1850,7 +1857,7 @@ class UpgradeAdapter {
     /**
      * Allows AngularJS service to be accessible from Angular.
      *
-     *
+     * \@usageNotes
      * ### Example
      *
      * ```
@@ -1893,7 +1900,7 @@ class UpgradeAdapter {
     /**
      * Allows Angular service to be accessible from AngularJS.
      *
-     *
+     * \@usageNotes
      * ### Example
      *
      * ```
@@ -1920,15 +1927,16 @@ class UpgradeAdapter {
      *
      * This method is automatically called by `bootstrap()` and `registerForNg1Tests()`.
      *
-     * @param {?=} modules The AngularJS modules that this upgrade module should depend upon.
-     * @return {?} The AngularJS upgrade module that is declared by this method
-     *
+     * \@usageNotes
      * ### Example
      *
      * ```
      * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
      * upgradeAdapter.declareNg1Module(['heroApp']);
      * ```
+     * @param {?=} modules The AngularJS modules that this upgrade module should depend upon.
+     * @return {?} The AngularJS upgrade module that is declared by this method
+     *
      */
     declareNg1Module(modules = []) {
         /** @type {?} */
