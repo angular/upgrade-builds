@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.8+20.sha-37f3b92
+ * @license Angular v6.1.8+37.sha-cea7fbe
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var VERSION = new core.Version('6.1.8+20.sha-37f3b92');
+    var VERSION = new core.Version('6.1.8+37.sha-cea7fbe');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -520,6 +520,7 @@
      * This helper function returns a factory function to be used for registering
      * an AngularJS wrapper directive for "downgrading" an Angular component.
      *
+     * @usageNotes
      * ### Examples
      *
      * Let's assume that you have an Angular component called `ng2Heroes` that needs
@@ -671,6 +672,7 @@
      * This helper function returns a factory function that provides access to the Angular
      * service identified by the `token` parameter.
      *
+     * @usageNotes
      * ### Examples
      *
      * First ensure that the service to be downgraded is provided in an `NgModule`
@@ -1194,7 +1196,8 @@
      * 3. Bootstrapping of a hybrid Angular application which contains both of the frameworks
      *    coexisting in a single application.
      *
-     * ## Mental Model
+     * @usageNotes
+     * ### Mental Model
      *
      * When reasoning about how a hybrid application works it is useful to have a mental model which
      * describes what is happening and explains what is happening at the lowest level.
@@ -1291,7 +1294,8 @@
          * Angular Component. The adapter will bootstrap Angular component from within the
          * AngularJS template.
          *
-         * ## Mental Model
+         * @usageNotes
+         * ### Mental Model
          *
          * 1. The component is instantiated by being listed in AngularJS template. This means that the
          *    host element is controlled by AngularJS, but the component's view will be controlled by
@@ -1303,7 +1307,7 @@
          *    by way of the `ControlValueAccessor` interface from @angular/forms. Only components that
          *    implement this interface are eligible.
          *
-         * ## Supported Features
+         * ### Supported Features
          *
          * - Bindings:
          *   - Attribute: `<comp name="World">`
@@ -1354,13 +1358,14 @@
          * directive. The adapter will bootstrap AngularJS component from within the Angular
          * template.
          *
-         * ## Mental Model
+         * @usageNotes
+         * ### Mental Model
          *
          * 1. The component is instantiated by being listed in Angular template. This means that the
          *    host element is controlled by Angular, but the component's view will be controlled by
          *    AngularJS.
          *
-         * ## Supported Features
+         * ### Supported Features
          *
          * - Bindings:
          *   - Attribute: `<comp name="World">`
@@ -1438,6 +1443,7 @@
          * Use this instead of `angular.mock.module()` to load the upgrade module into
          * the AngularJS testing injector.
          *
+         * @usageNotes
          * ### Example
          *
          * ```
@@ -1493,6 +1499,7 @@
          * [`bootstrap`](https://docs.angularjs.org/api/ng/function/angular.bootstrap) method. Unlike
          * AngularJS, this bootstrap is asynchronous.
          *
+         * @usageNotes
          * ### Example
          *
          * ```
@@ -1562,7 +1569,7 @@
         /**
          * Allows AngularJS service to be accessible from Angular.
          *
-         *
+         * @usageNotes
          * ### Example
          *
          * ```
@@ -1601,7 +1608,7 @@
         /**
          * Allows Angular service to be accessible from AngularJS.
          *
-         *
+         * @usageNotes
          * ### Example
          *
          * ```
@@ -1629,6 +1636,7 @@
          * @param modules The AngularJS modules that this upgrade module should depend upon.
          * @returns The AngularJS upgrade module that is declared by this method
          *
+         * @usageNotes
          * ### Example
          *
          * ```
