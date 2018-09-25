@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.6+35.sha-82a14dc
+ * @license Angular v7.0.0-beta.6+58.sha-0c34471
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -458,6 +458,7 @@ function matchesSelector(el, selector) {
  * This helper function returns a factory function to be used for registering
  * an AngularJS wrapper directive for "downgrading" an Angular component.
  *
+ * @usageNotes
  * ### Examples
  *
  * Let's assume that you have an Angular component called `ng2Heroes` that needs
@@ -609,6 +610,7 @@ function isThenable(obj) {
  * This helper function returns a factory function that provides access to the Angular
  * service identified by the `token` parameter.
  *
+ * @usageNotes
  * ### Examples
  *
  * First ensure that the service to be downgraded is provided in an `NgModule`
@@ -651,7 +653,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new Version('7.0.0-beta.6+35.sha-82a14dc');
+var VERSION = new Version('7.0.0-beta.6+58.sha-0c34471');
 
 /**
  * @license
@@ -1116,11 +1118,12 @@ var Bindings = /** @class */ (function () {
  * A helper class that allows an AngularJS component to be used from Angular.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AoT compilation.*
  *
  * This helper class should be used as a base class for creating Angular directives
  * that wrap AngularJS components that need to be "upgraded".
  *
+ * @usageNotes
  * ### Examples
  *
  * Let's assume that you have an AngularJS component called `ng1Hero` that needs
@@ -1400,18 +1403,18 @@ var UpgradeComponent = /** @class */ (function () {
  * This class is an `NgModule`, which you import to provide AngularJS core services,
  * and has an instance method used to bootstrap the hybrid upgrade application.
  *
- * #### Core AngularJS services
- * Importing this `NgModule` will add providers for the core
- * [AngularJS services](https://docs.angularjs.org/api/ng/service) to the root injector.
+ * * Core AngularJS services
+ *   Importing this `NgModule` will add providers for the core
+ *   [AngularJS services](https://docs.angularjs.org/api/ng/service) to the root injector.
  *
- * #### Bootstrap
- * The runtime instance of this class contains a {@link UpgradeModule#bootstrap `bootstrap()`}
- * method, which you use to bootstrap the top level AngularJS module onto an element in the
- * DOM for the hybrid upgrade app.
+ * * Bootstrap
+ *   The runtime instance of this class contains a {@link UpgradeModule#bootstrap `bootstrap()`}
+ *   method, which you use to bootstrap the top level AngularJS module onto an element in the
+ *   DOM for the hybrid upgrade app.
  *
- * It also contains properties to access the {@link UpgradeModule#injector root injector}, the
- * bootstrap `NgZone` and the
- * [AngularJS $injector](https://docs.angularjs.org/api/auto/service/$injector).
+ *   It also contains properties to access the {@link UpgradeModule#injector root injector}, the
+ *   bootstrap `NgZone` and the
+ *   [AngularJS $injector](https://docs.angularjs.org/api/auto/service/$injector).
  *
  * ### Examples
  *
