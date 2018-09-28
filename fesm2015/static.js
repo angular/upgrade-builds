@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-beta.7+48.sha-f455518
+ * @license Angular v7.0.0-beta.7+52.sha-794c359
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -810,7 +810,7 @@ function downgradeInjectable(token) {
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('7.0.0-beta.7+48.sha-f455518');
+const VERSION = new Version('7.0.0-beta.7+52.sha-794c359');
 
 /**
  * @fileoverview added by tsickle
@@ -1781,7 +1781,6 @@ class UpgradeModule {
      * @param {?} ngZone
      */
     constructor(/** The root `Injector` for the upgrade application. */
-    /** The root `Injector` for the upgrade application. */
     injector, ngZone) {
         this.ngZone = ngZone;
         this.injector = new NgAdapterInjector(injector);
