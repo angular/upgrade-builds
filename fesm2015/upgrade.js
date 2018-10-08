@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-rc.0+63.sha-55d54c7
+ * @license Angular v7.0.0-rc.0+65.sha-5a31bde
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('7.0.0-rc.0+63.sha-55d54c7');
+const VERSION = new Version('7.0.0-rc.0+65.sha-5a31bde');
 
 /**
  * @license
@@ -30,7 +30,7 @@ function noNg() {
 let angular = {
     bootstrap: noNg,
     module: noNg,
-    element: noNg,
+    element: Object.assign(() => noNg(), { cleanData: noNg }),
     version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
@@ -45,7 +45,7 @@ catch (e) {
 }
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
-const element = e => angular.element(e);
+const element = Object.assign((e) => angular.element(e), { cleanData: (nodes) => angular.element.cleanData(nodes) });
 let version = angular.version;
 
 /**
@@ -711,7 +711,14 @@ class UpgradeHelper {
             controllerInstance.$onDestroy();
         }
         $scope.$destroy();
-        this.$element.triggerHandler('$destroy');
+        // Clean the jQuery/jqLite data on the component+child elements.
+        // Equivelent to how jQuery/jqLite invoke `cleanData` on an Element (this.element)
+        //  https://github.com/jquery/jquery/blob/e743cbd28553267f955f71ea7248377915613fd9/src/manipulation.js#L223
+        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/jqLite.js#L306-L312
+        // `cleanData` will invoke the AngularJS `$destroy` DOM event
+        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/Angular.js#L1911-L1924
+        element.cleanData([this.element]);
+        element.cleanData(this.element.querySelectorAll('*'));
     }
     prepareTransclusion() {
         const transclude = this.directive.transclude;
