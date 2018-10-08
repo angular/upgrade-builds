@@ -1,5 +1,5 @@
 /**
- * @license Angular v6.1.9+71.sha-3660ff8
+ * @license Angular v6.1.9+72.sha-623adbb
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -12,7 +12,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('6.1.9+71.sha-3660ff8');
+const VERSION = new Version('6.1.9+72.sha-623adbb');
 
 /**
  * @fileoverview added by tsickle
@@ -28,7 +28,7 @@ function noNg() {
 let angular = /** @type {?} */ ({
     bootstrap: noNg,
     module: noNg,
-    element: noNg,
+    element: Object.assign(() => noNg(), { cleanData: noNg }),
     version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
@@ -46,7 +46,7 @@ const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 /** @type {?} */
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
 /** @type {?} */
-const element = e => angular.element(e);
+const element = Object.assign((e) => angular.element(e), { cleanData: (nodes) => angular.element.cleanData(nodes) });
 /** @type {?} */
 let version = angular.version;
 
@@ -921,8 +921,15 @@ class UpgradeHelper {
         if (controllerInstance && isFunction(controllerInstance.$onDestroy)) {
             controllerInstance.$onDestroy();
         }
-        $scope.$destroy(); /** @type {?} */
-        ((this.$element.triggerHandler))('$destroy');
+        $scope.$destroy();
+        // Clean the jQuery/jqLite data on the component+child elements.
+        // Equivelent to how jQuery/jqLite invoke `cleanData` on an Element (this.element)
+        //  https://github.com/jquery/jquery/blob/e743cbd28553267f955f71ea7248377915613fd9/src/manipulation.js#L223
+        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/jqLite.js#L306-L312
+        // `cleanData` will invoke the AngularJS `$destroy` DOM event
+        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/Angular.js#L1911-L1924
+        element.cleanData([this.element]);
+        element.cleanData(this.element.querySelectorAll('*'));
     }
     /**
      * @return {?}
