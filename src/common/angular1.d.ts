@@ -225,10 +225,7 @@ export interface INgModelController {
 declare let angular: {
     bootstrap: (e: Element, modules: (string | IInjectable)[], config?: IAngularBootstrapConfig) => IInjectorService;
     module: (prefix: string, dependencies?: string[]) => IModule;
-    element: {
-        (e: string | Element | Document | IAugmentedJQuery): IAugmentedJQuery;
-        cleanData: (nodes: Node[] | NodeList) => void;
-    };
+    element: (e: string | Element | Document | IAugmentedJQuery) => IAugmentedJQuery;
     version: {
         major: number;
     };
