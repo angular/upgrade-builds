@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-rc.0+102.sha-e26cb21
+ * @license Angular v7.0.0-rc.0+103.sha-912f3d1
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18,10 +18,12 @@ import { __spread, __decorate, __metadata } from 'tslib';
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
+var noNgElement = function () { return noNg(); };
+noNgElement.cleanData = noNg;
 var angular = {
     bootstrap: noNg,
     module: noNg,
-    element: noNg,
+    element: noNgElement,
     version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
@@ -68,6 +70,7 @@ var module$1 = function (prefix, dependencies) {
     return angular.module(prefix, dependencies);
 };
 var element = function (e) { return angular.element(e); };
+element.cleanData = function (nodes) { return angular.element.cleanData(nodes); };
 var version = angular.version;
 
 /**
@@ -653,7 +656,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new Version('7.0.0-rc.0+102.sha-e26cb21');
+var VERSION = new Version('7.0.0-rc.0+103.sha-912f3d1');
 
 /**
  * @license
@@ -934,7 +937,14 @@ var UpgradeHelper = /** @class */ (function () {
             controllerInstance.$onDestroy();
         }
         $scope.$destroy();
-        this.$element.triggerHandler('$destroy');
+        // Clean the jQuery/jqLite data on the component+child elements.
+        // Equivelent to how jQuery/jqLite invoke `cleanData` on an Element (this.element)
+        //  https://github.com/jquery/jquery/blob/e743cbd28553267f955f71ea7248377915613fd9/src/manipulation.js#L223
+        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/jqLite.js#L306-L312
+        // `cleanData` will invoke the AngularJS `$destroy` DOM event
+        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/Angular.js#L1911-L1924
+        element.cleanData([this.element]);
+        element.cleanData(this.element.querySelectorAll('*'));
     };
     UpgradeHelper.prototype.prepareTransclusion = function () {
         var _this = this;
