@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-rc.1+24.sha-9895553
+ * @license Angular v7.0.0-rc.1+27.sha-071934e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -17,15 +17,19 @@ import { platformBrowser } from '@angular/platform-browser';
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
+const ɵ0 = () => noNg();
 /** @type {?} */
-let angular = /** @type {?} */ ({
+const noNgElement = /** @type {?} */ ((ɵ0));
+noNgElement.cleanData = noNg;
+/** @type {?} */
+let angular = {
     bootstrap: noNg,
     module: noNg,
-    element: noNg,
-    version: undefined,
+    element: noNgElement,
+    version: /** @type {?} */ (undefined),
     resumeBootstrap: noNg,
     getTestability: noNg
-});
+};
 try {
     if (window.hasOwnProperty('angular')) {
         angular = (/** @type {?} */ (window)).angular;
@@ -72,7 +76,8 @@ const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 /** @type {?} */
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
 /** @type {?} */
-const element = e => angular.element(e);
+const element = /** @type {?} */ ((e => angular.element(e)));
+element.cleanData = nodes => angular.element.cleanData(nodes);
 /** @type {?} */
 let version = angular.version;
 
@@ -810,7 +815,7 @@ function downgradeInjectable(token) {
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 /** @type {?} */
-const VERSION = new Version('7.0.0-rc.1+24.sha-9895553');
+const VERSION = new Version('7.0.0-rc.1+27.sha-071934e');
 
 /**
  * @fileoverview added by tsickle
@@ -1146,8 +1151,15 @@ class UpgradeHelper {
         if (controllerInstance && isFunction(controllerInstance.$onDestroy)) {
             controllerInstance.$onDestroy();
         }
-        $scope.$destroy(); /** @type {?} */
-        ((this.$element.triggerHandler))('$destroy');
+        $scope.$destroy();
+        // Clean the jQuery/jqLite data on the component+child elements.
+        // Equivelent to how jQuery/jqLite invoke `cleanData` on an Element (this.element)
+        //  https://github.com/jquery/jquery/blob/e743cbd28553267f955f71ea7248377915613fd9/src/manipulation.js#L223
+        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/jqLite.js#L306-L312
+        // `cleanData` will invoke the AngularJS `$destroy` DOM event
+        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/Angular.js#L1911-L1924
+        element.cleanData([this.element]);
+        element.cleanData(this.element.querySelectorAll('*'));
     }
     /**
      * @return {?}
