@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-rc.1+27.sha-071934e
+ * @license Angular v7.0.0-rc.1+26.sha-735dfd3
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18,12 +18,10 @@ import { __decorate, __metadata } from 'tslib';
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
-const noNgElement = (() => noNg());
-noNgElement.cleanData = noNg;
 let angular = {
     bootstrap: noNg,
     module: noNg,
-    element: noNgElement,
+    element: noNg,
     version: undefined,
     resumeBootstrap: noNg,
     getTestability: noNg
@@ -65,8 +63,7 @@ function getAngularJSGlobal() {
 }
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
-const element = (e => angular.element(e));
-element.cleanData = nodes => angular.element.cleanData(nodes);
+const element = e => angular.element(e);
 let version = angular.version;
 
 /**
@@ -635,7 +632,7 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-const VERSION = new Version('7.0.0-rc.1+27.sha-071934e');
+const VERSION = new Version('7.0.0-rc.1+26.sha-735dfd3');
 
 /**
  * @license
@@ -912,14 +909,7 @@ class UpgradeHelper {
             controllerInstance.$onDestroy();
         }
         $scope.$destroy();
-        // Clean the jQuery/jqLite data on the component+child elements.
-        // Equivelent to how jQuery/jqLite invoke `cleanData` on an Element (this.element)
-        //  https://github.com/jquery/jquery/blob/e743cbd28553267f955f71ea7248377915613fd9/src/manipulation.js#L223
-        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/jqLite.js#L306-L312
-        // `cleanData` will invoke the AngularJS `$destroy` DOM event
-        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/Angular.js#L1911-L1924
-        element.cleanData([this.element]);
-        element.cleanData(this.element.querySelectorAll('*'));
+        this.$element.triggerHandler('$destroy');
     }
     prepareTransclusion() {
         const transclude = this.directive.transclude;
