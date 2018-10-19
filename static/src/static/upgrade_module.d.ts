@@ -130,7 +130,7 @@ import { Injector, NgZone } from '@angular/core';
  *
  * {@example upgrade/static/ts/full/module.ts region="use-ng1-upgraded-service"}
  *
- * @experimental
+ * @publicApi
  */
 export declare class UpgradeModule {
     /** The bootstrap zone for the upgrade application */

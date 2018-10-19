@@ -44,11 +44,10 @@ import { Type } from '@angular/core';
  * @returns a factory function that can be used to register the component in an
  * AngularJS module.
  *
- * @experimental
+ * @publicApi
  */
 export declare function downgradeComponent(info: {
     component: Type<any>;
-    /** @experimental */
     propagateDigest?: boolean;
     /** @deprecated since v4. This parameter is no longer used */
     inputs?: string[];
