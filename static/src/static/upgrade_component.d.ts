@@ -43,7 +43,7 @@ import { DoCheck, ElementRef, Injector, OnChanges, OnDestroy, OnInit, SimpleChan
  *   * the AngularJS name of the component (`ng1Hero`)
  *   * the `ElementRef` and `Injector` for the component wrapper
  *
- * @experimental
+ * @publicApi
  */
 export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
     private name;

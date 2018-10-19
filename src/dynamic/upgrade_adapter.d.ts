@@ -87,6 +87,7 @@ import * as angular from '../common/angular1';
  *
  * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
  * [Ahead-of-Time compilation](guide/aot-compiler).
+ * @publicApi
  */
 export declare class UpgradeAdapter {
     private ng2AppModule;
@@ -408,6 +409,7 @@ export declare class UpgradeAdapter {
  *
  * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
  * [Ahead-of-Time compilation](guide/aot-compiler).
+ * @publicApi
  */
 export declare class UpgradeAdapterRef {
     ng1RootScope: angular.IRootScopeService;

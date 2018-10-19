@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-rc.1+118.sha-31022cb
+ * @license Angular v7.0.0-rc.1+137.sha-4c2ce4e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -40,6 +40,8 @@ catch (e) {
 }
 /**
  * @deprecated Use `setAngularJSGlobal` instead.
+ *
+ * \@publicApi
  * @param {?} ng
  * @return {?}
  */
@@ -48,6 +50,8 @@ function setAngularLib(ng) {
 }
 /**
  * @deprecated Use `getAngularJSGlobal` instead.
+ *
+ * \@publicApi
  * @return {?}
  */
 function getAngularLib() {
@@ -57,6 +61,8 @@ function getAngularLib() {
  * Resets the AngularJS global.
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
+ *
+ * \@publicApi
  * @param {?} ng
  * @return {?}
  */
@@ -66,6 +72,8 @@ function setAngularJSGlobal(ng) {
 }
 /**
  * Returns the current AngularJS global.
+ *
+ * \@publicApi
  * @return {?}
  */
 function getAngularJSGlobal() {
@@ -617,7 +625,7 @@ function matchesSelector(el, selector) {
  *
  * {\@example upgrade/static/ts/full/module.ts region="ng2-heroes-wrapper"}
  *
- * \@experimental
+ * \@publicApi
  * @param {?} info contains information about the Component that is being downgraded:
  *
  * * `component: Type<any>`: The type of the Component that will be downgraded
@@ -796,7 +804,7 @@ function isThenable(obj) {
  *
  * {\@example upgrade/static/ts/full/module.ts region="example-app"}
  *
- * \@experimental
+ * \@publicApi
  * @param {?} token an `InjectionToken` that identifies a service provided from Angular.
  *
  * @return {?} a [factory function](https://docs.angularjs.org/guide/di) that can be
@@ -814,8 +822,10 @@ function downgradeInjectable(token) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/** @type {?} */
-const VERSION = new Version('7.0.0-rc.1+118.sha-31022cb');
+/** *
+ * \@publicApi
+  @type {?} */
+const VERSION = new Version('7.0.0-rc.1+137.sha-4c2ce4e');
 
 /**
  * @fileoverview added by tsickle
@@ -992,7 +1002,7 @@ class NgAdapterInjector {
  *
  * </div>
  *
- * \@experimental
+ * \@publicApi
  * @template T
  * @param {?} moduleFactoryOrBootstrapFn
  * @return {?}
@@ -1433,7 +1443,7 @@ class Bindings {
  *   * the AngularJS name of the component (`ng1Hero`)
  *   * the `ElementRef` and `Injector` for the component wrapper
  *
- * \@experimental
+ * \@publicApi
  */
 class UpgradeComponent {
     /**
@@ -1785,7 +1795,7 @@ class UpgradeComponent {
  *
  * {\@example upgrade/static/ts/full/module.ts region="use-ng1-upgraded-service"}
  *
- * \@experimental
+ * \@publicApi
  */
 class UpgradeModule {
     /**

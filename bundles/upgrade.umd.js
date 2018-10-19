@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-rc.1+118.sha-31022cb
+ * @license Angular v7.0.0-rc.1+137.sha-4c2ce4e
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,10 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    var VERSION = new core.Version('7.0.0-rc.1+118.sha-31022cb');
+    /**
+     * @publicApi
+     */
+    var VERSION = new core.Version('7.0.0-rc.1+137.sha-4c2ce4e');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -551,7 +554,7 @@
      * @returns a factory function that can be used to register the component in an
      * AngularJS module.
      *
-     * @experimental
+     * @publicApi
      */
     function downgradeComponent(info) {
         var directiveFactory = function ($compile, $injector, $parse) {
@@ -704,7 +707,7 @@
      * @returns a [factory function](https://docs.angularjs.org/guide/di) that can be
      * used to register the service on an AngularJS module.
      *
-     * @experimental
+     * @publicApi
      */
     function downgradeInjectable(token) {
         var factory = function (i) { return i.get(token); };
@@ -1276,6 +1279,7 @@
      *
      * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
      * [Ahead-of-Time compilation](guide/aot-compiler).
+     * @publicApi
      */
     var UpgradeAdapter = /** @class */ (function () {
         function UpgradeAdapter(ng2AppModule, compilerOptions) {
@@ -1778,6 +1782,7 @@
      *
      * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
      * [Ahead-of-Time compilation](guide/aot-compiler).
+     * @publicApi
      */
     var UpgradeAdapterRef = /** @class */ (function () {
         function UpgradeAdapterRef() {
