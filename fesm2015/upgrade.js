@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0+32.sha-3f94759
+ * @license Angular v7.0.0+52.sha-778e1c2
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -11,8 +11,10 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/** @type {?} */
-const VERSION = new Version('7.0.0+32.sha-3f94759');
+/** *
+ * \@publicApi
+  @type {?} */
+const VERSION = new Version('7.0.0+52.sha-778e1c2');
 
 /**
  * @fileoverview added by tsickle
@@ -614,7 +616,7 @@ function matchesSelector(el, selector) {
  *
  * {\@example upgrade/static/ts/full/module.ts region="ng2-heroes-wrapper"}
  *
- * \@experimental
+ * \@publicApi
  * @param {?} info contains information about the Component that is being downgraded:
  *
  * * `component: Type<any>`: The type of the Component that will be downgraded
@@ -793,7 +795,7 @@ function isThenable(obj) {
  *
  * {\@example upgrade/static/ts/full/module.ts region="example-app"}
  *
- * \@experimental
+ * \@publicApi
  * @param {?} token an `InjectionToken` that identifies a service provided from Angular.
  *
  * @return {?} a [factory function](https://docs.angularjs.org/guide/di) that can be
@@ -1549,6 +1551,7 @@ let upgradeCount = 0;
  *
  * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
  * [Ahead-of-Time compilation](guide/aot-compiler).
+ * \@publicApi
  */
 class UpgradeAdapter {
     /**
@@ -2077,6 +2080,7 @@ class UpgradeAdapter {
  *
  * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
  * [Ahead-of-Time compilation](guide/aot-compiler).
+ * \@publicApi
  */
 class UpgradeAdapterRef {
     constructor() {

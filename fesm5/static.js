@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0+32.sha-3f94759
+ * @license Angular v7.0.0+52.sha-778e1c2
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -38,12 +38,16 @@ catch (e) {
 }
 /**
  * @deprecated Use `setAngularJSGlobal` instead.
+ *
+ * @publicApi
  */
 function setAngularLib(ng) {
     setAngularJSGlobal(ng);
 }
 /**
  * @deprecated Use `getAngularJSGlobal` instead.
+ *
+ * @publicApi
  */
 function getAngularLib() {
     return getAngularJSGlobal();
@@ -52,6 +56,8 @@ function getAngularLib() {
  * Resets the AngularJS global.
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
+ *
+ * @publicApi
  */
 function setAngularJSGlobal(ng) {
     angular = ng;
@@ -59,6 +65,8 @@ function setAngularJSGlobal(ng) {
 }
 /**
  * Returns the current AngularJS global.
+ *
+ * @publicApi
  */
 function getAngularJSGlobal() {
     return angular;
@@ -488,7 +496,7 @@ function matchesSelector(el, selector) {
  * @returns a factory function that can be used to register the component in an
  * AngularJS module.
  *
- * @experimental
+ * @publicApi
  */
 function downgradeComponent(info) {
     var directiveFactory = function ($compile, $injector, $parse) {
@@ -641,7 +649,7 @@ function isThenable(obj) {
  * @returns a [factory function](https://docs.angularjs.org/guide/di) that can be
  * used to register the service on an AngularJS module.
  *
- * @experimental
+ * @publicApi
  */
 function downgradeInjectable(token) {
     var factory = function (i) { return i.get(token); };
@@ -656,7 +664,10 @@ function downgradeInjectable(token) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-var VERSION = new Version('7.0.0+32.sha-3f94759');
+/**
+ * @publicApi
+ */
+var VERSION = new Version('7.0.0+52.sha-778e1c2');
 
 /**
  * @license
@@ -814,7 +825,7 @@ var NgAdapterInjector = /** @class */ (function () {
  *
  * </div>
  *
- * @experimental
+ * @publicApi
  */
 function downgradeModule(moduleFactoryOrBootstrapFn) {
     var LAZY_MODULE_NAME = UPGRADE_MODULE_NAME + '.lazy';
@@ -1159,7 +1170,7 @@ var Bindings = /** @class */ (function () {
  *   * the AngularJS name of the component (`ng1Hero`)
  *   * the `ElementRef` and `Injector` for the component wrapper
  *
- * @experimental
+ * @publicApi
  */
 var UpgradeComponent = /** @class */ (function () {
     /**
@@ -1462,7 +1473,7 @@ var UpgradeComponent = /** @class */ (function () {
  *
  * {@example upgrade/static/ts/full/module.ts region="use-ng1-upgraded-service"}
  *
- * @experimental
+ * @publicApi
  */
 var UpgradeModule = /** @class */ (function () {
     function UpgradeModule(
