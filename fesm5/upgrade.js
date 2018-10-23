@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.0.0-rc.1+186.sha-ce6948f.with-local-changes
+ * @license Angular v7.0.0-rc.1+187.sha-07b8990.with-local-changes
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('7.0.0-rc.1+186.sha-ce6948f.with-local-changes');
+var VERSION = new Version('7.0.0-rc.1+187.sha-07b8990.with-local-changes');
 
 /**
  * @license
