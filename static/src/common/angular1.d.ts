@@ -237,20 +237,28 @@ declare let angular: {
 };
 /**
  * @deprecated Use `setAngularJSGlobal` instead.
+ *
+ * @publicApi
  */
 export declare function setAngularLib(ng: any): void;
 /**
  * @deprecated Use `getAngularJSGlobal` instead.
+ *
+ * @publicApi
  */
 export declare function getAngularLib(): any;
 /**
  * Resets the AngularJS global.
  *
  * Used when AngularJS is loaded lazily, and not available on `window`.
+ *
+ * @publicApi
  */
 export declare function setAngularJSGlobal(ng: any): void;
 /**
  * Returns the current AngularJS global.
+ *
+ * @publicApi
  */
 export declare function getAngularJSGlobal(): any;
 export declare const bootstrap: typeof angular.bootstrap;
