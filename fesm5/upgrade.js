@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.1.0-beta.0+39.sha-07509da
+ * @license Angular v7.1.0-beta.0+37.sha-56f44be
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('7.1.0-beta.0+39.sha-07509da');
+var VERSION = new Version('7.1.0-beta.0+37.sha-56f44be');
 
 /**
  * @license
