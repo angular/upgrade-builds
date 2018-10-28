@@ -88,6 +88,6 @@ import { NgModuleFactory, NgModuleRef, StaticProvider } from '@angular/core';
  *
  * </div>
  *
- * @experimental
+ * @publicApi
  */
 export declare function downgradeModule<T>(moduleFactoryOrBootstrapFn: NgModuleFactory<T> | ((extraProviders: StaticProvider[]) => Promise<NgModuleRef<T>>)): string;

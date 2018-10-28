@@ -44,6 +44,6 @@
  * @returns a [factory function](https://docs.angularjs.org/guide/di) that can be
  * used to register the service on an AngularJS module.
  *
- * @experimental
+ * @publicApi
  */
 export declare function downgradeInjectable(token: any): Function;
