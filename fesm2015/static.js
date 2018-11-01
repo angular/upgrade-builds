@@ -1,10 +1,10 @@
 /**
- * @license Angular v7.1.0-beta.1+6.sha-4e9f2e5
+ * @license Angular v7.1.0-beta.1+14.sha-2e7b5c5
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
-import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule, ɵdefineNgModule, defineInjector, inject } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule, ɵdefineNgModule, defineInjector, inject, ɵsetClassMetadata } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -824,7 +824,7 @@ function downgradeInjectable(token) {
 /** *
  * \@publicApi
   @type {?} */
-const VERSION = new Version('7.1.0-beta.1+6.sha-4e9f2e5');
+const VERSION = new Version('7.1.0-beta.1+14.sha-2e7b5c5');
 
 /**
  * @fileoverview added by tsickle
@@ -1936,6 +1936,14 @@ UpgradeModule.ctorParameters = () => [
 ];
 UpgradeModule.ngModuleDef = ɵdefineNgModule({ type: UpgradeModule, bootstrap: [], declarations: [], imports: [], exports: [] });
 UpgradeModule.ngInjectorDef = defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(inject(Injector), inject(NgZone)); }, providers: [angular1Providers], imports: [] });
+/*@__PURE__*/ ɵsetClassMetadata(UpgradeModule, [{
+        type: NgModule,
+        args: [{ providers: [angular1Providers] }]
+    }], [{
+        type: Injector
+    }, {
+        type: NgZone
+    }], null);
 
 /**
  * @fileoverview added by tsickle
