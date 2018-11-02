@@ -8,7 +8,9 @@
 export declare type Ng1Token = string;
 export declare type Ng1Expression = string | Function;
 export interface IAnnotatedFunction extends Function {
-    $inject?: ReadonlyArray<Ng1Token>;
+    $inject?: Function extends {
+        $inject?: string[];
+    } ? Ng1Token[] : ReadonlyArray<Ng1Token>;
 }
 export declare type IInjectable = (Ng1Token | Function)[] | IAnnotatedFunction;
 export declare type SingleOrListOrMap<T> = T | T[] | {
