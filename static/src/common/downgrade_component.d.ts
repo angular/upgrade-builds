@@ -34,8 +34,14 @@ import { Type } from '@angular/core';
  *
  * @param info contains information about the Component that is being downgraded:
  *
- * * `component: Type<any>`: The type of the Component that will be downgraded
- * * `propagateDigest?: boolean`: Whether to perform {@link ChangeDetectorRef#detectChanges
+ * - `component: Type<any>`: The type of the Component that will be downgraded
+ * - `downgradedModule?: string`: The name of the downgraded module (if any) that the component
+ *   "belongs to", as returned by a call to `downgradeModule()`. It is the module, whose
+ *   corresponding Angular module will be bootstrapped, when the component needs to be instantiated.
+ *   <br />
+ *   (This option is only necessary when using `downgradeModule()` to downgrade more than one
+ *   Angular module.)
+ * - `propagateDigest?: boolean`: Whether to perform {@link ChangeDetectorRef#detectChanges
  *   change detection} on the component on every
  *   [$digest](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest). If set to `false`,
  *   change detection will still be performed when any of the component's inputs changes.
@@ -48,6 +54,7 @@ import { Type } from '@angular/core';
  */
 export declare function downgradeComponent(info: {
     component: Type<any>;
+    downgradedModule?: string;
     propagateDigest?: boolean;
     /** @deprecated since v4. This parameter is no longer used */
     inputs?: string[];
