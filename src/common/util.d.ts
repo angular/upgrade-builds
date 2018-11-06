@@ -10,8 +10,11 @@ import * as angular from './angular1';
 export declare function onError(e: any): void;
 export declare function controllerKey(name: string): string;
 export declare function directiveNormalize(name: string): string;
-export declare function getComponentName(component: Type<any>): string;
+export declare function getTypeName(type: Type<any>): string;
+export declare function getDowngradedModuleCount($injector: angular.IInjectorService): number;
+export declare function getUpgradeAppType($injector: angular.IInjectorService): UpgradeAppType;
 export declare function isFunction(value: any): value is Function;
+export declare function validateInjectionKey($injector: angular.IInjectorService, downgradedModule: string, injectionKey: string, attemptedAction: string): void;
 export declare class Deferred<R> {
     promise: Promise<R>;
     resolve: (value?: R | PromiseLike<R>) => void;
@@ -22,6 +25,12 @@ export interface LazyModuleRef {
     needsNgZone: boolean;
     injector?: Injector;
     promise?: Promise<Injector>;
+}
+export declare const enum UpgradeAppType {
+    None = 0,
+    Dynamic = 1,
+    Static = 2,
+    Lite = 3
 }
 /**
  * Glue the AngularJS `NgModelController` (if it exists) to the component

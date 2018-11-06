@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.1.0-beta.1+74.sha-099d1a6
+ * @license Angular v7.1.0-beta.1+77.sha-7dbc103
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -14,7 +14,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /** *
  * \@publicApi
   @type {?} */
-const VERSION = new Version('7.1.0-beta.1+74.sha-099d1a6');
+const VERSION = new Version('7.1.0-beta.1+77.sha-7dbc103');
 
 /**
  * @fileoverview added by tsickle
@@ -89,11 +89,15 @@ const $$TESTABILITY = '$$testability';
 /** @type {?} */
 const COMPILER_KEY = '$$angularCompiler';
 /** @type {?} */
+const DOWNGRADED_MODULE_COUNT_KEY = '$$angularDowngradedModuleCount';
+/** @type {?} */
 const INJECTOR_KEY = '$$angularInjector';
 /** @type {?} */
 const LAZY_MODULE_REF = '$$angularLazyModuleRef';
 /** @type {?} */
 const NG_ZONE_KEY = '$$angularNgZone';
+/** @type {?} */
+const UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
 /** @type {?} */
 const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 /** @type {?} */
@@ -145,13 +149,6 @@ class PropertyBinding {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 /** @type {?} */
 const DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
 /** @type {?} */
@@ -187,12 +184,28 @@ function directiveNormalize(name) {
         .replace(DIRECTIVE_SPECIAL_CHARS_REGEXP, (_, letter) => letter.toUpperCase());
 }
 /**
- * @param {?} component
+ * @param {?} type
  * @return {?}
  */
-function getComponentName(component) {
-    // Return the name of the component or the first line of its stringified version.
-    return (/** @type {?} */ (component)).overriddenName || component.name || component.toString().split('\n')[0];
+function getTypeName(type) {
+    // Return the name of the type or the first line of its stringified version.
+    return (/** @type {?} */ (type)).overriddenName || type.name || type.toString().split('\n')[0];
+}
+/**
+ * @param {?} $injector
+ * @return {?}
+ */
+function getDowngradedModuleCount($injector) {
+    return $injector.has(DOWNGRADED_MODULE_COUNT_KEY) ? $injector.get(DOWNGRADED_MODULE_COUNT_KEY) :
+        0;
+}
+/**
+ * @param {?} $injector
+ * @return {?}
+ */
+function getUpgradeAppType($injector) {
+    return $injector.has(UPGRADE_APP_TYPE_KEY) ? $injector.get(UPGRADE_APP_TYPE_KEY) :
+        0 /* None */;
 }
 /**
  * @param {?} value
@@ -200,6 +213,46 @@ function getComponentName(component) {
  */
 function isFunction(value) {
     return typeof value === 'function';
+}
+/**
+ * @param {?} $injector
+ * @param {?} downgradedModule
+ * @param {?} injectionKey
+ * @param {?} attemptedAction
+ * @return {?}
+ */
+function validateInjectionKey($injector, downgradedModule, injectionKey, attemptedAction) {
+    /** @type {?} */
+    const upgradeAppType = getUpgradeAppType($injector);
+    /** @type {?} */
+    const downgradedModuleCount = getDowngradedModuleCount($injector);
+    // Check for common errors.
+    switch (upgradeAppType) {
+        case 1 /* Dynamic */:
+        case 2 /* Static */:
+            if (downgradedModule) {
+                throw new Error(`Error while ${attemptedAction}: 'downgradedModule' unexpectedly specified.\n` +
+                    'You should not specify a value for \'downgradedModule\', unless you are downgrading ' +
+                    'more than one Angular module (via \'downgradeModule()\').');
+            }
+            break;
+        case 3 /* Lite */:
+            if (!downgradedModule && (downgradedModuleCount >= 2)) {
+                throw new Error(`Error while ${attemptedAction}: 'downgradedModule' not specified.\n` +
+                    'This application contains more than one downgraded Angular module, thus you need to ' +
+                    'always specify \'downgradedModule\' when downgrading components and injectables.');
+            }
+            if (!$injector.has(injectionKey)) {
+                throw new Error(`Error while ${attemptedAction}: Unable to find the specified downgraded module.\n` +
+                    'Did you forget to downgrade an Angular module or include it in the AngularJS ' +
+                    'application?');
+            }
+            break;
+        default:
+            throw new Error(`Error while ${attemptedAction}: Not a valid '@angular/upgrade' application.\n` +
+                'Did you forget to downgrade an Angular module or include it in the AngularJS ' +
+                'application?');
+    }
 }
 /**
  * @template R
@@ -472,7 +525,7 @@ class DowngradeComponentAdapter {
             });
         }
         else {
-            throw new Error(`Missing emitter '${output.prop}' on component '${getComponentName(this.componentFactory.componentType)}'!`);
+            throw new Error(`Missing emitter '${output.prop}' on component '${getTypeName(this.componentFactory.componentType)}'!`);
         }
     }
     /**
@@ -620,8 +673,14 @@ function matchesSelector(el, selector) {
  * \@publicApi
  * @param {?} info contains information about the Component that is being downgraded:
  *
- * * `component: Type<any>`: The type of the Component that will be downgraded
- * * `propagateDigest?: boolean`: Whether to perform {\@link ChangeDetectorRef#detectChanges
+ * - `component: Type<any>`: The type of the Component that will be downgraded
+ * - `downgradedModule?: string`: The name of the downgraded module (if any) that the component
+ *   "belongs to", as returned by a call to `downgradeModule()`. It is the module, whose
+ *   corresponding Angular module will be bootstrapped, when the component needs to be instantiated.
+ *   <br />
+ *   (This option is only necessary when using `downgradeModule()` to downgrade more than one
+ *   Angular module.)
+ * - `propagateDigest?: boolean`: Whether to perform {\@link ChangeDetectorRef#detectChanges
  *   change detection} on the component on every
  *   [$digest](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest). If set to `false`,
  *   change detection will still be performed when any of the component's inputs changes.
@@ -653,7 +712,14 @@ function downgradeComponent(info) {
                 let ranAsync = false;
                 if (!parentInjector) {
                     /** @type {?} */
-                    const lazyModuleRef = /** @type {?} */ ($injector.get(LAZY_MODULE_REF));
+                    const downgradedModule = info.downgradedModule || '';
+                    /** @type {?} */
+                    const lazyModuleRefKey = `${LAZY_MODULE_REF}${downgradedModule}`;
+                    /** @type {?} */
+                    const attemptedAction = `instantiating component '${getTypeName(info.component)}'`;
+                    validateInjectionKey($injector, downgradedModule, lazyModuleRefKey, attemptedAction);
+                    /** @type {?} */
+                    const lazyModuleRef = /** @type {?} */ ($injector.get(lazyModuleRefKey));
                     needsNgZone = lazyModuleRef.needsNgZone;
                     parentInjector = lazyModuleRef.injector || /** @type {?} */ (lazyModuleRef.promise);
                 }
@@ -664,7 +730,7 @@ function downgradeComponent(info) {
                     /** @type {?} */
                     const componentFactory = /** @type {?} */ ((componentFactoryResolver.resolveComponentFactory(info.component)));
                     if (!componentFactory) {
-                        throw new Error('Expecting ComponentFactory for: ' + getComponentName(info.component));
+                        throw new Error(`Expecting ComponentFactory for: ${getTypeName(info.component)}`);
                     }
                     /** @type {?} */
                     const injectorPromise = new ParentInjectorPromise(element);
@@ -796,17 +862,47 @@ function isThenable(obj) {
  *
  * {\@example upgrade/static/ts/full/module.ts region="example-app"}
  *
+ * <div class="alert is-important">
+ *
+ *   When using `downgradeModule()`, downgraded injectables will not be available until the Angular
+ *   module that provides them is instantiated. In order to be safe, you need to ensure that the
+ *   downgraded injectables are not used anywhere _outside_ the part of the app where it is
+ *   guaranteed that their module has been instantiated.
+ *
+ *   For example, it is _OK_ to use a downgraded service in an upgraded component that is only used
+ *   from a downgraded Angular component provided by the same Angular module as the injectable, but
+ *   it is _not OK_ to use it in an AngularJS component that may be used independently of Angular or
+ *   use it in a downgraded Angular component from a different module.
+ *
+ * </div>
+ *
  * \@publicApi
  * @param {?} token an `InjectionToken` that identifies a service provided from Angular.
+ * @param {?=} downgradedModule the name of the downgraded module (if any) that the injectable
+ * "belongs to", as returned by a call to `downgradeModule()`. It is the module, whose injector will
+ * be used for instantiating the injectable.<br />
+ * (This option is only necessary when using `downgradeModule()` to downgrade more than one Angular
+ * module.)
  *
  * @return {?} a [factory function](https://docs.angularjs.org/guide/di) that can be
  * used to register the service on an AngularJS module.
  *
  */
-function downgradeInjectable(token) {
+function downgradeInjectable(token, downgradedModule = '') {
     /** @type {?} */
-    const factory = function (i) { return i.get(token); };
-    (/** @type {?} */ (factory))['$inject'] = [INJECTOR_KEY];
+    const factory = function ($injector) {
+        /** @type {?} */
+        const injectorKey = `${INJECTOR_KEY}${downgradedModule}`;
+        /** @type {?} */
+        const injectableName = isFunction(token) ? getTypeName(token) : String(token);
+        /** @type {?} */
+        const attemptedAction = `instantiating injectable '${injectableName}'`;
+        validateInjectionKey($injector, downgradedModule, injectorKey, attemptedAction);
+        /** @type {?} */
+        const injector = $injector.get(injectorKey);
+        return injector.get(token);
+    };
+    (/** @type {?} */ (factory))['$inject'] = [$INJECTOR];
     return factory;
 }
 
@@ -1970,7 +2066,8 @@ class UpgradeAdapter {
         const platformRef = platformBrowserDynamic();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
-        ng1Module.factory(INJECTOR_KEY, () => /** @type {?} */ ((this.moduleRef)).injector.get(Injector))
+        ng1Module.constant(UPGRADE_APP_TYPE_KEY, 1 /* Dynamic */)
+            .factory(INJECTOR_KEY, () => /** @type {?} */ ((this.moduleRef)).injector.get(Injector))
             .factory(LAZY_MODULE_REF, [
             INJECTOR_KEY,
             (injector) => (/** @type {?} */ ({ injector, needsNgZone: false }))
