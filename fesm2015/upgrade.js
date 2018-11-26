@@ -1,10 +1,10 @@
 /**
- * @license Angular v7.1.0+1.sha-dc300c5
+ * @license Angular v7.1.0+11.sha-f45aedc
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
-import { Version, ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Directive, ElementRef, EventEmitter, Inject, Compiler, NgModule } from '@angular/core';
+import { Version, ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Directive, ElementRef, EventEmitter, Inject, Compiler, NgModule, resolveForwardRef } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -14,7 +14,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /** *
  * \@publicApi
   @type {?} */
-const VERSION = new Version('7.1.0+1.sha-dc300c5');
+const VERSION = new Version('7.1.0+11.sha-f45aedc');
 
 /**
  * @fileoverview added by tsickle
@@ -2130,7 +2130,7 @@ class UpgradeAdapter {
                             { provide: $COMPILE, useFactory: () => ng1Injector.get($COMPILE) },
                             this.upgradedProviders
                         ],
-                        imports: [this.ng2AppModule],
+                        imports: [resolveForwardRef(this.ng2AppModule)],
                         entryComponents: this.downgradedComponents
                     };
                     class DynamicNgUpgradeModule {
