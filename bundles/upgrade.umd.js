@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.1.0+1.sha-dc300c5
+ * @license Angular v7.1.0+11.sha-f45aedc
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('7.1.0+1.sha-dc300c5');
+    var VERSION = new core.Version('7.1.0+11.sha-f45aedc');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1814,7 +1814,7 @@
                                 { provide: $COMPILE, useFactory: function () { return ng1Injector.get($COMPILE); } },
                                 _this.upgradedProviders
                             ],
-                            imports: [_this.ng2AppModule],
+                            imports: [core.resolveForwardRef(_this.ng2AppModule)],
                             entryComponents: _this.downgradedComponents
                         };
                         // At this point we have ng1 injector and we have prepared
