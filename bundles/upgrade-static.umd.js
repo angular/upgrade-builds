@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-beta.2+36.sha-7fae911
+ * @license Angular v7.2.0-beta.2+39.sha-d0d351c
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -747,7 +747,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('7.2.0-beta.2+36.sha-7fae911');
+    var VERSION = new i0.Version('7.2.0-beta.2+39.sha-d0d351c');
 
     /**
      * @license
@@ -1739,11 +1739,11 @@
     /*@__PURE__*/ i0.ɵsetClassMetadata(UpgradeModule, [{
             type: i0.NgModule,
             args: [{ providers: [angular1Providers] }]
-        }], [{
+        }], function () { return [{
             type: i0.Injector
         }, {
             type: i0.NgZone
-        }], null);
+        }]; }, null);
 
     /**
      * @license
