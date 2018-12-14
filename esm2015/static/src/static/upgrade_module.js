@@ -285,11 +285,11 @@ UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModul
 /*@__PURE__*/ i0.ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,
         args: [{ providers: [angular1Providers] }]
-    }], [{
+    }], function () { return [{
         type: Injector
     }, {
         type: NgZone
-    }], null);
+    }]; }, null);
 if (false) {
     /**
      * The AngularJS `$injector` for the upgrade application.
