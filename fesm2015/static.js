@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-beta.2+39.sha-d0d351c
+ * @license Angular v7.2.0-beta.2+37.sha-a8ebc83
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -938,7 +938,7 @@ function downgradeInjectable(token, downgradedModule = '') {
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0-beta.2+39.sha-d0d351c');
+const VERSION = new Version('7.2.0-beta.2+37.sha-a8ebc83');
 
 /**
  * @fileoverview added by tsickle
@@ -2103,11 +2103,11 @@ UpgradeModule.ngInjectorDef = defineInjector({ factory: function UpgradeModule_F
 /*@__PURE__*/ ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,
         args: [{ providers: [angular1Providers] }]
-    }], function () { return [{
+    }], [{
         type: Injector
     }, {
         type: NgZone
-    }]; }, null);
+    }], null);
 
 /**
  * @fileoverview added by tsickle
