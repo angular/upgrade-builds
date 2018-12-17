@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-beta.2+64.sha-e94975d
+ * @license Angular v7.2.0-beta.2+66.sha-c986d3d
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0-beta.2+64.sha-e94975d');
+const VERSION = new Version('7.2.0-beta.2+66.sha-c986d3d');
 
 /**
  * @fileoverview added by tsickle
@@ -1308,36 +1308,14 @@ class UpgradeNg1ComponentAdapterBuilder {
         // TODO(tbosch): find or file a bug against TypeScript for this.
         /** @type {?} */
         const directive = { selector: selector, inputs: this.inputsRename, outputs: this.outputsRename };
-        class MyClass {
+        class MyClass extends UpgradeNg1ComponentAdapter {
             /**
              * @param {?} scope
              * @param {?} injector
              * @param {?} elementRef
              */
             constructor(scope, injector, elementRef) {
-                /** @type {?} */
-                const helper = new UpgradeHelper(injector, name, elementRef, this.directive);
-                return (/** @type {?} */ (new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap)));
-            }
-            /**
-             * @return {?}
-             */
-            ngOnInit() {
-            }
-            /**
-             * @return {?}
-             */
-            ngOnChanges() {
-            }
-            /**
-             * @return {?}
-             */
-            ngDoCheck() {
-            }
-            /**
-             * @return {?}
-             */
-            ngOnDestroy() {
+                (/** @type {?} */ (super(new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap)));
             }
         }
         MyClass.decorators = [
