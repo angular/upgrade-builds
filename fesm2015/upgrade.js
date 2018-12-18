@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-beta.2+83.sha-b04bc5d
+ * @license Angular v7.2.0-beta.2+89.sha-69198ba
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -9,17 +9,17 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0-beta.2+83.sha-b04bc5d');
+const VERSION = new Version('7.2.0-beta.2+89.sha-69198ba');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @return {?}
@@ -60,7 +60,7 @@ let version = angular.version;
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @license
@@ -106,7 +106,7 @@ const REQUIRE_NG_MODEL = '?ngModel';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @license
@@ -132,6 +132,7 @@ class PropertyBinding {
         this.parseBinding();
     }
     /**
+     * @private
      * @return {?}
      */
     parseBinding() {
@@ -148,7 +149,7 @@ class PropertyBinding {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
@@ -304,7 +305,7 @@ function strictEquals(val1, val2) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const INITIAL_VALUE = {
@@ -512,6 +513,7 @@ class DowngradeComponentAdapter {
         }
     }
     /**
+     * @private
      * @param {?} output
      * @param {?} expr
      * @param {?=} isAssignment
@@ -560,6 +562,7 @@ class DowngradeComponentAdapter {
      */
     getInjector() { return this.componentRef.injector; }
     /**
+     * @private
      * @param {?} prop
      * @param {?} prevValue
      * @param {?} currValue
@@ -651,7 +654,7 @@ function matchesSelector(el, selector) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@description
@@ -844,7 +847,7 @@ function isThenable(obj) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@description
@@ -926,7 +929,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // Constants
 /** @type {?} */
@@ -1159,6 +1162,7 @@ class UpgradeHelper {
         return requiredControllers;
     }
     /**
+     * @private
      * @param {?} html
      * @return {?}
      */
@@ -1167,6 +1171,7 @@ class UpgradeHelper {
         return this.$compile(this.element.childNodes);
     }
     /**
+     * @private
      * @return {?}
      */
     extractChildNodes() {
@@ -1181,6 +1186,7 @@ class UpgradeHelper {
         return childNodes;
     }
     /**
+     * @private
      * @return {?}
      */
     getDirectiveRequire() {
@@ -1202,6 +1208,7 @@ class UpgradeHelper {
         return require;
     }
     /**
+     * @private
      * @param {?} require
      * @param {?=} controllerInstance
      * @return {?}
@@ -1276,7 +1283,7 @@ function notSupported(name, feature) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const CAMEL_CASE = /([A-Z])/g;
@@ -1569,7 +1576,7 @@ class UpgradeNg1ComponentAdapter {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 let upgradeCount = 0;
@@ -2050,6 +2057,7 @@ class UpgradeAdapter {
      * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
      * upgradeAdapter.declareNg1Module(['heroApp']);
      * ```
+     * @private
      * @param {?=} modules The AngularJS modules that this upgrade module should depend upon.
      * @return {?} The AngularJS upgrade module that is declared by this method
      *
@@ -2202,6 +2210,7 @@ class UpgradeAdapterRef {
     }
     /* @internal */
     /**
+     * @private
      * @param {?} ngModuleRef
      * @param {?} ng1Injector
      * @return {?}
@@ -2235,12 +2244,12 @@ class UpgradeAdapterRef {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**

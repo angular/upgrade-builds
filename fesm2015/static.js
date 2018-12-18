@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-beta.2+83.sha-b04bc5d
+ * @license Angular v7.2.0-beta.2+89.sha-69198ba
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -9,7 +9,7 @@ import { platformBrowser } from '@angular/platform-browser';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @return {?}
@@ -91,7 +91,7 @@ let version = angular.version;
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @license
@@ -139,7 +139,7 @@ const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @license
@@ -165,6 +165,7 @@ class PropertyBinding {
         this.parseBinding();
     }
     /**
+     * @private
      * @return {?}
      */
     parseBinding() {
@@ -181,7 +182,7 @@ class PropertyBinding {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
@@ -311,7 +312,7 @@ function strictEquals(val1, val2) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const INITIAL_VALUE = {
@@ -519,6 +520,7 @@ class DowngradeComponentAdapter {
         }
     }
     /**
+     * @private
      * @param {?} output
      * @param {?} expr
      * @param {?=} isAssignment
@@ -567,6 +569,7 @@ class DowngradeComponentAdapter {
      */
     getInjector() { return this.componentRef.injector; }
     /**
+     * @private
      * @param {?} prop
      * @param {?} prevValue
      * @param {?} currValue
@@ -658,7 +661,7 @@ function matchesSelector(el, selector) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@description
@@ -851,7 +854,7 @@ function isThenable(obj) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@description
@@ -933,17 +936,17 @@ function downgradeInjectable(token, downgradedModule = '') {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0-beta.2+83.sha-b04bc5d');
+const VERSION = new Version('7.2.0-beta.2+89.sha-69198ba');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @license
@@ -1012,7 +1015,7 @@ const angular1Providers = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgAdapterInjector {
     /**
@@ -1040,7 +1043,7 @@ class NgAdapterInjector {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 let moduleUid = 0;
@@ -1191,7 +1194,7 @@ function identity(x) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // Constants
 /** @type {?} */
@@ -1424,6 +1427,7 @@ class UpgradeHelper {
         return requiredControllers;
     }
     /**
+     * @private
      * @param {?} html
      * @return {?}
      */
@@ -1432,6 +1436,7 @@ class UpgradeHelper {
         return this.$compile(this.element.childNodes);
     }
     /**
+     * @private
      * @return {?}
      */
     extractChildNodes() {
@@ -1446,6 +1451,7 @@ class UpgradeHelper {
         return childNodes;
     }
     /**
+     * @private
      * @return {?}
      */
     getDirectiveRequire() {
@@ -1467,6 +1473,7 @@ class UpgradeHelper {
         return require;
     }
     /**
+     * @private
      * @param {?} require
      * @param {?=} controllerInstance
      * @return {?}
@@ -1541,7 +1548,7 @@ function notSupported(name, feature) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const NOT_SUPPORTED = 'NOT_SUPPORTED';
@@ -1742,6 +1749,7 @@ class UpgradeComponent {
         this.helper.onDestroy(this.$componentScope, this.controllerInstance);
     }
     /**
+     * @private
      * @param {?} directive
      * @return {?}
      */
@@ -1788,6 +1796,7 @@ class UpgradeComponent {
         return bindings;
     }
     /**
+     * @private
      * @return {?}
      */
     initializeOutputs() {
@@ -1800,6 +1809,7 @@ class UpgradeComponent {
         });
     }
     /**
+     * @private
      * @return {?}
      */
     bindOutputs() {
@@ -1813,6 +1823,7 @@ class UpgradeComponent {
         });
     }
     /**
+     * @private
      * @param {?} changes
      * @return {?}
      */
@@ -1827,7 +1838,7 @@ class UpgradeComponent {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@description
@@ -2095,12 +2106,12 @@ UpgradeModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
