@@ -1,11 +1,11 @@
 /**
- * @license Angular v7.2.0-beta.2+58.sha-52544ff
+ * @license Angular v7.2.0-beta.2+66.sha-c986d3d
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
 import { Version, ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Directive, ElementRef, EventEmitter, Inject, Compiler, NgModule, resolveForwardRef } from '@angular/core';
-import { __read, __decorate, __assign, __metadata, __param } from 'tslib';
+import { __read, __decorate, __assign, __metadata, __extends, __param } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('7.2.0-beta.2+58.sha-52544ff');
+var VERSION = new Version('7.2.0-beta.2+66.sha-c986d3d');
 
 /**
  * @license
@@ -1014,26 +1014,20 @@ var UpgradeNg1ComponentAdapterBuilder = /** @class */ (function () {
         // inlining this into @Directive
         // TODO(tbosch): find or file a bug against TypeScript for this.
         var directive = { selector: selector, inputs: this.inputsRename, outputs: this.outputsRename };
-        var MyClass = /** @class */ (function () {
+        var MyClass = /** @class */ (function (_super) {
+            __extends(MyClass, _super);
             function MyClass(scope, injector, elementRef) {
-                var helper = new UpgradeHelper(injector, name, elementRef, this.directive);
-                return new UpgradeNg1ComponentAdapter(helper, scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
+                var _this = this;
+                _this = _super.call(this, new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap) || this;
+                return _this;
             }
-            MyClass.prototype.ngOnInit = function () {
-            };
-            MyClass.prototype.ngOnChanges = function () {
-            };
-            MyClass.prototype.ngDoCheck = function () {
-            };
-            MyClass.prototype.ngOnDestroy = function () {
-            };
             MyClass = __decorate([
                 Directive(__assign({ jit: true }, directive)),
                 __param(0, Inject($SCOPE)),
                 __metadata("design:paramtypes", [Object, Injector, ElementRef])
             ], MyClass);
             return MyClass;
-        }());
+        }(UpgradeNg1ComponentAdapter));
         this.type = MyClass;
     }
     UpgradeNg1ComponentAdapterBuilder.prototype.extractBindings = function () {
