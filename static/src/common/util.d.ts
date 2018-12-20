@@ -22,7 +22,6 @@ export declare class Deferred<R> {
     constructor();
 }
 export interface LazyModuleRef {
-    needsNgZone: boolean;
     injector?: Injector;
     promise?: Promise<Injector>;
 }
