@@ -1,12 +1,12 @@
 /**
- * @license Angular v7.2.0-beta.2+91.sha-12c3176
+ * @license Angular v7.2.0-rc.0+25.sha-4b67b0a
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
 import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule } from '@angular/core';
+import { __read, __spread, __decorate, __metadata } from 'tslib';
 import { platformBrowser } from '@angular/platform-browser';
-import { __spread, __decorate, __metadata } from 'tslib';
 
 /**
  * @license
@@ -290,7 +290,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
         }
         hookupNgModel(this.ngModel, this.component);
     };
-    DowngradeComponentAdapter.prototype.setupInputs = function (needsNgZone, propagateDigest) {
+    DowngradeComponentAdapter.prototype.setupInputs = function (manuallyAttachView, propagateDigest) {
         var _this = this;
         if (propagateDigest === void 0) { propagateDigest = true; }
         var attrs = this.attrs;
@@ -368,7 +368,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
         }
         // If necessary, attach the view so that it will be dirty-checked.
         // (Allow time for the initial input values to be set and `ngOnChanges()` to be called.)
-        if (needsNgZone || !propagateDigest) {
+        if (manuallyAttachView || !propagateDigest) {
             var unwatch_2 = this.componentScope.$watch(function () {
                 unwatch_2();
                 unwatch_2 = null;
@@ -548,14 +548,19 @@ function matchesSelector(el, selector) {
  */
 function downgradeComponent(info) {
     var directiveFactory = function ($compile, $injector, $parse) {
-        // When using `UpgradeModule`, we don't need to ensure callbacks to Angular APIs (e.g. change
-        // detection) are run inside the Angular zone, because `$digest()` will be run inside the zone
-        // (except if explicitly escaped, in which case we shouldn't force it back in).
-        // When using `downgradeModule()` though, we need to ensure such callbacks are run inside the
-        // Angular zone.
-        var needsNgZone = false;
-        var wrapCallback = function (cb) { return cb; };
+        // When using `downgradeModule()`, we need to handle certain things specially. For example:
+        // - We always need to attach the component view to the `ApplicationRef` for it to be
+        //   dirty-checked.
+        // - We need to ensure callbacks to Angular APIs (e.g. change detection) are run inside the
+        //   Angular zone.
+        //   NOTE: This is not needed, when using `UpgradeModule`, because `$digest()` will be run
+        //         inside the Angular zone (except if explicitly escaped, in which case we shouldn't
+        //         force it back in).
+        var isNgUpgradeLite = getUpgradeAppType($injector) === 3 /* Lite */;
+        var wrapCallback = !isNgUpgradeLite ? function (cb) { return cb; } : function (cb) { return function () { return NgZone.isInAngularZone() ? cb() : ngZone.run(cb); }; };
         var ngZone;
+        // When downgrading multiple modules, special handling is needed wrt injectors.
+        var hasMultipleDowngradedModules = isNgUpgradeLite && (getDowngradedModuleCount($injector) > 1);
         return {
             restrict: 'E',
             terminal: true,
@@ -566,18 +571,58 @@ function downgradeComponent(info) {
                 // been compiled.
                 var ngModel = required[1];
                 var parentInjector = required[0];
+                var moduleInjector = undefined;
                 var ranAsync = false;
-                if (!parentInjector) {
+                if (!parentInjector || hasMultipleDowngradedModules) {
                     var downgradedModule = info.downgradedModule || '';
                     var lazyModuleRefKey = "" + LAZY_MODULE_REF + downgradedModule;
                     var attemptedAction = "instantiating component '" + getTypeName(info.component) + "'";
                     validateInjectionKey($injector, downgradedModule, lazyModuleRefKey, attemptedAction);
                     var lazyModuleRef = $injector.get(lazyModuleRefKey);
-                    needsNgZone = lazyModuleRef.needsNgZone;
-                    parentInjector = lazyModuleRef.injector || lazyModuleRef.promise;
+                    moduleInjector = lazyModuleRef.injector || lazyModuleRef.promise;
                 }
-                var doDowngrade = function (injector) {
-                    var componentFactoryResolver = injector.get(ComponentFactoryResolver);
+                // Notes:
+                //
+                // There are two injectors: `finalModuleInjector` and `finalParentInjector` (they might be
+                // the same instance, but that is irrelevant):
+                // - `finalModuleInjector` is used to retrieve `ComponentFactoryResolver`, thus it must be
+                //   on the same tree as the `NgModule` that declares this downgraded component.
+                // - `finalParentInjector` is used for all other injection purposes.
+                //   (Note that Angular knows to only traverse the component-tree part of that injector,
+                //   when looking for an injectable and then switch to the module injector.)
+                //
+                // There are basically three cases:
+                // - If there is no parent component (thus no `parentInjector`), we bootstrap the downgraded
+                //   `NgModule` and use its injector as both `finalModuleInjector` and
+                //   `finalParentInjector`.
+                // - If there is a parent component (and thus a `parentInjector`) and we are sure that it
+                //   belongs to the same `NgModule` as this downgraded component (e.g. because there is only
+                //   one downgraded module, we use that `parentInjector` as both `finalModuleInjector` and
+                //   `finalParentInjector`.
+                // - If there is a parent component, but it may belong to a different `NgModule`, then we
+                //   use the `parentInjector` as `finalParentInjector` and this downgraded component's
+                //   declaring `NgModule`'s injector as `finalModuleInjector`.
+                //   Note 1: If the `NgModule` is already bootstrapped, we just get its injector (we don't
+                //           bootstrap again).
+                //   Note 2: It is possible that (while there are multiple downgraded modules) this
+                //           downgraded component and its parent component both belong to the same NgModule.
+                //           In that case, we could have used the `parentInjector` as both
+                //           `finalModuleInjector` and `finalParentInjector`, but (for simplicity) we are
+                //           treating this case as if they belong to different `NgModule`s. That doesn't
+                //           really affect anything, since `parentInjector` has `moduleInjector` as ancestor
+                //           and trying to resolve `ComponentFactoryResolver` from either one will return
+                //           the same instance.
+                // If there is a parent component, use its injector as parent injector.
+                // If this is a "top-level" Angular component, use the module injector.
+                var finalParentInjector = parentInjector || moduleInjector;
+                // If this is a "top-level" Angular component or the parent component may belong to a
+                // different `NgModule`, use the module injector for module-specific dependencies.
+                // If there is a parent component that belongs to the same `NgModule`, use its injector.
+                var finalModuleInjector = moduleInjector || parentInjector;
+                var doDowngrade = function (injector, moduleInjector) {
+                    // Retrieve `ComponentFactoryResolver` from the injector tied to the `NgModule` this
+                    // component belongs to.
+                    var componentFactoryResolver = moduleInjector.get(ComponentFactoryResolver);
                     var componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                     if (!componentFactory) {
                         throw new Error("Expecting ComponentFactory for: " + getTypeName(info.component));
@@ -586,7 +631,7 @@ function downgradeComponent(info) {
                     var facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
                     var projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
-                    facade.setupInputs(needsNgZone, info.propagateDigest);
+                    facade.setupInputs(isNgUpgradeLite, info.propagateDigest);
                     facade.setupOutputs();
                     facade.registerCleanup();
                     injectorPromise.resolve(facade.getInjector());
@@ -596,20 +641,21 @@ function downgradeComponent(info) {
                         scope.$evalAsync(function () { });
                     }
                 };
-                var downgradeFn = !needsNgZone ? doDowngrade : function (injector) {
+                var downgradeFn = !isNgUpgradeLite ? doDowngrade : function (pInjector, mInjector) {
                     if (!ngZone) {
-                        ngZone = injector.get(NgZone);
-                        wrapCallback = function (cb) { return function () {
-                            return NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
-                        }; };
+                        ngZone = pInjector.get(NgZone);
                     }
-                    wrapCallback(function () { return doDowngrade(injector); })();
+                    wrapCallback(function () { return doDowngrade(pInjector, mInjector); })();
                 };
-                if (isThenable(parentInjector)) {
-                    parentInjector.then(downgradeFn);
+                if (isThenable(finalParentInjector) || isThenable(finalModuleInjector)) {
+                    Promise.all([finalParentInjector, finalModuleInjector])
+                        .then(function (_a) {
+                        var _b = __read(_a, 2), pInjector = _b[0], mInjector = _b[1];
+                        return downgradeFn(pInjector, mInjector);
+                    });
                 }
                 else {
-                    downgradeFn(parentInjector);
+                    downgradeFn(finalParentInjector, finalModuleInjector);
                 }
                 ranAsync = true;
             }
@@ -746,7 +792,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('7.2.0-beta.2+91.sha-12c3176');
+var VERSION = new Version('7.2.0-rc.0+25.sha-4b67b0a');
 
 /**
  * @license
@@ -905,6 +951,31 @@ var moduleUid = 0;
  *
  * </div>
  *
+ * ### Downgrading multiple modules
+ *
+ * It is possible to downgrade multiple modules and include them in an AngularJS application. In
+ * that case, each downgraded module will be bootstrapped when an associated downgraded component or
+ * injectable needs to be instantiated.
+ *
+ * Things to keep in mind, when downgrading multiple modules:
+ *
+ * - Each downgraded component/injectable needs to be explicitly associated with a downgraded
+ *   module. See `downgradeComponent()` and `downgradeInjectable()` for more details.
+ *
+ * - If you want some injectables to be shared among all downgraded modules, you can provide them as
+ *   `StaticProvider`s, when creating the `PlatformRef` (e.g. via `platformBrowser` or
+ *   `platformBrowserDynamic`).
+ *
+ * - When using {@link PlatformRef#bootstrapmodule `bootstrapModule()`} or
+ *   {@link PlatformRef#bootstrapmodulefactory `bootstrapModuleFactory()`} to bootstrap the
+ *   downgraded modules, each one is considered a "root" module. As a consequence, a new instance
+ *   will be created for every injectable provided in `"root"` (via
+ *   {@link Injectable#providedIn `providedIn`}).
+ *   If this is not your intention, you can have a shared module (that will act as act as the "root"
+ *   module) and create all downgraded modules using that module's injector:
+ *
+ *   {@example upgrade/static/ts/lite-multi-shared/module.ts region="shared-root-module"}
+ *
  * @publicApi
  */
 function downgradeModule(moduleFactoryOrBootstrapFn) {
@@ -934,7 +1005,6 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
         function ($injector) {
             setTempInjectorRef($injector);
             var result = {
-                needsNgZone: true,
                 promise: bootstrapFn(angular1Providers).then(function (ref) {
                     injector = result.injector = new NgAdapterInjector(ref.injector);
                     injector.get($INJECTOR);
@@ -1600,10 +1670,7 @@ var UpgradeModule = /** @class */ (function () {
         var initModule = module$1(INIT_MODULE_NAME, [])
             .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
             .value(INJECTOR_KEY, this.injector)
-            .factory(LAZY_MODULE_REF, [
-            INJECTOR_KEY,
-            function (injector) { return ({ injector: injector, needsNgZone: false }); }
-        ])
+            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector }); }])
             .config([
             $PROVIDE, $INJECTOR,
             function ($provide, $injector) {
