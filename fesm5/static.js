@@ -1,11 +1,11 @@
 /**
- * @license Angular v7.2.0-rc.0+47.sha-5fee444
+ * @license Angular v7.2.0-rc.0+48.sha-880b4aa
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
 import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule } from '@angular/core';
-import { __spread, __decorate, __metadata, __read } from 'tslib';
+import { __read, __spread, __decorate, __metadata } from 'tslib';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -792,7 +792,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('7.2.0-rc.0+47.sha-5fee444');
+var VERSION = new Version('7.2.0-rc.0+48.sha-880b4aa');
 
 /**
  * @license
