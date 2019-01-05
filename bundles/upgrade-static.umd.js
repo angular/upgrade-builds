@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-rc.0+64.sha-929334b
+ * @license Angular v7.2.0-rc.0+65.sha-b61dafa
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -36,7 +36,7 @@
             angular = window.angular;
         }
     }
-    catch (e) {
+    catch (_a) {
         // ignore in CJS mode.
     }
     /**
@@ -843,7 +843,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('7.2.0-rc.0+64.sha-929334b');
+    var VERSION = new core.Version('7.2.0-rc.0+65.sha-b61dafa');
 
     /**
      * @license
