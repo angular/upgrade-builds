@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-rc.0+61.sha-0bd9deb
+ * @license Angular v7.2.0-rc.0+65.sha-b61dafa
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('7.2.0-rc.0+61.sha-0bd9deb');
+var VERSION = new Version('7.2.0-rc.0+65.sha-b61dafa');
 
 /**
  * @license
@@ -46,7 +46,7 @@ try {
         angular = window.angular;
     }
 }
-catch (e) {
+catch (_a) {
     // ignore in CJS mode.
 }
 var bootstrap = function (e, modules, config) {
