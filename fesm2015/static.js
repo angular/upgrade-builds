@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-rc.0+54.sha-3f9fee3
+ * @license Angular v7.2.0-rc.0+54.sha-4890b1d
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -991,7 +991,7 @@ function downgradeInjectable(token, downgradedModule = '') {
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0-rc.0+54.sha-3f9fee3');
+const VERSION = new Version('7.2.0-rc.0+54.sha-4890b1d');
 
 /**
  * @fileoverview added by tsickle
