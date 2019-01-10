@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-rc.0+77.sha-9bda446
+ * @license Angular v7.2.0-rc.0+78.sha-a64a7a4
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -991,7 +991,7 @@ function downgradeInjectable(token, downgradedModule = '') {
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0-rc.0+77.sha-9bda446');
+const VERSION = new Version('7.2.0-rc.0+78.sha-a64a7a4');
 
 /**
  * @fileoverview added by tsickle
@@ -1009,7 +1009,7 @@ const VERSION = new Version('7.2.0-rc.0+77.sha-9bda446');
 // Then we "get" the ng1 injector from the module injector, which triggers the provider to read
 // the stored injector and release the reference to it.
 /** @type {?} */
-let tempInjectorRef;
+let tempInjectorRef = null;
 /**
  * @param {?} injector
  * @return {?}
