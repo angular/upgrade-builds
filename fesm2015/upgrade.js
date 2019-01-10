@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-rc.0+76.sha-acb69e8
+ * @license Angular v7.2.0-rc.0+77.sha-9bda446
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0-rc.0+76.sha-acb69e8');
+const VERSION = new Version('7.2.0-rc.0+77.sha-9bda446');
 
 /**
  * @fileoverview added by tsickle
