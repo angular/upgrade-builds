@@ -1,11 +1,11 @@
 /**
- * @license Angular v7.2.0+98.sha-a6ba789
+ * @license Angular v7.2.0+100.sha-feebe03
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
 import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule } from '@angular/core';
-import { __spread, __decorate, __metadata, __read } from 'tslib';
+import { __read, __spread, __decorate, __metadata } from 'tslib';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -792,7 +792,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('7.2.0+98.sha-a6ba789');
+var VERSION = new Version('7.2.0+100.sha-feebe03');
 
 /**
  * @license
@@ -805,7 +805,7 @@ var VERSION = new Version('7.2.0+98.sha-a6ba789');
 // We store the ng1 injector so that the provider in the module injector can access it
 // Then we "get" the ng1 injector from the module injector, which triggers the provider to read
 // the stored injector and release the reference to it.
-var tempInjectorRef;
+var tempInjectorRef = null;
 function setTempInjectorRef(injector) {
     tempInjectorRef = injector;
 }
