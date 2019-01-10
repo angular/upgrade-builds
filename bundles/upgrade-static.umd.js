@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0+99.sha-e8a57f0
+ * @license Angular v7.2.0+98.sha-a6ba789
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -843,7 +843,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('7.2.0+99.sha-e8a57f0');
+    var VERSION = new core.Version('7.2.0+98.sha-a6ba789');
 
     /**
      * @license
@@ -856,7 +856,7 @@
     // We store the ng1 injector so that the provider in the module injector can access it
     // Then we "get" the ng1 injector from the module injector, which triggers the provider to read
     // the stored injector and release the reference to it.
-    var tempInjectorRef = null;
+    var tempInjectorRef;
     function setTempInjectorRef(injector) {
         tempInjectorRef = injector;
     }
