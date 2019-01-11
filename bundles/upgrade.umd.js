@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-rc.0+20.sha-1c0ac25
+ * @license Angular v7.2.0+103.sha-7de7e1b
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('7.2.0-rc.0+20.sha-1c0ac25');
+    var VERSION = new core.Version('7.2.0+103.sha-7de7e1b');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -120,7 +120,7 @@
             angular = window.angular;
         }
     }
-    catch (e) {
+    catch (_a) {
         // ignore in CJS mode.
     }
     var bootstrap = function (e, modules, config) {
