@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0+103.sha-7de7e1b
+ * @license Angular v7.2.0+112.sha-7a9e3ad
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -7,8 +7,8 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser-dynamic')) :
     typeof define === 'function' && define.amd ? define('@angular/upgrade', ['exports', '@angular/core', '@angular/platform-browser-dynamic'], factory) :
-    (factory((global.ng = global.ng || {}, global.ng.upgrade = {}),global.ng.core,global.ng.platformBrowserDynamic));
-}(this, (function (exports,core,platformBrowserDynamic) { 'use strict';
+    (global = global || self, factory((global.ng = global.ng || {}, global.ng.upgrade = {}), global.ng.core, global.ng.platformBrowserDynamic));
+}(this, function (exports, core, platformBrowserDynamic) { 'use strict';
 
     /**
      * @license
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('7.2.0+103.sha-7de7e1b');
+    var VERSION = new core.Version('7.2.0+112.sha-7a9e3ad');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1976,5 +1976,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=upgrade.umd.js.map
