@@ -1,10 +1,10 @@
 /**
- * @license Angular v7.2.0+101.sha-ad6569c
- * (c) 2010-2018 Google, Inc. https://angular.io/
+ * @license Angular v7.2.0+128.sha-091a8a6
+ * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Version, ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Directive, ElementRef, EventEmitter, Inject, Compiler, NgModule, resolveForwardRef } from '@angular/core';
+import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, resolveForwardRef, NgModule } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0+101.sha-ad6569c');
+const VERSION = new Version('7.2.0+128.sha-091a8a6');
 
 /**
  * @fileoverview added by tsickle

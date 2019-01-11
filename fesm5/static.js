@@ -1,11 +1,11 @@
 /**
- * @license Angular v7.2.0+101.sha-ad6569c
- * (c) 2010-2018 Google, Inc. https://angular.io/
+ * @license Angular v7.2.0+128.sha-091a8a6
+ * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule } from '@angular/core';
-import { __read, __spread, __decorate, __metadata } from 'tslib';
+import { __read, __decorate, __metadata, __spread } from 'tslib';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -792,7 +792,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('7.2.0+101.sha-ad6569c');
+var VERSION = new Version('7.2.0+128.sha-091a8a6');
 
 /**
  * @license

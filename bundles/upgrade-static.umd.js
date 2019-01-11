@@ -1,14 +1,14 @@
 /**
- * @license Angular v7.2.0+101.sha-ad6569c
- * (c) 2010-2018 Google, Inc. https://angular.io/
+ * @license Angular v7.2.0+128.sha-091a8a6
+ * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser')) :
     typeof define === 'function' && define.amd ? define('@angular/upgrade/static', ['exports', '@angular/core', '@angular/platform-browser'], factory) :
-    (factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = {}),global.ng.core,global.ng.platformBrowser));
-}(this, (function (exports,core,platformBrowser) { 'use strict';
+    (global = global || self, factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = {}), global.ng.core, global.ng.platformBrowser));
+}(this, function (exports, core, platformBrowser) { 'use strict';
 
     /**
      * @license
@@ -843,7 +843,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('7.2.0+101.sha-ad6569c');
+    var VERSION = new core.Version('7.2.0+128.sha-091a8a6');
 
     /**
      * @license
@@ -1865,5 +1865,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=upgrade-static.umd.js.map
