@@ -1,10 +1,10 @@
 /**
- * @license Angular v7.2.0-rc.0+79.sha-d4b476f
+ * @license Angular v7.2.0-rc.0+82.sha-c18c46a
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
 
-import { ApplicationRef, ChangeDetectorRef, Injector, SimpleChange, Testability, TestabilityRegistry, ComponentFactoryResolver, NgZone, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵlooseIdentical, NgModule } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -991,7 +991,7 @@ function downgradeInjectable(token, downgradedModule = '') {
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('7.2.0-rc.0+79.sha-d4b476f');
+const VERSION = new Version('7.2.0-rc.0+82.sha-c18c46a');
 
 /**
  * @fileoverview added by tsickle
