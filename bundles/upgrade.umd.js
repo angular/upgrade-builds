@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.0-rc.0+96.sha-01d475d
+ * @license Angular v7.2.0-rc.0+97.sha-31556fa
  * (c) 2010-2018 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('7.2.0-rc.0+96.sha-01d475d');
+    var VERSION = new core.Version('7.2.0-rc.0+97.sha-31556fa');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
