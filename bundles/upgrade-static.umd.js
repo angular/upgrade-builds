@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.0+19.sha-2b9cc85
+ * @license Angular v8.0.0-beta.0+20.sha-ab2bf83
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -471,14 +471,14 @@
         };
         DowngradeComponentAdapter.prototype.registerCleanup = function () {
             var _this = this;
+            var testabilityRegistry = this.componentRef.injector.get(core.TestabilityRegistry);
             var destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
             var destroyed = false;
             this.element.on('$destroy', function () { return _this.componentScope.$destroy(); });
             this.componentScope.$on('$destroy', function () {
                 if (!destroyed) {
                     destroyed = true;
-                    _this.componentRef.injector.get(core.TestabilityRegistry)
-                        .unregisterApplication(_this.componentRef.location.nativeElement);
+                    testabilityRegistry.unregisterApplication(_this.componentRef.location.nativeElement);
                     destroyComponentRef();
                 }
             });
@@ -843,7 +843,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('8.0.0-beta.0+19.sha-2b9cc85');
+    var VERSION = new core.Version('8.0.0-beta.0+20.sha-ab2bf83');
 
     /**
      * @license
