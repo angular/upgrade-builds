@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.0+3.sha-808898d
+ * @license Angular v8.0.0-beta.0+21.sha-45bf911
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('8.0.0-beta.0+3.sha-808898d');
+var VERSION = new Version('8.0.0-beta.0+21.sha-45bf911');
 
 /**
  * @license
@@ -417,14 +417,14 @@ var DowngradeComponentAdapter = /** @class */ (function () {
     };
     DowngradeComponentAdapter.prototype.registerCleanup = function () {
         var _this = this;
+        var testabilityRegistry = this.componentRef.injector.get(TestabilityRegistry);
         var destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
         var destroyed = false;
         this.element.on('$destroy', function () { return _this.componentScope.$destroy(); });
         this.componentScope.$on('$destroy', function () {
             if (!destroyed) {
                 destroyed = true;
-                _this.componentRef.injector.get(TestabilityRegistry)
-                    .unregisterApplication(_this.componentRef.location.nativeElement);
+                testabilityRegistry.unregisterApplication(_this.componentRef.location.nativeElement);
                 destroyComponentRef();
             }
         });
