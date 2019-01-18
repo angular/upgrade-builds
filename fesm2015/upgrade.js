@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.0+19.sha-2b9cc85
+ * @license Angular v8.0.0-beta.0+20.sha-ab2bf83
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('8.0.0-beta.0+19.sha-2b9cc85');
+const VERSION = new Version('8.0.0-beta.0+20.sha-ab2bf83');
 
 /**
  * @fileoverview added by tsickle
@@ -543,6 +543,8 @@ class DowngradeComponentAdapter {
      */
     registerCleanup() {
         /** @type {?} */
+        const testabilityRegistry = this.componentRef.injector.get(TestabilityRegistry);
+        /** @type {?} */
         const destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy());
         /** @type {?} */
         let destroyed = false;
@@ -550,8 +552,7 @@ class DowngradeComponentAdapter {
         this.componentScope.$on('$destroy', () => {
             if (!destroyed) {
                 destroyed = true;
-                this.componentRef.injector.get(TestabilityRegistry)
-                    .unregisterApplication(this.componentRef.location.nativeElement);
+                testabilityRegistry.unregisterApplication(this.componentRef.location.nativeElement);
                 destroyComponentRef();
             }
         });
