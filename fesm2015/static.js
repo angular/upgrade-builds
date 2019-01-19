@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.0+15.sha-7220bfd
+ * @license Angular v8.0.0-beta.0+25.sha-218110a
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -551,6 +551,8 @@ class DowngradeComponentAdapter {
      */
     registerCleanup() {
         /** @type {?} */
+        const testabilityRegistry = this.componentRef.injector.get(TestabilityRegistry);
+        /** @type {?} */
         const destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy());
         /** @type {?} */
         let destroyed = false;
@@ -558,8 +560,7 @@ class DowngradeComponentAdapter {
         this.componentScope.$on('$destroy', () => {
             if (!destroyed) {
                 destroyed = true;
-                this.componentRef.injector.get(TestabilityRegistry)
-                    .unregisterApplication(this.componentRef.location.nativeElement);
+                testabilityRegistry.unregisterApplication(this.componentRef.location.nativeElement);
                 destroyComponentRef();
             }
         });
@@ -991,7 +992,7 @@ function downgradeInjectable(token, downgradedModule = '') {
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('8.0.0-beta.0+15.sha-7220bfd');
+const VERSION = new Version('8.0.0-beta.0+25.sha-218110a');
 
 /**
  * @fileoverview added by tsickle
