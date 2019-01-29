@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.1+68.sha-6e16338
+ * @license Angular v8.0.0-beta.1+83.sha-e18a52e
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -831,7 +831,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('8.0.0-beta.1+68.sha-6e16338');
+    var VERSION = new i0.Version('8.0.0-beta.1+83.sha-e18a52e');
 
     /**
      * @license
@@ -1799,7 +1799,7 @@
                 };
             }
         };
-        UpgradeModule.ngModuleDef = i0.ɵdefineNgModule({ type: UpgradeModule, bootstrap: [], declarations: [], imports: [], exports: [] });
+        UpgradeModule.ngModuleDef = i0.ɵdefineNgModule({ type: UpgradeModule });
         UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.inject(i0.Injector), i0.inject(i0.NgZone)); }, providers: [angular1Providers], imports: [] });
         return UpgradeModule;
     }());

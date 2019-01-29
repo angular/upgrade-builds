@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.1+68.sha-6e16338
+ * @license Angular v8.0.0-beta.1+83.sha-e18a52e
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -991,7 +991,7 @@ function downgradeInjectable(token, downgradedModule = '') {
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('8.0.0-beta.1+68.sha-6e16338');
+const VERSION = new Version('8.0.0-beta.1+83.sha-e18a52e');
 
 /**
  * @fileoverview added by tsickle
@@ -2180,7 +2180,7 @@ UpgradeModule.ctorParameters = () => [
     { type: Injector },
     { type: NgZone }
 ];
-/** @nocollapse */ UpgradeModule.ngModuleDef = ɵdefineNgModule({ type: UpgradeModule, bootstrap: [], declarations: [], imports: [], exports: [] });
+/** @nocollapse */ UpgradeModule.ngModuleDef = ɵdefineNgModule({ type: UpgradeModule });
 /** @nocollapse */ UpgradeModule.ngInjectorDef = defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(inject(Injector), inject(NgZone)); }, providers: [angular1Providers], imports: [] });
 /*@__PURE__*/ ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,

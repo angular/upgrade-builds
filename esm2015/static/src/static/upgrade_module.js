@@ -277,7 +277,7 @@ UpgradeModule.ctorParameters = () => [
     { type: Injector },
     { type: NgZone }
 ];
-/** @nocollapse */ UpgradeModule.ngModuleDef = i0.ɵdefineNgModule({ type: UpgradeModule, bootstrap: [], declarations: [], imports: [], exports: [] });
+/** @nocollapse */ UpgradeModule.ngModuleDef = i0.ɵdefineNgModule({ type: UpgradeModule });
 /** @nocollapse */ UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.inject(Injector), i0.inject(NgZone)); }, providers: [angular1Providers], imports: [] });
 /*@__PURE__*/ i0.ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,
