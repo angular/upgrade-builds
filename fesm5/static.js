@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.3+6.sha-baf103c
+ * @license Angular v8.0.0-beta.3+10.sha-d42f32c
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -791,7 +791,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('8.0.0-beta.3+6.sha-baf103c');
+var VERSION = new Version('8.0.0-beta.3+10.sha-d42f32c');
 
 /**
  * @license
