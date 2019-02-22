@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.5+27.sha-65d839d.with-local-changes
+ * @license Angular v8.0.0-beta.5+57.sha-c64b13e.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -992,7 +992,7 @@ function downgradeInjectable(token, downgradedModule = '') {
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('8.0.0-beta.5+27.sha-65d839d.with-local-changes');
+const VERSION = new Version('8.0.0-beta.5+57.sha-c64b13e.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -1459,7 +1459,9 @@ class UpgradeHelper {
                 Object.keys(slots).filter(slotName => slots[slotName]).forEach(slotName => {
                     /** @type {?} */
                     const nodes = slots[slotName];
-                    slots[slotName] = (scope, cloneAttach) => (/** @type {?} */ (cloneAttach))(nodes, scope);
+                    slots[slotName] = (scope, cloneAttach) => {
+                        return (/** @type {?} */ (cloneAttach))(nodes, scope);
+                    };
                 });
             }
             // Attach `$$slots` to default slot transclude fn.
