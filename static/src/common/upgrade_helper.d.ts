@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { ElementRef, Injector, SimpleChanges } from '@angular/core';
-import * as angular from './angular1';
+import { IAugmentedJQuery, IController, IDirective, IInjectorService, ILinkFn, IScope } from './angular1';
 export interface IBindingDestination {
     [key: string]: any;
     $onChanges?: (changes: SimpleChanges) => void;
@@ -20,19 +20,19 @@ export interface IControllerInstance extends IBindingDestination {
 export declare class UpgradeHelper {
     private injector;
     private name;
-    readonly $injector: angular.IInjectorService;
+    readonly $injector: IInjectorService;
     readonly element: Element;
-    readonly $element: angular.IAugmentedJQuery;
-    readonly directive: angular.IDirective;
+    readonly $element: IAugmentedJQuery;
+    readonly directive: IDirective;
     private readonly $compile;
     private readonly $controller;
-    constructor(injector: Injector, name: string, elementRef: ElementRef, directive?: angular.IDirective);
-    static getDirective($injector: angular.IInjectorService, name: string): angular.IDirective;
-    static getTemplate($injector: angular.IInjectorService, directive: angular.IDirective, fetchRemoteTemplate?: boolean): string | Promise<string>;
-    buildController(controllerType: angular.IController, $scope: angular.IScope): any;
-    compileTemplate(template?: string): angular.ILinkFn;
-    onDestroy($scope: angular.IScope, controllerInstance?: any): void;
-    prepareTransclusion(): angular.ILinkFn | undefined;
+    constructor(injector: Injector, name: string, elementRef: ElementRef, directive?: IDirective);
+    static getDirective($injector: IInjectorService, name: string): IDirective;
+    static getTemplate($injector: IInjectorService, directive: IDirective, fetchRemoteTemplate?: boolean): string | Promise<string>;
+    buildController(controllerType: IController, $scope: IScope): any;
+    compileTemplate(template?: string): ILinkFn;
+    onDestroy($scope: IScope, controllerInstance?: any): void;
+    prepareTransclusion(): ILinkFn | undefined;
     resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): IControllerInstance | {
         [key: string]: IControllerInstance;
     } | IControllerInstance[] | null;

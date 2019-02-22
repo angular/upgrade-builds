@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { ComponentFactory, Injector } from '@angular/core';
-import * as angular from './angular1';
+import { IAttributes, IAugmentedJQuery, ICompileService, IInjectorService, INgModelController, IParseService, IScope } from './angular1';
 export declare class DowngradeComponentAdapter {
     private element;
     private attrs;
@@ -26,7 +26,7 @@ export declare class DowngradeComponentAdapter {
     private component;
     private changeDetector;
     private viewChangeDetector;
-    constructor(element: angular.IAugmentedJQuery, attrs: angular.IAttributes, scope: angular.IScope, ngModel: angular.INgModelController, parentInjector: Injector, $injector: angular.IInjectorService, $compile: angular.ICompileService, $parse: angular.IParseService, componentFactory: ComponentFactory<any>, wrapCallback: <T>(cb: () => T) => () => T);
+    constructor(element: IAugmentedJQuery, attrs: IAttributes, scope: IScope, ngModel: INgModelController, parentInjector: Injector, $injector: IInjectorService, $compile: ICompileService, $parse: IParseService, componentFactory: ComponentFactory<any>, wrapCallback: <T>(cb: () => T) => () => T);
     compileContents(): Node[][];
     createComponent(projectableNodes: Node[][]): void;
     setupInputs(manuallyAttachView: boolean, propagateDigest?: boolean): void;

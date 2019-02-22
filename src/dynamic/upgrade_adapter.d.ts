@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { CompilerOptions, Injector, NgModuleRef, Type } from '@angular/core';
-import * as angular from '../common/angular1';
+import { IAngularBootstrapConfig, IInjectorService, IRootScopeService } from '../common/angular1';
 /**
  * Use `UpgradeAdapter` to allow AngularJS and Angular to coexist in a single application.
  *
@@ -328,7 +328,7 @@ export declare class UpgradeAdapter {
      * });
      * ```
      */
-    bootstrap(element: Element, modules?: any[], config?: angular.IAngularBootstrapConfig): UpgradeAdapterRef;
+    bootstrap(element: Element, modules?: any[], config?: IAngularBootstrapConfig): UpgradeAdapterRef;
     /**
      * Allows AngularJS service to be accessible from Angular.
      *
@@ -412,8 +412,8 @@ export declare class UpgradeAdapter {
  * @publicApi
  */
 export declare class UpgradeAdapterRef {
-    ng1RootScope: angular.IRootScopeService;
-    ng1Injector: angular.IInjectorService;
+    ng1RootScope: IRootScopeService;
+    ng1Injector: IInjectorService;
     ng2ModuleRef: NgModuleRef<any>;
     ng2Injector: Injector;
     /**

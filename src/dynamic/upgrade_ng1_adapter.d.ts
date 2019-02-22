@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { Type } from '@angular/core';
-import * as angular from '../common/angular1';
+import { IDirective, IInjectorService } from '../common/angular1';
 export declare class UpgradeNg1ComponentAdapterBuilder {
     name: string;
     type: Type<any>;
@@ -19,7 +19,7 @@ export declare class UpgradeNg1ComponentAdapterBuilder {
     propertyMap: {
         [name: string]: string;
     };
-    directive: angular.IDirective | null;
+    directive: IDirective | null;
     template: string;
     constructor(name: string);
     extractBindings(): void;
@@ -28,5 +28,5 @@ export declare class UpgradeNg1ComponentAdapterBuilder {
      */
     static resolve(exportedComponents: {
         [name: string]: UpgradeNg1ComponentAdapterBuilder;
-    }, $injector: angular.IInjectorService): Promise<string[]>;
+    }, $injector: IInjectorService): Promise<string[]>;
 }
