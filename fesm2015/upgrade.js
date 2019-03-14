@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.8+20.sha-a3e1054.with-local-changes
+ * @license Angular v8.0.0-beta.8+25.sha-410ccac.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('8.0.0-beta.8+20.sha-a3e1054.with-local-changes');
+const VERSION = new Version('8.0.0-beta.8+25.sha-410ccac.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -59,7 +59,7 @@ const bootstrap = (/**
  */
 (e, modules, config) => angular.bootstrap(e, modules, config));
 /** @type {?} */
-const module$1 = (/**
+const module = (/**
  * @param {?} prefix
  * @param {?=} dependencies
  * @return {?}
@@ -2245,7 +2245,7 @@ class UpgradeAdapter {
      * @param {?=} config
      * @return {?}
      */
-    bootstrap(element$$1, modules, config) {
+    bootstrap(element$1, modules, config) {
         this.declareNg1Module(modules);
         /** @type {?} */
         const upgrade = new UpgradeAdapterRef();
@@ -2256,7 +2256,7 @@ class UpgradeAdapter {
         this.ngZone.run((/**
          * @return {?}
          */
-        () => { bootstrap(element$$1, [this.ng1Module.name], (/** @type {?} */ (config))); }));
+        () => { bootstrap(element$1, [this.ng1Module.name], (/** @type {?} */ (config))); }));
         /** @type {?} */
         const ng1BootstrapPromise = new Promise((/**
          * @param {?} resolve
@@ -2286,7 +2286,7 @@ class UpgradeAdapter {
          * @return {?}
          */
         ([ng1Injector]) => {
-            (/** @type {?} */ (element(element$$1).data))(controllerKey(INJECTOR_KEY), (/** @type {?} */ (this.moduleRef)).injector);
+            (/** @type {?} */ (element(element$1).data))(controllerKey(INJECTOR_KEY), (/** @type {?} */ (this.moduleRef)).injector);
             (/** @type {?} */ (this.moduleRef)).injector.get(NgZone).run((/**
              * @return {?}
              */
@@ -2395,7 +2395,7 @@ class UpgradeAdapter {
         /** @type {?} */
         const upgradeAdapter = this;
         /** @type {?} */
-        const ng1Module = this.ng1Module = module$1(this.idPrefix, modules);
+        const ng1Module = this.ng1Module = module(this.idPrefix, modules);
         /** @type {?} */
         const platformRef = platformBrowserDynamic();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });

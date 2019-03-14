@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.8+20.sha-a3e1054.with-local-changes
+ * @license Angular v8.0.0-beta.8+25.sha-410ccac.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -90,7 +90,7 @@ const bootstrap = (/**
  */
 (e, modules, config) => angular.bootstrap(e, modules, config));
 /** @type {?} */
-const module$1 = (/**
+const module = (/**
  * @param {?} prefix
  * @param {?=} dependencies
  * @return {?}
@@ -1134,7 +1134,7 @@ function downgradeInjectable(token, downgradedModule = '') {
  * \@publicApi
  * @type {?}
  */
-const VERSION = new Version('8.0.0-beta.8+20.sha-a3e1054.with-local-changes');
+const VERSION = new Version('8.0.0-beta.8+25.sha-410ccac.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -1369,7 +1369,7 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
     /** @type {?} */
     let injector;
     // Create an ng1 module to bootstrap.
-    module$1(lazyModuleName, [])
+    module(lazyModuleName, [])
         .constant(UPGRADE_APP_TYPE_KEY, 3 /* Lite */)
         .factory(INJECTOR_KEY, [lazyInjectorKey, identity])
         .factory(lazyInjectorKey, (/**
@@ -2319,12 +2319,12 @@ class UpgradeModule {
      * @param {?=} config
      * @return {?}
      */
-    bootstrap(element$$1, modules = [], config /*angular.IAngularBootstrapConfig*/) {
+    bootstrap(element$1, modules = [], config /*angular.IAngularBootstrapConfig*/) {
         /** @type {?} */
         const INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
         // Create an ng1 module to bootstrap
         /** @type {?} */
-        const initModule = module$1(INIT_MODULE_NAME, [])
+        const initModule = module(INIT_MODULE_NAME, [])
             .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
             .value(INJECTOR_KEY, this.injector)
             .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (/**
@@ -2441,7 +2441,7 @@ class UpgradeModule {
                 setTempInjectorRef($injector);
                 this.injector.get($INJECTOR);
                 // Put the injector on the DOM, so that it can be "required"
-                (/** @type {?} */ (element(element$$1).data))(controllerKey(INJECTOR_KEY), this.injector);
+                (/** @type {?} */ (element(element$1).data))(controllerKey(INJECTOR_KEY), this.injector);
                 // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles
                 // We need to do this in the next tick so that we don't prevent the bootup
                 // stabilizing
@@ -2464,7 +2464,7 @@ class UpgradeModule {
             })
         ]);
         /** @type {?} */
-        const upgradeModule = module$1(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
+        const upgradeModule = module(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
         /** @type {?} */
         const windowAngular = ((/** @type {?} */ (window)))['angular'];
@@ -2473,7 +2473,7 @@ class UpgradeModule {
         this.ngZone.run((/**
          * @return {?}
          */
-        () => { bootstrap(element$$1, [upgradeModule.name], config); }));
+        () => { bootstrap(element$1, [upgradeModule.name], config); }));
         // Patch resumeBootstrap() to run inside the ngZone
         if (windowAngular.resumeBootstrap) {
             /** @type {?} */

@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.8+20.sha-a3e1054.with-local-changes
+ * @license Angular v8.0.0-beta.8+25.sha-410ccac.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('8.0.0-beta.8+20.sha-a3e1054.with-local-changes');
+    var VERSION = new core.Version('8.0.0-beta.8+25.sha-410ccac.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -125,7 +125,7 @@
     var bootstrap = function (e, modules, config) {
         return angular.bootstrap(e, modules, config);
     };
-    var module$1 = function (prefix, dependencies) {
+    var module = function (prefix, dependencies) {
         return angular.module(prefix, dependencies);
     };
     var element = (function (e) { return angular.element(e); });
@@ -1683,14 +1683,14 @@
          * });
          * ```
          */
-        UpgradeAdapter.prototype.bootstrap = function (element$$1, modules, config) {
+        UpgradeAdapter.prototype.bootstrap = function (element$1, modules, config) {
             var _this = this;
             this.declareNg1Module(modules);
             var upgrade = new UpgradeAdapterRef();
             // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
             var windowAngular = window /** TODO #???? */['angular'];
             windowAngular.resumeBootstrap = undefined;
-            this.ngZone.run(function () { bootstrap(element$$1, [_this.ng1Module.name], config); });
+            this.ngZone.run(function () { bootstrap(element$1, [_this.ng1Module.name], config); });
             var ng1BootstrapPromise = new Promise(function (resolve) {
                 if (windowAngular.resumeBootstrap) {
                     var originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
@@ -1707,7 +1707,7 @@
             });
             Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(function (_a) {
                 var _b = __read(_a, 1), ng1Injector = _b[0];
-                element(element$$1).data(controllerKey(INJECTOR_KEY), _this.moduleRef.injector);
+                element(element$1).data(controllerKey(INJECTOR_KEY), _this.moduleRef.injector);
                 _this.moduleRef.injector.get(core.NgZone).run(function () { upgrade._bootstrapDone(_this.moduleRef, ng1Injector); });
             }, onError);
             return upgrade;
@@ -1798,7 +1798,7 @@
             var rootScopePrototype;
             var rootScope;
             var upgradeAdapter = this;
-            var ng1Module = this.ng1Module = module$1(this.idPrefix, modules);
+            var ng1Module = this.ng1Module = module(this.idPrefix, modules);
             var platformRef = platformBrowserDynamic.platformBrowserDynamic();
             this.ngZone = new core.NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
             this.ng2BootstrapDeferred = new Deferred();
