@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.10+103.sha-3487055.with-local-changes
+ * @license Angular v8.0.0-beta.10+106.sha-cbd5d28.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -791,7 +791,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('8.0.0-beta.10+103.sha-3487055.with-local-changes');
+var VERSION = new Version('8.0.0-beta.10+106.sha-cbd5d28.with-local-changes');
 
 /**
  * @license
@@ -1775,7 +1775,7 @@ var UpgradeModule = /** @class */ (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-// This file only re-exports content of the `src` folder. Keep it that way.
+// This file only re-exports items to appear in the public api. Keep it that way.
 
 /**
  * @license
