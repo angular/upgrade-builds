@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.11+56.sha-91f2b1e.with-local-changes
+ * @license Angular v7.2.11+58.sha-50bcaa6.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,8 +18,7 @@ import { platformBrowser } from '@angular/platform-browser';
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
-var ɵ0 = function () { return noNg(); };
-var noNgElement = (ɵ0);
+var noNgElement = (function () { return noNg(); });
 noNgElement.cleanData = noNg;
 var angular = {
     bootstrap: noNg,
@@ -792,7 +791,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('7.2.11+56.sha-91f2b1e.with-local-changes');
+var VERSION = new Version('7.2.11+58.sha-50bcaa6.with-local-changes');
 
 /**
  * @license
@@ -1782,7 +1781,7 @@ var UpgradeModule = /** @class */ (function () {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-// This file only re-exports content of the `src` folder. Keep it that way.
+// This file only re-exports items to appear in the public api. Keep it that way.
 
 /**
  * @license
