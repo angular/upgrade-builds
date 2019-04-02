@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.11+60.sha-ec4dced.with-local-changes
+ * @license Angular v7.2.11+61.sha-a357dae.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -767,7 +767,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('7.2.11+60.sha-ec4dced.with-local-changes');
+const VERSION = new Version('7.2.11+61.sha-a357dae.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
