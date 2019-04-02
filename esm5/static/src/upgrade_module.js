@@ -259,7 +259,7 @@ var UpgradeModule = /** @class */ (function () {
         }
     };
     UpgradeModule.ngModuleDef = i0.ɵdefineNgModule({ type: UpgradeModule });
-    UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.inject(i0.Injector), i0.inject(i0.NgZone)); }, providers: [angular1Providers], imports: [] });
+    UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.inject(i0.Injector), i0.inject(i0.NgZone)); }, providers: [angular1Providers] });
     return UpgradeModule;
 }());
 export { UpgradeModule };

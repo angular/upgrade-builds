@@ -344,7 +344,7 @@ UpgradeModule.ctorParameters = () => [
     { type: NgZone }
 ];
 /** @nocollapse */ UpgradeModule.ngModuleDef = i0.ɵdefineNgModule({ type: UpgradeModule });
-/** @nocollapse */ UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.inject(i0.Injector), i0.inject(i0.NgZone)); }, providers: [angular1Providers], imports: [] });
+/** @nocollapse */ UpgradeModule.ngInjectorDef = i0.defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.inject(i0.Injector), i0.inject(i0.NgZone)); }, providers: [angular1Providers] });
 /*@__PURE__*/ i0.ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,
         args: [{ providers: [angular1Providers] }]
