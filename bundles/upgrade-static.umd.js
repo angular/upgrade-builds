@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.10+105.sha-9f54d76.with-local-changes
+ * @license Angular v8.0.0-beta.10+104.sha-e5201f9.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -831,7 +831,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('8.0.0-beta.10+105.sha-9f54d76.with-local-changes');
+    var VERSION = new i0.Version('8.0.0-beta.10+104.sha-e5201f9.with-local-changes');
 
     /**
      * @license
@@ -1815,7 +1815,7 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
-    // This file only re-exports items to appear in the public api. Keep it that way.
+    // This file only re-exports content of the `src` folder. Keep it that way.
 
     /**
      * @license
