@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.10+105.sha-9f54d76.with-local-changes
+ * @license Angular v8.0.0-beta.10+104.sha-e5201f9.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('8.0.0-beta.10+105.sha-9f54d76.with-local-changes');
+    var VERSION = new core.Version('8.0.0-beta.10+104.sha-e5201f9.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -104,7 +104,8 @@
     function noNg() {
         throw new Error('AngularJS v1.x is not loaded!');
     }
-    var noNgElement = (function () { return noNg(); });
+    var ɵ0 = function () { return noNg(); };
+    var noNgElement = (ɵ0);
     noNgElement.cleanData = noNg;
     var angular = {
         bootstrap: noNg,
