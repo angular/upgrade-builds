@@ -1,11 +1,11 @@
 /**
- * @license Angular v8.0.0-beta.11+55.sha-db62ccf.with-local-changes
+ * @license Angular v8.0.0-beta.11+57.sha-ef85336.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { __read, __spread } from 'tslib';
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, ɵdefineNgModule, defineInjector, inject, ɵsetClassMetadata, NgModule } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, ΔdefineNgModule, ΔdefineInjector, Δinject, ɵsetClassMetadata, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -791,7 +791,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('8.0.0-beta.11+55.sha-db62ccf.with-local-changes');
+var VERSION = new Version('8.0.0-beta.11+57.sha-ef85336.with-local-changes');
 
 /**
  * @license
@@ -1759,8 +1759,8 @@ var UpgradeModule = /** @class */ (function () {
             };
         }
     };
-    UpgradeModule.ngModuleDef = ɵdefineNgModule({ type: UpgradeModule });
-    UpgradeModule.ngInjectorDef = defineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(inject(Injector), inject(NgZone)); }, providers: [angular1Providers] });
+    UpgradeModule.ngModuleDef = ΔdefineNgModule({ type: UpgradeModule });
+    UpgradeModule.ngInjectorDef = ΔdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(Δinject(Injector), Δinject(NgZone)); }, providers: [angular1Providers] });
     return UpgradeModule;
 }());
 /*@__PURE__*/ ɵsetClassMetadata(UpgradeModule, [{
