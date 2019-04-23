@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.13+23.sha-9a81e52.with-local-changes
+ * @license Angular v7.2.13+24.sha-4382cea.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -791,7 +791,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('7.2.13+23.sha-9a81e52.with-local-changes');
+var VERSION = new Version('7.2.13+24.sha-4382cea.with-local-changes');
 
 /**
  * @license
