@@ -1,5 +1,5 @@
 /**
- * @license Angular v7.2.14+10.sha-d025159.with-local-changes
+ * @license Angular v7.2.14+13.sha-07f0385.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('7.2.14+10.sha-d025159.with-local-changes');
+    var VERSION = new core.Version('7.2.14+13.sha-07f0385.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -125,7 +125,9 @@
     var bootstrap = function (e, modules, config) {
         return angular.bootstrap(e, modules, config);
     };
-    var module$1 = function (prefix, dependencies) {
+    // Do not declare as `module` to avoid webpack bug
+    // (see https://github.com/angular/angular/issues/30050).
+    var module_ = function (prefix, dependencies) {
         return angular.module(prefix, dependencies);
     };
     var element = (function (e) { return angular.element(e); });
@@ -1798,7 +1800,7 @@
             var rootScopePrototype;
             var rootScope;
             var upgradeAdapter = this;
-            var ng1Module = this.ng1Module = module$1(this.idPrefix, modules);
+            var ng1Module = this.ng1Module = module_(this.idPrefix, modules);
             var platformRef = platformBrowserDynamic.platformBrowserDynamic();
             this.ngZone = new core.NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
             this.ng2BootstrapDeferred = new Deferred();
@@ -1895,7 +1897,17 @@
                         })
                             .then(function () { return _this.ng2BootstrapDeferred.resolve(ng1Injector); }, onError)
                             .then(function () {
-                            var subscription = _this.ngZone.onMicrotaskEmpty.subscribe({ next: function () { return rootScope.$digest(); } });
+                            var subscription = _this.ngZone.onMicrotaskEmpty.subscribe({
+                                next: function () {
+                                    if (rootScope.$$phase) {
+                                        if (core.isDevMode()) {
+                                            console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                                        }
+                                        return rootScope.$evalAsync(function () { });
+                                    }
+                                    return rootScope.$digest();
+                                }
+                            });
                             rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
                         });
                     })

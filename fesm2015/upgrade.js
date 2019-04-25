@@ -1,10 +1,10 @@
 /**
- * @license Angular v7.2.14+10.sha-d025159.with-local-changes
+ * @license Angular v7.2.14+13.sha-07f0385.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, resolveForwardRef, NgModule } from '@angular/core';
+import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('7.2.14+10.sha-d025159.with-local-changes');
+const VERSION = new Version('7.2.14+13.sha-07f0385.with-local-changes');
 
 /**
  * @license
@@ -48,7 +48,9 @@ catch (_a) {
     // ignore in CJS mode.
 }
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
-const module$1 = (prefix, dependencies) => angular.module(prefix, dependencies);
+// Do not declare as `module` to avoid webpack bug
+// (see https://github.com/angular/angular/issues/30050).
+const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e => angular.element(e));
 element.cleanData = nodes => angular.element.cleanData(nodes);
 let version = angular.version;
@@ -1791,7 +1793,7 @@ class UpgradeAdapter {
         /** @type {?} */
         const upgradeAdapter = this;
         /** @type {?} */
-        const ng1Module = this.ng1Module = module$1(this.idPrefix, modules);
+        const ng1Module = this.ng1Module = module_(this.idPrefix, modules);
         /** @type {?} */
         const platformRef = platformBrowserDynamic();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
@@ -1896,7 +1898,17 @@ class UpgradeAdapter {
                         .then(() => this.ng2BootstrapDeferred.resolve(ng1Injector), onError)
                         .then(() => {
                         /** @type {?} */
-                        let subscription = this.ngZone.onMicrotaskEmpty.subscribe({ next: () => rootScope.$digest() });
+                        let subscription = this.ngZone.onMicrotaskEmpty.subscribe({
+                            next: () => {
+                                if (rootScope.$$phase) {
+                                    if (isDevMode()) {
+                                        console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                                    }
+                                    return rootScope.$evalAsync(() => { });
+                                }
+                                return rootScope.$digest();
+                            }
+                        });
                         rootScope.$on('$destroy', () => { subscription.unsubscribe(); });
                     });
                 })
