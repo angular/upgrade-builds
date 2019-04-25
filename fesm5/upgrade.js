@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.14+37.sha-a9379e0.with-local-changes
+ * @license Angular v8.0.0-beta.14+38.sha-abcb2cf.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('8.0.0-beta.14+37.sha-a9379e0.with-local-changes');
+var VERSION = new Version('8.0.0-beta.14+38.sha-abcb2cf.with-local-changes');
 
 /**
  * @license
@@ -51,7 +51,9 @@ catch (_a) {
 var bootstrap = function (e, modules, config) {
     return angular.bootstrap(e, modules, config);
 };
-var module = function (prefix, dependencies) {
+// Do not declare as `module` to avoid webpack bug
+// (see https://github.com/angular/angular/issues/30050).
+var module_ = function (prefix, dependencies) {
     return angular.module(prefix, dependencies);
 };
 var element = (function (e) { return angular.element(e); });
@@ -1724,7 +1726,7 @@ var UpgradeAdapter = /** @class */ (function () {
         var rootScopePrototype;
         var rootScope;
         var upgradeAdapter = this;
-        var ng1Module = this.ng1Module = module(this.idPrefix, modules);
+        var ng1Module = this.ng1Module = module_(this.idPrefix, modules);
         var platformRef = platformBrowserDynamic();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
