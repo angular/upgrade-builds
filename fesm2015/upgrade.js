@@ -1,10 +1,10 @@
 /**
- * @license Angular v8.0.0-beta.14+52.sha-2dc4e88.with-local-changes
+ * @license Angular v8.0.0-beta.14+54.sha-2236ea4.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, resolveForwardRef, NgModule } from '@angular/core';
+import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('8.0.0-beta.14+52.sha-2dc4e88.with-local-changes');
+const VERSION = new Version('8.0.0-beta.14+54.sha-2236ea4.with-local-changes');
 
 /**
  * @license
@@ -2020,10 +2020,23 @@ class UpgradeAdapter {
                      */
                     () => {
                         /** @type {?} */
-                        let subscription = this.ngZone.onMicrotaskEmpty.subscribe({ next: (/**
+                        let subscription = this.ngZone.onMicrotaskEmpty.subscribe({
+                            next: (/**
                              * @return {?}
                              */
-                            () => rootScope.$digest()) });
+                            () => {
+                                if (rootScope.$$phase) {
+                                    if (isDevMode()) {
+                                        console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                                    }
+                                    return rootScope.$evalAsync((/**
+                                     * @return {?}
+                                     */
+                                    () => { }));
+                                }
+                                return rootScope.$digest();
+                            })
+                        });
                         rootScope.$on('$destroy', (/**
                          * @return {?}
                          */

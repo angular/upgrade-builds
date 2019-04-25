@@ -1,10 +1,10 @@
 /**
- * @license Angular v8.0.0-beta.14+52.sha-2dc4e88.with-local-changes
+ * @license Angular v8.0.0-beta.14+54.sha-2236ea4.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, NgModule, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, isDevMode, NgModule, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -769,7 +769,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('8.0.0-beta.14+52.sha-2dc4e88.with-local-changes');
+const VERSION = new Version('8.0.0-beta.14+54.sha-2236ea4.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -1919,7 +1919,15 @@ class UpgradeModule {
                     const subscription = this.ngZone.onMicrotaskEmpty.subscribe((/**
                      * @return {?}
                      */
-                    () => $rootScope.$digest()));
+                    () => {
+                        if ($rootScope.$$phase) {
+                            if (isDevMode()) {
+                                console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                            }
+                            return $rootScope.$evalAsync();
+                        }
+                        return $rootScope.$digest();
+                    }));
                     $rootScope.$on('$destroy', (/**
                      * @return {?}
                      */

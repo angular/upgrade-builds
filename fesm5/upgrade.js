@@ -1,10 +1,10 @@
 /**
- * @license Angular v8.0.0-beta.14+52.sha-2dc4e88.with-local-changes
+ * @license Angular v8.0.0-beta.14+54.sha-2236ea4.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, EventEmitter, Directive, Inject, ElementRef, Compiler, resolveForwardRef, NgModule } from '@angular/core';
+import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, EventEmitter, Directive, Inject, ElementRef, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
 import { __read, __extends, __decorate, __assign, __param, __metadata } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('8.0.0-beta.14+52.sha-2dc4e88.with-local-changes');
+var VERSION = new Version('8.0.0-beta.14+54.sha-2236ea4.with-local-changes');
 
 /**
  * @license
@@ -1823,7 +1823,17 @@ var UpgradeAdapter = /** @class */ (function () {
                     })
                         .then(function () { return _this.ng2BootstrapDeferred.resolve(ng1Injector); }, onError)
                         .then(function () {
-                        var subscription = _this.ngZone.onMicrotaskEmpty.subscribe({ next: function () { return rootScope.$digest(); } });
+                        var subscription = _this.ngZone.onMicrotaskEmpty.subscribe({
+                            next: function () {
+                                if (rootScope.$$phase) {
+                                    if (isDevMode()) {
+                                        console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                                    }
+                                    return rootScope.$evalAsync(function () { });
+                                }
+                                return rootScope.$digest();
+                            }
+                        });
                         rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
                     });
                 })
