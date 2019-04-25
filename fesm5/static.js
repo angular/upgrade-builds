@@ -1,11 +1,11 @@
 /**
- * @license Angular v8.0.0-beta.14+52.sha-2dc4e88.with-local-changes
+ * @license Angular v8.0.0-beta.14+54.sha-2236ea4.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { __read, __decorate, __metadata, __spread } from 'tslib';
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, NgModule } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, isDevMode, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -793,7 +793,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('8.0.0-beta.14+52.sha-2dc4e88.with-local-changes');
+var VERSION = new Version('8.0.0-beta.14+54.sha-2236ea4.with-local-changes');
 
 /**
  * @license
@@ -1745,7 +1745,15 @@ var UpgradeModule = /** @class */ (function () {
                 // stabilizing
                 setTimeout(function () {
                     var $rootScope = $injector.get('$rootScope');
-                    var subscription = _this.ngZone.onMicrotaskEmpty.subscribe(function () { return $rootScope.$digest(); });
+                    var subscription = _this.ngZone.onMicrotaskEmpty.subscribe(function () {
+                        if ($rootScope.$$phase) {
+                            if (isDevMode()) {
+                                console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                            }
+                            return $rootScope.$evalAsync();
+                        }
+                        return $rootScope.$digest();
+                    });
                     $rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
                 }, 0);
             }
