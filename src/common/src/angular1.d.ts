@@ -264,7 +264,7 @@ export declare function setAngularJSGlobal(ng: any): void;
  */
 export declare function getAngularJSGlobal(): any;
 export declare const bootstrap: typeof angular.bootstrap;
-export declare const module: typeof angular.module;
+export declare const module_: typeof angular.module;
 export declare const element: typeof angular.element;
 export declare const resumeBootstrap: typeof angular.resumeBootstrap;
 export declare const getTestability: typeof angular.getTestability;

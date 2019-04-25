@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.14+37.sha-a9379e0.with-local-changes
+ * @license Angular v8.0.0-beta.14+38.sha-abcb2cf.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('8.0.0-beta.14+37.sha-a9379e0.with-local-changes');
+const VERSION = new Version('8.0.0-beta.14+38.sha-abcb2cf.with-local-changes');
 
 /**
  * @license
@@ -48,7 +48,9 @@ catch (_a) {
     // ignore in CJS mode.
 }
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
-const module = (prefix, dependencies) => angular.module(prefix, dependencies);
+// Do not declare as `module` to avoid webpack bug
+// (see https://github.com/angular/angular/issues/30050).
+const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e => angular.element(e));
 element.cleanData = nodes => angular.element.cleanData(nodes);
 let version = angular.version;
@@ -1852,7 +1854,7 @@ class UpgradeAdapter {
         /** @type {?} */
         const upgradeAdapter = this;
         /** @type {?} */
-        const ng1Module = this.ng1Module = module(this.idPrefix, modules);
+        const ng1Module = this.ng1Module = module_(this.idPrefix, modules);
         /** @type {?} */
         const platformRef = platformBrowserDynamic();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
