@@ -1,10 +1,10 @@
 /**
- * @license Angular v8.0.0-beta.14+31.sha-071ee64.with-local-changes
+ * @license Angular v8.0.0-beta.14+74.sha-6de4cbd.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, NgModule } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, isDevMode, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -71,7 +71,9 @@ function getAngularJSGlobal() {
     return angular;
 }
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
-const module = (prefix, dependencies) => angular.module(prefix, dependencies);
+// Do not declare as `module` to avoid webpack bug
+// (see https://github.com/angular/angular/issues/30050).
+const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e => angular.element(e));
 element.cleanData = nodes => angular.element.cleanData(nodes);
 let version = angular.version;
@@ -767,7 +769,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('8.0.0-beta.14+31.sha-071ee64.with-local-changes');
+const VERSION = new Version('8.0.0-beta.14+74.sha-6de4cbd.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -1002,7 +1004,7 @@ function downgradeModule(moduleFactoryOrBootstrapFn) {
     /** @type {?} */
     let injector;
     // Create an ng1 module to bootstrap.
-    module(lazyModuleName, [])
+    module_(lazyModuleName, [])
         .constant(UPGRADE_APP_TYPE_KEY, 3 /* Lite */)
         .factory(INJECTOR_KEY, [lazyInjectorKey, identity])
         .factory(lazyInjectorKey, (/**
@@ -1779,7 +1781,7 @@ class UpgradeModule {
         const INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
         // Create an ng1 module to bootstrap
         /** @type {?} */
-        const initModule = module(INIT_MODULE_NAME, [])
+        const initModule = module_(INIT_MODULE_NAME, [])
             .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
             .value(INJECTOR_KEY, this.injector)
             .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (/**
@@ -1910,7 +1912,15 @@ class UpgradeModule {
                     const subscription = this.ngZone.onMicrotaskEmpty.subscribe((/**
                      * @return {?}
                      */
-                    () => $rootScope.$digest()));
+                    () => {
+                        if ($rootScope.$$phase) {
+                            if (isDevMode()) {
+                                console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                            }
+                            return $rootScope.$evalAsync();
+                        }
+                        return $rootScope.$digest();
+                    }));
                     $rootScope.$on('$destroy', (/**
                      * @return {?}
                      */
@@ -1919,7 +1929,7 @@ class UpgradeModule {
             })
         ]);
         /** @type {?} */
-        const upgradeModule = module(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
+        const upgradeModule = module_(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
         /** @type {?} */
         const windowAngular = ((/** @type {?} */ (window)))['angular'];

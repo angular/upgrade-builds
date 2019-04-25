@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.0-beta.14+31.sha-071ee64.with-local-changes
+ * @license Angular v8.0.0-beta.14+74.sha-6de4cbd.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -76,7 +76,9 @@
     var bootstrap = function (e, modules, config) {
         return angular.bootstrap(e, modules, config);
     };
-    var module = function (prefix, dependencies) {
+    // Do not declare as `module` to avoid webpack bug
+    // (see https://github.com/angular/angular/issues/30050).
+    var module_ = function (prefix, dependencies) {
         return angular.module(prefix, dependencies);
     };
     var element = (function (e) { return angular.element(e); });
@@ -842,7 +844,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('8.0.0-beta.14+31.sha-071ee64.with-local-changes');
+    var VERSION = new core.Version('8.0.0-beta.14+74.sha-6de4cbd.with-local-changes');
 
     /**
      * @license
@@ -1039,7 +1041,7 @@
             };
         var injector;
         // Create an ng1 module to bootstrap.
-        module(lazyModuleName, [])
+        module_(lazyModuleName, [])
             .constant(UPGRADE_APP_TYPE_KEY, 3 /* Lite */)
             .factory(INJECTOR_KEY, [lazyInjectorKey, identity])
             .factory(lazyInjectorKey, function () {
@@ -1717,7 +1719,7 @@
             if (modules === void 0) { modules = []; }
             var INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
             // Create an ng1 module to bootstrap
-            var initModule = module(INIT_MODULE_NAME, [])
+            var initModule = module_(INIT_MODULE_NAME, [])
                 .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
                 .value(INJECTOR_KEY, this.injector)
                 .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector }); }])
@@ -1794,12 +1796,20 @@
                     // stabilizing
                     setTimeout(function () {
                         var $rootScope = $injector.get('$rootScope');
-                        var subscription = _this.ngZone.onMicrotaskEmpty.subscribe(function () { return $rootScope.$digest(); });
+                        var subscription = _this.ngZone.onMicrotaskEmpty.subscribe(function () {
+                            if ($rootScope.$$phase) {
+                                if (core.isDevMode()) {
+                                    console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                                }
+                                return $rootScope.$evalAsync();
+                            }
+                            return $rootScope.$digest();
+                        });
                         $rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
                     }, 0);
                 }
             ]);
-            var upgradeModule = module(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
+            var upgradeModule = module_(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
             // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
             var windowAngular = window['angular'];
             windowAngular.resumeBootstrap = undefined;
