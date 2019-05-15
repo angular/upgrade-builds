@@ -153,6 +153,6 @@ export declare class UpgradeModule {
      * @param [config] optional extra AngularJS bootstrap configuration
      */
     bootstrap(element: Element, modules?: string[], config?: any): void;
-    static ngModuleDef: i0.ɵɵNgModuleDefWithMeta<UpgradeModule, never, never, never>;
-    static ngInjectorDef: i0.ɵɵInjectorDef<UpgradeModule>;
+    static ngModuleDef: i0.ΔNgModuleDefWithMeta<UpgradeModule, never, never, never>;
+    static ngInjectorDef: i0.ΔInjectorDef<UpgradeModule>;
 }
