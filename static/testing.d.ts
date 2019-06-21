@@ -4,4 +4,4 @@
  * License: MIT
  */
 
-export * from './static/static';
+export * from './testing/testing';
