@@ -231,6 +231,7 @@ declare let angular: {
         (e: string | Element | Document | IAugmentedJQuery): IAugmentedJQuery;
         cleanData: (nodes: Node[] | NodeList) => void;
     };
+    injector: (modules: Array<string | IInjectable>, strictDi?: boolean) => IInjectorService;
     version: {
         major: number;
     };
@@ -266,6 +267,7 @@ export declare function getAngularJSGlobal(): any;
 export declare const bootstrap: typeof angular.bootstrap;
 export declare const module_: typeof angular.module;
 export declare const element: typeof angular.element;
+export declare const injector: typeof angular.injector;
 export declare const resumeBootstrap: typeof angular.resumeBootstrap;
 export declare const getTestability: typeof angular.getTestability;
 export declare let version: {

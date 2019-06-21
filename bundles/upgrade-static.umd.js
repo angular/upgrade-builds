@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.1.0-next.3+22.sha-fad03c3.with-local-changes
+ * @license Angular v8.1.0-next.3+24.sha-3fb78aa.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -26,6 +26,7 @@
         bootstrap: noNg,
         module: noNg,
         element: noNgElement,
+        injector: noNg,
         version: undefined,
         resumeBootstrap: noNg,
         getTestability: noNg
@@ -833,7 +834,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('8.1.0-next.3+22.sha-fad03c3.with-local-changes');
+    var VERSION = new i0.Version('8.1.0-next.3+24.sha-3fb78aa.with-local-changes');
 
     /**
      * @license
