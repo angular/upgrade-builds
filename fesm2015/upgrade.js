@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.0.2+29.sha-4ea231f.with-local-changes
+ * @license Angular v8.0.2+36.sha-8a1bd2c.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('8.0.2+29.sha-4ea231f.with-local-changes');
+const VERSION = new Version('8.0.2+36.sha-8a1bd2c.with-local-changes');
 
 /**
  * @license
