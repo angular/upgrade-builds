@@ -122,7 +122,7 @@ export interface ITranscludeFunction {
     (cloneAttachFn?: ICloneAttachFunction): IAugmentedJQuery;
 }
 export interface ICloneAttachFunction {
-    (clonedElement?: IAugmentedJQuery, scope?: IScope): any;
+    (clonedElement: IAugmentedJQuery, scope: IScope): any;
 }
 export declare type IAugmentedJQuery = Node[] & {
     on?: (name: string, fn: () => void) => void;
