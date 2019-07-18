@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.2.0-next.2+8.sha-78e7fdd.with-local-changes
+ * @license Angular v8.2.0-next.2+22.sha-60f58bf.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('8.2.0-next.2+8.sha-78e7fdd.with-local-changes');
+const VERSION = new Version('8.2.0-next.2+22.sha-60f58bf.with-local-changes');
 
 /**
  * @license
@@ -1920,11 +1920,13 @@ class UpgradeAdapter {
                             // Cannot use arrow function below because we need the context
                             /** @type {?} */
                             const newWhenStable = (/**
+                             * @this {?}
                              * @param {?} callback
                              * @return {?}
                              */
                             function (callback) {
                                 originalWhenStable.call(this, (/**
+                                 * @this {?}
                                  * @return {?}
                                  */
                                 function () {
