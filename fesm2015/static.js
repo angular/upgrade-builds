@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.2.0-next.2+74.sha-29e1c53.with-local-changes
+ * @license Angular v8.2.0-next.2+73.sha-87ce4e9.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -770,7 +770,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('8.2.0-next.2+74.sha-29e1c53.with-local-changes');
+const VERSION = new Version('8.2.0-next.2+73.sha-87ce4e9.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -1101,13 +1101,13 @@ class UpgradeHelper {
             notSupported(name, 'terminal');
         return directive;
     }
-    static getTemplate($injector, directive, fetchRemoteTemplate = false, $element) {
+    static getTemplate($injector, directive, fetchRemoteTemplate = false) {
         if (directive.template !== undefined) {
-            return getOrCall(directive.template, $element);
+            return getOrCall(directive.template);
         }
         else if (directive.templateUrl) {
             const $templateCache = $injector.get($TEMPLATE_CACHE);
-            const url = getOrCall(directive.templateUrl, $element);
+            const url = getOrCall(directive.templateUrl);
             const template = $templateCache.get(url);
             if (template !== undefined) {
                 return template;
@@ -1141,8 +1141,7 @@ class UpgradeHelper {
     }
     compileTemplate(template) {
         if (template === undefined) {
-            template =
-                UpgradeHelper.getTemplate(this.$injector, this.directive, false, this.$element);
+            template = UpgradeHelper.getTemplate(this.$injector, this.directive);
         }
         return this.compileHtml(template);
     }
@@ -1302,8 +1301,8 @@ class UpgradeHelper {
         }
     }
 }
-function getOrCall(property, ...args) {
-    return isFunction(property) ? property(...args) : property;
+function getOrCall(property) {
+    return isFunction(property) ? property() : property;
 }
 // NOTE: Only works for `typeof T !== 'object'`.
 function isMap(value) {
