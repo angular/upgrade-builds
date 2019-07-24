@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.2.0-next.2+73.sha-87ce4e9.with-local-changes
+ * @license Angular v8.2.0-next.2+77.sha-716af10.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('8.2.0-next.2+73.sha-87ce4e9.with-local-changes');
+    var VERSION = new core.Version('8.2.0-next.2+77.sha-716af10.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -91,6 +91,12 @@
             }
             finally { if (e) throw e.error; }
         }
+        return ar;
+    }
+
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
         return ar;
     }
 
@@ -892,14 +898,14 @@
                 notSupported(name, 'terminal');
             return directive;
         };
-        UpgradeHelper.getTemplate = function ($injector, directive, fetchRemoteTemplate) {
+        UpgradeHelper.getTemplate = function ($injector, directive, fetchRemoteTemplate, $element) {
             if (fetchRemoteTemplate === void 0) { fetchRemoteTemplate = false; }
             if (directive.template !== undefined) {
-                return getOrCall(directive.template);
+                return getOrCall(directive.template, $element);
             }
             else if (directive.templateUrl) {
                 var $templateCache_1 = $injector.get($TEMPLATE_CACHE);
-                var url_1 = getOrCall(directive.templateUrl);
+                var url_1 = getOrCall(directive.templateUrl, $element);
                 var template = $templateCache_1.get(url_1);
                 if (template !== undefined) {
                     return template;
@@ -933,7 +939,8 @@
         };
         UpgradeHelper.prototype.compileTemplate = function (template) {
             if (template === undefined) {
-                template = UpgradeHelper.getTemplate(this.$injector, this.directive);
+                template =
+                    UpgradeHelper.getTemplate(this.$injector, this.directive, false, this.$element);
             }
             return this.compileHtml(template);
         };
@@ -1097,7 +1104,11 @@
         return UpgradeHelper;
     }());
     function getOrCall(property) {
-        return isFunction(property) ? property() : property;
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        return isFunction(property) ? property.apply(void 0, __spread(args)) : property;
     }
     // NOTE: Only works for `typeof T !== 'object'`.
     function isMap(value) {
