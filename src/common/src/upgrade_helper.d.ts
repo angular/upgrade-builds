@@ -28,7 +28,7 @@ export declare class UpgradeHelper {
     private readonly $controller;
     constructor(injector: Injector, name: string, elementRef: ElementRef, directive?: IDirective);
     static getDirective($injector: IInjectorService, name: string): IDirective;
-    static getTemplate($injector: IInjectorService, directive: IDirective, fetchRemoteTemplate?: boolean): string | Promise<string>;
+    static getTemplate($injector: IInjectorService, directive: IDirective, fetchRemoteTemplate?: boolean, $element?: IAugmentedJQuery): string | Promise<string>;
     buildController(controllerType: IController, $scope: IScope): any;
     compileTemplate(template?: string): ILinkFn;
     onDestroy($scope: IScope, controllerInstance?: any): void;
