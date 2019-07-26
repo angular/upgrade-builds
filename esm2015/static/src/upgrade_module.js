@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 import { Injector, NgModule, NgZone, Testability, isDevMode } from '@angular/core';
 import { bootstrap, element as angularElement, module_ as angularModule } from '../../src/common/src/angular1';
