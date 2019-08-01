@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.2.0+3.sha-b8f2694.with-local-changes
+ * @license Angular v8.2.0+6.sha-14bfcfb.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('8.2.0+3.sha-b8f2694.with-local-changes');
+    var VERSION = new core.Version('8.2.0+6.sha-14bfcfb.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -579,6 +579,64 @@
      * Use of this source code is governed by an MIT-style license that can be
      * found in the LICENSE file at https://angular.io/license
      */
+    function isThenable(obj) {
+        return !!obj && isFunction(obj.then);
+    }
+    /**
+     * Synchronous, promise-like object.
+     */
+    var SyncPromise = /** @class */ (function () {
+        function SyncPromise() {
+            this.resolved = false;
+            this.callbacks = [];
+        }
+        SyncPromise.all = function (valuesOrPromises) {
+            var aggrPromise = new SyncPromise();
+            var resolvedCount = 0;
+            var results = [];
+            var resolve = function (idx, value) {
+                results[idx] = value;
+                if (++resolvedCount === valuesOrPromises.length)
+                    aggrPromise.resolve(results);
+            };
+            valuesOrPromises.forEach(function (p, idx) {
+                if (isThenable(p)) {
+                    p.then(function (v) { return resolve(idx, v); });
+                }
+                else {
+                    resolve(idx, p);
+                }
+            });
+            return aggrPromise;
+        };
+        SyncPromise.prototype.resolve = function (value) {
+            // Do nothing, if already resolved.
+            if (this.resolved)
+                return;
+            this.value = value;
+            this.resolved = true;
+            // Run the queued callbacks.
+            this.callbacks.forEach(function (callback) { return callback(value); });
+            this.callbacks.length = 0;
+        };
+        SyncPromise.prototype.then = function (callback) {
+            if (this.resolved) {
+                callback(this.value);
+            }
+            else {
+                this.callbacks.push(callback);
+            }
+        };
+        return SyncPromise;
+    }());
+
+    /**
+     * @license
+     * Copyright Google Inc. All Rights Reserved.
+     *
+     * Use of this source code is governed by an MIT-style license that can be
+     * found in the LICENSE file at https://angular.io/license
+     */
     /**
      * @description
      *
@@ -726,16 +784,11 @@
                         }
                         wrapCallback(function () { return doDowngrade(pInjector, mInjector); })();
                     };
-                    if (isThenable(finalParentInjector) || isThenable(finalModuleInjector)) {
-                        Promise.all([finalParentInjector, finalModuleInjector])
-                            .then(function (_a) {
-                            var _b = __read(_a, 2), pInjector = _b[0], mInjector = _b[1];
-                            return downgradeFn(pInjector, mInjector);
-                        });
-                    }
-                    else {
-                        downgradeFn(finalParentInjector, finalModuleInjector);
-                    }
+                    ParentInjectorPromise.all([finalParentInjector, finalModuleInjector])
+                        .then(function (_a) {
+                        var _b = __read(_a, 2), pInjector = _b[0], mInjector = _b[1];
+                        return downgradeFn(pInjector, mInjector);
+                    });
                     ranAsync = true;
                 }
             };
@@ -746,39 +799,28 @@
     }
     /**
      * Synchronous promise-like object to wrap parent injectors,
-     * to preserve the synchronous nature of Angular 1's $compile.
+     * to preserve the synchronous nature of AngularJS's `$compile`.
      */
-    var ParentInjectorPromise = /** @class */ (function () {
+    var ParentInjectorPromise = /** @class */ (function (_super) {
+        __extends(ParentInjectorPromise, _super);
         function ParentInjectorPromise(element) {
-            this.element = element;
-            this.injectorKey = controllerKey(INJECTOR_KEY);
-            this.callbacks = [];
+            var _this = _super.call(this) || this;
+            _this.element = element;
+            _this.injectorKey = controllerKey(INJECTOR_KEY);
             // Store the promise on the element.
-            element.data(this.injectorKey, this);
+            element.data(_this.injectorKey, _this);
+            return _this;
         }
-        ParentInjectorPromise.prototype.then = function (callback) {
-            if (this.injector) {
-                callback(this.injector);
-            }
-            else {
-                this.callbacks.push(callback);
-            }
-        };
         ParentInjectorPromise.prototype.resolve = function (injector) {
-            this.injector = injector;
             // Store the real injector on the element.
             this.element.data(this.injectorKey, injector);
             // Release the element to prevent memory leaks.
             this.element = null;
-            // Run the queued callbacks.
-            this.callbacks.forEach(function (callback) { return callback(injector); });
-            this.callbacks.length = 0;
+            // Resolve the promise.
+            _super.prototype.resolve.call(this, injector);
         };
         return ParentInjectorPromise;
-    }());
-    function isThenable(obj) {
-        return isFunction(obj.then);
-    }
+    }(SyncPromise));
 
     /**
      * @license
