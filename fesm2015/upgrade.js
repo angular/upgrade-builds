@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.0+6.sha-82b9728.with-local-changes
+ * @license Angular v9.0.0-next.0+10.sha-e8b8f6d.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.0+6.sha-82b9728.with-local-changes');
+const VERSION = new Version('9.0.0-next.0+10.sha-e8b8f6d.with-local-changes');
 
 /**
  * @license
@@ -478,6 +478,63 @@ function matchesSelector(el, selector) {
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+function isThenable(obj) {
+    return !!obj && isFunction(obj.then);
+}
+/**
+ * Synchronous, promise-like object.
+ */
+class SyncPromise {
+    constructor() {
+        this.resolved = false;
+        this.callbacks = [];
+    }
+    static all(valuesOrPromises) {
+        const aggrPromise = new SyncPromise();
+        let resolvedCount = 0;
+        const results = [];
+        const resolve = (idx, value) => {
+            results[idx] = value;
+            if (++resolvedCount === valuesOrPromises.length)
+                aggrPromise.resolve(results);
+        };
+        valuesOrPromises.forEach((p, idx) => {
+            if (isThenable(p)) {
+                p.then(v => resolve(idx, v));
+            }
+            else {
+                resolve(idx, p);
+            }
+        });
+        return aggrPromise;
+    }
+    resolve(value) {
+        // Do nothing, if already resolved.
+        if (this.resolved)
+            return;
+        this.value = value;
+        this.resolved = true;
+        // Run the queued callbacks.
+        this.callbacks.forEach(callback => callback(value));
+        this.callbacks.length = 0;
+    }
+    then(callback) {
+        if (this.resolved) {
+            callback(this.value);
+        }
+        else {
+            this.callbacks.push(callback);
+        }
+    }
+}
+
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 /**
  * @description
  *
@@ -625,13 +682,8 @@ function downgradeComponent(info) {
                     }
                     wrapCallback(() => doDowngrade(pInjector, mInjector))();
                 };
-                if (isThenable(finalParentInjector) || isThenable(finalModuleInjector)) {
-                    Promise.all([finalParentInjector, finalModuleInjector])
-                        .then(([pInjector, mInjector]) => downgradeFn(pInjector, mInjector));
-                }
-                else {
-                    downgradeFn(finalParentInjector, finalModuleInjector);
-                }
+                ParentInjectorPromise.all([finalParentInjector, finalModuleInjector])
+                    .then(([pInjector, mInjector]) => downgradeFn(pInjector, mInjector));
                 ranAsync = true;
             }
         };
@@ -642,37 +694,24 @@ function downgradeComponent(info) {
 }
 /**
  * Synchronous promise-like object to wrap parent injectors,
- * to preserve the synchronous nature of Angular 1's $compile.
+ * to preserve the synchronous nature of AngularJS's `$compile`.
  */
-class ParentInjectorPromise {
+class ParentInjectorPromise extends SyncPromise {
     constructor(element) {
+        super();
         this.element = element;
         this.injectorKey = controllerKey(INJECTOR_KEY);
-        this.callbacks = [];
         // Store the promise on the element.
         element.data(this.injectorKey, this);
     }
-    then(callback) {
-        if (this.injector) {
-            callback(this.injector);
-        }
-        else {
-            this.callbacks.push(callback);
-        }
-    }
     resolve(injector) {
-        this.injector = injector;
         // Store the real injector on the element.
         this.element.data(this.injectorKey, injector);
         // Release the element to prevent memory leaks.
         this.element = null;
-        // Run the queued callbacks.
-        this.callbacks.forEach(callback => callback(injector));
-        this.callbacks.length = 0;
+        // Resolve the promise.
+        super.resolve(injector);
     }
-}
-function isThenable(obj) {
-    return isFunction(obj.then);
 }
 
 /**
