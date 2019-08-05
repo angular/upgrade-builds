@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.0+25.sha-96cbcd6.with-local-changes
+ * @license Angular v9.0.0-next.0+34.sha-7db269b.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('9.0.0-next.0+25.sha-96cbcd6.with-local-changes');
+    var VERSION = new core.Version('9.0.0-next.0+34.sha-7db269b.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -784,7 +784,11 @@
                         }
                         wrapCallback(function () { return doDowngrade(pInjector, mInjector); })();
                     };
-                    ParentInjectorPromise.all([finalParentInjector, finalModuleInjector])
+                    // NOTE:
+                    // Not using `ParentInjectorPromise.all()` (which is inherited from `SyncPromise`), because
+                    // Closure Compiler (or some related tool) complains:
+                    // `TypeError: ...$src$downgrade_component_ParentInjectorPromise.all is not a function`
+                    SyncPromise.all([finalParentInjector, finalModuleInjector])
                         .then(function (_a) {
                         var _b = __read(_a, 2), pInjector = _b[0], mInjector = _b[1];
                         return downgradeFn(pInjector, mInjector);
