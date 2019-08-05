@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.2.0+13.sha-2cabced.with-local-changes
+ * @license Angular v8.2.0+15.sha-c00e7ff.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -687,7 +687,11 @@ function downgradeComponent(info) {
                     }
                     wrapCallback(() => doDowngrade(pInjector, mInjector))();
                 };
-                ParentInjectorPromise.all([finalParentInjector, finalModuleInjector])
+                // NOTE:
+                // Not using `ParentInjectorPromise.all()` (which is inherited from `SyncPromise`), because
+                // Closure Compiler (or some related tool) complains:
+                // `TypeError: ...$src$downgrade_component_ParentInjectorPromise.all is not a function`
+                SyncPromise.all([finalParentInjector, finalModuleInjector])
                     .then(([pInjector, mInjector]) => downgradeFn(pInjector, mInjector));
                 ranAsync = true;
             }
@@ -809,7 +813,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('8.2.0+13.sha-2cabced.with-local-changes');
+const VERSION = new Version('8.2.0+15.sha-c00e7ff.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
