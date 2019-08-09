@@ -1,11 +1,11 @@
 /**
- * @license Angular v8.2.1+4.sha-6ec91dd.with-local-changes
+ * @license Angular v8.2.1+6.sha-eccb60c.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, EventEmitter, Directive, Inject, ElementRef, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
-import { __extends, __read, __spread, __decorate, __assign, __param, __metadata } from 'tslib';
+import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
+import { __read, __extends, __spread, __decorate, __assign, __param, __metadata } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('8.2.1+4.sha-6ec91dd.with-local-changes');
+var VERSION = new Version('8.2.1+6.sha-eccb60c.with-local-changes');
 
 /**
  * @license
@@ -49,6 +49,41 @@ try {
 catch (_a) {
     // ignore in CJS mode.
 }
+/**
+ * @deprecated Use `setAngularJSGlobal` instead.
+ *
+ * @publicApi
+ */
+function setAngularLib(ng) {
+    setAngularJSGlobal(ng);
+}
+/**
+ * @deprecated Use `getAngularJSGlobal` instead.
+ *
+ * @publicApi
+ */
+function getAngularLib() {
+    return getAngularJSGlobal();
+}
+/**
+ * Resets the AngularJS global.
+ *
+ * Used when AngularJS is loaded lazily, and not available on `window`.
+ *
+ * @publicApi
+ */
+function setAngularJSGlobal(ng) {
+    angular = ng;
+    version = ng && ng.version;
+}
+/**
+ * Returns the current AngularJS global.
+ *
+ * @publicApi
+ */
+function getAngularJSGlobal() {
+    return angular;
+}
 var bootstrap = function (e, modules, config) {
     return angular.bootstrap(e, modules, config);
 };
@@ -59,6 +94,9 @@ var module_ = function (prefix, dependencies) {
 };
 var element = (function (e) { return angular.element(e); });
 element.cleanData = function (nodes) { return angular.element.cleanData(nodes); };
+var injector = function (modules, strictDi) { return angular.injector(modules, strictDi); };
+var resumeBootstrap = function () { return angular.resumeBootstrap(); };
+var getTestability = function (e) { return angular.getTestability(e); };
 var version = angular.version;
 
 /**
@@ -70,21 +108,28 @@ var version = angular.version;
  */
 var $COMPILE = '$compile';
 var $CONTROLLER = '$controller';
+var $DELEGATE = '$delegate';
+var $EXCEPTION_HANDLER = '$exceptionHandler';
 var $HTTP_BACKEND = '$httpBackend';
 var $INJECTOR = '$injector';
+var $INTERVAL = '$interval';
 var $PARSE = '$parse';
+var $PROVIDE = '$provide';
 var $ROOT_SCOPE = '$rootScope';
 var $SCOPE = '$scope';
 var $TEMPLATE_CACHE = '$templateCache';
+var $TEMPLATE_REQUEST = '$templateRequest';
 var $$TESTABILITY = '$$testability';
 var COMPILER_KEY = '$$angularCompiler';
 var DOWNGRADED_MODULE_COUNT_KEY = '$$angularDowngradedModuleCount';
+var GROUP_PROJECTABLE_NODES_KEY = '$$angularGroupProjectableNodes';
 var INJECTOR_KEY = '$$angularInjector';
 var LAZY_MODULE_REF = '$$angularLazyModuleRef';
 var NG_ZONE_KEY = '$$angularNgZone';
 var UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
 var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 var REQUIRE_NG_MODEL = '?ngModel';
+var UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
  * @license
@@ -450,6 +495,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
  */
 function groupNodesBySelector(ngContentSelectors, nodes) {
     var projectableNodes = [];
+    var wildcardNgContentIndex;
     for (var i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -1895,6 +1941,37 @@ var UpgradeAdapter = /** @class */ (function () {
         return ng1Module;
     };
     return UpgradeAdapter;
+}());
+/**
+ * Synchronous promise-like object to wrap parent injectors,
+ * to preserve the synchronous nature of AngularJS's $compile.
+ */
+var ParentInjectorPromise$1 = /** @class */ (function () {
+    function ParentInjectorPromise(element) {
+        this.element = element;
+        this.callbacks = [];
+        // store the promise on the element
+        element.data(controllerKey(INJECTOR_KEY), this);
+    }
+    ParentInjectorPromise.prototype.then = function (callback) {
+        if (this.injector) {
+            callback(this.injector);
+        }
+        else {
+            this.callbacks.push(callback);
+        }
+    };
+    ParentInjectorPromise.prototype.resolve = function (injector) {
+        this.injector = injector;
+        // reset the element data to point to the real injector
+        this.element.data(controllerKey(INJECTOR_KEY), injector);
+        // clean out the element to prevent memory leaks
+        this.element = null;
+        // run all the queued callbacks
+        this.callbacks.forEach(function (callback) { return callback(injector); });
+        this.callbacks.length = 0;
+    };
+    return ParentInjectorPromise;
 }());
 /**
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.

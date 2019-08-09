@@ -1,5 +1,5 @@
 /**
- * @license Angular v8.2.1+4.sha-6ec91dd.with-local-changes
+ * @license Angular v8.2.1+6.sha-eccb60c.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -37,12 +37,54 @@ try {
 catch (_a) {
     // ignore in CJS mode.
 }
+/**
+ * @deprecated Use `setAngularJSGlobal` instead.
+ *
+ * @publicApi
+ */
+function setAngularLib(ng) {
+    setAngularJSGlobal(ng);
+}
+/**
+ * @deprecated Use `getAngularJSGlobal` instead.
+ *
+ * @publicApi
+ */
+function getAngularLib() {
+    return getAngularJSGlobal();
+}
+/**
+ * Resets the AngularJS global.
+ *
+ * Used when AngularJS is loaded lazily, and not available on `window`.
+ *
+ * @publicApi
+ */
+function setAngularJSGlobal(ng) {
+    angular = ng;
+    version = ng && ng.version;
+}
+/**
+ * Returns the current AngularJS global.
+ *
+ * @publicApi
+ */
+function getAngularJSGlobal() {
+    return angular;
+}
+var bootstrap = function (e, modules, config) {
+    return angular.bootstrap(e, modules, config);
+};
 // Do not declare as `module` to avoid webpack bug
 // (see https://github.com/angular/angular/issues/30050).
 var module_ = function (prefix, dependencies) {
     return angular.module(prefix, dependencies);
 };
+var element = (function (e) { return angular.element(e); });
+element.cleanData = function (nodes) { return angular.element.cleanData(nodes); };
 var injector = function (modules, strictDi) { return angular.injector(modules, strictDi); };
+var resumeBootstrap = function () { return angular.resumeBootstrap(); };
+var getTestability = function (e) { return angular.getTestability(e); };
 var version = angular.version;
 
 /**
@@ -52,9 +94,30 @@ var version = angular.version;
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+var $COMPILE = '$compile';
+var $CONTROLLER = '$controller';
+var $DELEGATE = '$delegate';
+var $EXCEPTION_HANDLER = '$exceptionHandler';
+var $HTTP_BACKEND = '$httpBackend';
 var $INJECTOR = '$injector';
+var $INTERVAL = '$interval';
+var $PARSE = '$parse';
+var $PROVIDE = '$provide';
+var $ROOT_SCOPE = '$rootScope';
+var $SCOPE = '$scope';
+var $TEMPLATE_CACHE = '$templateCache';
+var $TEMPLATE_REQUEST = '$templateRequest';
+var $$TESTABILITY = '$$testability';
+var COMPILER_KEY = '$$angularCompiler';
+var DOWNGRADED_MODULE_COUNT_KEY = '$$angularDowngradedModuleCount';
+var GROUP_PROJECTABLE_NODES_KEY = '$$angularGroupProjectableNodes';
 var INJECTOR_KEY = '$$angularInjector';
+var LAZY_MODULE_REF = '$$angularLazyModuleRef';
+var NG_ZONE_KEY = '$$angularNgZone';
 var UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
+var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
+var REQUIRE_NG_MODEL = '?ngModel';
+var UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
  * @license

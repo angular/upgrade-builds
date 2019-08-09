@@ -1,10 +1,10 @@
 /**
- * @license Angular v8.2.1+4.sha-6ec91dd.with-local-changes
+ * @license Angular v8.2.1+6.sha-eccb60c.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { __extends, __read, __spread, __decorate, __metadata } from 'tslib';
+import { __read, __extends, __spread, __decorate, __metadata } from 'tslib';
 import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, isDevMode, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
@@ -82,6 +82,9 @@ var module_ = function (prefix, dependencies) {
 };
 var element = (function (e) { return angular.element(e); });
 element.cleanData = function (nodes) { return angular.element.cleanData(nodes); };
+var injector = function (modules, strictDi) { return angular.injector(modules, strictDi); };
+var resumeBootstrap = function () { return angular.resumeBootstrap(); };
+var getTestability = function (e) { return angular.getTestability(e); };
 var version = angular.version;
 
 /**
@@ -94,17 +97,23 @@ var version = angular.version;
 var $COMPILE = '$compile';
 var $CONTROLLER = '$controller';
 var $DELEGATE = '$delegate';
+var $EXCEPTION_HANDLER = '$exceptionHandler';
 var $HTTP_BACKEND = '$httpBackend';
 var $INJECTOR = '$injector';
 var $INTERVAL = '$interval';
 var $PARSE = '$parse';
 var $PROVIDE = '$provide';
+var $ROOT_SCOPE = '$rootScope';
 var $SCOPE = '$scope';
 var $TEMPLATE_CACHE = '$templateCache';
+var $TEMPLATE_REQUEST = '$templateRequest';
 var $$TESTABILITY = '$$testability';
+var COMPILER_KEY = '$$angularCompiler';
 var DOWNGRADED_MODULE_COUNT_KEY = '$$angularDowngradedModuleCount';
+var GROUP_PROJECTABLE_NODES_KEY = '$$angularGroupProjectableNodes';
 var INJECTOR_KEY = '$$angularInjector';
 var LAZY_MODULE_REF = '$$angularLazyModuleRef';
+var NG_ZONE_KEY = '$$angularNgZone';
 var UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
 var REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 var REQUIRE_NG_MODEL = '?ngModel';
@@ -150,6 +159,17 @@ var PropertyBinding = /** @class */ (function () {
  */
 var DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
 var DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
+function onError(e) {
+    // TODO: (misko): We seem to not have a stack trace here!
+    if (console.error) {
+        console.error(e, e.stack);
+    }
+    else {
+        // tslint:disable-next-line:no-console
+        console.log(e, e.stack);
+    }
+    throw e;
+}
 function controllerKey(name) {
     return '$' + name + 'Controller';
 }
@@ -203,6 +223,16 @@ function validateInjectionKey($injector, downgradedModule, injectionKey, attempt
                 'application?');
     }
 }
+var Deferred = /** @class */ (function () {
+    function Deferred() {
+        var _this = this;
+        this.promise = new Promise(function (res, rej) {
+            _this.resolve = res;
+            _this.reject = rej;
+        });
+    }
+    return Deferred;
+}());
 /**
  * @return Whether the passed-in component implements the subset of the
  *     `ControlValueAccessor` interface needed for AngularJS `ng-model`
@@ -453,6 +483,7 @@ var DowngradeComponentAdapter = /** @class */ (function () {
  */
 function groupNodesBySelector(ngContentSelectors, nodes) {
     var projectableNodes = [];
+    var wildcardNgContentIndex;
     for (var i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -840,7 +871,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('8.2.1+4.sha-6ec91dd.with-local-changes');
+var VERSION = new Version('8.2.1+6.sha-eccb60c.with-local-changes');
 
 /**
  * @license
