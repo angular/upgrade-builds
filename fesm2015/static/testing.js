@@ -1,10 +1,10 @@
 /**
- * @license Angular v9.0.0-next.1+11.sha-0ddf0c4.with-local-changes
+ * @license Angular v9.0.0-next.1+13.sha-c198a27.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, Injector, ɵsetClassMetadata, NgModule } from '@angular/core';
+import { NgModule, Injector, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 /**
@@ -36,10 +36,50 @@ try {
 catch (_a) {
     // ignore in CJS mode.
 }
+/**
+ * @deprecated Use `setAngularJSGlobal` instead.
+ *
+ * @publicApi
+ */
+function setAngularLib(ng) {
+    setAngularJSGlobal(ng);
+}
+/**
+ * @deprecated Use `getAngularJSGlobal` instead.
+ *
+ * @publicApi
+ */
+function getAngularLib() {
+    return getAngularJSGlobal();
+}
+/**
+ * Resets the AngularJS global.
+ *
+ * Used when AngularJS is loaded lazily, and not available on `window`.
+ *
+ * @publicApi
+ */
+function setAngularJSGlobal(ng) {
+    angular = ng;
+    version = ng && ng.version;
+}
+/**
+ * Returns the current AngularJS global.
+ *
+ * @publicApi
+ */
+function getAngularJSGlobal() {
+    return angular;
+}
+const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 // Do not declare as `module` to avoid webpack bug
 // (see https://github.com/angular/angular/issues/30050).
 const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
+const element = (e => angular.element(e));
+element.cleanData = nodes => angular.element.cleanData(nodes);
 const injector = (modules, strictDi) => angular.injector(modules, strictDi);
+const resumeBootstrap = () => angular.resumeBootstrap();
+const getTestability = e => angular.getTestability(e);
 let version = angular.version;
 
 /**
@@ -49,9 +89,30 @@ let version = angular.version;
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+const $COMPILE = '$compile';
+const $CONTROLLER = '$controller';
+const $DELEGATE = '$delegate';
+const $EXCEPTION_HANDLER = '$exceptionHandler';
+const $HTTP_BACKEND = '$httpBackend';
 const $INJECTOR = '$injector';
+const $INTERVAL = '$interval';
+const $PARSE = '$parse';
+const $PROVIDE = '$provide';
+const $ROOT_SCOPE = '$rootScope';
+const $SCOPE = '$scope';
+const $TEMPLATE_CACHE = '$templateCache';
+const $TEMPLATE_REQUEST = '$templateRequest';
+const $$TESTABILITY = '$$testability';
+const COMPILER_KEY = '$$angularCompiler';
+const DOWNGRADED_MODULE_COUNT_KEY = '$$angularDowngradedModuleCount';
+const GROUP_PROJECTABLE_NODES_KEY = '$$angularGroupProjectableNodes';
 const INJECTOR_KEY = '$$angularInjector';
+const LAZY_MODULE_REF = '$$angularLazyModuleRef';
+const NG_ZONE_KEY = '$$angularNgZone';
 const UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
+const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
+const REQUIRE_NG_MODEL = '?ngModel';
+const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
  * @fileoverview added by tsickle
