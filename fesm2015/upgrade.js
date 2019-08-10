@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.1+11.sha-0ddf0c4.with-local-changes
+ * @license Angular v9.0.0-next.1+18.sha-9a37e82.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.1+11.sha-0ddf0c4.with-local-changes');
+const VERSION = new Version('9.0.0-next.1+18.sha-9a37e82.with-local-changes');
 
 /**
  * @license
@@ -48,12 +48,50 @@ try {
 catch (_a) {
     // ignore in CJS mode.
 }
+/**
+ * @deprecated Use `setAngularJSGlobal` instead.
+ *
+ * @publicApi
+ */
+function setAngularLib(ng) {
+    setAngularJSGlobal(ng);
+}
+/**
+ * @deprecated Use `getAngularJSGlobal` instead.
+ *
+ * @publicApi
+ */
+function getAngularLib() {
+    return getAngularJSGlobal();
+}
+/**
+ * Resets the AngularJS global.
+ *
+ * Used when AngularJS is loaded lazily, and not available on `window`.
+ *
+ * @publicApi
+ */
+function setAngularJSGlobal(ng) {
+    angular = ng;
+    version = ng && ng.version;
+}
+/**
+ * Returns the current AngularJS global.
+ *
+ * @publicApi
+ */
+function getAngularJSGlobal() {
+    return angular;
+}
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 // Do not declare as `module` to avoid webpack bug
 // (see https://github.com/angular/angular/issues/30050).
 const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e => angular.element(e));
 element.cleanData = nodes => angular.element.cleanData(nodes);
+const injector = (modules, strictDi) => angular.injector(modules, strictDi);
+const resumeBootstrap = () => angular.resumeBootstrap();
+const getTestability = e => angular.getTestability(e);
 let version = angular.version;
 
 /**
@@ -65,21 +103,28 @@ let version = angular.version;
  */
 const $COMPILE = '$compile';
 const $CONTROLLER = '$controller';
+const $DELEGATE = '$delegate';
+const $EXCEPTION_HANDLER = '$exceptionHandler';
 const $HTTP_BACKEND = '$httpBackend';
 const $INJECTOR = '$injector';
+const $INTERVAL = '$interval';
 const $PARSE = '$parse';
+const $PROVIDE = '$provide';
 const $ROOT_SCOPE = '$rootScope';
 const $SCOPE = '$scope';
 const $TEMPLATE_CACHE = '$templateCache';
+const $TEMPLATE_REQUEST = '$templateRequest';
 const $$TESTABILITY = '$$testability';
 const COMPILER_KEY = '$$angularCompiler';
 const DOWNGRADED_MODULE_COUNT_KEY = '$$angularDowngradedModuleCount';
+const GROUP_PROJECTABLE_NODES_KEY = '$$angularGroupProjectableNodes';
 const INJECTOR_KEY = '$$angularInjector';
 const LAZY_MODULE_REF = '$$angularLazyModuleRef';
 const NG_ZONE_KEY = '$$angularNgZone';
 const UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
 const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 const REQUIRE_NG_MODEL = '?ngModel';
+const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
  * @license
@@ -429,6 +474,7 @@ class DowngradeComponentAdapter {
  */
 function groupNodesBySelector(ngContentSelectors, nodes) {
     const projectableNodes = [];
+    let wildcardNgContentIndex;
     for (let i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -1202,6 +1248,30 @@ class UpgradeNg1ComponentAdapterBuilder {
         return Promise.all(promises);
     }
 }
+if (false) {
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.type;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.inputs;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.inputsRename;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.outputs;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.outputsRename;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.propertyOutputs;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.checkProperties;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.propertyMap;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.directive;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.template;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapterBuilder.prototype.name;
+}
 class UpgradeNg1ComponentAdapter {
     /**
      * @param {?} helper
@@ -1372,6 +1442,60 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         (/** @type {?} */ (this.destinationObj))[this.propertyMap[name]] = value;
     }
+}
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeNg1ComponentAdapter.prototype.controllerInstance;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapter.prototype.destinationObj;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapter.prototype.checkLastValues;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapter.prototype.directive;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapter.prototype.element;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapter.prototype.$element;
+    /** @type {?} */
+    UpgradeNg1ComponentAdapter.prototype.componentScope;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeNg1ComponentAdapter.prototype.helper;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeNg1ComponentAdapter.prototype.template;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeNg1ComponentAdapter.prototype.inputs;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeNg1ComponentAdapter.prototype.outputs;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeNg1ComponentAdapter.prototype.propOuts;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeNg1ComponentAdapter.prototype.checkProperties;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeNg1ComponentAdapter.prototype.propertyMap;
 }
 
 /**
@@ -2100,6 +2224,126 @@ class UpgradeAdapter {
         return ng1Module;
     }
 }
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.idPrefix;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.downgradedComponents;
+    /**
+     * An internal map of ng1 components which need to up upgraded to ng2.
+     *
+     * We can't upgrade until injector is instantiated and we can retrieve the component metadata.
+     * For this reason we keep a list of components to upgrade until ng1 injector is bootstrapped.
+     *
+     * \@internal
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.ng1ComponentsToBeUpgraded;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.upgradedProviders;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.ngZone;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.ng1Module;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.moduleRef;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.ng2BootstrapDeferred;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.ng2AppModule;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapter.prototype.compilerOptions;
+}
+/**
+ * Synchronous promise-like object to wrap parent injectors,
+ * to preserve the synchronous nature of AngularJS's $compile.
+ */
+class ParentInjectorPromise$1 {
+    /**
+     * @param {?} element
+     */
+    constructor(element) {
+        this.element = element;
+        this.callbacks = [];
+        // store the promise on the element
+        (/** @type {?} */ (element.data))(controllerKey(INJECTOR_KEY), this);
+    }
+    /**
+     * @param {?} callback
+     * @return {?}
+     */
+    then(callback) {
+        if (this.injector) {
+            callback(this.injector);
+        }
+        else {
+            this.callbacks.push(callback);
+        }
+    }
+    /**
+     * @param {?} injector
+     * @return {?}
+     */
+    resolve(injector) {
+        this.injector = injector;
+        // reset the element data to point to the real injector
+        (/** @type {?} */ (this.element.data))(controllerKey(INJECTOR_KEY), injector);
+        // clean out the element to prevent memory leaks
+        this.element = (/** @type {?} */ (null));
+        // run all the queued callbacks
+        this.callbacks.forEach((/**
+         * @param {?} callback
+         * @return {?}
+         */
+        (callback) => callback(injector)));
+        this.callbacks.length = 0;
+    }
+}
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    ParentInjectorPromise$1.prototype.injector;
+    /**
+     * @type {?}
+     * @private
+     */
+    ParentInjectorPromise$1.prototype.callbacks;
+    /**
+     * @type {?}
+     * @private
+     */
+    ParentInjectorPromise$1.prototype.element;
+}
 /**
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.
  *
@@ -2148,6 +2392,21 @@ class UpgradeAdapterRef {
         (/** @type {?} */ (this.ng1Injector)).get($ROOT_SCOPE).$destroy();
         (/** @type {?} */ (this.ng2ModuleRef)).destroy();
     }
+}
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeAdapterRef.prototype._readyFn;
+    /** @type {?} */
+    UpgradeAdapterRef.prototype.ng1RootScope;
+    /** @type {?} */
+    UpgradeAdapterRef.prototype.ng1Injector;
+    /** @type {?} */
+    UpgradeAdapterRef.prototype.ng2ModuleRef;
+    /** @type {?} */
+    UpgradeAdapterRef.prototype.ng2Injector;
 }
 
 /**

@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.1+11.sha-0ddf0c4.with-local-changes
+ * @license Angular v9.0.0-next.1+18.sha-9a37e82.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -77,6 +77,9 @@ const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
 const element = (e => angular.element(e));
 element.cleanData = nodes => angular.element.cleanData(nodes);
+const injector = (modules, strictDi) => angular.injector(modules, strictDi);
+const resumeBootstrap = () => angular.resumeBootstrap();
+const getTestability = e => angular.getTestability(e);
 let version = angular.version;
 
 /**
@@ -89,17 +92,23 @@ let version = angular.version;
 const $COMPILE = '$compile';
 const $CONTROLLER = '$controller';
 const $DELEGATE = '$delegate';
+const $EXCEPTION_HANDLER = '$exceptionHandler';
 const $HTTP_BACKEND = '$httpBackend';
 const $INJECTOR = '$injector';
 const $INTERVAL = '$interval';
 const $PARSE = '$parse';
 const $PROVIDE = '$provide';
+const $ROOT_SCOPE = '$rootScope';
 const $SCOPE = '$scope';
 const $TEMPLATE_CACHE = '$templateCache';
+const $TEMPLATE_REQUEST = '$templateRequest';
 const $$TESTABILITY = '$$testability';
+const COMPILER_KEY = '$$angularCompiler';
 const DOWNGRADED_MODULE_COUNT_KEY = '$$angularDowngradedModuleCount';
+const GROUP_PROJECTABLE_NODES_KEY = '$$angularGroupProjectableNodes';
 const INJECTOR_KEY = '$$angularInjector';
 const LAZY_MODULE_REF = '$$angularLazyModuleRef';
+const NG_ZONE_KEY = '$$angularNgZone';
 const UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
 const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 const REQUIRE_NG_MODEL = '?ngModel';
@@ -144,6 +153,17 @@ class PropertyBinding {
  */
 const DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
 const DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
+function onError(e) {
+    // TODO: (misko): We seem to not have a stack trace here!
+    if (console.error) {
+        console.error(e, e.stack);
+    }
+    else {
+        // tslint:disable-next-line:no-console
+        console.log(e, e.stack);
+    }
+    throw e;
+}
 function controllerKey(name) {
     return '$' + name + 'Controller';
 }
@@ -195,6 +215,14 @@ function validateInjectionKey($injector, downgradedModule, injectionKey, attempt
             throw new Error(`Error while ${attemptedAction}: Not a valid '@angular/upgrade' application.\n` +
                 'Did you forget to downgrade an Angular module or include it in the AngularJS ' +
                 'application?');
+    }
+}
+class Deferred {
+    constructor() {
+        this.promise = new Promise((res, rej) => {
+            this.resolve = res;
+            this.reject = rej;
+        });
     }
 }
 /**
@@ -434,6 +462,7 @@ class DowngradeComponentAdapter {
  */
 function groupNodesBySelector(ngContentSelectors, nodes) {
     const projectableNodes = [];
+    let wildcardNgContentIndex;
     for (let i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -813,7 +842,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.1+11.sha-0ddf0c4.with-local-changes');
+const VERSION = new Version('9.0.0-next.1+18.sha-9a37e82.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -910,6 +939,13 @@ class NgAdapterInjector {
         }
         return this.modInjector.get(token, notFoundValue);
     }
+}
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    NgAdapterInjector.prototype.modInjector;
 }
 
 /**
@@ -1374,6 +1410,16 @@ class Bindings {
         this.propertyToOutputMap = {};
     }
 }
+if (false) {
+    /** @type {?} */
+    Bindings.prototype.twoWayBoundProperties;
+    /** @type {?} */
+    Bindings.prototype.twoWayBoundLastValues;
+    /** @type {?} */
+    Bindings.prototype.expressionBoundProperties;
+    /** @type {?} */
+    Bindings.prototype.propertyToOutputMap;
+}
 /**
  * \@description
  *
@@ -1672,6 +1718,78 @@ class UpgradeComponent {
             this.bindingDestination.$onChanges(changes);
         }
     }
+}
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.helper;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.$injector;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.element;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.$element;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.$componentScope;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.directive;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.bindings;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.controllerInstance;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.bindingDestination;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.pendingChanges;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.unregisterDoCheckWatcher;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.name;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.elementRef;
+    /**
+     * @type {?}
+     * @private
+     */
+    UpgradeComponent.prototype.injector;
 }
 
 /**
@@ -2013,6 +2131,23 @@ UpgradeModule.ctorParameters = () => [
     { type: Injector },
     { type: NgZone }
 ];
+if (false) {
+    /**
+     * The AngularJS `$injector` for the upgrade application.
+     * @type {?}
+     */
+    UpgradeModule.prototype.$injector;
+    /**
+     * The Angular Injector *
+     * @type {?}
+     */
+    UpgradeModule.prototype.injector;
+    /**
+     * The bootstrap zone for the upgrade application
+     * @type {?}
+     */
+    UpgradeModule.prototype.ngZone;
+}
 
 /**
  * @fileoverview added by tsickle
