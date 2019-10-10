@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.10+27.sha-1ae77da.with-local-changes
+ * @license Angular v9.0.0-next.10+28.sha-6ab5f36.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1060,7 +1060,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('9.0.0-next.10+27.sha-1ae77da.with-local-changes');
+    var VERSION = new i0.Version('9.0.0-next.10+28.sha-6ab5f36.with-local-changes');
 
     /**
      * @license
@@ -1676,8 +1676,8 @@
             }
             // Linking
             var link = this.directive.link;
-            var preLink = (typeof link == 'object') && link.pre;
-            var postLink = (typeof link == 'object') ? link.post : link;
+            var preLink = typeof link == 'object' && link.pre;
+            var postLink = typeof link == 'object' ? link.post : link;
             var attrs = NOT_SUPPORTED;
             var transcludeFn = NOT_SUPPORTED;
             if (preLink) {
@@ -1728,7 +1728,7 @@
             if (btcIsObject && Object.keys(directive.scope).length) {
                 throw new Error("Binding definitions on scope and controller at the same time is not supported.");
             }
-            var context = (btcIsObject) ? directive.bindToController : directive.scope;
+            var context = btcIsObject ? directive.bindToController : directive.scope;
             var bindings = new Bindings();
             if (typeof context == 'object') {
                 Object.keys(context).forEach(function (propName) {

@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.10+27.sha-1ae77da.with-local-changes
+ * @license Angular v9.0.0-next.10+28.sha-6ab5f36.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('9.0.0-next.10+27.sha-1ae77da.with-local-changes');
+    var VERSION = new core.Version('9.0.0-next.10+28.sha-6ab5f36.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1484,8 +1484,8 @@
             }
             // Linking
             var link = this.directive.link;
-            var preLink = (typeof link == 'object') && link.pre;
-            var postLink = (typeof link == 'object') ? link.post : link;
+            var preLink = typeof link == 'object' && link.pre;
+            var postLink = typeof link == 'object' ? link.post : link;
             var attrs = NOT_SUPPORTED;
             var transcludeFn = NOT_SUPPORTED;
             if (preLink) {

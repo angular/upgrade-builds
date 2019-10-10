@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.10+27.sha-1ae77da.with-local-changes
+ * @license Angular v9.0.0-next.10+28.sha-6ab5f36.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -842,7 +842,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.10+27.sha-1ae77da.with-local-changes');
+const VERSION = new Version('9.0.0-next.10+28.sha-6ab5f36.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -1542,9 +1542,9 @@ class UpgradeComponent {
         /** @type {?} */
         const link = this.directive.link;
         /** @type {?} */
-        const preLink = (typeof link == 'object') && ((/** @type {?} */ (link))).pre;
+        const preLink = typeof link == 'object' && link.pre;
         /** @type {?} */
-        const postLink = (typeof link == 'object') ? ((/** @type {?} */ (link))).post : link;
+        const postLink = typeof link == 'object' ? link.post : link;
         /** @type {?} */
         const attrs = NOT_SUPPORTED;
         /** @type {?} */
@@ -1624,7 +1624,7 @@ class UpgradeComponent {
             throw new Error(`Binding definitions on scope and controller at the same time is not supported.`);
         }
         /** @type {?} */
-        const context = (btcIsObject) ? directive.bindToController : directive.scope;
+        const context = btcIsObject ? directive.bindToController : directive.scope;
         /** @type {?} */
         const bindings = new Bindings();
         if (typeof context == 'object') {
