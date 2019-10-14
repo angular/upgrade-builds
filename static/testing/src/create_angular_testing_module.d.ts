@@ -12,7 +12,7 @@ export declare let $injector: angular.IInjectorService | null;
 export declare function $injectorFactory(): angular.IInjectorService | null;
 export declare class AngularTestingModule {
     constructor(i: Injector);
-    static ngModuleDef: i0.ɵɵNgModuleDefWithMeta<AngularTestingModule, never, never, never>;
+    static ɵmod: i0.ɵɵNgModuleDefWithMeta<AngularTestingModule, never, never, never>;
     static ngInjectorDef: i0.ɵɵInjectorDef<AngularTestingModule>;
 }
 /**
