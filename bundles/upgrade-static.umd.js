@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.11+8.sha-3e14c2d.with-local-changes
+ * @license Angular v9.0.0-next.11+10.sha-86104b8.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1060,7 +1060,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('9.0.0-next.11+8.sha-3e14c2d.with-local-changes');
+    var VERSION = new i0.Version('9.0.0-next.11+10.sha-86104b8.with-local-changes');
 
     /**
      * @license
@@ -2042,7 +2042,7 @@
             }
         };
         UpgradeModule.ɵmod = i0.ɵɵdefineNgModule({ type: UpgradeModule });
-        UpgradeModule.ngInjectorDef = i0.ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.ɵɵinject(i0.Injector), i0.ɵɵinject(i0.NgZone)); }, providers: [angular1Providers] });
+        UpgradeModule.ɵinj = i0.ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.ɵɵinject(i0.Injector), i0.ɵɵinject(i0.NgZone)); }, providers: [angular1Providers] });
         return UpgradeModule;
     }());
     /*@__PURE__*/ i0.ɵsetClassMetadata(UpgradeModule, [{

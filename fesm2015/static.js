@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.11+8.sha-3e14c2d.with-local-changes
+ * @license Angular v9.0.0-next.11+10.sha-86104b8.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -842,7 +842,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.11+8.sha-3e14c2d.with-local-changes');
+const VERSION = new Version('9.0.0-next.11+10.sha-86104b8.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -2139,7 +2139,7 @@ UpgradeModule.ctorParameters = () => [
     { type: NgZone }
 ];
 /** @nocollapse */ UpgradeModule.ɵmod = ɵɵdefineNgModule({ type: UpgradeModule });
-/** @nocollapse */ UpgradeModule.ngInjectorDef = ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(ɵɵinject(Injector), ɵɵinject(NgZone)); }, providers: [angular1Providers] });
+/** @nocollapse */ UpgradeModule.ɵinj = ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(ɵɵinject(Injector), ɵɵinject(NgZone)); }, providers: [angular1Providers] });
 /*@__PURE__*/ ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,
         args: [{ providers: [angular1Providers] }]

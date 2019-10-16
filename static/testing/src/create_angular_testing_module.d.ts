@@ -13,7 +13,7 @@ export declare function $injectorFactory(): angular.IInjectorService | null;
 export declare class AngularTestingModule {
     constructor(i: Injector);
     static ɵmod: i0.ɵɵNgModuleDefWithMeta<AngularTestingModule, never, never, never>;
-    static ngInjectorDef: i0.ɵɵInjectorDef<AngularTestingModule>;
+    static ɵinj: i0.ɵɵInjectorDef<AngularTestingModule>;
 }
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS

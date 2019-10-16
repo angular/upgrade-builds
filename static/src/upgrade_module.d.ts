@@ -154,5 +154,5 @@ export declare class UpgradeModule {
      */
     bootstrap(element: Element, modules?: string[], config?: any): void;
     static ɵmod: i0.ɵɵNgModuleDefWithMeta<UpgradeModule, never, never, never>;
-    static ngInjectorDef: i0.ɵɵInjectorDef<UpgradeModule>;
+    static ɵinj: i0.ɵɵInjectorDef<UpgradeModule>;
 }
