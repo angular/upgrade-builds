@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.11+10.sha-86104b8.with-local-changes
+ * @license Angular v9.0.0-next.11+11.sha-becd62d.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.11+10.sha-86104b8.with-local-changes');
+const VERSION = new Version('9.0.0-next.11+11.sha-becd62d.with-local-changes');
 
 /**
  * @license
@@ -73,7 +73,6 @@ function getAngularLib() {
  */
 function setAngularJSGlobal(ng) {
     angular = ng;
-    version = ng && ng.version;
 }
 /**
  * Returns the current AngularJS global.
@@ -92,7 +91,6 @@ element.cleanData = nodes => angular.element.cleanData(nodes);
 const injector = (modules, strictDi) => angular.injector(modules, strictDi);
 const resumeBootstrap = () => angular.resumeBootstrap();
 const getTestability = e => angular.getTestability(e);
-let version = angular.version;
 
 /**
  * @license
