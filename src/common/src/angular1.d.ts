@@ -270,7 +270,4 @@ export declare const element: typeof angular.element;
 export declare const injector: typeof angular.injector;
 export declare const resumeBootstrap: typeof angular.resumeBootstrap;
 export declare const getTestability: typeof angular.getTestability;
-export declare let version: {
-    major: number;
-};
 export {};
