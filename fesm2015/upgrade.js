@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.11+59.sha-117ca7c.with-local-changes
+ * @license Angular v9.0.0-next.11+62.sha-a0d16dc.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.11+59.sha-117ca7c.with-local-changes');
+const VERSION = new Version('9.0.0-next.11+62.sha-a0d16dc.with-local-changes');
 
 /**
  * @license
@@ -2148,7 +2148,8 @@ class UpgradeAdapter {
                     // At this point we have ng1 injector and we have prepared
                     // ng1 components to be upgraded, we now can bootstrap ng2.
                     class DynamicNgUpgradeModule {
-                        constructor() { }
+                        constructor() {
+                        }
                         /**
                          * @return {?}
                          */
