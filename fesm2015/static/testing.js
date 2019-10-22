@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.11+24.sha-20be755.with-local-changes
+ * @license Angular v9.0.0-next.12+50.sha-dfff5fe.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -130,7 +130,9 @@ class AngularTestingModule {
     /**
      * @param {?} i
      */
-    constructor(i) { injector$1 = i; }
+    constructor(i) {
+        injector$1 = i;
+    }
 }
 AngularTestingModule.decorators = [
     { type: NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] }
