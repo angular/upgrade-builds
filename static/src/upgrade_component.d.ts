@@ -6,6 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { DoCheck, ElementRef, Injector, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import * as i0 from "@angular/core";
 /**
  * @description
  *
@@ -80,4 +81,6 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private initializeOutputs;
     private bindOutputs;
     private forwardChanges;
+    static ɵfac: i0.ɵɵFactoryDef<UpgradeComponent>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<UpgradeComponent, never, never, {}, {}, never>;
 }

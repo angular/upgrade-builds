@@ -1,11 +1,11 @@
 /**
- * @license Angular v9.0.0-next.13+53.sha-3505692.with-local-changes
+ * @license Angular v9.0.0-next.13+54.sha-14c4b1b.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { __read, __extends, __spread } from 'tslib';
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, isDevMode, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata, NgModule } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, isDevMode, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -869,7 +869,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('9.0.0-next.13+53.sha-3505692.with-local-changes');
+var VERSION = new Version('9.0.0-next.13+54.sha-14c4b1b.with-local-changes');
 
 /**
  * @license
@@ -1594,6 +1594,8 @@ var UpgradeComponent = /** @class */ (function () {
             this.bindingDestination.$onChanges(changes);
         }
     };
+    UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { ɵɵinvalidFactory(); };
+    UpgradeComponent.ɵdir = ɵɵdefineDirective({ type: UpgradeComponent, selectors: [], features: [ɵɵNgOnChangesFeature()] });
     return UpgradeComponent;
 }());
 

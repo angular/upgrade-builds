@@ -1,10 +1,10 @@
 /**
- * @license Angular v9.0.0-next.13+53.sha-3505692.with-local-changes
+ * @license Angular v9.0.0-next.13+54.sha-14c4b1b.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
+import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
 import { __read, __extends, __spread, __decorate, __assign, __param, __metadata } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('9.0.0-next.13+53.sha-3505692.with-local-changes');
+var VERSION = new Version('9.0.0-next.13+54.sha-14c4b1b.with-local-changes');
 
 /**
  * @license
@@ -1128,13 +1128,6 @@ function notSupported(name, feature) {
     throw new Error("Upgraded directive '" + name + "' contains unsupported feature: '" + feature + "'.");
 }
 
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 var CAMEL_CASE = /([A-Z])/g;
 var INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true
@@ -1343,6 +1336,8 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
     UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     };
+    UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { ɵɵinvalidFactory(); };
+    UpgradeNg1ComponentAdapter.ɵdir = ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, selectors: [], features: [ɵɵNgOnChangesFeature()] });
     return UpgradeNg1ComponentAdapter;
 }());
 

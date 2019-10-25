@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.13+53.sha-3505692.with-local-changes
+ * @license Angular v9.0.0-next.13+54.sha-14c4b1b.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1068,7 +1068,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('9.0.0-next.13+53.sha-3505692.with-local-changes');
+    var VERSION = new i0.Version('9.0.0-next.13+54.sha-14c4b1b.with-local-changes');
 
     /**
      * @license
@@ -1793,6 +1793,8 @@
                 this.bindingDestination.$onChanges(changes);
             }
         };
+        UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { i0.ɵɵinvalidFactory(); };
+        UpgradeComponent.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeComponent, selectors: [], features: [i0.ɵɵNgOnChangesFeature()] });
         return UpgradeComponent;
     }());
 

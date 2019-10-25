@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.13+53.sha-3505692.with-local-changes
+ * @license Angular v9.0.0-next.13+54.sha-14c4b1b.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -8,7 +8,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser-dynamic')) :
     typeof define === 'function' && define.amd ? define('@angular/upgrade', ['exports', '@angular/core', '@angular/platform-browser-dynamic'], factory) :
     (global = global || self, factory((global.ng = global.ng || {}, global.ng.upgrade = {}), global.ng.core, global.ng.platformBrowserDynamic));
-}(this, function (exports, core, platformBrowserDynamic) { 'use strict';
+}(this, function (exports, i0, platformBrowserDynamic) { 'use strict';
 
     /**
      * @license
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('9.0.0-next.13+53.sha-3505692.with-local-changes');
+    var VERSION = new i0.Version('9.0.0-next.13+54.sha-14c4b1b.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -514,19 +514,19 @@
         };
         DowngradeComponentAdapter.prototype.createComponent = function (projectableNodes) {
             var providers = [{ provide: $SCOPE, useValue: this.componentScope }];
-            var childInjector = core.Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
+            var childInjector = i0.Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
             this.componentRef =
                 this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
-            this.viewChangeDetector = this.componentRef.injector.get(core.ChangeDetectorRef);
+            this.viewChangeDetector = this.componentRef.injector.get(i0.ChangeDetectorRef);
             this.changeDetector = this.componentRef.changeDetectorRef;
             this.component = this.componentRef.instance;
             // testability hook is commonly added during component bootstrap in
             // packages/core/src/application_ref.bootstrap()
             // in downgraded application, component creation will take place here as well as adding the
             // testability hook.
-            var testability = this.componentRef.injector.get(core.Testability, null);
+            var testability = this.componentRef.injector.get(i0.Testability, null);
             if (testability) {
-                this.componentRef.injector.get(core.TestabilityRegistry)
+                this.componentRef.injector.get(i0.TestabilityRegistry)
                     .registerApplication(this.componentRef.location.nativeElement, testability);
             }
             hookupNgModel(this.ngModel, this.component);
@@ -613,7 +613,7 @@
                 var unwatch_2 = this.componentScope.$watch(function () {
                     unwatch_2();
                     unwatch_2 = null;
-                    var appRef = _this.parentInjector.get(core.ApplicationRef);
+                    var appRef = _this.parentInjector.get(i0.ApplicationRef);
                     appRef.attachView(_this.componentRef.hostView);
                 });
             }
@@ -661,7 +661,7 @@
         };
         DowngradeComponentAdapter.prototype.registerCleanup = function () {
             var _this = this;
-            var testabilityRegistry = this.componentRef.injector.get(core.TestabilityRegistry);
+            var testabilityRegistry = this.componentRef.injector.get(i0.TestabilityRegistry);
             var destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
             var destroyed = false;
             this.element.on('$destroy', function () { return _this.componentScope.$destroy(); });
@@ -676,7 +676,7 @@
         DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
         DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
             if (this.implementsOnChanges) {
-                this.inputChanges[prop] = new core.SimpleChange(prevValue, currValue, prevValue === currValue);
+                this.inputChanges[prop] = new i0.SimpleChange(prevValue, currValue, prevValue === currValue);
             }
             this.inputChangeCount++;
             this.component[prop] = currValue;
@@ -857,7 +857,7 @@
             //         inside the Angular zone (except if explicitly escaped, in which case we shouldn't
             //         force it back in).
             var isNgUpgradeLite = getUpgradeAppType($injector) === 3 /* Lite */;
-            var wrapCallback = !isNgUpgradeLite ? function (cb) { return cb; } : function (cb) { return function () { return core.NgZone.isInAngularZone() ? cb() : ngZone.run(cb); }; };
+            var wrapCallback = !isNgUpgradeLite ? function (cb) { return cb; } : function (cb) { return function () { return i0.NgZone.isInAngularZone() ? cb() : ngZone.run(cb); }; };
             var ngZone;
             // When downgrading multiple modules, special handling is needed wrt injectors.
             var hasMultipleDowngradedModules = isNgUpgradeLite && (getDowngradedModuleCount($injector) > 1);
@@ -922,7 +922,7 @@
                     var doDowngrade = function (injector, moduleInjector) {
                         // Retrieve `ComponentFactoryResolver` from the injector tied to the `NgModule` this
                         // component belongs to.
-                        var componentFactoryResolver = moduleInjector.get(core.ComponentFactoryResolver);
+                        var componentFactoryResolver = moduleInjector.get(i0.ComponentFactoryResolver);
                         var componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
                         if (!componentFactory) {
                             throw new Error("Expecting ComponentFactory for: " + getTypeName(info.component));
@@ -943,7 +943,7 @@
                     };
                     var downgradeFn = !isNgUpgradeLite ? doDowngrade : function (pInjector, mInjector) {
                         if (!ngZone) {
-                            ngZone = pInjector.get(core.NgZone);
+                            ngZone = pInjector.get(i0.NgZone);
                         }
                         wrapCallback(function () { return doDowngrade(pInjector, mInjector); })();
                     };
@@ -1327,13 +1327,6 @@
         throw new Error("Upgraded directive '" + name + "' contains unsupported feature: '" + feature + "'.");
     }
 
-    /**
-     * @license
-     * Copyright Google Inc. All Rights Reserved.
-     *
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://angular.io/license
-     */
     var CAMEL_CASE = /([A-Z])/g;
     var INITIAL_VALUE$1 = {
         __UNINITIALIZED__: true
@@ -1364,9 +1357,9 @@
                     return _this;
                 }
                 MyClass = __decorate([
-                    core.Directive(__assign({ jit: true }, directive)),
-                    __param(0, core.Inject($SCOPE)),
-                    __metadata("design:paramtypes", [Object, core.Injector, core.ElementRef])
+                    i0.Directive(__assign({ jit: true }, directive)),
+                    __param(0, i0.Inject($SCOPE)),
+                    __metadata("design:paramtypes", [Object, i0.Injector, i0.ElementRef])
                 ], MyClass);
                 return MyClass;
             }(UpgradeNg1ComponentAdapter));
@@ -1465,7 +1458,7 @@
                 this[inputs[i]] = null;
             }
             for (var j = 0; j < outputs.length; j++) {
-                var emitter = this[outputs[j]] = new core.EventEmitter();
+                var emitter = this[outputs[j]] = new i0.EventEmitter();
                 if (this.propOuts.indexOf(outputs[j]) === -1) {
                     this.setComponentProperty(outputs[j], (function (emitter) { return function (value) { return emitter.emit(value); }; })(emitter));
                 }
@@ -1542,6 +1535,8 @@
         UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
             this.destinationObj[this.propertyMap[name]] = value;
         };
+        UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { i0.ɵɵinvalidFactory(); };
+        UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, selectors: [], features: [i0.ɵɵNgOnChangesFeature()] });
         return UpgradeNg1ComponentAdapter;
     }());
 
@@ -1931,7 +1926,7 @@
             Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(function (_a) {
                 var _b = __read(_a, 1), ng1Injector = _b[0];
                 element(element$1).data(controllerKey(INJECTOR_KEY), _this.moduleRef.injector);
-                _this.moduleRef.injector.get(core.NgZone).run(function () { upgrade._bootstrapDone(_this.moduleRef, ng1Injector); });
+                _this.moduleRef.injector.get(i0.NgZone).run(function () { upgrade._bootstrapDone(_this.moduleRef, ng1Injector); });
             }, onError);
             return upgrade;
         };
@@ -2023,13 +2018,13 @@
             var upgradeAdapter = this;
             var ng1Module = this.ng1Module = module_(this.idPrefix, modules);
             var platformRef = platformBrowserDynamic.platformBrowserDynamic();
-            this.ngZone = new core.NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
+            this.ngZone = new i0.NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
             this.ng2BootstrapDeferred = new Deferred();
             ng1Module.constant(UPGRADE_APP_TYPE_KEY, 1 /* Dynamic */)
-                .factory(INJECTOR_KEY, function () { return _this.moduleRef.injector.get(core.Injector); })
+                .factory(INJECTOR_KEY, function () { return _this.moduleRef.injector.get(i0.Injector); })
                 .factory(LAZY_MODULE_REF, [INJECTOR_KEY, function (injector) { return ({ injector: injector }); }])
                 .constant(NG_ZONE_KEY, this.ngZone)
-                .factory(COMPILER_KEY, function () { return _this.moduleRef.injector.get(core.Compiler); })
+                .factory(COMPILER_KEY, function () { return _this.moduleRef.injector.get(i0.Compiler); })
                 .config([
                 '$provide', '$injector',
                 function (provide, ng1Injector) {
@@ -2057,7 +2052,7 @@
                                 // Cannot use arrow function below because we need the context
                                 var newWhenStable = function (callback) {
                                     originalWhenStable.call(this, function () {
-                                        var ng2Testability = upgradeAdapter.moduleRef.injector.get(core.Testability);
+                                        var ng2Testability = upgradeAdapter.moduleRef.injector.get(i0.Testability);
                                         if (ng2Testability.isStable()) {
                                             callback.apply(this, arguments);
                                         }
@@ -2087,7 +2082,7 @@
                                 { provide: $COMPILE, useFactory: function () { return ng1Injector.get($COMPILE); } },
                                 _this.upgradedProviders
                             ],
-                            imports: [core.resolveForwardRef(_this.ng2AppModule)],
+                            imports: [i0.resolveForwardRef(_this.ng2AppModule)],
                             entryComponents: _this.downgradedComponents
                         };
                         // At this point we have ng1 injector and we have prepared
@@ -2097,7 +2092,7 @@
                             }
                             DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
                             DynamicNgUpgradeModule = __decorate([
-                                core.NgModule(__assign({ jit: true }, ngModule)),
+                                i0.NgModule(__assign({ jit: true }, ngModule)),
                                 __metadata("design:paramtypes", [])
                             ], DynamicNgUpgradeModule);
                             return DynamicNgUpgradeModule;
@@ -2121,7 +2116,7 @@
                             var subscription = _this.ngZone.onMicrotaskEmpty.subscribe({
                                 next: function () {
                                     if (rootScope.$$phase) {
-                                        if (core.isDevMode()) {
+                                        if (i0.isDevMode()) {
                                             console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
                                         }
                                         return rootScope.$evalAsync(function () { });

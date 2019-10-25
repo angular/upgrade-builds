@@ -1,10 +1,10 @@
 /**
- * @license Angular v9.0.0-next.13+53.sha-3505692.with-local-changes
+ * @license Angular v9.0.0-next.13+54.sha-14c4b1b.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, isDevMode, NgModule, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, isDevMode, NgModule, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -840,7 +840,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.13+53.sha-3505692.with-local-changes');
+const VERSION = new Version('9.0.0-next.13+54.sha-14c4b1b.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -1394,6 +1394,13 @@ function notSupported(name, feature) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 /** @type {?} */
 const NOT_SUPPORTED = 'NOT_SUPPORTED';
 /** @type {?} */
@@ -1717,6 +1724,8 @@ class UpgradeComponent {
         }
     }
 }
+/** @nocollapse */ UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { ɵɵinvalidFactory(); };
+/** @nocollapse */ UpgradeComponent.ɵdir = ɵɵdefineDirective({ type: UpgradeComponent, selectors: [], features: [ɵɵNgOnChangesFeature()] });
 if (false) {
     /**
      * @type {?}
