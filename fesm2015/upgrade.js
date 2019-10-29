@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-next.14+24.sha-d1246a1.with-local-changes
+ * @license Angular v9.0.0-next.14+25.sha-c3e9356.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-next.14+24.sha-d1246a1.with-local-changes');
+const VERSION = new Version('9.0.0-next.14+25.sha-c3e9356.with-local-changes');
 
 /**
  * @license
@@ -1449,7 +1449,7 @@ class UpgradeNg1ComponentAdapter {
     }
 }
 /** @nocollapse */ UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { ɵɵinvalidFactory(); };
-/** @nocollapse */ UpgradeNg1ComponentAdapter.ɵdir = ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, selectors: [], features: [ɵɵNgOnChangesFeature()] });
+/** @nocollapse */ UpgradeNg1ComponentAdapter.ɵdir = ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [ɵɵNgOnChangesFeature()] });
 if (false) {
     /**
      * @type {?}

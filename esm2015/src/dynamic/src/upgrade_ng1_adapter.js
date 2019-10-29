@@ -361,7 +361,7 @@ class UpgradeNg1ComponentAdapter {
     }
 }
 /** @nocollapse */ UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { i0.ɵɵinvalidFactory(); };
-/** @nocollapse */ UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, selectors: [], features: [i0.ɵɵNgOnChangesFeature()] });
+/** @nocollapse */ UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [i0.ɵɵNgOnChangesFeature()] });
 if (false) {
     /**
      * @type {?}
