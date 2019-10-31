@@ -1,18 +1,7 @@
 /**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @license Angular v9.0.0-next.15+4.sha-556cb78.with-local-changes
+ * (c) 2010-2019 Google LLC. https://angular.io/
+ * License: MIT
  */
-/**
- * @module
- * @description
- * Entry point for all public APIs of the upgrade/static package, allowing
- * Angular 1 and Angular 2+ to run side by side in the same application.
- */
-export { downgradeComponent } from './src/common/downgrade_component';
-export { downgradeInjectable } from './src/common/downgrade_injectable';
-export { VERSION } from './src/common/version';
-export { UpgradeComponent } from './src/static/upgrade_component';
-export { UpgradeModule } from './src/static/upgrade_module';
+
+export * from './static/static';
