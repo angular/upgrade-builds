@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+47.sha-85298e3.with-local-changes
+ * @license Angular v9.0.0-rc.0+62.sha-d751ca7.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -8,7 +8,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/core/testing')) :
     typeof define === 'function' && define.amd ? define('@angular/upgrade/static/testing', ['exports', '@angular/core', '@angular/core/testing'], factory) :
     (global = global || self, factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = global.ng.upgrade.static || {}, global.ng.upgrade.static.testing = {}), global.ng.core, global.ng.core.testing));
-}(this, function (exports, core, testing) { 'use strict';
+}(this, (function (exports, core, testing) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -521,13 +521,13 @@
      * Generated bundle index. Do not edit.
      */
 
-    exports.ɵangular_packages_upgrade_static_testing_testing_a = module_;
-    exports.ɵangular_packages_upgrade_static_testing_testing_d = INJECTOR_KEY;
-    exports.ɵangular_packages_upgrade_static_testing_testing_b = UPGRADE_APP_TYPE_KEY;
-    exports.createAngularTestingModule = createAngularTestingModule;
     exports.createAngularJSTestingModule = createAngularJSTestingModule;
+    exports.createAngularTestingModule = createAngularTestingModule;
+    exports.ɵangular_packages_upgrade_static_testing_testing_a = module_;
+    exports.ɵangular_packages_upgrade_static_testing_testing_b = UPGRADE_APP_TYPE_KEY;
+    exports.ɵangular_packages_upgrade_static_testing_testing_d = INJECTOR_KEY;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=upgrade-static-testing.umd.js.map
