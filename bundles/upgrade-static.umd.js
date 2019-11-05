@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+62.sha-d751ca7.with-local-changes
+ * @license Angular v9.0.0-rc.0+63.sha-3de72e4.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -8,7 +8,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser')) :
     typeof define === 'function' && define.amd ? define('@angular/upgrade/static', ['exports', '@angular/core', '@angular/platform-browser'], factory) :
     (global = global || self, factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = {}), global.ng.core, global.ng.platformBrowser));
-}(this, (function (exports, core, platformBrowser) { 'use strict';
+}(this, function (exports, core, platformBrowser) { 'use strict';
 
     /**
      * @license
@@ -1068,7 +1068,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('9.0.0-rc.0+62.sha-d751ca7.with-local-changes');
+    var VERSION = new core.Version('9.0.0-rc.0+63.sha-3de72e4.with-local-changes');
 
     /**
      * @license
@@ -2085,23 +2085,23 @@
      * Generated bundle index. Do not edit.
      */
 
-    exports.UpgradeComponent = UpgradeComponent;
-    exports.UpgradeModule = UpgradeModule;
-    exports.VERSION = VERSION;
-    exports.downgradeComponent = downgradeComponent;
-    exports.downgradeInjectable = downgradeInjectable;
-    exports.downgradeModule = downgradeModule;
+    exports.ɵangular_packages_upgrade_static_static_e = angular1Providers;
+    exports.ɵangular_packages_upgrade_static_static_c = compileFactory;
+    exports.ɵangular_packages_upgrade_static_static_a = injectorFactory;
+    exports.ɵangular_packages_upgrade_static_static_d = parseFactory;
+    exports.ɵangular_packages_upgrade_static_static_b = rootScopeFactory;
     exports.getAngularJSGlobal = getAngularJSGlobal;
     exports.getAngularLib = getAngularLib;
     exports.setAngularJSGlobal = setAngularJSGlobal;
     exports.setAngularLib = setAngularLib;
-    exports.ɵangular_packages_upgrade_static_static_a = injectorFactory;
-    exports.ɵangular_packages_upgrade_static_static_b = rootScopeFactory;
-    exports.ɵangular_packages_upgrade_static_static_c = compileFactory;
-    exports.ɵangular_packages_upgrade_static_static_d = parseFactory;
-    exports.ɵangular_packages_upgrade_static_static_e = angular1Providers;
+    exports.downgradeComponent = downgradeComponent;
+    exports.downgradeInjectable = downgradeInjectable;
+    exports.VERSION = VERSION;
+    exports.downgradeModule = downgradeModule;
+    exports.UpgradeComponent = UpgradeComponent;
+    exports.UpgradeModule = UpgradeModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=upgrade-static.umd.js.map
