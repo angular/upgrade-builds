@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+66.sha-1735135.with-local-changes
+ * @license Angular v9.0.0-rc.0+75.sha-114317c.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -323,5 +323,5 @@ function createAngularJSTestingModule(angularModules) {
  * Generated bundle index. Do not edit.
  */
 
-export { module_ as ɵangular_packages_upgrade_static_testing_testing_a, INJECTOR_KEY as ɵangular_packages_upgrade_static_testing_testing_d, UPGRADE_APP_TYPE_KEY as ɵangular_packages_upgrade_static_testing_testing_b, createAngularTestingModule, createAngularJSTestingModule };
+export { createAngularJSTestingModule, createAngularTestingModule, module_ as ɵangular_packages_upgrade_static_testing_testing_a, UPGRADE_APP_TYPE_KEY as ɵangular_packages_upgrade_static_testing_testing_b, INJECTOR_KEY as ɵangular_packages_upgrade_static_testing_testing_d };
 //# sourceMappingURL=testing.js.map

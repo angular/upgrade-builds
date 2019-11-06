@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+66.sha-1735135.with-local-changes
+ * @license Angular v9.0.0-rc.0+75.sha-114317c.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-rc.0+66.sha-1735135.with-local-changes');
+const VERSION = new Version('9.0.0-rc.0+75.sha-114317c.with-local-changes');
 
 /**
  * @license
@@ -2422,5 +2422,5 @@ if (false) {
  * Generated bundle index. Do not edit.
  */
 
-export { VERSION, UpgradeAdapter, UpgradeAdapterRef };
+export { UpgradeAdapter, UpgradeAdapterRef, VERSION };
 //# sourceMappingURL=upgrade.js.map
