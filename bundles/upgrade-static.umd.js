@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+69.sha-41560b4.with-local-changes
+ * @license Angular v9.0.0-rc.0+78.sha-a20979d.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -8,7 +8,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser')) :
     typeof define === 'function' && define.amd ? define('@angular/upgrade/static', ['exports', '@angular/core', '@angular/platform-browser'], factory) :
     (global = global || self, factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = {}), global.ng.core, global.ng.platformBrowser));
-}(this, function (exports, i0, platformBrowser) { 'use strict';
+}(this, (function (exports, i0, platformBrowser) { 'use strict';
 
     /**
      * @license
@@ -1068,7 +1068,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('9.0.0-rc.0+69.sha-41560b4.with-local-changes');
+    var VERSION = new i0.Version('9.0.0-rc.0+78.sha-a20979d.with-local-changes');
 
     /**
      * @license
@@ -2077,18 +2077,18 @@
      * found in the LICENSE file at https://angular.io/license
      */
 
+    exports.UpgradeComponent = UpgradeComponent;
+    exports.UpgradeModule = UpgradeModule;
+    exports.VERSION = VERSION;
+    exports.downgradeComponent = downgradeComponent;
+    exports.downgradeInjectable = downgradeInjectable;
+    exports.downgradeModule = downgradeModule;
     exports.getAngularJSGlobal = getAngularJSGlobal;
     exports.getAngularLib = getAngularLib;
     exports.setAngularJSGlobal = setAngularJSGlobal;
     exports.setAngularLib = setAngularLib;
-    exports.downgradeComponent = downgradeComponent;
-    exports.downgradeInjectable = downgradeInjectable;
-    exports.VERSION = VERSION;
-    exports.downgradeModule = downgradeModule;
-    exports.UpgradeComponent = UpgradeComponent;
-    exports.UpgradeModule = UpgradeModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=upgrade-static.umd.js.map
