@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+69.sha-41560b4.with-local-changes
+ * @license Angular v9.0.0-rc.0+77.sha-2ed04ff.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -869,7 +869,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('9.0.0-rc.0+69.sha-41560b4.with-local-changes');
+var VERSION = new Version('9.0.0-rc.0+77.sha-2ed04ff.with-local-changes');
 
 /**
  * @license
@@ -1886,5 +1886,5 @@ var UpgradeModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { angular1Providers as ɵangular_packages_upgrade_static_static_e, compileFactory as ɵangular_packages_upgrade_static_static_c, injectorFactory as ɵangular_packages_upgrade_static_static_a, parseFactory as ɵangular_packages_upgrade_static_static_d, rootScopeFactory as ɵangular_packages_upgrade_static_static_b, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, downgradeComponent, downgradeInjectable, VERSION, downgradeModule, UpgradeComponent, UpgradeModule };
+export { UpgradeComponent, UpgradeModule, VERSION, downgradeComponent, downgradeInjectable, downgradeModule, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, injectorFactory as ɵangular_packages_upgrade_static_static_a, rootScopeFactory as ɵangular_packages_upgrade_static_static_b, compileFactory as ɵangular_packages_upgrade_static_static_c, parseFactory as ɵangular_packages_upgrade_static_static_d, angular1Providers as ɵangular_packages_upgrade_static_static_e };
 //# sourceMappingURL=static.js.map
