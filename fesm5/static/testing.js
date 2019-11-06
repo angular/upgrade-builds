@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+69.sha-41560b4.with-local-changes
+ * @license Angular v9.0.0-rc.0+77.sha-2ed04ff.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -319,5 +319,5 @@ function createAngularJSTestingModule(angularModules) {
  * found in the LICENSE file at https://angular.io/license
  */
 
-export { createAngularTestingModule, createAngularJSTestingModule };
+export { createAngularJSTestingModule, createAngularTestingModule };
 //# sourceMappingURL=testing.js.map

@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+69.sha-41560b4.with-local-changes
+ * @license Angular v9.0.0-rc.0+77.sha-2ed04ff.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -8,7 +8,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/core/testing')) :
     typeof define === 'function' && define.amd ? define('@angular/upgrade/static/testing', ['exports', '@angular/core', '@angular/core/testing'], factory) :
     (global = global || self, factory((global.ng = global.ng || {}, global.ng.upgrade = global.ng.upgrade || {}, global.ng.upgrade.static = global.ng.upgrade.static || {}, global.ng.upgrade.static.testing = {}), global.ng.core, global.ng.core.testing));
-}(this, function (exports, i0, testing) { 'use strict';
+}(this, (function (exports, i0, testing) { 'use strict';
 
     /**
      * @license
@@ -322,10 +322,10 @@
      * found in the LICENSE file at https://angular.io/license
      */
 
-    exports.createAngularTestingModule = createAngularTestingModule;
     exports.createAngularJSTestingModule = createAngularJSTestingModule;
+    exports.createAngularTestingModule = createAngularTestingModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=upgrade-static-testing.umd.js.map
