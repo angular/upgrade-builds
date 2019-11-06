@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+77.sha-2ed04ff.with-local-changes
+ * @license Angular v9.0.0-rc.0+69.sha-41560b4.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -8,7 +8,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser-dynamic')) :
     typeof define === 'function' && define.amd ? define('@angular/upgrade', ['exports', '@angular/core', '@angular/platform-browser-dynamic'], factory) :
     (global = global || self, factory((global.ng = global.ng || {}, global.ng.upgrade = {}), global.ng.core, global.ng.platformBrowserDynamic));
-}(this, (function (exports, i0, platformBrowserDynamic) { 'use strict';
+}(this, function (exports, i0, platformBrowserDynamic) { 'use strict';
 
     /**
      * @license
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('9.0.0-rc.0+77.sha-2ed04ff.with-local-changes');
+    var VERSION = new i0.Version('9.0.0-rc.0+69.sha-41560b4.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -2224,11 +2224,11 @@
      * found in the LICENSE file at https://angular.io/license
      */
 
+    exports.VERSION = VERSION;
     exports.UpgradeAdapter = UpgradeAdapter;
     exports.UpgradeAdapterRef = UpgradeAdapterRef;
-    exports.VERSION = VERSION;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=upgrade.umd.js.map

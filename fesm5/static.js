@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.0+77.sha-2ed04ff.with-local-changes
+ * @license Angular v9.0.0-rc.0+69.sha-41560b4.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -869,7 +869,7 @@ function downgradeInjectable(token, downgradedModule) {
 /**
  * @publicApi
  */
-var VERSION = new Version('9.0.0-rc.0+77.sha-2ed04ff.with-local-changes');
+var VERSION = new Version('9.0.0-rc.0+69.sha-41560b4.with-local-changes');
 
 /**
  * @license
@@ -1878,5 +1878,5 @@ var UpgradeModule = /** @class */ (function () {
  * found in the LICENSE file at https://angular.io/license
  */
 
-export { UpgradeComponent, UpgradeModule, VERSION, downgradeComponent, downgradeInjectable, downgradeModule, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib };
+export { getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, downgradeComponent, downgradeInjectable, VERSION, downgradeModule, UpgradeComponent, UpgradeModule };
 //# sourceMappingURL=static.js.map
