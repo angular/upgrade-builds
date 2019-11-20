@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.1+188.sha-b54ed98.with-local-changes
+ * @license Angular v9.0.0-rc.1+197.sha-55748db.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -136,10 +136,10 @@ var AngularTestingModule = /** @class */ (function () {
     AngularTestingModule.ɵinj = ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
     return AngularTestingModule;
 }());
-/*@__PURE__*/ ɵsetClassMetadata(AngularTestingModule, [{
+/*@__PURE__*/ (function () { ɵsetClassMetadata(AngularTestingModule, [{
         type: NgModule,
         args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
-    }], function () { return [{ type: Injector }]; }, null);
+    }], function () { return [{ type: Injector }]; }, null); })();
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
  * services.

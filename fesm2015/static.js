@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.1+188.sha-b54ed98.with-local-changes
+ * @license Angular v9.0.0-rc.1+197.sha-55748db.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -840,7 +840,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-rc.1+188.sha-b54ed98.with-local-changes');
+const VERSION = new Version('9.0.0-rc.1+197.sha-55748db.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
@@ -2147,10 +2147,10 @@ UpgradeModule.ctorParameters = () => [
 ];
 /** @nocollapse */ UpgradeModule.ɵmod = ɵɵdefineNgModule({ type: UpgradeModule });
 /** @nocollapse */ UpgradeModule.ɵinj = ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(ɵɵinject(Injector), ɵɵinject(NgZone)); }, providers: [angular1Providers] });
-/*@__PURE__*/ ɵsetClassMetadata(UpgradeModule, [{
+/*@__PURE__*/ (function () { ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,
         args: [{ providers: [angular1Providers] }]
-    }], function () { return [{ type: Injector }, { type: NgZone }]; }, null);
+    }], function () { return [{ type: Injector }, { type: NgZone }]; }, null); })();
 if (false) {
     /**
      * The AngularJS `$injector` for the upgrade application.
