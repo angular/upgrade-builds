@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.3+30.sha-f1bf5b2.with-local-changes
+ * @license Angular v9.0.0-rc.3+42.sha-99e68d0.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-rc.3+30.sha-f1bf5b2.with-local-changes');
+const VERSION = new Version('9.0.0-rc.3+42.sha-99e68d0.with-local-changes');
 
 /**
  * @license
@@ -1093,6 +1093,7 @@ function notSupported(name, feature) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/src/dynamic/src/upgrade_ng1_adapter.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
@@ -1498,6 +1499,7 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/src/dynamic/src/upgrade_adapter.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
@@ -2410,11 +2412,13 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/public_api.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
