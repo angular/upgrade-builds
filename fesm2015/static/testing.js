@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.1+226.sha-a37bf9a.with-local-changes
+ * @license Angular v9.0.0-rc.1+227.sha-3c335c3.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -114,6 +114,7 @@ const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/testing/src/create_angular_testing_module.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -232,6 +233,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/testing/src/create_angularjs_testing_module.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -324,11 +326,13 @@ function createAngularJSTestingModule(angularModules) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/testing/public_api.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/testing/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 

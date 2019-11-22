@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.1+226.sha-a37bf9a.with-local-changes
+ * @license Angular v9.0.0-rc.1+227.sha-3c335c3.with-local-changes
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -840,10 +840,11 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-rc.1+226.sha-a37bf9a.with-local-changes');
+const VERSION = new Version('9.0.0-rc.1+227.sha-3c335c3.with-local-changes');
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/src/angular1_providers.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -913,6 +914,7 @@ const angular1Providers = [
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/src/util.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgAdapterInjector {
@@ -948,6 +950,7 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/src/downgrade_module.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
@@ -1392,6 +1395,7 @@ function notSupported(name, feature) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/src/upgrade_component.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -1801,6 +1805,7 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/src/upgrade_module.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -2171,11 +2176,13 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/public_api.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: packages/upgrade/static/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
