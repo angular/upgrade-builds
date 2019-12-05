@@ -8,7 +8,6 @@
 import { Injector, Type } from '@angular/core';
 import * as angular from '../../../src/common/src/angular1';
 import * as i0 from "@angular/core";
-export declare let $injector: angular.IInjectorService | null;
 export declare function $injectorFactory(): angular.IInjectorService | null;
 export declare class AngularTestingModule {
     constructor(i: Injector);
