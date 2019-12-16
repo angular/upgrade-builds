@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.1+478.sha-04ab036
+ * @license Angular v9.0.0-rc.1+480.sha-12444a8
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -593,6 +593,9 @@ class SyncPromise {
  *
  * {@example upgrade/static/ts/full/module.ts region="ng2-heroes-wrapper"}
  *
+ * For more details and examples on downgrading Angular components to AngularJS components please
+ * visit the [Upgrade guide](guide/upgrade#using-angular-components-from-angularjs-code).
+ *
  * @param info contains information about the Component that is being downgraded:
  *
  * - `component: Type<any>`: The type of the Component that will be downgraded
@@ -840,7 +843,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-rc.1+478.sha-04ab036');
+const VERSION = new Version('9.0.0-rc.1+480.sha-12444a8');
 
 /**
  * @fileoverview added by tsickle
