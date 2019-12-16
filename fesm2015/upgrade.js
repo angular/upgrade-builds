@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.6+35.sha-4d99dfe.with-local-changes
+ * @license Angular v9.0.0-rc.6+60.sha-76e4870
  * (c) 2010-2019 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-rc.6+35.sha-4d99dfe.with-local-changes');
+const VERSION = new Version('9.0.0-rc.6+60.sha-76e4870');
 
 /**
  * @license
@@ -604,6 +604,9 @@ class SyncPromise {
  * can use to define the AngularJS directive that wraps the "downgraded" component.
  *
  * {@example upgrade/static/ts/full/module.ts region="ng2-heroes-wrapper"}
+ *
+ * For more details and examples on downgrading Angular components to AngularJS components please
+ * visit the [Upgrade guide](guide/upgrade#using-angular-components-from-angularjs-code).
  *
  * @param info contains information about the Component that is being downgraded:
  *
