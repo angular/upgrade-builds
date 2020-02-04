@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.14+2.sha-a320dc9
+ * @license Angular v9.0.0-rc.14+12.sha-1a23c79
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-rc.14+2.sha-a320dc9');
+const VERSION = new Version('9.0.0-rc.14+12.sha-1a23c79');
 
 /**
  * @license
@@ -585,7 +585,7 @@ class SyncPromise {
  * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * This helper function returns a factory function to be used for registering
  * an AngularJS wrapper directive for "downgrading" an Angular component.
@@ -778,7 +778,7 @@ class ParentInjectorPromise extends SyncPromise {
  * A helper function to allow an Angular service to be accessible from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * This helper function returns a factory function that provides access to the Angular
  * service identified by the `token` parameter.

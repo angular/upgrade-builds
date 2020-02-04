@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.0.0-rc.14+2.sha-a320dc9
+ * @license Angular v9.0.0-rc.14+12.sha-1a23c79
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -573,7 +573,7 @@ class SyncPromise {
  * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * This helper function returns a factory function to be used for registering
  * an AngularJS wrapper directive for "downgrading" an Angular component.
@@ -766,7 +766,7 @@ class ParentInjectorPromise extends SyncPromise {
  * A helper function to allow an Angular service to be accessible from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * This helper function returns a factory function that provides access to the Angular
  * service identified by the `token` parameter.
@@ -843,7 +843,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.0.0-rc.14+2.sha-a320dc9');
+const VERSION = new Version('9.0.0-rc.14+12.sha-1a23c79');
 
 /**
  * @fileoverview added by tsickle
@@ -966,7 +966,7 @@ let moduleUid = 0;
  * instantiated.
  *
  * *Part of the [upgrade/static](api?query=upgrade/static) library for hybrid upgrade apps that
- * support AoT compilation.*
+ * support AOT compilation.*
  *
  * It allows loading/bootstrapping the Angular part of a hybrid application lazily and not having to
  * pay the cost up-front. For example, you can have an AngularJS application that uses Angular for
@@ -1431,7 +1431,7 @@ if (false) {
  * A helper class that allows an AngularJS component to be used from Angular.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation.*
+ * library for hybrid upgrade apps that support AOT compilation.*
  *
  * This helper class should be used as a base class for creating Angular directives
  * that wrap AngularJS components that need to be "upgraded".
@@ -1451,7 +1451,7 @@ if (false) {
  *
  * In this example you can see that we must derive from the `UpgradeComponent`
  * base class but also provide an {\@link Directive `\@Directive`} decorator. This is
- * because the AoT compiler requires that this information is statically available at
+ * because the AOT compiler requires that this information is statically available at
  * compile time.
  *
  * Note that we must do the following:
@@ -1809,10 +1809,10 @@ if (false) {
  * and has an instance method used to bootstrap the hybrid upgrade application.
  *
  * *Part of the [upgrade/static](api?query=upgrade/static)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * The `upgrade/static` package contains helpers that allow AngularJS and Angular components
- * to be used together inside a hybrid upgrade application, which supports AoT compilation.
+ * to be used together inside a hybrid upgrade application, which supports AOT compilation.
  *
  * Specifically, the classes and functions in the `upgrade/static` module allow the following:
  *
