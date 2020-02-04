@@ -12,7 +12,7 @@ import { Type } from '@angular/core';
  * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * This helper function returns a factory function to be used for registering
  * an AngularJS wrapper directive for "downgrading" an Angular component.

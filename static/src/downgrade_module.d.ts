@@ -14,7 +14,7 @@ import { NgModuleFactory, NgModuleRef, StaticProvider } from '@angular/core';
  * instantiated.
  *
  * *Part of the [upgrade/static](api?query=upgrade/static) library for hybrid upgrade apps that
- * support AoT compilation.*
+ * support AOT compilation.*
  *
  * It allows loading/bootstrapping the Angular part of a hybrid application lazily and not having to
  * pay the cost up-front. For example, you can have an AngularJS application that uses Angular for

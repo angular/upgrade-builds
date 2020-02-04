@@ -13,7 +13,7 @@ import * as i0 from "@angular/core";
  * A helper class that allows an AngularJS component to be used from Angular.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation.*
+ * library for hybrid upgrade apps that support AOT compilation.*
  *
  * This helper class should be used as a base class for creating Angular directives
  * that wrap AngularJS components that need to be "upgraded".
@@ -33,7 +33,7 @@ import * as i0 from "@angular/core";
  *
  * In this example you can see that we must derive from the `UpgradeComponent`
  * base class but also provide an {@link Directive `@Directive`} decorator. This is
- * because the AoT compiler requires that this information is statically available at
+ * because the AOT compiler requires that this information is statically available at
  * compile time.
  *
  * Note that we must do the following:
