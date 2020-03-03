@@ -1,5 +1,5 @@
 /**
- * @license Angular v9.1.0-next.2+41.sha-47a1811
+ * @license Angular v9.1.0-next.2+46.sha-c195d22
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -843,7 +843,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('9.1.0-next.2+41.sha-47a1811');
+const VERSION = new Version('9.1.0-next.2+46.sha-c195d22');
 
 /**
  * @fileoverview added by tsickle
@@ -1732,7 +1732,7 @@ class UpgradeComponent {
     }
 }
 /** @nocollapse */ UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { ɵɵinvalidFactory(); };
-/** @nocollapse */ UpgradeComponent.ɵdir = ɵɵdefineDirective({ type: UpgradeComponent, features: [ɵɵNgOnChangesFeature()] });
+/** @nocollapse */ UpgradeComponent.ɵdir = ɵɵdefineDirective({ type: UpgradeComponent, features: [ɵɵNgOnChangesFeature] });
 if (false) {
     /**
      * @type {?}

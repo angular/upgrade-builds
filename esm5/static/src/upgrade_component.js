@@ -238,7 +238,7 @@ var UpgradeComponent = /** @class */ (function () {
         }
     };
     UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { i0.ɵɵinvalidFactory(); };
-    UpgradeComponent.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeComponent, features: [i0.ɵɵNgOnChangesFeature()] });
+    UpgradeComponent.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeComponent, features: [i0.ɵɵNgOnChangesFeature] });
     return UpgradeComponent;
 }());
 export { UpgradeComponent };

@@ -339,7 +339,7 @@ export class UpgradeComponent {
     }
 }
 /** @nocollapse */ UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { i0.ɵɵinvalidFactory(); };
-/** @nocollapse */ UpgradeComponent.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeComponent, features: [i0.ɵɵNgOnChangesFeature()] });
+/** @nocollapse */ UpgradeComponent.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeComponent, features: [i0.ɵɵNgOnChangesFeature] });
 if (false) {
     /**
      * @type {?}
