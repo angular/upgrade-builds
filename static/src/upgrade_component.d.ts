@@ -81,6 +81,6 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private initializeOutputs;
     private bindOutputs;
     private forwardChanges;
-    static ɵfac: i0.ɵɵFactoryDef<UpgradeComponent>;
+    static ɵfac: i0.ɵɵFactoryDef<UpgradeComponent, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<UpgradeComponent, never, never, {}, {}, never>;
 }
