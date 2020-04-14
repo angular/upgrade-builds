@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-next.1+32.sha-5e80e7e
+ * @license Angular v10.0.0-next.1+33.sha-698b028
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-var VERSION = new Version('10.0.0-next.1+32.sha-5e80e7e');
+var VERSION = new Version('10.0.0-next.1+33.sha-698b028');
 
 /**
  * @license
@@ -258,7 +258,9 @@ function supportsNgModel(component) {
  */
 function hookupNgModel(ngModel, component) {
     if (ngModel && supportsNgModel(component)) {
-        ngModel.$render = function () { component.writeValue(ngModel.$viewValue); };
+        ngModel.$render = function () {
+            component.writeValue(ngModel.$viewValue);
+        };
         component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
         if (typeof component.registerOnTouched === 'function') {
             component.registerOnTouched(ngModel.$setTouched.bind(ngModel));
@@ -474,7 +476,9 @@ var DowngradeComponentAdapter = /** @class */ (function () {
             }
         });
     };
-    DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
+    DowngradeComponentAdapter.prototype.getInjector = function () {
+        return this.componentRef.injector;
+    };
     DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
         if (this.implementsOnChanges) {
             this.inputChanges[prop] = new SimpleChange(prevValue, currValue, prevValue === currValue);
@@ -1342,7 +1346,9 @@ var UpgradeNg1ComponentAdapter = /** @class */ (function () {
             this.controllerInstance.$doCheck();
         }
     };
-    UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () { this.helper.onDestroy(this.componentScope, this.controllerInstance); };
+    UpgradeNg1ComponentAdapter.prototype.ngOnDestroy = function () {
+        this.helper.onDestroy(this.componentScope, this.controllerInstance);
+    };
     UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     };
@@ -1662,7 +1668,9 @@ var UpgradeAdapter = /** @class */ (function () {
         this.declareNg1Module(modules);
         windowNgMock.module(this.ng1Module.name);
         var upgrade = new UpgradeAdapterRef();
-        this.ng2BootstrapDeferred.promise.then(function (ng1Injector) { upgrade._bootstrapDone(_this.moduleRef, ng1Injector); }, onError);
+        this.ng2BootstrapDeferred.promise.then(function (ng1Injector) {
+            upgrade._bootstrapDone(_this.moduleRef, ng1Injector);
+        }, onError);
         return upgrade;
     };
     /**
@@ -1717,7 +1725,9 @@ var UpgradeAdapter = /** @class */ (function () {
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
         var windowAngular = window /** TODO #???? */['angular'];
         windowAngular.resumeBootstrap = undefined;
-        this.ngZone.run(function () { bootstrap(element$1, [_this.ng1Module.name], config); });
+        this.ngZone.run(function () {
+            bootstrap(element$1, [_this.ng1Module.name], config);
+        });
         var ng1BootstrapPromise = new Promise(function (resolve) {
             if (windowAngular.resumeBootstrap) {
                 var originalResumeBootstrap_1 = windowAngular.resumeBootstrap;
@@ -1735,7 +1745,9 @@ var UpgradeAdapter = /** @class */ (function () {
         Promise.all([this.ng2BootstrapDeferred.promise, ng1BootstrapPromise]).then(function (_a) {
             var _b = __read(_a, 1), ng1Injector = _b[0];
             element(element$1).data(controllerKey(INJECTOR_KEY), _this.moduleRef.injector);
-            _this.moduleRef.injector.get(NgZone).run(function () { upgrade._bootstrapDone(_this.moduleRef, ng1Injector); });
+            _this.moduleRef.injector.get(NgZone).run(function () {
+                upgrade._bootstrapDone(_this.moduleRef, ng1Injector);
+            });
         }, onError);
         return upgrade;
     };
@@ -1799,7 +1811,9 @@ var UpgradeAdapter = /** @class */ (function () {
      *
      * ```
      */
-    UpgradeAdapter.prototype.downgradeNg2Provider = function (token) { return downgradeInjectable(token); };
+    UpgradeAdapter.prototype.downgradeNg2Provider = function (token) {
+        return downgradeInjectable(token);
+    };
     /**
      * Declare the AngularJS upgrade module for this adapter without bootstrapping the whole
      * hybrid application.
@@ -1933,7 +1947,9 @@ var UpgradeAdapter = /** @class */ (function () {
                                 return rootScope.$digest();
                             }
                         });
-                        rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
+                        rootScope.$on('$destroy', function () {
+                            subscription.unsubscribe();
+                        });
                     });
                 })
                     .catch(function (e) { return _this.ng2BootstrapDeferred.reject(e); });
@@ -2005,7 +2021,9 @@ var UpgradeAdapterRef = /** @class */ (function () {
      * The `ready` callback function is invoked inside the Angular zone, therefore it does not
      * require a call to `$apply()`.
      */
-    UpgradeAdapterRef.prototype.ready = function (fn) { this._readyFn = fn; };
+    UpgradeAdapterRef.prototype.ready = function (fn) {
+        this._readyFn = fn;
+    };
     /**
      * Dispose of running hybrid AngularJS / Angular application.
      */
