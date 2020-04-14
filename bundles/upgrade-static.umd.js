@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-next.1+32.sha-5e80e7e
+ * @license Angular v10.0.0-next.1+33.sha-698b028
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -462,7 +462,9 @@
      */
     function hookupNgModel(ngModel, component) {
         if (ngModel && supportsNgModel(component)) {
-            ngModel.$render = function () { component.writeValue(ngModel.$viewValue); };
+            ngModel.$render = function () {
+                component.writeValue(ngModel.$viewValue);
+            };
             component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
             if (typeof component.registerOnTouched === 'function') {
                 component.registerOnTouched(ngModel.$setTouched.bind(ngModel));
@@ -678,7 +680,9 @@
                 }
             });
         };
-        DowngradeComponentAdapter.prototype.getInjector = function () { return this.componentRef.injector; };
+        DowngradeComponentAdapter.prototype.getInjector = function () {
+            return this.componentRef.injector;
+        };
         DowngradeComponentAdapter.prototype.updateInput = function (prop, prevValue, currValue) {
             if (this.implementsOnChanges) {
                 this.inputChanges[prop] = new i0.SimpleChange(prevValue, currValue, prevValue === currValue);
@@ -1088,7 +1092,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('10.0.0-next.1+32.sha-5e80e7e');
+    var VERSION = new i0.Version('10.0.0-next.1+33.sha-698b028');
 
     /**
      * @license
@@ -2015,7 +2019,9 @@
                                                 // $rootScope.$apply, and running the callback in NgZone will
                                                 // cause a '$digest already in progress' error if it's in the
                                                 // same vm turn.
-                                                setTimeout(function () { _this.ngZone.run(function () { return fn.apply(void 0, __spread(args)); }); });
+                                                setTimeout(function () {
+                                                    _this.ngZone.run(function () { return fn.apply(void 0, __spread(args)); });
+                                                });
                                             }, delay, count, invokeApply], pass));
                                     });
                                 };
@@ -2049,7 +2055,9 @@
                             }
                             return $rootScope.$digest();
                         });
-                        $rootScope.$on('$destroy', function () { subscription.unsubscribe(); });
+                        $rootScope.$on('$destroy', function () {
+                            subscription.unsubscribe();
+                        });
                     }, 0);
                 }
             ]);
@@ -2058,7 +2066,9 @@
             var windowAngular = window['angular'];
             windowAngular.resumeBootstrap = undefined;
             // Bootstrap the AngularJS application inside our zone
-            this.ngZone.run(function () { bootstrap(element$1, [upgradeModule.name], config); });
+            this.ngZone.run(function () {
+                bootstrap(element$1, [upgradeModule.name], config);
+            });
             // Patch resumeBootstrap() to run inside the ngZone
             if (windowAngular.resumeBootstrap) {
                 var originalResumeBootstrap_1 = windowAngular.resumeBootstrap;

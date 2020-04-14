@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-next.1+32.sha-5e80e7e
+ * @license Angular v10.0.0-next.1+33.sha-698b028
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-next.1+32.sha-5e80e7e');
+const VERSION = new Version('10.0.0-next.1+33.sha-698b028');
 
 /**
  * @license
@@ -250,7 +250,9 @@ function supportsNgModel(component) {
  */
 function hookupNgModel(ngModel, component) {
     if (ngModel && supportsNgModel(component)) {
-        ngModel.$render = () => { component.writeValue(ngModel.$viewValue); };
+        ngModel.$render = () => {
+            component.writeValue(ngModel.$viewValue);
+        };
         component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
         if (typeof component.registerOnTouched === 'function') {
             component.registerOnTouched(ngModel.$setTouched.bind(ngModel));
@@ -454,7 +456,9 @@ class DowngradeComponentAdapter {
             }
         });
     }
-    getInjector() { return this.componentRef.injector; }
+    getInjector() {
+        return this.componentRef.injector;
+    }
     updateInput(prop, prevValue, currValue) {
         if (this.implementsOnChanges) {
             this.inputChanges[prop] = new SimpleChange(prevValue, currValue, prevValue === currValue);
@@ -1442,7 +1446,9 @@ class UpgradeNg1ComponentAdapter {
     /**
      * @return {?}
      */
-    ngOnDestroy() { this.helper.onDestroy(this.componentScope, this.controllerInstance); }
+    ngOnDestroy() {
+        this.helper.onDestroy(this.componentScope, this.controllerInstance);
+    }
     /**
      * @param {?} name
      * @param {?} value
@@ -1833,7 +1839,9 @@ class UpgradeAdapter {
          * @param {?} ng1Injector
          * @return {?}
          */
-        (ng1Injector) => { ((/** @type {?} */ (upgrade)))._bootstrapDone(this.moduleRef, ng1Injector); }), onError);
+        (ng1Injector) => {
+            ((/** @type {?} */ (upgrade)))._bootstrapDone(this.moduleRef, ng1Injector);
+        }), onError);
         return upgrade;
     }
     /**
@@ -1896,7 +1904,9 @@ class UpgradeAdapter {
         this.ngZone.run((/**
          * @return {?}
          */
-        () => { bootstrap(element$1, [this.ng1Module.name], (/** @type {?} */ (config))); }));
+        () => {
+            bootstrap(element$1, [this.ng1Module.name], (/** @type {?} */ (config)));
+        }));
         /** @type {?} */
         const ng1BootstrapPromise = new Promise((/**
          * @param {?} resolve
@@ -1930,7 +1940,9 @@ class UpgradeAdapter {
             (/** @type {?} */ (this.moduleRef)).injector.get(NgZone).run((/**
              * @return {?}
              */
-            () => { ((/** @type {?} */ (upgrade)))._bootstrapDone(this.moduleRef, ng1Injector); }));
+            () => {
+                ((/** @type {?} */ (upgrade)))._bootstrapDone(this.moduleRef, ng1Injector);
+            }));
         }), onError);
         return upgrade;
     }
@@ -2004,7 +2016,9 @@ class UpgradeAdapter {
      * @param {?} token
      * @return {?}
      */
-    downgradeNg2Provider(token) { return downgradeInjectable(token); }
+    downgradeNg2Provider(token) {
+        return downgradeInjectable(token);
+    }
     /**
      * Declare the AngularJS upgrade module for this adapter without bootstrapping the whole
      * hybrid application.
@@ -2223,7 +2237,9 @@ class UpgradeAdapter {
                         rootScope.$on('$destroy', (/**
                          * @return {?}
                          */
-                        () => { subscription.unsubscribe(); }));
+                        () => {
+                            subscription.unsubscribe();
+                        }));
                     }));
                 }))
                     .catch((/**
@@ -2395,7 +2411,9 @@ class UpgradeAdapterRef {
      * @param {?} fn
      * @return {?}
      */
-    ready(fn) { this._readyFn = fn; }
+    ready(fn) {
+        this._readyFn = fn;
+    }
     /**
      * Dispose of running hybrid AngularJS / Angular application.
      * @return {?}

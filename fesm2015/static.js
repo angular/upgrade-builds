@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-next.1+32.sha-5e80e7e
+ * @license Angular v10.0.0-next.1+33.sha-698b028
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -238,7 +238,9 @@ function supportsNgModel(component) {
  */
 function hookupNgModel(ngModel, component) {
     if (ngModel && supportsNgModel(component)) {
-        ngModel.$render = () => { component.writeValue(ngModel.$viewValue); };
+        ngModel.$render = () => {
+            component.writeValue(ngModel.$viewValue);
+        };
         component.registerOnChange(ngModel.$setViewValue.bind(ngModel));
         if (typeof component.registerOnTouched === 'function') {
             component.registerOnTouched(ngModel.$setTouched.bind(ngModel));
@@ -442,7 +444,9 @@ class DowngradeComponentAdapter {
             }
         });
     }
-    getInjector() { return this.componentRef.injector; }
+    getInjector() {
+        return this.componentRef.injector;
+    }
     updateInput(prop, prevValue, currValue) {
         if (this.implementsOnChanges) {
             this.inputChanges[prop] = new SimpleChange(prevValue, currValue, prevValue === currValue);
@@ -843,7 +847,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-next.1+32.sha-5e80e7e');
+const VERSION = new Version('10.0.0-next.1+33.sha-698b028');
 
 /**
  * @fileoverview added by tsickle
@@ -2057,10 +2061,12 @@ class UpgradeModule {
                                         setTimeout((/**
                                          * @return {?}
                                          */
-                                        () => { this.ngZone.run((/**
-                                         * @return {?}
-                                         */
-                                        () => fn(...args))); }));
+                                        () => {
+                                            this.ngZone.run((/**
+                                             * @return {?}
+                                             */
+                                            () => fn(...args)));
+                                        }));
                                     }), delay, count, invokeApply, ...pass);
                                 }));
                             });
@@ -2109,7 +2115,9 @@ class UpgradeModule {
                     $rootScope.$on('$destroy', (/**
                      * @return {?}
                      */
-                    () => { subscription.unsubscribe(); }));
+                    () => {
+                        subscription.unsubscribe();
+                    }));
                 }), 0);
             })
         ]);
@@ -2123,7 +2131,9 @@ class UpgradeModule {
         this.ngZone.run((/**
          * @return {?}
          */
-        () => { bootstrap(element$1, [upgradeModule.name], config); }));
+        () => {
+            bootstrap(element$1, [upgradeModule.name], config);
+        }));
         // Patch resumeBootstrap() to run inside the ngZone
         if (windowAngular.resumeBootstrap) {
             /** @type {?} */
