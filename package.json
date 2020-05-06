@@ -1,22 +1,14 @@
 {
   "name": "@angular/upgrade",
-  "version": "10.0.0-next.5+45.sha-fafa50d",
+  "version": "10.0.0-next.5+53.sha-3c6c00d",
   "description": "Angular - the library for easing update from v1 to v2",
-  "main": "./bundles/upgrade.umd.js",
-  "module": "./fesm5/upgrade.js",
-  "es2015": "./fesm2015/upgrade.js",
-  "esm5": "./esm5/upgrade.js",
-  "esm2015": "./esm2015/upgrade.js",
-  "fesm5": "./fesm5/upgrade.js",
-  "fesm2015": "./fesm2015/upgrade.js",
-  "typings": "./upgrade.d.ts",
   "author": "angular",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "10.0.0-next.5+45.sha-fafa50d",
-    "@angular/compiler": "10.0.0-next.5+45.sha-fafa50d",
-    "@angular/platform-browser": "10.0.0-next.5+45.sha-fafa50d",
-    "@angular/platform-browser-dynamic": "10.0.0-next.5+45.sha-fafa50d",
+    "@angular/core": "10.0.0-next.5+53.sha-3c6c00d",
+    "@angular/compiler": "10.0.0-next.5+53.sha-3c6c00d",
+    "@angular/platform-browser": "10.0.0-next.5+53.sha-3c6c00d",
+    "@angular/platform-browser-dynamic": "10.0.0-next.5+53.sha-3c6c00d",
     "tslib": "^1.10.0"
   },
   "repository": {
@@ -49,5 +41,11 @@
   "sideEffects": false,
   "publishConfig": {
     "registry": "https://wombat-dressing-room.appspot.com"
-  }
+  },
+  "main": "./bundles/upgrade.umd.js",
+  "fesm2015": "./fesm2015/upgrade.js",
+  "esm2015": "./esm2015/upgrade.js",
+  "typings": "./upgrade.d.ts",
+  "module": "./fesm2015/upgrade.js",
+  "es2015": "./fesm2015/upgrade.js"
 }
