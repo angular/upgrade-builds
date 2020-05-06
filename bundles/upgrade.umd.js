@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-next.5+55.sha-20cc3ab
+ * @license Angular v10.0.0-next.5+61.sha-f930e75
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('10.0.0-next.5+55.sha-20cc3ab');
+    var VERSION = new core.Version('10.0.0-next.5+61.sha-f930e75');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1568,6 +1568,10 @@
         UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
             this.destinationObj[this.propertyMap[name]] = value;
         };
+        UpgradeNg1ComponentAdapter = __decorate([
+            core.Directive(),
+            __metadata("design:paramtypes", [UpgradeHelper, Object, String, Array, Array, Array, Array, Object])
+        ], UpgradeNg1ComponentAdapter);
         return UpgradeNg1ComponentAdapter;
     }());
 
