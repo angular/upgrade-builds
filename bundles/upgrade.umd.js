@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-next.5+55.sha-20cc3ab
+ * @license Angular v10.0.0-next.5+61.sha-f930e75
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('10.0.0-next.5+55.sha-20cc3ab');
+    var VERSION = new i0.Version('10.0.0-next.5+61.sha-f930e75');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1565,6 +1565,9 @@
         UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [i0.ɵɵNgOnChangesFeature] });
         return UpgradeNg1ComponentAdapter;
     }());
+    /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(UpgradeNg1ComponentAdapter, [{
+            type: i0.Directive
+        }], function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; }, null); })();
 
     /**
      * @license

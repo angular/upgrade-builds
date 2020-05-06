@@ -1,10 +1,10 @@
 /**
- * @license Angular v10.0.0-next.5+55.sha-20cc3ab
+ * @license Angular v10.0.0-next.5+61.sha-f930e75
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
+import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, ɵsetClassMetadata, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-next.5+55.sha-20cc3ab');
+const VERSION = new Version('10.0.0-next.5+61.sha-f930e75');
 
 /**
  * @license
@@ -1458,8 +1458,25 @@ class UpgradeNg1ComponentAdapter {
         (/** @type {?} */ (this.destinationObj))[this.propertyMap[name]] = value;
     }
 }
+UpgradeNg1ComponentAdapter.decorators = [
+    { type: Directive },
+];
+/** @nocollapse */
+UpgradeNg1ComponentAdapter.ctorParameters = () => [
+    { type: UpgradeHelper },
+    { type: undefined },
+    { type: String },
+    { type: Array },
+    { type: Array },
+    { type: Array },
+    { type: Array },
+    { type: undefined }
+];
 /** @nocollapse */ UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { ɵɵinvalidFactory(); };
 /** @nocollapse */ UpgradeNg1ComponentAdapter.ɵdir = ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [ɵɵNgOnChangesFeature] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(UpgradeNg1ComponentAdapter, [{
+        type: Directive
+    }], function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; }, null); })();
 if (false) {
     /**
      * @type {?}

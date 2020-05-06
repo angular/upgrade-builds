@@ -1,10 +1,10 @@
 /**
- * @license Angular v10.0.0-next.5+55.sha-20cc3ab
+ * @license Angular v10.0.0-next.5+61.sha-f930e75
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, isDevMode, NgModule, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, Directive, ElementRef, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, ɵsetClassMetadata, isDevMode, NgModule, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -847,7 +847,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-next.5+55.sha-20cc3ab');
+const VERSION = new Version('10.0.0-next.5+61.sha-f930e75');
 
 /**
  * @fileoverview added by tsickle
@@ -1735,8 +1735,20 @@ class UpgradeComponent {
         }
     }
 }
+UpgradeComponent.decorators = [
+    { type: Directive },
+];
+/** @nocollapse */
+UpgradeComponent.ctorParameters = () => [
+    { type: String },
+    { type: ElementRef },
+    { type: Injector }
+];
 /** @nocollapse */ UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { ɵɵinvalidFactory(); };
 /** @nocollapse */ UpgradeComponent.ɵdir = ɵɵdefineDirective({ type: UpgradeComponent, features: [ɵɵNgOnChangesFeature] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(UpgradeComponent, [{
+        type: Directive
+    }], function () { return [{ type: undefined }, { type: ElementRef }, { type: Injector }]; }, null); })();
 if (false) {
     /**
      * @type {?}
