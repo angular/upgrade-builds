@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-next.7+17.sha-2418c6a
+ * @license Angular v10.0.0-next.7+43.sha-f16ca1c
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -134,23 +134,26 @@ let injector$1;
 function $injectorFactory() {
     return $injector;
 }
-class AngularTestingModule {
-    /**
-     * @param {?} i
-     */
-    constructor(i) {
-        injector$1 = i;
+let AngularTestingModule = /** @class */ (() => {
+    class AngularTestingModule {
+        /**
+         * @param {?} i
+         */
+        constructor(i) {
+            injector$1 = i;
+        }
     }
-}
-AngularTestingModule.decorators = [
-    { type: NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] },
-];
-/** @nocollapse */
-AngularTestingModule.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ AngularTestingModule.ɵmod = ɵɵdefineNgModule({ type: AngularTestingModule });
-/** @nocollapse */ AngularTestingModule.ɵinj = ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+    AngularTestingModule.decorators = [
+        { type: NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] },
+    ];
+    /** @nocollapse */
+    AngularTestingModule.ctorParameters = () => [
+        { type: Injector }
+    ];
+    /** @nocollapse */ AngularTestingModule.ɵmod = ɵɵdefineNgModule({ type: AngularTestingModule });
+    /** @nocollapse */ AngularTestingModule.ɵinj = ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+    return AngularTestingModule;
+})();
 /*@__PURE__*/ (function () { ɵsetClassMetadata(AngularTestingModule, [{
         type: NgModule,
         args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]

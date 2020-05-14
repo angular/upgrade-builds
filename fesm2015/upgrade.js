@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-next.7+17.sha-2418c6a
+ * @license Angular v10.0.0-next.7+43.sha-f16ca1c
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-next.7+17.sha-2418c6a');
+const VERSION = new Version('10.0.0-next.7+43.sha-f16ca1c');
 
 /**
  * @license
@@ -1146,25 +1146,28 @@ class UpgradeNg1ComponentAdapterBuilder {
         // TODO(tbosch): find or file a bug against TypeScript for this.
         /** @type {?} */
         const directive = { selector: selector, inputs: this.inputsRename, outputs: this.outputsRename };
-        class MyClass extends UpgradeNg1ComponentAdapter {
-            /**
-             * @param {?} scope
-             * @param {?} injector
-             * @param {?} elementRef
-             */
-            constructor(scope, injector, elementRef) {
-                (/** @type {?} */ (super(new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap)));
+        let MyClass = /** @class */ (() => {
+            class MyClass extends UpgradeNg1ComponentAdapter {
+                /**
+                 * @param {?} scope
+                 * @param {?} injector
+                 * @param {?} elementRef
+                 */
+                constructor(scope, injector, elementRef) {
+                    (/** @type {?} */ (super(new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap)));
+                }
             }
-        }
-        MyClass.decorators = [
-            { type: Directive, args: [Object.assign({ jit: true }, directive),] },
-        ];
-        /** @nocollapse */
-        MyClass.ctorParameters = () => [
-            { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] }] },
-            { type: Injector },
-            { type: ElementRef }
-        ];
+            MyClass.decorators = [
+                { type: Directive, args: [Object.assign({ jit: true }, directive),] },
+            ];
+            /** @nocollapse */
+            MyClass.ctorParameters = () => [
+                { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] }] },
+                { type: Injector },
+                { type: ElementRef }
+            ];
+            return MyClass;
+        })();
         this.type = MyClass;
     }
     /**
@@ -1285,195 +1288,198 @@ if (false) {
     /** @type {?} */
     UpgradeNg1ComponentAdapterBuilder.prototype.name;
 }
-class UpgradeNg1ComponentAdapter {
-    /**
-     * @param {?} helper
-     * @param {?} scope
-     * @param {?} template
-     * @param {?} inputs
-     * @param {?} outputs
-     * @param {?} propOuts
-     * @param {?} checkProperties
-     * @param {?} propertyMap
-     */
-    constructor(helper, scope, template, inputs, outputs, propOuts, checkProperties, propertyMap) {
-        this.helper = helper;
-        this.template = template;
-        this.inputs = inputs;
-        this.outputs = outputs;
-        this.propOuts = propOuts;
-        this.checkProperties = checkProperties;
-        this.propertyMap = propertyMap;
-        this.controllerInstance = null;
-        this.destinationObj = null;
-        this.checkLastValues = [];
-        this.$element = null;
-        this.directive = helper.directive;
-        this.element = helper.element;
-        this.$element = helper.$element;
-        this.componentScope = scope.$new(!!this.directive.scope);
-        /** @type {?} */
-        const controllerType = this.directive.controller;
-        if (this.directive.bindToController && controllerType) {
-            this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
-            this.destinationObj = this.controllerInstance;
-        }
-        else {
-            this.destinationObj = this.componentScope;
-        }
-        for (let i = 0; i < inputs.length; i++) {
-            ((/** @type {?} */ (this)))[inputs[i]] = null;
-        }
-        for (let j = 0; j < outputs.length; j++) {
+let UpgradeNg1ComponentAdapter = /** @class */ (() => {
+    class UpgradeNg1ComponentAdapter {
+        /**
+         * @param {?} helper
+         * @param {?} scope
+         * @param {?} template
+         * @param {?} inputs
+         * @param {?} outputs
+         * @param {?} propOuts
+         * @param {?} checkProperties
+         * @param {?} propertyMap
+         */
+        constructor(helper, scope, template, inputs, outputs, propOuts, checkProperties, propertyMap) {
+            this.helper = helper;
+            this.template = template;
+            this.inputs = inputs;
+            this.outputs = outputs;
+            this.propOuts = propOuts;
+            this.checkProperties = checkProperties;
+            this.propertyMap = propertyMap;
+            this.controllerInstance = null;
+            this.destinationObj = null;
+            this.checkLastValues = [];
+            this.$element = null;
+            this.directive = helper.directive;
+            this.element = helper.element;
+            this.$element = helper.$element;
+            this.componentScope = scope.$new(!!this.directive.scope);
             /** @type {?} */
-            const emitter = ((/** @type {?} */ (this)))[outputs[j]] = new EventEmitter();
-            if (this.propOuts.indexOf(outputs[j]) === -1) {
-                this.setComponentProperty(outputs[j], ((/**
-                 * @param {?} emitter
-                 * @return {?}
-                 */
-                emitter => (/**
-                 * @param {?} value
-                 * @return {?}
-                 */
-                (value) => emitter.emit(value))))(emitter));
+            const controllerType = this.directive.controller;
+            if (this.directive.bindToController && controllerType) {
+                this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
+                this.destinationObj = this.controllerInstance;
             }
-        }
-        for (let k = 0; k < propOuts.length; k++) {
-            this.checkLastValues.push(INITIAL_VALUE$1);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-        // Collect contents, insert and compile template
-        /** @type {?} */
-        const attachChildNodes = this.helper.prepareTransclusion();
-        /** @type {?} */
-        const linkFn = this.helper.compileTemplate(this.template);
-        // Instantiate controller (if not already done so)
-        /** @type {?} */
-        const controllerType = this.directive.controller;
-        /** @type {?} */
-        const bindToController = this.directive.bindToController;
-        if (controllerType && !bindToController) {
-            this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
-        }
-        // Require other controllers
-        /** @type {?} */
-        const requiredControllers = this.helper.resolveAndBindRequiredControllers(this.controllerInstance);
-        // Hook: $onInit
-        if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
-            this.controllerInstance.$onInit();
-        }
-        // Linking
-        /** @type {?} */
-        const link = this.directive.link;
-        /** @type {?} */
-        const preLink = typeof link == 'object' && link.pre;
-        /** @type {?} */
-        const postLink = typeof link == 'object' ? link.post : link;
-        /** @type {?} */
-        const attrs = NOT_SUPPORTED;
-        /** @type {?} */
-        const transcludeFn = NOT_SUPPORTED;
-        if (preLink) {
-            preLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
-        }
-        linkFn(this.componentScope, (/** @type {?} */ (null)), { parentBoundTranscludeFn: attachChildNodes });
-        if (postLink) {
-            postLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
-        }
-        // Hook: $postLink
-        if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
-            this.controllerInstance.$postLink();
-        }
-    }
-    /**
-     * @param {?} changes
-     * @return {?}
-     */
-    ngOnChanges(changes) {
-        /** @type {?} */
-        const ng1Changes = {};
-        Object.keys(changes).forEach((/**
-         * @param {?} name
-         * @return {?}
-         */
-        name => {
-            /** @type {?} */
-            const change = changes[name];
-            this.setComponentProperty(name, change.currentValue);
-            ng1Changes[this.propertyMap[name]] = change;
-        }));
-        if (isFunction((/** @type {?} */ (this.destinationObj)).$onChanges)) {
-            (/** @type {?} */ ((/** @type {?} */ (this.destinationObj)).$onChanges))(ng1Changes);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    ngDoCheck() {
-        /** @type {?} */
-        const destinationObj = this.destinationObj;
-        /** @type {?} */
-        const lastValues = this.checkLastValues;
-        /** @type {?} */
-        const checkProperties = this.checkProperties;
-        /** @type {?} */
-        const propOuts = this.propOuts;
-        checkProperties.forEach((/**
-         * @param {?} propName
-         * @param {?} i
-         * @return {?}
-         */
-        (propName, i) => {
-            /** @type {?} */
-            const value = (/** @type {?} */ (destinationObj))[propName];
-            /** @type {?} */
-            const last = lastValues[i];
-            if (!strictEquals(last, value)) {
+            else {
+                this.destinationObj = this.componentScope;
+            }
+            for (let i = 0; i < inputs.length; i++) {
+                ((/** @type {?} */ (this)))[inputs[i]] = null;
+            }
+            for (let j = 0; j < outputs.length; j++) {
                 /** @type {?} */
-                const eventEmitter = ((/** @type {?} */ (this)))[propOuts[i]];
-                eventEmitter.emit(lastValues[i] = value);
+                const emitter = ((/** @type {?} */ (this)))[outputs[j]] = new EventEmitter();
+                if (this.propOuts.indexOf(outputs[j]) === -1) {
+                    this.setComponentProperty(outputs[j], ((/**
+                     * @param {?} emitter
+                     * @return {?}
+                     */
+                    emitter => (/**
+                     * @param {?} value
+                     * @return {?}
+                     */
+                    (value) => emitter.emit(value))))(emitter));
+                }
             }
-        }));
-        if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
-            this.controllerInstance.$doCheck();
+            for (let k = 0; k < propOuts.length; k++) {
+                this.checkLastValues.push(INITIAL_VALUE$1);
+            }
+        }
+        /**
+         * @return {?}
+         */
+        ngOnInit() {
+            // Collect contents, insert and compile template
+            /** @type {?} */
+            const attachChildNodes = this.helper.prepareTransclusion();
+            /** @type {?} */
+            const linkFn = this.helper.compileTemplate(this.template);
+            // Instantiate controller (if not already done so)
+            /** @type {?} */
+            const controllerType = this.directive.controller;
+            /** @type {?} */
+            const bindToController = this.directive.bindToController;
+            if (controllerType && !bindToController) {
+                this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
+            }
+            // Require other controllers
+            /** @type {?} */
+            const requiredControllers = this.helper.resolveAndBindRequiredControllers(this.controllerInstance);
+            // Hook: $onInit
+            if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
+                this.controllerInstance.$onInit();
+            }
+            // Linking
+            /** @type {?} */
+            const link = this.directive.link;
+            /** @type {?} */
+            const preLink = typeof link == 'object' && link.pre;
+            /** @type {?} */
+            const postLink = typeof link == 'object' ? link.post : link;
+            /** @type {?} */
+            const attrs = NOT_SUPPORTED;
+            /** @type {?} */
+            const transcludeFn = NOT_SUPPORTED;
+            if (preLink) {
+                preLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
+            }
+            linkFn(this.componentScope, (/** @type {?} */ (null)), { parentBoundTranscludeFn: attachChildNodes });
+            if (postLink) {
+                postLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
+            }
+            // Hook: $postLink
+            if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
+                this.controllerInstance.$postLink();
+            }
+        }
+        /**
+         * @param {?} changes
+         * @return {?}
+         */
+        ngOnChanges(changes) {
+            /** @type {?} */
+            const ng1Changes = {};
+            Object.keys(changes).forEach((/**
+             * @param {?} name
+             * @return {?}
+             */
+            name => {
+                /** @type {?} */
+                const change = changes[name];
+                this.setComponentProperty(name, change.currentValue);
+                ng1Changes[this.propertyMap[name]] = change;
+            }));
+            if (isFunction((/** @type {?} */ (this.destinationObj)).$onChanges)) {
+                (/** @type {?} */ ((/** @type {?} */ (this.destinationObj)).$onChanges))(ng1Changes);
+            }
+        }
+        /**
+         * @return {?}
+         */
+        ngDoCheck() {
+            /** @type {?} */
+            const destinationObj = this.destinationObj;
+            /** @type {?} */
+            const lastValues = this.checkLastValues;
+            /** @type {?} */
+            const checkProperties = this.checkProperties;
+            /** @type {?} */
+            const propOuts = this.propOuts;
+            checkProperties.forEach((/**
+             * @param {?} propName
+             * @param {?} i
+             * @return {?}
+             */
+            (propName, i) => {
+                /** @type {?} */
+                const value = (/** @type {?} */ (destinationObj))[propName];
+                /** @type {?} */
+                const last = lastValues[i];
+                if (!strictEquals(last, value)) {
+                    /** @type {?} */
+                    const eventEmitter = ((/** @type {?} */ (this)))[propOuts[i]];
+                    eventEmitter.emit(lastValues[i] = value);
+                }
+            }));
+            if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
+                this.controllerInstance.$doCheck();
+            }
+        }
+        /**
+         * @return {?}
+         */
+        ngOnDestroy() {
+            this.helper.onDestroy(this.componentScope, this.controllerInstance);
+        }
+        /**
+         * @param {?} name
+         * @param {?} value
+         * @return {?}
+         */
+        setComponentProperty(name, value) {
+            (/** @type {?} */ (this.destinationObj))[this.propertyMap[name]] = value;
         }
     }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        this.helper.onDestroy(this.componentScope, this.controllerInstance);
-    }
-    /**
-     * @param {?} name
-     * @param {?} value
-     * @return {?}
-     */
-    setComponentProperty(name, value) {
-        (/** @type {?} */ (this.destinationObj))[this.propertyMap[name]] = value;
-    }
-}
-UpgradeNg1ComponentAdapter.decorators = [
-    { type: Directive },
-];
-/** @nocollapse */
-UpgradeNg1ComponentAdapter.ctorParameters = () => [
-    { type: UpgradeHelper },
-    { type: undefined },
-    { type: String },
-    { type: Array },
-    { type: Array },
-    { type: Array },
-    { type: Array },
-    { type: undefined }
-];
-/** @nocollapse */ UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { ɵɵinvalidFactory(); };
-/** @nocollapse */ UpgradeNg1ComponentAdapter.ɵdir = ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [ɵɵNgOnChangesFeature] });
+    UpgradeNg1ComponentAdapter.decorators = [
+        { type: Directive },
+    ];
+    /** @nocollapse */
+    UpgradeNg1ComponentAdapter.ctorParameters = () => [
+        { type: UpgradeHelper },
+        { type: undefined },
+        { type: String },
+        { type: Array },
+        { type: Array },
+        { type: Array },
+        { type: Array },
+        { type: undefined }
+    ];
+    /** @nocollapse */ UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { ɵɵinvalidFactory(); };
+    /** @nocollapse */ UpgradeNg1ComponentAdapter.ɵdir = ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [ɵɵNgOnChangesFeature] });
+    return UpgradeNg1ComponentAdapter;
+})();
 /*@__PURE__*/ (function () { ɵsetClassMetadata(UpgradeNg1ComponentAdapter, [{
         type: Directive
     }], function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; }, null); })();
@@ -2192,18 +2198,23 @@ class UpgradeAdapter {
                     };
                     // At this point we have ng1 injector and we have prepared
                     // ng1 components to be upgraded, we now can bootstrap ng2.
-                    class DynamicNgUpgradeModule {
-                        constructor() { }
-                        /**
-                         * @return {?}
-                         */
-                        ngDoBootstrap() { }
-                    }
-                    DynamicNgUpgradeModule.decorators = [
-                        { type: NgModule, args: [Object.assign({ jit: true }, ngModule),] },
-                    ];
-                    /** @nocollapse */
-                    DynamicNgUpgradeModule.ctorParameters = () => [];
+                    let DynamicNgUpgradeModule = /** @class */ (() => {
+                        // At this point we have ng1 injector and we have prepared
+                        // ng1 components to be upgraded, we now can bootstrap ng2.
+                        class DynamicNgUpgradeModule {
+                            constructor() { }
+                            /**
+                             * @return {?}
+                             */
+                            ngDoBootstrap() { }
+                        }
+                        DynamicNgUpgradeModule.decorators = [
+                            { type: NgModule, args: [Object.assign({ jit: true }, ngModule),] },
+                        ];
+                        /** @nocollapse */
+                        DynamicNgUpgradeModule.ctorParameters = () => [];
+                        return DynamicNgUpgradeModule;
+                    })();
                     platformRef
                         .bootstrapModule(DynamicNgUpgradeModule, [(/** @type {?} */ (this.compilerOptions)), { ngZone: this.ngZone }])
                         .then((/**
