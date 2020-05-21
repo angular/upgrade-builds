@@ -1,10 +1,10 @@
 /**
- * @license Angular v10.0.0-next.9+22.sha-6ca3fb1
+ * @license Angular v10.0.0-next.9+23.sha-a1001f2
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { NgModule, Injector, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, ɵsetClassMetadata } from '@angular/core';
+import { ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, Injector, ɵsetClassMetadata, NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 /**
@@ -113,45 +113,25 @@ const REQUIRE_NG_MODEL = '?ngModel';
 const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
- * @fileoverview added by tsickle
- * Generated from: packages/upgrade/static/testing/src/create_angular_testing_module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
  * @license
  * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-/** @type {?} */
 let $injector = null;
-/** @type {?} */
 let injector$1;
-/**
- * @return {?}
- */
 function $injectorFactory() {
     return $injector;
 }
 let AngularTestingModule = /** @class */ (() => {
     class AngularTestingModule {
-        /**
-         * @param {?} i
-         */
         constructor(i) {
             injector$1 = i;
         }
     }
-    AngularTestingModule.decorators = [
-        { type: NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] },
-    ];
-    /** @nocollapse */
-    AngularTestingModule.ctorParameters = () => [
-        { type: Injector }
-    ];
-    /** @nocollapse */ AngularTestingModule.ɵmod = ɵɵdefineNgModule({ type: AngularTestingModule });
-    /** @nocollapse */ AngularTestingModule.ɵinj = ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+    AngularTestingModule.ɵmod = ɵɵdefineNgModule({ type: AngularTestingModule });
+    AngularTestingModule.ɵinj = ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
     return AngularTestingModule;
 })();
 /*@__PURE__*/ (function () { ɵsetClassMetadata(AngularTestingModule, [{
@@ -217,27 +197,26 @@ let AngularTestingModule = /** @class */ (() => {
  * </code-tabs>
  *
  *
- * \@publicApi
- * @param {?} angularJSModules a collection of the names of AngularJS modules to include in the
+ * @param angularJSModules a collection of the names of AngularJS modules to include in the
  * configuration.
- * @param {?=} strictDi
- * @return {?}
+ * @param [strictDi] whether the AngularJS injector should have `strictDI` enabled.
+ *
+ * @publicApi
  */
 function createAngularTestingModule(angularJSModules, strictDi) {
     module_('$$angularJSTestingModule', angularJSModules)
         .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
-        .factory(INJECTOR_KEY, (/**
-     * @return {?}
-     */
-    () => injector$1));
+        .factory(INJECTOR_KEY, () => injector$1);
     $injector = injector(['ng', '$$angularJSTestingModule'], strictDi);
     return AngularTestingModule;
 }
 
 /**
- * @fileoverview added by tsickle
- * Generated from: packages/upgrade/static/testing/src/create_angularjs_testing_module.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
  */
 /**
  * A helper function to use when unit testing AngularJS services that depend upon downgraded Angular
@@ -302,41 +281,40 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * </code-tabs>
  *
  *
- * \@publicApi
- * @param {?} angularModules a collection of Angular modules to include in the configuration.
+ * @param angularModules a collection of Angular modules to include in the configuration.
  *
- * @return {?}
+ * @publicApi
  */
 function createAngularJSTestingModule(angularModules) {
     return module_('$$angularJSTestingModule', [])
         .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
         .factory(INJECTOR_KEY, [
         $INJECTOR,
-        (/**
-         * @param {?} $injector
-         * @return {?}
-         */
         ($injector) => {
             TestBed.configureTestingModule({
                 imports: angularModules,
                 providers: [{ provide: $INJECTOR, useValue: $injector }]
             });
             return TestBed.inject(Injector);
-        })
+        }
     ])
         .name;
 }
 
 /**
- * @fileoverview added by tsickle
- * Generated from: packages/upgrade/static/testing/public_api.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
  */
 
 /**
- * @fileoverview added by tsickle
- * Generated from: packages/upgrade/static/testing/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
  */
 
 export { createAngularJSTestingModule, createAngularTestingModule };
