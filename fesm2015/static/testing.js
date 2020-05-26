@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+17.sha-d1ea1f4
+ * @license Angular v10.0.0-rc.0+15.sha-ecce994
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -9,7 +9,7 @@ import { TestBed } from '@angular/core/testing';
 
 /**
  * @license
- * Copyright Google LLC All Rights Reserved.
+ * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -82,7 +82,7 @@ const getTestability = e => angular.getTestability(e);
 
 /**
  * @license
- * Copyright Google LLC All Rights Reserved.
+ * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -114,7 +114,7 @@ const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
  * @license
- * Copyright Google LLC All Rights Reserved.
+ * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -213,7 +213,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
 
 /**
  * @license
- * Copyright Google LLC All Rights Reserved.
+ * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -303,7 +303,7 @@ function createAngularJSTestingModule(angularModules) {
 
 /**
  * @license
- * Copyright Google LLC All Rights Reserved.
+ * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
@@ -311,7 +311,7 @@ function createAngularJSTestingModule(angularModules) {
 
 /**
  * @license
- * Copyright Google LLC All Rights Reserved.
+ * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
