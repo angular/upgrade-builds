@@ -1,10 +1,9 @@
 /**
- * @license Angular v10.0.0-rc.0+34.sha-bd7393f
+ * @license Angular v10.0.0-rc.0+35.sha-4d0e175
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { __decorate, __metadata } from 'tslib';
 import { NgModule, Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
@@ -126,15 +125,18 @@ function $injectorFactory() {
     return $injector;
 }
 let AngularTestingModule = /** @class */ (() => {
-    let AngularTestingModule = class AngularTestingModule {
+    class AngularTestingModule {
         constructor(i) {
             injector$1 = i;
         }
-    };
-    AngularTestingModule = __decorate([
-        NgModule({ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }),
-        __metadata("design:paramtypes", [Injector])
-    ], AngularTestingModule);
+    }
+    AngularTestingModule.decorators = [
+        { type: NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] }
+    ];
+    /** @nocollapse */
+    AngularTestingModule.ctorParameters = () => [
+        { type: Injector }
+    ];
     return AngularTestingModule;
 })();
 /**

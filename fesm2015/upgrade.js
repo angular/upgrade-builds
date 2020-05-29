@@ -1,11 +1,10 @@
 /**
- * @license Angular v10.0.0-rc.0+34.sha-bd7393f
+ * @license Angular v10.0.0-rc.0+35.sha-4d0e175
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { Version, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, resolveForwardRef, NgModule, isDevMode } from '@angular/core';
-import { __decorate, __param, __metadata } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -18,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-rc.0+34.sha-bd7393f');
+const VERSION = new Version('10.0.0-rc.0+35.sha-4d0e175');
 
 /**
  * @license
@@ -1129,16 +1128,20 @@ class UpgradeNg1ComponentAdapterBuilder {
         // TODO(tbosch): find or file a bug against TypeScript for this.
         const directive = { selector: selector, inputs: this.inputsRename, outputs: this.outputsRename };
         let MyClass = /** @class */ (() => {
-            let MyClass = class MyClass extends UpgradeNg1ComponentAdapter {
+            class MyClass extends UpgradeNg1ComponentAdapter {
                 constructor(scope, injector, elementRef) {
                     super(new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
                 }
-            };
-            MyClass = __decorate([
-                Directive(Object.assign({ jit: true }, directive)),
-                __param(0, Inject($SCOPE)),
-                __metadata("design:paramtypes", [Object, Injector, ElementRef])
-            ], MyClass);
+            }
+            MyClass.decorators = [
+                { type: Directive, args: [Object.assign({ jit: true }, directive),] },
+            ];
+            /** @nocollapse */
+            MyClass.ctorParameters = () => [
+                { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] }] },
+                { type: Injector },
+                { type: ElementRef }
+            ];
             return MyClass;
         })();
         this.type = MyClass;
@@ -1206,7 +1209,7 @@ class UpgradeNg1ComponentAdapterBuilder {
     }
 }
 let UpgradeNg1ComponentAdapter = /** @class */ (() => {
-    let UpgradeNg1ComponentAdapter = class UpgradeNg1ComponentAdapter {
+    class UpgradeNg1ComponentAdapter {
         constructor(helper, scope, template, inputs, outputs, propOuts, checkProperties, propertyMap) {
             this.helper = helper;
             this.template = template;
@@ -1312,11 +1315,21 @@ let UpgradeNg1ComponentAdapter = /** @class */ (() => {
         setComponentProperty(name, value) {
             this.destinationObj[this.propertyMap[name]] = value;
         }
-    };
-    UpgradeNg1ComponentAdapter = __decorate([
-        Directive(),
-        __metadata("design:paramtypes", [UpgradeHelper, Object, String, Array, Array, Array, Array, Object])
-    ], UpgradeNg1ComponentAdapter);
+    }
+    UpgradeNg1ComponentAdapter.decorators = [
+        { type: Directive }
+    ];
+    /** @nocollapse */
+    UpgradeNg1ComponentAdapter.ctorParameters = () => [
+        { type: UpgradeHelper },
+        { type: undefined },
+        { type: String },
+        { type: Array },
+        { type: Array },
+        { type: Array },
+        { type: Array },
+        { type: undefined }
+    ];
     return UpgradeNg1ComponentAdapter;
 })();
 
@@ -1871,14 +1884,15 @@ class UpgradeAdapter {
                     // At this point we have ng1 injector and we have prepared
                     // ng1 components to be upgraded, we now can bootstrap ng2.
                     let DynamicNgUpgradeModule = /** @class */ (() => {
-                        let DynamicNgUpgradeModule = class DynamicNgUpgradeModule {
+                        class DynamicNgUpgradeModule {
                             constructor() { }
                             ngDoBootstrap() { }
-                        };
-                        DynamicNgUpgradeModule = __decorate([
-                            NgModule(Object.assign({ jit: true }, ngModule)),
-                            __metadata("design:paramtypes", [])
-                        ], DynamicNgUpgradeModule);
+                        }
+                        DynamicNgUpgradeModule.decorators = [
+                            { type: NgModule, args: [Object.assign({ jit: true }, ngModule),] },
+                        ];
+                        /** @nocollapse */
+                        DynamicNgUpgradeModule.ctorParameters = () => [];
                         return DynamicNgUpgradeModule;
                     })();
                     platformRef
