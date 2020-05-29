@@ -1,12 +1,11 @@
 /**
- * @license Angular v10.0.0-rc.0+22.sha-82761ec
+ * @license Angular v10.0.0-rc.0+23.sha-d16a7f3
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, Directive, ElementRef, isDevMode, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
-import { __decorate, __metadata } from 'tslib';
 
 /**
  * @license
@@ -848,7 +847,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-rc.0+22.sha-82761ec');
+const VERSION = new Version('10.0.0-rc.0+23.sha-d16a7f3');
 
 /**
  * @license
@@ -1387,7 +1386,7 @@ class Bindings {
  * @publicApi
  */
 let UpgradeComponent = /** @class */ (() => {
-    let UpgradeComponent = class UpgradeComponent {
+    class UpgradeComponent {
         /**
          * Create a new `UpgradeComponent` instance. You should not normally need to do this.
          * Instead you should derive a new class from this one and call the super constructor
@@ -1556,11 +1555,16 @@ let UpgradeComponent = /** @class */ (() => {
                 this.bindingDestination.$onChanges(changes);
             }
         }
-    };
-    UpgradeComponent = __decorate([
-        Directive(),
-        __metadata("design:paramtypes", [String, ElementRef, Injector])
-    ], UpgradeComponent);
+    }
+    UpgradeComponent.decorators = [
+        { type: Directive }
+    ];
+    /** @nocollapse */
+    UpgradeComponent.ctorParameters = () => [
+        { type: String },
+        { type: ElementRef },
+        { type: Injector }
+    ];
     return UpgradeComponent;
 })();
 
@@ -1697,7 +1701,7 @@ let UpgradeComponent = /** @class */ (() => {
  * @publicApi
  */
 let UpgradeModule = /** @class */ (() => {
-    let UpgradeModule = class UpgradeModule {
+    class UpgradeModule {
         constructor(
         /** The root `Injector` for the upgrade application. */
         injector, 
@@ -1820,12 +1824,15 @@ let UpgradeModule = /** @class */ (() => {
                 };
             }
         }
-    };
-    UpgradeModule = __decorate([
-        NgModule({ providers: [angular1Providers] }),
-        __metadata("design:paramtypes", [Injector,
-            NgZone])
-    ], UpgradeModule);
+    }
+    UpgradeModule.decorators = [
+        { type: NgModule, args: [{ providers: [angular1Providers] },] }
+    ];
+    /** @nocollapse */
+    UpgradeModule.ctorParameters = () => [
+        { type: Injector },
+        { type: NgZone }
+    ];
     return UpgradeModule;
 })();
 

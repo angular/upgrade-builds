@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+22.sha-82761ec
+ * @license Angular v10.0.0-rc.0+23.sha-d16a7f3
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1106,7 +1106,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('10.0.0-rc.0+22.sha-82761ec');
+    var VERSION = new core.Version('10.0.0-rc.0+23.sha-d16a7f3');
 
     /**
      * @license
@@ -1831,10 +1831,15 @@
                 this.bindingDestination.$onChanges(changes);
             }
         };
-        UpgradeComponent = __decorate([
-            core.Directive(),
-            __metadata("design:paramtypes", [String, core.ElementRef, core.Injector])
-        ], UpgradeComponent);
+        UpgradeComponent.decorators = [
+            { type: core.Directive }
+        ];
+        /** @nocollapse */
+        UpgradeComponent.ctorParameters = function () { return [
+            { type: String },
+            { type: core.ElementRef },
+            { type: core.Injector }
+        ]; };
         return UpgradeComponent;
     }());
 
@@ -2104,11 +2109,14 @@
                 };
             }
         };
-        UpgradeModule = __decorate([
-            core.NgModule({ providers: [angular1Providers] }),
-            __metadata("design:paramtypes", [core.Injector,
-                core.NgZone])
-        ], UpgradeModule);
+        UpgradeModule.decorators = [
+            { type: core.NgModule, args: [{ providers: [angular1Providers] },] }
+        ];
+        /** @nocollapse */
+        UpgradeModule.ctorParameters = function () { return [
+            { type: core.Injector },
+            { type: core.NgZone }
+        ]; };
         return UpgradeModule;
     }());
 

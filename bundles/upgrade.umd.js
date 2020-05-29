@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+22.sha-82761ec
+ * @license Angular v10.0.0-rc.0+23.sha-d16a7f3
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('10.0.0-rc.0+22.sha-82761ec');
+    var VERSION = new core.Version('10.0.0-rc.0+23.sha-d16a7f3');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -1401,11 +1401,15 @@
                     _this = _super.call(this, new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap) || this;
                     return _this;
                 }
-                MyClass = __decorate([
-                    core.Directive(__assign({ jit: true }, directive)),
-                    __param(0, core.Inject($SCOPE)),
-                    __metadata("design:paramtypes", [Object, core.Injector, core.ElementRef])
-                ], MyClass);
+                MyClass.decorators = [
+                    { type: core.Directive, args: [__assign({ jit: true }, directive),] },
+                ];
+                /** @nocollapse */
+                MyClass.ctorParameters = function () { return [
+                    { type: undefined, decorators: [{ type: core.Inject, args: [$SCOPE,] }] },
+                    { type: core.Injector },
+                    { type: core.ElementRef }
+                ]; };
                 return MyClass;
             }(UpgradeNg1ComponentAdapter));
             this.type = MyClass;
@@ -1582,10 +1586,20 @@
         UpgradeNg1ComponentAdapter.prototype.setComponentProperty = function (name, value) {
             this.destinationObj[this.propertyMap[name]] = value;
         };
-        UpgradeNg1ComponentAdapter = __decorate([
-            core.Directive(),
-            __metadata("design:paramtypes", [UpgradeHelper, Object, String, Array, Array, Array, Array, Object])
-        ], UpgradeNg1ComponentAdapter);
+        UpgradeNg1ComponentAdapter.decorators = [
+            { type: core.Directive }
+        ];
+        /** @nocollapse */
+        UpgradeNg1ComponentAdapter.ctorParameters = function () { return [
+            { type: UpgradeHelper },
+            { type: undefined },
+            { type: String },
+            { type: Array },
+            { type: Array },
+            { type: Array },
+            { type: Array },
+            { type: undefined }
+        ]; };
         return UpgradeNg1ComponentAdapter;
     }());
 
@@ -2148,10 +2162,11 @@
                             function DynamicNgUpgradeModule() {
                             }
                             DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
-                            DynamicNgUpgradeModule = __decorate([
-                                core.NgModule(__assign({ jit: true }, ngModule)),
-                                __metadata("design:paramtypes", [])
-                            ], DynamicNgUpgradeModule);
+                            DynamicNgUpgradeModule.decorators = [
+                                { type: core.NgModule, args: [__assign({ jit: true }, ngModule),] },
+                            ];
+                            /** @nocollapse */
+                            DynamicNgUpgradeModule.ctorParameters = function () { return []; };
                             return DynamicNgUpgradeModule;
                         }());
                         platformRef
