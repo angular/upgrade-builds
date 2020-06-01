@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "10.0.0-rc.0+35.sha-4d0e175",
+  "version": "10.0.0-rc.0+37.sha-8bb7411",
   "description": "Angular - the library for easing update from v1 to v2",
   "author": "angular",
   "license": "MIT",
@@ -8,10 +8,10 @@
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/core": "10.0.0-rc.0+35.sha-4d0e175",
-    "@angular/compiler": "10.0.0-rc.0+35.sha-4d0e175",
-    "@angular/platform-browser": "10.0.0-rc.0+35.sha-4d0e175",
-    "@angular/platform-browser-dynamic": "10.0.0-rc.0+35.sha-4d0e175"
+    "@angular/core": "10.0.0-rc.0+37.sha-8bb7411",
+    "@angular/compiler": "10.0.0-rc.0+37.sha-8bb7411",
+    "@angular/platform-browser": "10.0.0-rc.0+37.sha-8bb7411",
+    "@angular/platform-browser-dynamic": "10.0.0-rc.0+37.sha-8bb7411"
   },
   "repository": {
     "type": "git",
@@ -41,9 +41,6 @@
     ]
   },
   "sideEffects": false,
-  "publishConfig": {
-    "registry": "https://wombat-dressing-room.appspot.com"
-  },
   "main": "./bundles/upgrade.umd.js",
   "fesm2015": "./fesm2015/upgrade.js",
   "esm2015": "./esm2015/index.js",
