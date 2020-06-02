@@ -1,10 +1,10 @@
 /**
- * @license Angular v10.0.0-rc.2
+ * @license Angular v10.0.0-rc.2+7.sha-cb6996b
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, Directive, ElementRef, isDevMode, NgModule } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, Directive, ElementRef, isDevMode, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -847,7 +847,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-rc.2');
+const VERSION = new Version('10.0.0-rc.2+7.sha-cb6996b');
 
 /**
  * @license
@@ -1482,7 +1482,7 @@ let UpgradeComponent = /** @class */ (() => {
             twoWayBoundProperties.forEach((propName, idx) => {
                 const newValue = this.bindingDestination[propName];
                 const oldValue = twoWayBoundLastValues[idx];
-                if (!ɵlooseIdentical(newValue, oldValue)) {
+                if (!Object.is(newValue, oldValue)) {
                     const outputName = propertyToOutputMap[propName];
                     const eventEmitter = this[outputName];
                     eventEmitter.emit(newValue);
