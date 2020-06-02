@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+39.sha-c3651ce
+ * @license Angular v10.0.0-rc.0+44.sha-1b55da1
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1106,7 +1106,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('10.0.0-rc.0+39.sha-c3651ce');
+    var VERSION = new core.Version('10.0.0-rc.0+44.sha-1b55da1');
 
     /**
      * @license
@@ -1754,7 +1754,7 @@
             twoWayBoundProperties.forEach(function (propName, idx) {
                 var newValue = _this.bindingDestination[propName];
                 var oldValue = twoWayBoundLastValues[idx];
-                if (!core.ɵlooseIdentical(newValue, oldValue)) {
+                if (!Object.is(newValue, oldValue)) {
                     var outputName = propertyToOutputMap[propName];
                     var eventEmitter = _this[outputName];
                     eventEmitter.emit(newValue);
