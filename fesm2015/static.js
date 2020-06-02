@@ -1,10 +1,10 @@
 /**
- * @license Angular v10.0.0-rc.0+39.sha-c3651ce
+ * @license Angular v10.0.0-rc.0+44.sha-1b55da1
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, ɵlooseIdentical, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, ɵsetClassMetadata, Directive, ElementRef, isDevMode, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, NgModule } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, ɵsetClassMetadata, Directive, ElementRef, isDevMode, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -847,7 +847,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-rc.0+39.sha-c3651ce');
+const VERSION = new Version('10.0.0-rc.0+44.sha-1b55da1');
 
 /**
  * @license
@@ -1482,7 +1482,7 @@ let UpgradeComponent = /** @class */ (() => {
             twoWayBoundProperties.forEach((propName, idx) => {
                 const newValue = this.bindingDestination[propName];
                 const oldValue = twoWayBoundLastValues[idx];
-                if (!ɵlooseIdentical(newValue, oldValue)) {
+                if (!Object.is(newValue, oldValue)) {
                     const outputName = propertyToOutputMap[propName];
                     const eventEmitter = this[outputName];
                     eventEmitter.emit(newValue);
