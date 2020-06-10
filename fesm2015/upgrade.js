@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.3+14.sha-9d397eb
+ * @license Angular v10.0.0-rc.3+16.sha-742f3d6
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-rc.3+14.sha-9d397eb');
+const VERSION = new Version('10.0.0-rc.3+16.sha-742f3d6');
 
 /**
  * @license
@@ -1134,9 +1134,8 @@ class UpgradeNg1ComponentAdapterBuilder {
                 }
             }
             MyClass.decorators = [
-                { type: Directive, args: [Object.assign({ jit: true }, directive),] },
+                { type: Directive, args: [Object.assign({ jit: true }, directive),] }
             ];
-            /** @nocollapse */
             MyClass.ctorParameters = () => [
                 { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] }] },
                 { type: Injector },
@@ -1319,7 +1318,6 @@ let UpgradeNg1ComponentAdapter = /** @class */ (() => {
     UpgradeNg1ComponentAdapter.decorators = [
         { type: Directive }
     ];
-    /** @nocollapse */
     UpgradeNg1ComponentAdapter.ctorParameters = () => [
         { type: UpgradeHelper },
         { type: undefined },
@@ -1889,9 +1887,8 @@ class UpgradeAdapter {
                             ngDoBootstrap() { }
                         }
                         DynamicNgUpgradeModule.decorators = [
-                            { type: NgModule, args: [Object.assign({ jit: true }, ngModule),] },
+                            { type: NgModule, args: [Object.assign({ jit: true }, ngModule),] }
                         ];
-                        /** @nocollapse */
                         DynamicNgUpgradeModule.ctorParameters = () => [];
                         return DynamicNgUpgradeModule;
                     })();
