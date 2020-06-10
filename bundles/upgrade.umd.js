@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+113.sha-0a1d078
+ * @license Angular v10.0.0-rc.0+114.sha-401ef71
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('10.0.0-rc.0+113.sha-0a1d078');
+    var VERSION = new core.Version('10.0.0-rc.0+114.sha-401ef71');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -1402,9 +1402,8 @@
                     return _this;
                 }
                 MyClass.decorators = [
-                    { type: core.Directive, args: [__assign({ jit: true }, directive),] },
+                    { type: core.Directive, args: [__assign({ jit: true }, directive),] }
                 ];
-                /** @nocollapse */
                 MyClass.ctorParameters = function () { return [
                     { type: undefined, decorators: [{ type: core.Inject, args: [$SCOPE,] }] },
                     { type: core.Injector },
@@ -1589,7 +1588,6 @@
         UpgradeNg1ComponentAdapter.decorators = [
             { type: core.Directive }
         ];
-        /** @nocollapse */
         UpgradeNg1ComponentAdapter.ctorParameters = function () { return [
             { type: UpgradeHelper },
             { type: undefined },
@@ -2163,9 +2161,8 @@
                             }
                             DynamicNgUpgradeModule.prototype.ngDoBootstrap = function () { };
                             DynamicNgUpgradeModule.decorators = [
-                                { type: core.NgModule, args: [__assign({ jit: true }, ngModule),] },
+                                { type: core.NgModule, args: [__assign({ jit: true }, ngModule),] }
                             ];
-                            /** @nocollapse */
                             DynamicNgUpgradeModule.ctorParameters = function () { return []; };
                             return DynamicNgUpgradeModule;
                         }());

@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+113.sha-0a1d078
+ * @license Angular v10.0.0-rc.0+114.sha-401ef71
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -847,7 +847,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-rc.0+113.sha-0a1d078');
+const VERSION = new Version('10.0.0-rc.0+114.sha-401ef71');
 
 /**
  * @license
@@ -1559,7 +1559,6 @@ let UpgradeComponent = /** @class */ (() => {
     UpgradeComponent.decorators = [
         { type: Directive }
     ];
-    /** @nocollapse */
     UpgradeComponent.ctorParameters = () => [
         { type: String },
         { type: ElementRef },
@@ -1828,7 +1827,6 @@ let UpgradeModule = /** @class */ (() => {
     UpgradeModule.decorators = [
         { type: NgModule, args: [{ providers: [angular1Providers] },] }
     ];
-    /** @nocollapse */
     UpgradeModule.ctorParameters = () => [
         { type: Injector },
         { type: NgZone }

@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+113.sha-0a1d078
+ * @license Angular v10.0.0-rc.0+114.sha-401ef71
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1106,7 +1106,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('10.0.0-rc.0+113.sha-0a1d078');
+    var VERSION = new core.Version('10.0.0-rc.0+114.sha-401ef71');
 
     /**
      * @license
@@ -1834,7 +1834,6 @@
         UpgradeComponent.decorators = [
             { type: core.Directive }
         ];
-        /** @nocollapse */
         UpgradeComponent.ctorParameters = function () { return [
             { type: String },
             { type: core.ElementRef },
@@ -2112,7 +2111,6 @@
         UpgradeModule.decorators = [
             { type: core.NgModule, args: [{ providers: [angular1Providers] },] }
         ];
-        /** @nocollapse */
         UpgradeModule.ctorParameters = function () { return [
             { type: core.Injector },
             { type: core.NgZone }
