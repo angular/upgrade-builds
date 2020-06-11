@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+130.sha-8c682c5
+ * @license Angular v10.0.0-rc.0+134.sha-a937889
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -124,20 +124,17 @@ let injector$1;
 function $injectorFactory() {
     return $injector;
 }
-let AngularTestingModule = /** @class */ (() => {
-    class AngularTestingModule {
-        constructor(i) {
-            injector$1 = i;
-        }
+class AngularTestingModule {
+    constructor(i) {
+        injector$1 = i;
     }
-    AngularTestingModule.decorators = [
-        { type: NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] }
-    ];
-    AngularTestingModule.ctorParameters = () => [
-        { type: Injector }
-    ];
-    return AngularTestingModule;
-})();
+}
+AngularTestingModule.decorators = [
+    { type: NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] }
+];
+AngularTestingModule.ctorParameters = () => [
+    { type: Injector }
+];
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
  * services.
