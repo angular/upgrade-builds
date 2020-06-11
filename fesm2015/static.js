@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.4+6.sha-c2f4a9b
+ * @license Angular v10.0.0-rc.4+14.sha-38c48be
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -847,7 +847,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-rc.4+6.sha-c2f4a9b');
+const VERSION = new Version('10.0.0-rc.4+14.sha-38c48be');
 
 /**
  * @license
@@ -1385,187 +1385,184 @@ class Bindings {
  *
  * @publicApi
  */
-let UpgradeComponent = /** @class */ (() => {
-    class UpgradeComponent {
-        /**
-         * Create a new `UpgradeComponent` instance. You should not normally need to do this.
-         * Instead you should derive a new class from this one and call the super constructor
-         * from the base class.
-         *
-         * {@example upgrade/static/ts/full/module.ts region="ng1-hero-wrapper" }
-         *
-         * * The `name` parameter should be the name of the AngularJS directive.
-         * * The `elementRef` and `injector` parameters should be acquired from Angular by dependency
-         *   injection into the base class constructor.
-         */
-        constructor(name, elementRef, injector) {
-            this.name = name;
-            this.elementRef = elementRef;
-            this.injector = injector;
-            this.helper = new UpgradeHelper(injector, name, elementRef);
-            this.$injector = this.helper.$injector;
-            this.element = this.helper.element;
-            this.$element = this.helper.$element;
-            this.directive = this.helper.directive;
-            this.bindings = this.initializeBindings(this.directive);
-            // We ask for the AngularJS scope from the Angular injector, since
-            // we will put the new component scope onto the new injector for each component
-            const $parentScope = injector.get($SCOPE);
-            // QUESTION 1: Should we create an isolated scope if the scope is only true?
-            // QUESTION 2: Should we make the scope accessible through `$element.scope()/isolateScope()`?
-            this.$componentScope = $parentScope.$new(!!this.directive.scope);
-            this.initializeOutputs();
+class UpgradeComponent {
+    /**
+     * Create a new `UpgradeComponent` instance. You should not normally need to do this.
+     * Instead you should derive a new class from this one and call the super constructor
+     * from the base class.
+     *
+     * {@example upgrade/static/ts/full/module.ts region="ng1-hero-wrapper" }
+     *
+     * * The `name` parameter should be the name of the AngularJS directive.
+     * * The `elementRef` and `injector` parameters should be acquired from Angular by dependency
+     *   injection into the base class constructor.
+     */
+    constructor(name, elementRef, injector) {
+        this.name = name;
+        this.elementRef = elementRef;
+        this.injector = injector;
+        this.helper = new UpgradeHelper(injector, name, elementRef);
+        this.$injector = this.helper.$injector;
+        this.element = this.helper.element;
+        this.$element = this.helper.$element;
+        this.directive = this.helper.directive;
+        this.bindings = this.initializeBindings(this.directive);
+        // We ask for the AngularJS scope from the Angular injector, since
+        // we will put the new component scope onto the new injector for each component
+        const $parentScope = injector.get($SCOPE);
+        // QUESTION 1: Should we create an isolated scope if the scope is only true?
+        // QUESTION 2: Should we make the scope accessible through `$element.scope()/isolateScope()`?
+        this.$componentScope = $parentScope.$new(!!this.directive.scope);
+        this.initializeOutputs();
+    }
+    ngOnInit() {
+        // Collect contents, insert and compile template
+        const attachChildNodes = this.helper.prepareTransclusion();
+        const linkFn = this.helper.compileTemplate();
+        // Instantiate controller
+        const controllerType = this.directive.controller;
+        const bindToController = this.directive.bindToController;
+        if (controllerType) {
+            this.controllerInstance = this.helper.buildController(controllerType, this.$componentScope);
         }
-        ngOnInit() {
-            // Collect contents, insert and compile template
-            const attachChildNodes = this.helper.prepareTransclusion();
-            const linkFn = this.helper.compileTemplate();
-            // Instantiate controller
-            const controllerType = this.directive.controller;
-            const bindToController = this.directive.bindToController;
-            if (controllerType) {
-                this.controllerInstance = this.helper.buildController(controllerType, this.$componentScope);
-            }
-            else if (bindToController) {
-                throw new Error(`Upgraded directive '${this.directive.name}' specifies 'bindToController' but no controller.`);
-            }
-            // Set up outputs
-            this.bindingDestination = bindToController ? this.controllerInstance : this.$componentScope;
-            this.bindOutputs();
-            // Require other controllers
-            const requiredControllers = this.helper.resolveAndBindRequiredControllers(this.controllerInstance);
-            // Hook: $onChanges
-            if (this.pendingChanges) {
-                this.forwardChanges(this.pendingChanges);
-                this.pendingChanges = null;
-            }
-            // Hook: $onInit
-            if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
-                this.controllerInstance.$onInit();
-            }
-            // Hook: $doCheck
-            if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
-                const callDoCheck = () => this.controllerInstance.$doCheck();
-                this.unregisterDoCheckWatcher = this.$componentScope.$parent.$watch(callDoCheck);
-                callDoCheck();
-            }
-            // Linking
-            const link = this.directive.link;
-            const preLink = typeof link == 'object' && link.pre;
-            const postLink = typeof link == 'object' ? link.post : link;
-            const attrs = NOT_SUPPORTED;
-            const transcludeFn = NOT_SUPPORTED;
-            if (preLink) {
-                preLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
-            }
-            linkFn(this.$componentScope, null, { parentBoundTranscludeFn: attachChildNodes });
-            if (postLink) {
-                postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
-            }
-            // Hook: $postLink
-            if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
-                this.controllerInstance.$postLink();
-            }
+        else if (bindToController) {
+            throw new Error(`Upgraded directive '${this.directive.name}' specifies 'bindToController' but no controller.`);
         }
-        ngOnChanges(changes) {
-            if (!this.bindingDestination) {
-                this.pendingChanges = changes;
-            }
-            else {
-                this.forwardChanges(changes);
-            }
+        // Set up outputs
+        this.bindingDestination = bindToController ? this.controllerInstance : this.$componentScope;
+        this.bindOutputs();
+        // Require other controllers
+        const requiredControllers = this.helper.resolveAndBindRequiredControllers(this.controllerInstance);
+        // Hook: $onChanges
+        if (this.pendingChanges) {
+            this.forwardChanges(this.pendingChanges);
+            this.pendingChanges = null;
         }
-        ngDoCheck() {
-            const twoWayBoundProperties = this.bindings.twoWayBoundProperties;
-            const twoWayBoundLastValues = this.bindings.twoWayBoundLastValues;
-            const propertyToOutputMap = this.bindings.propertyToOutputMap;
-            twoWayBoundProperties.forEach((propName, idx) => {
-                const newValue = this.bindingDestination[propName];
-                const oldValue = twoWayBoundLastValues[idx];
-                if (!Object.is(newValue, oldValue)) {
-                    const outputName = propertyToOutputMap[propName];
-                    const eventEmitter = this[outputName];
-                    eventEmitter.emit(newValue);
-                    twoWayBoundLastValues[idx] = newValue;
+        // Hook: $onInit
+        if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
+            this.controllerInstance.$onInit();
+        }
+        // Hook: $doCheck
+        if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
+            const callDoCheck = () => this.controllerInstance.$doCheck();
+            this.unregisterDoCheckWatcher = this.$componentScope.$parent.$watch(callDoCheck);
+            callDoCheck();
+        }
+        // Linking
+        const link = this.directive.link;
+        const preLink = typeof link == 'object' && link.pre;
+        const postLink = typeof link == 'object' ? link.post : link;
+        const attrs = NOT_SUPPORTED;
+        const transcludeFn = NOT_SUPPORTED;
+        if (preLink) {
+            preLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
+        }
+        linkFn(this.$componentScope, null, { parentBoundTranscludeFn: attachChildNodes });
+        if (postLink) {
+            postLink(this.$componentScope, this.$element, attrs, requiredControllers, transcludeFn);
+        }
+        // Hook: $postLink
+        if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
+            this.controllerInstance.$postLink();
+        }
+    }
+    ngOnChanges(changes) {
+        if (!this.bindingDestination) {
+            this.pendingChanges = changes;
+        }
+        else {
+            this.forwardChanges(changes);
+        }
+    }
+    ngDoCheck() {
+        const twoWayBoundProperties = this.bindings.twoWayBoundProperties;
+        const twoWayBoundLastValues = this.bindings.twoWayBoundLastValues;
+        const propertyToOutputMap = this.bindings.propertyToOutputMap;
+        twoWayBoundProperties.forEach((propName, idx) => {
+            const newValue = this.bindingDestination[propName];
+            const oldValue = twoWayBoundLastValues[idx];
+            if (!Object.is(newValue, oldValue)) {
+                const outputName = propertyToOutputMap[propName];
+                const eventEmitter = this[outputName];
+                eventEmitter.emit(newValue);
+                twoWayBoundLastValues[idx] = newValue;
+            }
+        });
+    }
+    ngOnDestroy() {
+        if (isFunction(this.unregisterDoCheckWatcher)) {
+            this.unregisterDoCheckWatcher();
+        }
+        this.helper.onDestroy(this.$componentScope, this.controllerInstance);
+    }
+    initializeBindings(directive) {
+        const btcIsObject = typeof directive.bindToController === 'object';
+        if (btcIsObject && Object.keys(directive.scope).length) {
+            throw new Error(`Binding definitions on scope and controller at the same time is not supported.`);
+        }
+        const context = btcIsObject ? directive.bindToController : directive.scope;
+        const bindings = new Bindings();
+        if (typeof context == 'object') {
+            Object.keys(context).forEach(propName => {
+                const definition = context[propName];
+                const bindingType = definition.charAt(0);
+                // QUESTION: What about `=*`? Ignore? Throw? Support?
+                switch (bindingType) {
+                    case '@':
+                    case '<':
+                        // We don't need to do anything special. They will be defined as inputs on the
+                        // upgraded component facade and the change propagation will be handled by
+                        // `ngOnChanges()`.
+                        break;
+                    case '=':
+                        bindings.twoWayBoundProperties.push(propName);
+                        bindings.twoWayBoundLastValues.push(INITIAL_VALUE$1);
+                        bindings.propertyToOutputMap[propName] = propName + 'Change';
+                        break;
+                    case '&':
+                        bindings.expressionBoundProperties.push(propName);
+                        bindings.propertyToOutputMap[propName] = propName;
+                        break;
+                    default:
+                        let json = JSON.stringify(context);
+                        throw new Error(`Unexpected mapping '${bindingType}' in '${json}' in '${this.name}' directive.`);
                 }
             });
         }
-        ngOnDestroy() {
-            if (isFunction(this.unregisterDoCheckWatcher)) {
-                this.unregisterDoCheckWatcher();
-            }
-            this.helper.onDestroy(this.$componentScope, this.controllerInstance);
-        }
-        initializeBindings(directive) {
-            const btcIsObject = typeof directive.bindToController === 'object';
-            if (btcIsObject && Object.keys(directive.scope).length) {
-                throw new Error(`Binding definitions on scope and controller at the same time is not supported.`);
-            }
-            const context = btcIsObject ? directive.bindToController : directive.scope;
-            const bindings = new Bindings();
-            if (typeof context == 'object') {
-                Object.keys(context).forEach(propName => {
-                    const definition = context[propName];
-                    const bindingType = definition.charAt(0);
-                    // QUESTION: What about `=*`? Ignore? Throw? Support?
-                    switch (bindingType) {
-                        case '@':
-                        case '<':
-                            // We don't need to do anything special. They will be defined as inputs on the
-                            // upgraded component facade and the change propagation will be handled by
-                            // `ngOnChanges()`.
-                            break;
-                        case '=':
-                            bindings.twoWayBoundProperties.push(propName);
-                            bindings.twoWayBoundLastValues.push(INITIAL_VALUE$1);
-                            bindings.propertyToOutputMap[propName] = propName + 'Change';
-                            break;
-                        case '&':
-                            bindings.expressionBoundProperties.push(propName);
-                            bindings.propertyToOutputMap[propName] = propName;
-                            break;
-                        default:
-                            let json = JSON.stringify(context);
-                            throw new Error(`Unexpected mapping '${bindingType}' in '${json}' in '${this.name}' directive.`);
-                    }
-                });
-            }
-            return bindings;
-        }
-        initializeOutputs() {
-            // Initialize the outputs for `=` and `&` bindings
-            this.bindings.twoWayBoundProperties.concat(this.bindings.expressionBoundProperties)
-                .forEach(propName => {
-                const outputName = this.bindings.propertyToOutputMap[propName];
-                this[outputName] = new EventEmitter();
-            });
-        }
-        bindOutputs() {
-            // Bind `&` bindings to the corresponding outputs
-            this.bindings.expressionBoundProperties.forEach(propName => {
-                const outputName = this.bindings.propertyToOutputMap[propName];
-                const emitter = this[outputName];
-                this.bindingDestination[propName] = (value) => emitter.emit(value);
-            });
-        }
-        forwardChanges(changes) {
-            // Forward input changes to `bindingDestination`
-            Object.keys(changes).forEach(propName => this.bindingDestination[propName] = changes[propName].currentValue);
-            if (isFunction(this.bindingDestination.$onChanges)) {
-                this.bindingDestination.$onChanges(changes);
-            }
+        return bindings;
+    }
+    initializeOutputs() {
+        // Initialize the outputs for `=` and `&` bindings
+        this.bindings.twoWayBoundProperties.concat(this.bindings.expressionBoundProperties)
+            .forEach(propName => {
+            const outputName = this.bindings.propertyToOutputMap[propName];
+            this[outputName] = new EventEmitter();
+        });
+    }
+    bindOutputs() {
+        // Bind `&` bindings to the corresponding outputs
+        this.bindings.expressionBoundProperties.forEach(propName => {
+            const outputName = this.bindings.propertyToOutputMap[propName];
+            const emitter = this[outputName];
+            this.bindingDestination[propName] = (value) => emitter.emit(value);
+        });
+    }
+    forwardChanges(changes) {
+        // Forward input changes to `bindingDestination`
+        Object.keys(changes).forEach(propName => this.bindingDestination[propName] = changes[propName].currentValue);
+        if (isFunction(this.bindingDestination.$onChanges)) {
+            this.bindingDestination.$onChanges(changes);
         }
     }
-    UpgradeComponent.decorators = [
-        { type: Directive }
-    ];
-    UpgradeComponent.ctorParameters = () => [
-        { type: String },
-        { type: ElementRef },
-        { type: Injector }
-    ];
-    return UpgradeComponent;
-})();
+}
+UpgradeComponent.decorators = [
+    { type: Directive }
+];
+UpgradeComponent.ctorParameters = () => [
+    { type: String },
+    { type: ElementRef },
+    { type: Injector }
+];
 
 /**
  * @license
@@ -1699,140 +1696,137 @@ let UpgradeComponent = /** @class */ (() => {
  *
  * @publicApi
  */
-let UpgradeModule = /** @class */ (() => {
-    class UpgradeModule {
-        constructor(
-        /** The root `Injector` for the upgrade application. */
-        injector, 
-        /** The bootstrap zone for the upgrade application */
-        ngZone) {
-            this.ngZone = ngZone;
-            this.injector = new NgAdapterInjector(injector);
-        }
-        /**
-         * Bootstrap an AngularJS application from this NgModule
-         * @param element the element on which to bootstrap the AngularJS application
-         * @param [modules] the AngularJS modules to bootstrap for this application
-         * @param [config] optional extra AngularJS bootstrap configuration
-         */
-        bootstrap(element$1, modules = [], config /*angular.IAngularBootstrapConfig*/) {
-            const INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
-            // Create an ng1 module to bootstrap
-            const initModule = module_(INIT_MODULE_NAME, [])
-                .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
-                .value(INJECTOR_KEY, this.injector)
-                .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (injector) => ({ injector })])
-                .config([
-                $PROVIDE, $INJECTOR,
-                ($provide, $injector) => {
-                    if ($injector.has($$TESTABILITY)) {
-                        $provide.decorator($$TESTABILITY, [
-                            $DELEGATE,
-                            (testabilityDelegate) => {
-                                const originalWhenStable = testabilityDelegate.whenStable;
-                                const injector = this.injector;
-                                // Cannot use arrow function below because we need the context
-                                const newWhenStable = function (callback) {
-                                    originalWhenStable.call(testabilityDelegate, function () {
-                                        const ng2Testability = injector.get(Testability);
-                                        if (ng2Testability.isStable()) {
-                                            callback();
-                                        }
-                                        else {
-                                            ng2Testability.whenStable(newWhenStable.bind(testabilityDelegate, callback));
-                                        }
-                                    });
-                                };
-                                testabilityDelegate.whenStable = newWhenStable;
-                                return testabilityDelegate;
-                            }
-                        ]);
-                    }
-                    if ($injector.has($INTERVAL)) {
-                        $provide.decorator($INTERVAL, [
-                            $DELEGATE,
-                            (intervalDelegate) => {
-                                // Wrap the $interval service so that setInterval is called outside NgZone,
-                                // but the callback is still invoked within it. This is so that $interval
-                                // won't block stability, which preserves the behavior from AngularJS.
-                                let wrappedInterval = (fn, delay, count, invokeApply, ...pass) => {
-                                    return this.ngZone.runOutsideAngular(() => {
-                                        return intervalDelegate((...args) => {
-                                            // Run callback in the next VM turn - $interval calls
-                                            // $rootScope.$apply, and running the callback in NgZone will
-                                            // cause a '$digest already in progress' error if it's in the
-                                            // same vm turn.
-                                            setTimeout(() => {
-                                                this.ngZone.run(() => fn(...args));
-                                            });
-                                        }, delay, count, invokeApply, ...pass);
-                                    });
-                                };
-                                wrappedInterval['cancel'] = intervalDelegate.cancel;
-                                return wrappedInterval;
-                            }
-                        ]);
-                    }
+class UpgradeModule {
+    constructor(
+    /** The root `Injector` for the upgrade application. */
+    injector, 
+    /** The bootstrap zone for the upgrade application */
+    ngZone) {
+        this.ngZone = ngZone;
+        this.injector = new NgAdapterInjector(injector);
+    }
+    /**
+     * Bootstrap an AngularJS application from this NgModule
+     * @param element the element on which to bootstrap the AngularJS application
+     * @param [modules] the AngularJS modules to bootstrap for this application
+     * @param [config] optional extra AngularJS bootstrap configuration
+     */
+    bootstrap(element$1, modules = [], config /*angular.IAngularBootstrapConfig*/) {
+        const INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
+        // Create an ng1 module to bootstrap
+        const initModule = module_(INIT_MODULE_NAME, [])
+            .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
+            .value(INJECTOR_KEY, this.injector)
+            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (injector) => ({ injector })])
+            .config([
+            $PROVIDE, $INJECTOR,
+            ($provide, $injector) => {
+                if ($injector.has($$TESTABILITY)) {
+                    $provide.decorator($$TESTABILITY, [
+                        $DELEGATE,
+                        (testabilityDelegate) => {
+                            const originalWhenStable = testabilityDelegate.whenStable;
+                            const injector = this.injector;
+                            // Cannot use arrow function below because we need the context
+                            const newWhenStable = function (callback) {
+                                originalWhenStable.call(testabilityDelegate, function () {
+                                    const ng2Testability = injector.get(Testability);
+                                    if (ng2Testability.isStable()) {
+                                        callback();
+                                    }
+                                    else {
+                                        ng2Testability.whenStable(newWhenStable.bind(testabilityDelegate, callback));
+                                    }
+                                });
+                            };
+                            testabilityDelegate.whenStable = newWhenStable;
+                            return testabilityDelegate;
+                        }
+                    ]);
                 }
-            ])
-                .run([
-                $INJECTOR,
-                ($injector) => {
-                    this.$injector = $injector;
-                    // Initialize the ng1 $injector provider
-                    setTempInjectorRef($injector);
-                    this.injector.get($INJECTOR);
-                    // Put the injector on the DOM, so that it can be "required"
-                    element(element$1).data(controllerKey(INJECTOR_KEY), this.injector);
-                    // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles
-                    // We need to do this in the next tick so that we don't prevent the bootup
-                    // stabilizing
-                    setTimeout(() => {
-                        const $rootScope = $injector.get('$rootScope');
-                        const subscription = this.ngZone.onMicrotaskEmpty.subscribe(() => {
-                            if ($rootScope.$$phase) {
-                                if (isDevMode()) {
-                                    console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
-                                }
-                                return $rootScope.$evalAsync();
-                            }
-                            return $rootScope.$digest();
-                        });
-                        $rootScope.$on('$destroy', () => {
-                            subscription.unsubscribe();
-                        });
-                    }, 0);
+                if ($injector.has($INTERVAL)) {
+                    $provide.decorator($INTERVAL, [
+                        $DELEGATE,
+                        (intervalDelegate) => {
+                            // Wrap the $interval service so that setInterval is called outside NgZone,
+                            // but the callback is still invoked within it. This is so that $interval
+                            // won't block stability, which preserves the behavior from AngularJS.
+                            let wrappedInterval = (fn, delay, count, invokeApply, ...pass) => {
+                                return this.ngZone.runOutsideAngular(() => {
+                                    return intervalDelegate((...args) => {
+                                        // Run callback in the next VM turn - $interval calls
+                                        // $rootScope.$apply, and running the callback in NgZone will
+                                        // cause a '$digest already in progress' error if it's in the
+                                        // same vm turn.
+                                        setTimeout(() => {
+                                            this.ngZone.run(() => fn(...args));
+                                        });
+                                    }, delay, count, invokeApply, ...pass);
+                                });
+                            };
+                            wrappedInterval['cancel'] = intervalDelegate.cancel;
+                            return wrappedInterval;
+                        }
+                    ]);
                 }
-            ]);
-            const upgradeModule = module_(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
-            // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
-            const windowAngular = window['angular'];
-            windowAngular.resumeBootstrap = undefined;
-            // Bootstrap the AngularJS application inside our zone
-            this.ngZone.run(() => {
-                bootstrap(element$1, [upgradeModule.name], config);
-            });
-            // Patch resumeBootstrap() to run inside the ngZone
-            if (windowAngular.resumeBootstrap) {
-                const originalResumeBootstrap = windowAngular.resumeBootstrap;
-                const ngZone = this.ngZone;
-                windowAngular.resumeBootstrap = function () {
-                    let args = arguments;
-                    windowAngular.resumeBootstrap = originalResumeBootstrap;
-                    return ngZone.run(() => windowAngular.resumeBootstrap.apply(this, args));
-                };
             }
+        ])
+            .run([
+            $INJECTOR,
+            ($injector) => {
+                this.$injector = $injector;
+                // Initialize the ng1 $injector provider
+                setTempInjectorRef($injector);
+                this.injector.get($INJECTOR);
+                // Put the injector on the DOM, so that it can be "required"
+                element(element$1).data(controllerKey(INJECTOR_KEY), this.injector);
+                // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles
+                // We need to do this in the next tick so that we don't prevent the bootup
+                // stabilizing
+                setTimeout(() => {
+                    const $rootScope = $injector.get('$rootScope');
+                    const subscription = this.ngZone.onMicrotaskEmpty.subscribe(() => {
+                        if ($rootScope.$$phase) {
+                            if (isDevMode()) {
+                                console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                            }
+                            return $rootScope.$evalAsync();
+                        }
+                        return $rootScope.$digest();
+                    });
+                    $rootScope.$on('$destroy', () => {
+                        subscription.unsubscribe();
+                    });
+                }, 0);
+            }
+        ]);
+        const upgradeModule = module_(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
+        // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
+        const windowAngular = window['angular'];
+        windowAngular.resumeBootstrap = undefined;
+        // Bootstrap the AngularJS application inside our zone
+        this.ngZone.run(() => {
+            bootstrap(element$1, [upgradeModule.name], config);
+        });
+        // Patch resumeBootstrap() to run inside the ngZone
+        if (windowAngular.resumeBootstrap) {
+            const originalResumeBootstrap = windowAngular.resumeBootstrap;
+            const ngZone = this.ngZone;
+            windowAngular.resumeBootstrap = function () {
+                let args = arguments;
+                windowAngular.resumeBootstrap = originalResumeBootstrap;
+                return ngZone.run(() => windowAngular.resumeBootstrap.apply(this, args));
+            };
         }
     }
-    UpgradeModule.decorators = [
-        { type: NgModule, args: [{ providers: [angular1Providers] },] }
-    ];
-    UpgradeModule.ctorParameters = () => [
-        { type: Injector },
-        { type: NgZone }
-    ];
-    return UpgradeModule;
-})();
+}
+UpgradeModule.decorators = [
+    { type: NgModule, args: [{ providers: [angular1Providers] },] }
+];
+UpgradeModule.ctorParameters = () => [
+    { type: Injector },
+    { type: NgZone }
+];
 
 /**
  * @license
