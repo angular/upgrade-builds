@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+130.sha-8c682c5
+ * @license Angular v10.0.0-rc.0+134.sha-a937889
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.0-rc.0+130.sha-8c682c5');
+const VERSION = new Version('10.0.0-rc.0+134.sha-a937889');
 
 /**
  * @license
@@ -1121,19 +1121,16 @@ class UpgradeNg1ComponentAdapterBuilder {
         // inlining this into @Directive
         // TODO(tbosch): find or file a bug against TypeScript for this.
         const directive = { selector: selector, inputs: this.inputsRename, outputs: this.outputsRename };
-        let MyClass = /** @class */ (() => {
-            let MyClass = class MyClass extends UpgradeNg1ComponentAdapter {
-                constructor(scope, injector, elementRef) {
-                    super(new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
-                }
-            };
-            MyClass = __decorate([
-                Directive(Object.assign({ jit: true }, directive)),
-                __param(0, Inject($SCOPE)),
-                __metadata("design:paramtypes", [Object, Injector, ElementRef])
-            ], MyClass);
-            return MyClass;
-        })();
+        let MyClass = class MyClass extends UpgradeNg1ComponentAdapter {
+            constructor(scope, injector, elementRef) {
+                super(new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
+            }
+        };
+        MyClass = __decorate([
+            Directive(Object.assign({ jit: true }, directive)),
+            __param(0, Inject($SCOPE)),
+            __metadata("design:paramtypes", [Object, Injector, ElementRef])
+        ], MyClass);
         this.type = MyClass;
     }
     extractBindings() {
@@ -1198,118 +1195,115 @@ class UpgradeNg1ComponentAdapterBuilder {
         return Promise.all(promises);
     }
 }
-let UpgradeNg1ComponentAdapter = /** @class */ (() => {
-    class UpgradeNg1ComponentAdapter {
-        constructor(helper, scope, template, inputs, outputs, propOuts, checkProperties, propertyMap) {
-            this.helper = helper;
-            this.template = template;
-            this.inputs = inputs;
-            this.outputs = outputs;
-            this.propOuts = propOuts;
-            this.checkProperties = checkProperties;
-            this.propertyMap = propertyMap;
-            this.controllerInstance = null;
-            this.destinationObj = null;
-            this.checkLastValues = [];
-            this.$element = null;
-            this.directive = helper.directive;
-            this.element = helper.element;
-            this.$element = helper.$element;
-            this.componentScope = scope.$new(!!this.directive.scope);
-            const controllerType = this.directive.controller;
-            if (this.directive.bindToController && controllerType) {
-                this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
-                this.destinationObj = this.controllerInstance;
-            }
-            else {
-                this.destinationObj = this.componentScope;
-            }
-            for (let i = 0; i < inputs.length; i++) {
-                this[inputs[i]] = null;
-            }
-            for (let j = 0; j < outputs.length; j++) {
-                const emitter = this[outputs[j]] = new EventEmitter();
-                if (this.propOuts.indexOf(outputs[j]) === -1) {
-                    this.setComponentProperty(outputs[j], (emitter => (value) => emitter.emit(value))(emitter));
-                }
-            }
-            for (let k = 0; k < propOuts.length; k++) {
-                this.checkLastValues.push(INITIAL_VALUE$1);
+class UpgradeNg1ComponentAdapter {
+    constructor(helper, scope, template, inputs, outputs, propOuts, checkProperties, propertyMap) {
+        this.helper = helper;
+        this.template = template;
+        this.inputs = inputs;
+        this.outputs = outputs;
+        this.propOuts = propOuts;
+        this.checkProperties = checkProperties;
+        this.propertyMap = propertyMap;
+        this.controllerInstance = null;
+        this.destinationObj = null;
+        this.checkLastValues = [];
+        this.$element = null;
+        this.directive = helper.directive;
+        this.element = helper.element;
+        this.$element = helper.$element;
+        this.componentScope = scope.$new(!!this.directive.scope);
+        const controllerType = this.directive.controller;
+        if (this.directive.bindToController && controllerType) {
+            this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
+            this.destinationObj = this.controllerInstance;
+        }
+        else {
+            this.destinationObj = this.componentScope;
+        }
+        for (let i = 0; i < inputs.length; i++) {
+            this[inputs[i]] = null;
+        }
+        for (let j = 0; j < outputs.length; j++) {
+            const emitter = this[outputs[j]] = new EventEmitter();
+            if (this.propOuts.indexOf(outputs[j]) === -1) {
+                this.setComponentProperty(outputs[j], (emitter => (value) => emitter.emit(value))(emitter));
             }
         }
-        ngOnInit() {
-            // Collect contents, insert and compile template
-            const attachChildNodes = this.helper.prepareTransclusion();
-            const linkFn = this.helper.compileTemplate(this.template);
-            // Instantiate controller (if not already done so)
-            const controllerType = this.directive.controller;
-            const bindToController = this.directive.bindToController;
-            if (controllerType && !bindToController) {
-                this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
-            }
-            // Require other controllers
-            const requiredControllers = this.helper.resolveAndBindRequiredControllers(this.controllerInstance);
-            // Hook: $onInit
-            if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
-                this.controllerInstance.$onInit();
-            }
-            // Linking
-            const link = this.directive.link;
-            const preLink = typeof link == 'object' && link.pre;
-            const postLink = typeof link == 'object' ? link.post : link;
-            const attrs = NOT_SUPPORTED;
-            const transcludeFn = NOT_SUPPORTED;
-            if (preLink) {
-                preLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
-            }
-            linkFn(this.componentScope, null, { parentBoundTranscludeFn: attachChildNodes });
-            if (postLink) {
-                postLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
-            }
-            // Hook: $postLink
-            if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
-                this.controllerInstance.$postLink();
-            }
-        }
-        ngOnChanges(changes) {
-            const ng1Changes = {};
-            Object.keys(changes).forEach(name => {
-                const change = changes[name];
-                this.setComponentProperty(name, change.currentValue);
-                ng1Changes[this.propertyMap[name]] = change;
-            });
-            if (isFunction(this.destinationObj.$onChanges)) {
-                this.destinationObj.$onChanges(ng1Changes);
-            }
-        }
-        ngDoCheck() {
-            const destinationObj = this.destinationObj;
-            const lastValues = this.checkLastValues;
-            const checkProperties = this.checkProperties;
-            const propOuts = this.propOuts;
-            checkProperties.forEach((propName, i) => {
-                const value = destinationObj[propName];
-                const last = lastValues[i];
-                if (!strictEquals(last, value)) {
-                    const eventEmitter = this[propOuts[i]];
-                    eventEmitter.emit(lastValues[i] = value);
-                }
-            });
-            if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
-                this.controllerInstance.$doCheck();
-            }
-        }
-        ngOnDestroy() {
-            this.helper.onDestroy(this.componentScope, this.controllerInstance);
-        }
-        setComponentProperty(name, value) {
-            this.destinationObj[this.propertyMap[name]] = value;
+        for (let k = 0; k < propOuts.length; k++) {
+            this.checkLastValues.push(INITIAL_VALUE$1);
         }
     }
-    UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { ɵɵinvalidFactory(); };
-    UpgradeNg1ComponentAdapter.ɵdir = ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [ɵɵNgOnChangesFeature] });
-    return UpgradeNg1ComponentAdapter;
-})();
+    ngOnInit() {
+        // Collect contents, insert and compile template
+        const attachChildNodes = this.helper.prepareTransclusion();
+        const linkFn = this.helper.compileTemplate(this.template);
+        // Instantiate controller (if not already done so)
+        const controllerType = this.directive.controller;
+        const bindToController = this.directive.bindToController;
+        if (controllerType && !bindToController) {
+            this.controllerInstance = this.helper.buildController(controllerType, this.componentScope);
+        }
+        // Require other controllers
+        const requiredControllers = this.helper.resolveAndBindRequiredControllers(this.controllerInstance);
+        // Hook: $onInit
+        if (this.controllerInstance && isFunction(this.controllerInstance.$onInit)) {
+            this.controllerInstance.$onInit();
+        }
+        // Linking
+        const link = this.directive.link;
+        const preLink = typeof link == 'object' && link.pre;
+        const postLink = typeof link == 'object' ? link.post : link;
+        const attrs = NOT_SUPPORTED;
+        const transcludeFn = NOT_SUPPORTED;
+        if (preLink) {
+            preLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
+        }
+        linkFn(this.componentScope, null, { parentBoundTranscludeFn: attachChildNodes });
+        if (postLink) {
+            postLink(this.componentScope, this.$element, attrs, requiredControllers, transcludeFn);
+        }
+        // Hook: $postLink
+        if (this.controllerInstance && isFunction(this.controllerInstance.$postLink)) {
+            this.controllerInstance.$postLink();
+        }
+    }
+    ngOnChanges(changes) {
+        const ng1Changes = {};
+        Object.keys(changes).forEach(name => {
+            const change = changes[name];
+            this.setComponentProperty(name, change.currentValue);
+            ng1Changes[this.propertyMap[name]] = change;
+        });
+        if (isFunction(this.destinationObj.$onChanges)) {
+            this.destinationObj.$onChanges(ng1Changes);
+        }
+    }
+    ngDoCheck() {
+        const destinationObj = this.destinationObj;
+        const lastValues = this.checkLastValues;
+        const checkProperties = this.checkProperties;
+        const propOuts = this.propOuts;
+        checkProperties.forEach((propName, i) => {
+            const value = destinationObj[propName];
+            const last = lastValues[i];
+            if (!strictEquals(last, value)) {
+                const eventEmitter = this[propOuts[i]];
+                eventEmitter.emit(lastValues[i] = value);
+            }
+        });
+        if (this.controllerInstance && isFunction(this.controllerInstance.$doCheck)) {
+            this.controllerInstance.$doCheck();
+        }
+    }
+    ngOnDestroy() {
+        this.helper.onDestroy(this.componentScope, this.controllerInstance);
+    }
+    setComponentProperty(name, value) {
+        this.destinationObj[this.propertyMap[name]] = value;
+    }
+}
+UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { ɵɵinvalidFactory(); };
+UpgradeNg1ComponentAdapter.ɵdir = ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [ɵɵNgOnChangesFeature] });
 /*@__PURE__*/ (function () { ɵsetClassMetadata(UpgradeNg1ComponentAdapter, [{
         type: Directive
     }], function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; }, null); })();
@@ -1864,17 +1858,14 @@ class UpgradeAdapter {
                     };
                     // At this point we have ng1 injector and we have prepared
                     // ng1 components to be upgraded, we now can bootstrap ng2.
-                    let DynamicNgUpgradeModule = /** @class */ (() => {
-                        let DynamicNgUpgradeModule = class DynamicNgUpgradeModule {
-                            constructor() { }
-                            ngDoBootstrap() { }
-                        };
-                        DynamicNgUpgradeModule = __decorate([
-                            NgModule(Object.assign({ jit: true }, ngModule)),
-                            __metadata("design:paramtypes", [])
-                        ], DynamicNgUpgradeModule);
-                        return DynamicNgUpgradeModule;
-                    })();
+                    let DynamicNgUpgradeModule = class DynamicNgUpgradeModule {
+                        constructor() { }
+                        ngDoBootstrap() { }
+                    };
+                    DynamicNgUpgradeModule = __decorate([
+                        NgModule(Object.assign({ jit: true }, ngModule)),
+                        __metadata("design:paramtypes", [])
+                    ], DynamicNgUpgradeModule);
                     platformRef
                         .bootstrapModule(DynamicNgUpgradeModule, [this.compilerOptions, { ngZone: this.ngZone }])
                         .then((ref) => {
