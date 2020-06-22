@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+200.sha-7e0eccc
+ * @license Angular v10.0.0-rc.0+208.sha-fd65958
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -73,14 +73,10 @@
     function getAngularJSGlobal() {
         return angular;
     }
-    var bootstrap = function (e, modules, config) {
-        return angular.bootstrap(e, modules, config);
-    };
+    var bootstrap = function (e, modules, config) { return angular.bootstrap(e, modules, config); };
     // Do not declare as `module` to avoid webpack bug
     // (see https://github.com/angular/angular/issues/30050).
-    var module_ = function (prefix, dependencies) {
-        return angular.module(prefix, dependencies);
-    };
+    var module_ = function (prefix, dependencies) { return angular.module(prefix, dependencies); };
     var element = (function (e) { return angular.element(e); });
     element.cleanData = function (nodes) { return angular.element.cleanData(nodes); };
     var injector = function (modules, strictDi) { return angular.injector(modules, strictDi); };
@@ -135,14 +131,16 @@
         function AngularTestingModule(i) {
             injector$1 = i;
         }
-        AngularTestingModule.ɵmod = i0.ɵɵdefineNgModule({ type: AngularTestingModule });
-        AngularTestingModule.ɵinj = i0.ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(i0.ɵɵinject(i0.Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
         return AngularTestingModule;
     }());
-    /*@__PURE__*/ (function () { i0.ɵsetClassMetadata(AngularTestingModule, [{
-            type: i0.NgModule,
-            args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
-        }], function () { return [{ type: i0.Injector }]; }, null); })();
+    AngularTestingModule.ɵmod = i0.ɵɵdefineNgModule({ type: AngularTestingModule });
+    AngularTestingModule.ɵinj = i0.ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(i0.ɵɵinject(i0.Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+    /*@__PURE__*/ (function () {
+        i0.ɵsetClassMetadata(AngularTestingModule, [{
+                type: i0.NgModule,
+                args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
+            }], function () { return [{ type: i0.Injector }]; }, null);
+    })();
     /**
      * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
      * services.
