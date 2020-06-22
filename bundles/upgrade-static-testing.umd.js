@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.0-rc.0+200.sha-7e0eccc
+ * @license Angular v10.0.0-rc.0+208.sha-fd65958
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -73,14 +73,10 @@
     function getAngularJSGlobal() {
         return angular;
     }
-    var bootstrap = function (e, modules, config) {
-        return angular.bootstrap(e, modules, config);
-    };
+    var bootstrap = function (e, modules, config) { return angular.bootstrap(e, modules, config); };
     // Do not declare as `module` to avoid webpack bug
     // (see https://github.com/angular/angular/issues/30050).
-    var module_ = function (prefix, dependencies) {
-        return angular.module(prefix, dependencies);
-    };
+    var module_ = function (prefix, dependencies) { return angular.module(prefix, dependencies); };
     var element = (function (e) { return angular.element(e); });
     element.cleanData = function (nodes) { return angular.element.cleanData(nodes); };
     var injector = function (modules, strictDi) { return angular.injector(modules, strictDi); };
@@ -135,14 +131,14 @@
         function AngularTestingModule(i) {
             injector$1 = i;
         }
-        AngularTestingModule.decorators = [
-            { type: core.NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] }
-        ];
-        AngularTestingModule.ctorParameters = function () { return [
-            { type: core.Injector }
-        ]; };
         return AngularTestingModule;
     }());
+    AngularTestingModule.decorators = [
+        { type: core.NgModule, args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] },] }
+    ];
+    AngularTestingModule.ctorParameters = function () { return [
+        { type: core.Injector }
+    ]; };
     /**
      * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
      * services.
