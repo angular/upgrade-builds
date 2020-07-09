@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.1.0-next.0+18.sha-c40cbec
+ * @license Angular v10.1.0-next.0+19.sha-1550663
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('10.1.0-next.0+18.sha-c40cbec');
+const VERSION = new Version('10.1.0-next.0+19.sha-1550663');
 
 /**
  * @license
@@ -1992,6 +1992,10 @@ class UpgradeAdapterRef {
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
+ */
+
+/**
+ * Generated bundle index. Do not edit.
  */
 
 export { UpgradeAdapter, UpgradeAdapterRef, VERSION };

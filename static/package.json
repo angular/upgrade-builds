@@ -3,8 +3,8 @@
   "sideEffects": false,
   "main": "../bundles/upgrade-static.umd.js",
   "fesm2015": "../fesm2015/static.js",
-  "esm2015": "../esm2015/static/index.js",
-  "typings": "./index.d.ts",
+  "esm2015": "../esm2015/static/static.js",
+  "typings": "./static.d.ts",
   "module": "../fesm2015/static.js",
   "es2015": "../fesm2015/static.js"
 }
