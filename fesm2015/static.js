@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.0.5+23.sha-a123ef5
+ * @license Angular v10.0.5+29.sha-3d6e50d
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -847,7 +847,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('10.0.5+23.sha-a123ef5');
+const VERSION = new Version('10.0.5+29.sha-3d6e50d');
 
 /**
  * @license
