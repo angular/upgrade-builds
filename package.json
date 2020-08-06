@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "10.0.8+16.sha-ad16e2f",
+  "version": "10.0.8+17.sha-f5d5bac",
   "description": "Angular - the library for easing update from v1 to v2",
   "author": "angular",
   "license": "MIT",
@@ -8,10 +8,10 @@
     "tslib": "^2.0.0"
   },
   "peerDependencies": {
-    "@angular/core": "10.0.8+16.sha-ad16e2f",
-    "@angular/compiler": "10.0.8+16.sha-ad16e2f",
-    "@angular/platform-browser": "10.0.8+16.sha-ad16e2f",
-    "@angular/platform-browser-dynamic": "10.0.8+16.sha-ad16e2f"
+    "@angular/core": "10.0.8+17.sha-f5d5bac",
+    "@angular/compiler": "10.0.8+17.sha-f5d5bac",
+    "@angular/platform-browser": "10.0.8+17.sha-f5d5bac",
+    "@angular/platform-browser-dynamic": "10.0.8+17.sha-f5d5bac"
   },
   "repository": {
     "type": "git",
