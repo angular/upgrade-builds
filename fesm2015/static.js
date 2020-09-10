@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.0.0-next.1+5.sha-1373a98
+ * @license Angular v11.0.0-next.1+9.sha-281865b
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -830,8 +830,13 @@ function downgradeInjectable(token, downgradedModule = '') {
         const injectableName = isFunction(token) ? getTypeName(token) : String(token);
         const attemptedAction = `instantiating injectable '${injectableName}'`;
         validateInjectionKey($injector, downgradedModule, injectorKey, attemptedAction);
-        const injector = $injector.get(injectorKey);
-        return injector.get(token);
+        try {
+            const injector = $injector.get(injectorKey);
+            return injector.get(token);
+        }
+        catch (err) {
+            throw new Error(`Error while ${attemptedAction}: ${err.message || err}`);
+        }
     };
     factory['$inject'] = [$INJECTOR];
     return factory;
@@ -847,7 +852,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('11.0.0-next.1+5.sha-1373a98');
+const VERSION = new Version('11.0.0-next.1+9.sha-281865b');
 
 /**
  * @license
