@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.0.0-next.1+5.sha-1373a98
+ * @license Angular v11.0.0-next.1+9.sha-281865b
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('11.0.0-next.1+5.sha-1373a98');
+    var VERSION = new i0.Version('11.0.0-next.1+9.sha-281865b');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -1161,8 +1161,13 @@
             var injectableName = isFunction(token) ? getTypeName(token) : String(token);
             var attemptedAction = "instantiating injectable '" + injectableName + "'";
             validateInjectionKey($injector, downgradedModule, injectorKey, attemptedAction);
-            var injector = $injector.get(injectorKey);
-            return injector.get(token);
+            try {
+                var injector = $injector.get(injectorKey);
+                return injector.get(token);
+            }
+            catch (err) {
+                throw new Error("Error while " + attemptedAction + ": " + (err.message || err));
+            }
         };
         factory['$inject'] = [$INJECTOR];
         return factory;
