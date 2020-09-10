@@ -1,5 +1,5 @@
 /**
- * @license Angular v10.1.1+5.sha-7669bd8
+ * @license Angular v10.1.1+9.sha-edb7f90
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('10.1.1+5.sha-7669bd8');
+const VERSION = new Version('10.1.1+9.sha-edb7f90');
 
 /**
  * @license
@@ -842,8 +842,13 @@ function downgradeInjectable(token, downgradedModule = '') {
         const injectableName = isFunction(token) ? getTypeName(token) : String(token);
         const attemptedAction = `instantiating injectable '${injectableName}'`;
         validateInjectionKey($injector, downgradedModule, injectorKey, attemptedAction);
-        const injector = $injector.get(injectorKey);
-        return injector.get(token);
+        try {
+            const injector = $injector.get(injectorKey);
+            return injector.get(token);
+        }
+        catch (err) {
+            throw new Error(`Error while ${attemptedAction}: ${err.message || err}`);
+        }
     };
     factory['$inject'] = [$INJECTOR];
     return factory;
