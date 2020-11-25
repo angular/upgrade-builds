@@ -17,7 +17,7 @@ export declare function isFunction(value: any): value is Function;
 export declare function validateInjectionKey($injector: IInjectorService, downgradedModule: string, injectionKey: string, attemptedAction: string): void;
 export declare class Deferred<R> {
     promise: Promise<R>;
-    resolve: (value?: R | PromiseLike<R>) => void;
+    resolve: (value: R | PromiseLike<R>) => void;
     reject: (error?: any) => void;
     constructor();
 }
