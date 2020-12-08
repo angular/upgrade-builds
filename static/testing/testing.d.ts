@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.0.3+56.sha-19309b5
+ * @license Angular v11.0.3+63.sha-65e93ea
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -179,6 +179,7 @@ declare type IAugmentedJQuery = Node[] & {
     data?: (name: string, value?: any) => any;
     text?: () => string;
     inheritedData?: (name: string, value?: any) => any;
+    children?: () => IAugmentedJQuery;
     contents?: () => IAugmentedJQuery;
     parent?: () => IAugmentedJQuery;
     empty?: () => void;

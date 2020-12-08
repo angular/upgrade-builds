@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.0.3+56.sha-19309b5
+ * @license Angular v11.0.3+63.sha-65e93ea
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('11.0.3+56.sha-19309b5');
+const VERSION = new Version('11.0.3+63.sha-65e93ea');
 
 /**
  * @license
@@ -277,13 +277,12 @@ const INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 class DowngradeComponentAdapter {
-    constructor(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
+    constructor(element, attrs, scope, ngModel, parentInjector, $compile, $parse, componentFactory, wrapCallback) {
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
         this.ngModel = ngModel;
         this.parentInjector = parentInjector;
-        this.$injector = $injector;
         this.$compile = $compile;
         this.$parse = $parse;
         this.componentFactory = componentFactory;
@@ -447,11 +446,37 @@ class DowngradeComponentAdapter {
         const testabilityRegistry = this.componentRef.injector.get(TestabilityRegistry);
         const destroyComponentRef = this.wrapCallback(() => this.componentRef.destroy());
         let destroyed = false;
-        this.element.on('$destroy', () => this.componentScope.$destroy());
+        this.element.on('$destroy', () => {
+            // The `$destroy` event may have been triggered by the `cleanData()` call in the
+            // `componentScope` `$destroy` handler below. In that case, we don't want to call
+            // `componentScope.$destroy()` again.
+            if (!destroyed)
+                this.componentScope.$destroy();
+        });
         this.componentScope.$on('$destroy', () => {
             if (!destroyed) {
                 destroyed = true;
                 testabilityRegistry.unregisterApplication(this.componentRef.location.nativeElement);
+                // The `componentScope` might be getting destroyed, because an ancestor element is being
+                // removed/destroyed. If that is the case, jqLite/jQuery would normally invoke `cleanData()`
+                // on the removed element and all descendants.
+                //   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/jqLite.js#L349-L355
+                //   https://github.com/jquery/jquery/blob/6984d1747623dbc5e87fd6c261a5b6b1628c107c/src/manipulation.js#L182
+                //
+                // Here, however, `destroyComponentRef()` may under some circumstances remove the element
+                // from the DOM and therefore it will no longer be a descendant of the removed element when
+                // `cleanData()` is called. This would result in a memory leak, because the element's data
+                // and event handlers (and all objects directly or indirectly referenced by them) would be
+                // retained.
+                //
+                // To ensure the element is always properly cleaned up, we manually call `cleanData()` on
+                // this element and its descendants before destroying the `ComponentRef`.
+                //
+                // NOTE:
+                // `cleanData()` also will invoke the AngularJS `$destroy` event on the element:
+                //   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/Angular.js#L1932-L1945
+                element.cleanData(this.element);
+                element.cleanData(this.element[0].querySelectorAll('*'));
                 destroyComponentRef();
             }
         });
@@ -476,7 +501,6 @@ class DowngradeComponentAdapter {
  */
 function groupNodesBySelector(ngContentSelectors, nodes) {
     const projectableNodes = [];
-    let wildcardNgContentIndex;
     for (let i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
         projectableNodes[i] = [];
     }
@@ -714,7 +738,7 @@ function downgradeComponent(info) {
                         throw new Error(`Expecting ComponentFactory for: ${getTypeName(info.component)}`);
                     }
                     const injectorPromise = new ParentInjectorPromise(element);
-                    const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
+                    const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $compile, $parse, componentFactory, wrapCallback);
                     const projectableNodes = facade.compileContents();
                     facade.createComponent(projectableNodes);
                     facade.setupInputs(isNgUpgradeLite, info.propagateDigest);
@@ -866,7 +890,6 @@ const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 // Classes
 class UpgradeHelper {
     constructor(injector, name, elementRef, directive) {
-        this.injector = injector;
         this.name = name;
         this.$injector = injector.get($INJECTOR);
         this.$compile = this.$injector.get($COMPILE);
