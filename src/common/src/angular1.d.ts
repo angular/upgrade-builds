@@ -129,6 +129,7 @@ export declare type IAugmentedJQuery = Node[] & {
     data?: (name: string, value?: any) => any;
     text?: () => string;
     inheritedData?: (name: string, value?: any) => any;
+    children?: () => IAugmentedJQuery;
     contents?: () => IAugmentedJQuery;
     parent?: () => IAugmentedJQuery;
     empty?: () => void;

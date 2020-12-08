@@ -18,7 +18,6 @@ export interface IControllerInstance extends IBindingDestination {
     $postLink?: () => void;
 }
 export declare class UpgradeHelper {
-    private injector;
     private name;
     readonly $injector: IInjectorService;
     readonly element: Element;
