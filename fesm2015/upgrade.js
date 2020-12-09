@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.0.3+73.sha-b2090fd
+ * @license Angular v11.0.4+1.sha-eba7de6
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('11.0.3+73.sha-b2090fd');
+const VERSION = new Version('11.0.4+1.sha-eba7de6');
 
 /**
  * @license
