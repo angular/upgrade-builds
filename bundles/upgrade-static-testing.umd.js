@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.1.0-next.2+10.sha-76e3de2
+ * @license Angular v11.1.0-next.2+13.sha-b4b21bd
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -99,6 +99,7 @@
     var $INTERVAL = '$interval';
     var $PARSE = '$parse';
     var $PROVIDE = '$provide';
+    var $ROOT_ELEMENT = '$rootElement';
     var $ROOT_SCOPE = '$rootScope';
     var $SCOPE = '$scope';
     var $TEMPLATE_CACHE = '$templateCache';
