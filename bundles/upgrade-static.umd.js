@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.1.0-next.2+8.sha-85b07ad
+ * @license Angular v11.1.0-next.2+9.sha-1f73af7
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1195,7 +1195,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('11.1.0-next.2+8.sha-85b07ad');
+    var VERSION = new i0.Version('11.1.0-next.2+9.sha-1f73af7');
 
     /**
      * @license
@@ -1914,8 +1914,8 @@
     }());
     UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { i0.ɵɵinvalidFactory(); };
     UpgradeComponent.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeComponent, features: [i0.ɵɵNgOnChangesFeature] });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(UpgradeComponent, [{
+    (function () {
+        (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(UpgradeComponent, [{
                 type: i0.Directive
             }], function () { return [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }]; }, null);
     })();
@@ -2183,8 +2183,8 @@
     }());
     UpgradeModule.ɵmod = i0.ɵɵdefineNgModule({ type: UpgradeModule });
     UpgradeModule.ɵinj = i0.ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(i0.ɵɵinject(i0.Injector), i0.ɵɵinject(i0.NgZone)); }, providers: [angular1Providers] });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(UpgradeModule, [{
+    (function () {
+        (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(UpgradeModule, [{
                 type: i0.NgModule,
                 args: [{ providers: [angular1Providers] }]
             }], function () { return [{ type: i0.Injector }, { type: i0.NgZone }]; }, null);

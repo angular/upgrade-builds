@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.1.0-next.2+8.sha-85b07ad
+ * @license Angular v11.1.0-next.2+9.sha-1f73af7
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -135,8 +135,8 @@
     }());
     AngularTestingModule.ɵmod = i0.ɵɵdefineNgModule({ type: AngularTestingModule });
     AngularTestingModule.ɵinj = i0.ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(i0.ɵɵinject(i0.Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(AngularTestingModule, [{
+    (function () {
+        (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(AngularTestingModule, [{
                 type: i0.NgModule,
                 args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
             }], function () { return [{ type: i0.Injector }]; }, null);
