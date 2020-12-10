@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { Injector, NgZone } from '@angular/core';
+import { Injector, NgZone, PlatformRef } from '@angular/core';
 import * as i0 from "@angular/core";
 /**
  * @description
@@ -136,6 +136,12 @@ export declare class UpgradeModule {
     /** The bootstrap zone for the upgrade application */
     ngZone: NgZone;
     /**
+     * The owning `NgModuleRef`s `PlatformRef` instance.
+     * This is used to tie the lifecycle of the bootstrapped AngularJS apps to that of the Angular
+     * `PlatformRef`.
+     */
+    private platformRef;
+    /**
      * The AngularJS `$injector` for the upgrade application.
      */
     $injector: any;
@@ -145,7 +151,13 @@ export declare class UpgradeModule {
     /** The root `Injector` for the upgrade application. */
     injector: Injector, 
     /** The bootstrap zone for the upgrade application */
-    ngZone: NgZone);
+    ngZone: NgZone, 
+    /**
+     * The owning `NgModuleRef`s `PlatformRef` instance.
+     * This is used to tie the lifecycle of the bootstrapped AngularJS apps to that of the Angular
+     * `PlatformRef`.
+     */
+    platformRef: PlatformRef);
     /**
      * Bootstrap an AngularJS application from this NgModule
      * @param element the element on which to bootstrap the AngularJS application

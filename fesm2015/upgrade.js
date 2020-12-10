@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.1.0-next.2+10.sha-76e3de2
+ * @license Angular v11.1.0-next.2+13.sha-b4b21bd
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,7 +18,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('11.1.0-next.2+10.sha-76e3de2');
+const VERSION = new Version('11.1.0-next.2+13.sha-b4b21bd');
 
 /**
  * @license
@@ -109,6 +109,7 @@ const $INJECTOR = '$injector';
 const $INTERVAL = '$interval';
 const $PARSE = '$parse';
 const $PROVIDE = '$provide';
+const $ROOT_ELEMENT = '$rootElement';
 const $ROOT_SCOPE = '$rootScope';
 const $SCOPE = '$scope';
 const $TEMPLATE_CACHE = '$templateCache';
@@ -175,8 +176,41 @@ function onError(e) {
     }
     throw e;
 }
+/**
+ * Clean the jqLite/jQuery data on the element and all its descendants.
+ * Equivalent to how jqLite/jQuery invoke `cleanData()` on an Element when removed:
+ *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/jqLite.js#L349-L355
+ *   https://github.com/jquery/jquery/blob/6984d1747623dbc5e87fd6c261a5b6b1628c107c/src/manipulation.js#L182
+ *
+ * NOTE:
+ * `cleanData()` will also invoke the AngularJS `$destroy` DOM event on the element:
+ *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/Angular.js#L1932-L1945
+ *
+ * @param node The DOM node whose data needs to be cleaned.
+ */
+function cleanData(node) {
+    element.cleanData([node]);
+    if (isParentNode(node)) {
+        element.cleanData(node.querySelectorAll('*'));
+    }
+}
 function controllerKey(name) {
     return '$' + name + 'Controller';
+}
+/**
+ * Destroy an AngularJS app given the app `$injector`.
+ *
+ * NOTE: Destroying an app is not officially supported by AngularJS, but try to do our best by
+ *       destroying `$rootScope` and clean the jqLite/jQuery data on `$rootElement` and all
+ *       descendants.
+ *
+ * @param $injector The `$injector` of the AngularJS app to destroy.
+ */
+function destroyApp($injector) {
+    const $rootElement = $injector.get($ROOT_ELEMENT);
+    const $rootScope = $injector.get($ROOT_SCOPE);
+    $rootScope.$destroy();
+    cleanData($rootElement[0]);
 }
 function directiveNormalize(name) {
     return name.replace(DIRECTIVE_PREFIX_REGEXP, '')
@@ -196,6 +230,9 @@ function getUpgradeAppType($injector) {
 }
 function isFunction(value) {
     return typeof value === 'function';
+}
+function isParentNode(node) {
+    return isFunction(node.querySelectorAll);
 }
 function validateInjectionKey($injector, downgradedModule, injectionKey, attemptedAction) {
     const upgradeAppType = getUpgradeAppType($injector);
@@ -472,12 +509,7 @@ class DowngradeComponentAdapter {
                 //
                 // To ensure the element is always properly cleaned up, we manually call `cleanData()` on
                 // this element and its descendants before destroying the `ComponentRef`.
-                //
-                // NOTE:
-                // `cleanData()` also will invoke the AngularJS `$destroy` event on the element:
-                //   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/Angular.js#L1932-L1945
-                element.cleanData(this.element);
-                element.cleanData(this.element[0].querySelectorAll('*'));
+                cleanData(this.element[0]);
                 destroyComponentRef();
             }
         });
@@ -965,14 +997,7 @@ class UpgradeHelper {
             controllerInstance.$onDestroy();
         }
         $scope.$destroy();
-        // Clean the jQuery/jqLite data on the component+child elements.
-        // Equivelent to how jQuery/jqLite invoke `cleanData` on an Element (this.element)
-        //  https://github.com/jquery/jquery/blob/e743cbd28553267f955f71ea7248377915613fd9/src/manipulation.js#L223
-        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/jqLite.js#L306-L312
-        // `cleanData` will invoke the AngularJS `$destroy` DOM event
-        //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/Angular.js#L1911-L1924
-        element.cleanData([this.element]);
-        element.cleanData(this.element.querySelectorAll('*'));
+        cleanData(this.element);
     }
     prepareTransclusion() {
         const transclude = this.directive.transclude;
@@ -1813,7 +1838,6 @@ class UpgradeAdapter {
         const delayApplyExps = [];
         let original$applyFn;
         let rootScopePrototype;
-        let rootScope;
         const upgradeAdapter = this;
         const ng1Module = this.ng1Module = module_(this.idPrefix, modules);
         const platformRef = platformBrowserDynamic();
@@ -1840,7 +1864,7 @@ class UpgradeAdapter {
                         else {
                             throw new Error('Failed to find \'$apply\' on \'$rootScope\'!');
                         }
-                        return rootScope = rootScopeDelegate;
+                        return rootScopeDelegate;
                     }
                 ]);
                 if (ng1Injector.has($$TESTABILITY)) {
@@ -1924,6 +1948,12 @@ class UpgradeAdapter {
                         rootScope.$on('$destroy', () => {
                             subscription.unsubscribe();
                         });
+                        // Destroy the AngularJS app once the Angular `PlatformRef` is destroyed.
+                        // This does not happen in a typical SPA scenario, but it might be useful for
+                        // other use-cases where disposing of an Angular/AngularJS app is necessary
+                        // (such as Hot Module Replacement (HMR)).
+                        // See https://github.com/angular/angular/issues/39935.
+                        platformRef.onDestroy(() => destroyApp(ng1Injector));
                     });
                 })
                     .catch((e) => this.ng2BootstrapDeferred.reject(e));
