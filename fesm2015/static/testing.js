@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.0.4+3.sha-f5aab2b
+ * @license Angular v11.0.4+15.sha-e90a7f7
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -96,6 +96,7 @@ const $INJECTOR = '$injector';
 const $INTERVAL = '$interval';
 const $PARSE = '$parse';
 const $PROVIDE = '$provide';
+const $ROOT_ELEMENT = '$rootElement';
 const $ROOT_SCOPE = '$rootScope';
 const $SCOPE = '$scope';
 const $TEMPLATE_CACHE = '$templateCache';
