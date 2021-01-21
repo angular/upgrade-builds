@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.1.0-next.4+137.sha-315b272
+ * @license Angular v11.1.0-next.4+139.sha-3cf4e3c
  * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('11.1.0-next.4+137.sha-315b272');
+    var VERSION = new i0.Version('11.1.0-next.4+139.sha-3cf4e3c');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
