@@ -1,6 +1,6 @@
 /**
- * @license Angular v8.0.0-rc.0+81.sha-b46eb3c.with-local-changes
- * (c) 2010-2019 Google LLC. https://angular.io/
+ * @license Angular v11.1.0-next.4+175.sha-02ff4ed
+ * (c) 2010-2020 Google LLC. https://angular.io/
  * License: MIT
  */
 
@@ -13,6 +13,7 @@ import { NgZone } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { PlatformRef } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Type } from '@angular/core';
@@ -24,7 +25,7 @@ import { Version } from '@angular/core';
  * A helper function that allows an Angular component to be used from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * This helper function returns a factory function to be used for registering
  * an AngularJS wrapper directive for "downgrading" an Angular component.
@@ -43,6 +44,9 @@ import { Version } from '@angular/core';
  * can use to define the AngularJS directive that wraps the "downgraded" component.
  *
  * {@example upgrade/static/ts/full/module.ts region="ng2-heroes-wrapper"}
+ *
+ * For more details and examples on downgrading Angular components to AngularJS components please
+ * visit the [Upgrade guide](guide/upgrade#using-angular-components-from-angularjs-code).
  *
  * @param info contains information about the Component that is being downgraded:
  *
@@ -83,7 +87,7 @@ export declare function downgradeComponent(info: {
  * A helper function to allow an Angular service to be accessible from AngularJS.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * This helper function returns a factory function that provides access to the Angular
  * service identified by the `token` parameter.
@@ -147,7 +151,7 @@ export declare function downgradeInjectable(token: any, downgradedModule?: strin
  * instantiated.
  *
  * *Part of the [upgrade/static](api?query=upgrade/static) library for hybrid upgrade apps that
- * support AoT compilation.*
+ * support AOT compilation.*
  *
  * It allows loading/bootstrapping the Angular part of a hybrid application lazily and not having to
  * pay the cost up-front. For example, you can have an AngularJS application that uses Angular for
@@ -291,7 +295,7 @@ export declare function setAngularLib(ng: any): void;
  * A helper class that allows an AngularJS component to be used from Angular.
  *
  * *Part of the [upgrade/static](api?query=upgrade%2Fstatic)
- * library for hybrid upgrade apps that support AoT compilation.*
+ * library for hybrid upgrade apps that support AOT compilation.*
  *
  * This helper class should be used as a base class for creating Angular directives
  * that wrap AngularJS components that need to be "upgraded".
@@ -311,7 +315,7 @@ export declare function setAngularLib(ng: any): void;
  *
  * In this example you can see that we must derive from the `UpgradeComponent`
  * base class but also provide an {@link Directive `@Directive`} decorator. This is
- * because the AoT compiler requires that this information is statically available at
+ * because the AOT compiler requires that this information is statically available at
  * compile time.
  *
  * Note that we must do the following:
@@ -368,10 +372,10 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
  * and has an instance method used to bootstrap the hybrid upgrade application.
  *
  * *Part of the [upgrade/static](api?query=upgrade/static)
- * library for hybrid upgrade apps that support AoT compilation*
+ * library for hybrid upgrade apps that support AOT compilation*
  *
  * The `upgrade/static` package contains helpers that allow AngularJS and Angular components
- * to be used together inside a hybrid upgrade application, which supports AoT compilation.
+ * to be used together inside a hybrid upgrade application, which supports AOT compilation.
  *
  * Specifically, the classes and functions in the `upgrade/static` module allow the following:
  *
@@ -490,6 +494,12 @@ export declare class UpgradeModule {
     /** The bootstrap zone for the upgrade application */
     ngZone: NgZone;
     /**
+     * The owning `NgModuleRef`s `PlatformRef` instance.
+     * This is used to tie the lifecycle of the bootstrapped AngularJS apps to that of the Angular
+     * `PlatformRef`.
+     */
+    private platformRef;
+    /**
      * The AngularJS `$injector` for the upgrade application.
      */
     $injector: any;
@@ -499,7 +509,13 @@ export declare class UpgradeModule {
     /** The root `Injector` for the upgrade application. */
     injector: Injector, 
     /** The bootstrap zone for the upgrade application */
-    ngZone: NgZone);
+    ngZone: NgZone, 
+    /**
+     * The owning `NgModuleRef`s `PlatformRef` instance.
+     * This is used to tie the lifecycle of the bootstrapped AngularJS apps to that of the Angular
+     * `PlatformRef`.
+     */
+    platformRef: PlatformRef);
     /**
      * Bootstrap an AngularJS application from this NgModule
      * @param element the element on which to bootstrap the AngularJS application
