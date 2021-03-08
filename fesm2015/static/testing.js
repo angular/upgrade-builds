@@ -1,10 +1,10 @@
 /**
- * @license Angular v12.0.0-next.3+40.sha-bdf13fe
+ * @license Angular v12.0.0-next.3+42.sha-2ebe2bc
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, Injector, ɵsetClassMetadata, NgModule } from '@angular/core';
+import { ɵɵinject, Injector, ɵɵdefineNgModule, ɵɵdefineInjector, ɵsetClassMetadata, NgModule } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 /**
@@ -130,8 +130,9 @@ class AngularTestingModule {
         injector$1 = i;
     }
 }
+AngularTestingModule.ɵfac = function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); };
 AngularTestingModule.ɵmod = /*@__PURE__*/ ɵɵdefineNgModule({ type: AngularTestingModule });
-AngularTestingModule.ɵinj = /*@__PURE__*/ ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+AngularTestingModule.ɵinj = /*@__PURE__*/ ɵɵdefineInjector({ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(AngularTestingModule, [{
         type: NgModule,
         args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]

@@ -11,6 +11,7 @@ import * as i0 from "@angular/core";
 export declare function $injectorFactory(): angular.IInjectorService | null;
 export declare class AngularTestingModule {
     constructor(i: Injector);
+    static ɵfac: i0.ɵɵFactoryDef<AngularTestingModule, never>;
     static ɵmod: i0.ɵɵNgModuleDefWithMeta<AngularTestingModule, never, never, never>;
     static ɵinj: i0.ɵɵInjectorDef<AngularTestingModule>;
 }

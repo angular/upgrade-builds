@@ -1,10 +1,10 @@
 /**
- * @license Angular v12.0.0-next.3+40.sha-bdf13fe
+ * @license Angular v12.0.0-next.3+42.sha-2ebe2bc
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, ɵsetClassMetadata, Directive, ElementRef, isDevMode, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵinject, NgModule } from '@angular/core';
+import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, EventEmitter, ɵɵinvalidFactory, ɵɵdefineDirective, ɵɵNgOnChangesFeature, ɵsetClassMetadata, Directive, ElementRef, isDevMode, ɵɵinject, ɵɵdefineNgModule, ɵɵdefineInjector, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -908,7 +908,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('12.0.0-next.3+40.sha-bdf13fe');
+const VERSION = new Version('12.0.0-next.3+42.sha-2ebe2bc');
 
 /**
  * @license
@@ -1888,8 +1888,9 @@ class UpgradeModule {
         }
     }
 }
+UpgradeModule.ɵfac = function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(ɵɵinject(Injector), ɵɵinject(NgZone), ɵɵinject(PlatformRef)); };
 UpgradeModule.ɵmod = /*@__PURE__*/ ɵɵdefineNgModule({ type: UpgradeModule });
-UpgradeModule.ɵinj = /*@__PURE__*/ ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(ɵɵinject(Injector), ɵɵinject(NgZone), ɵɵinject(PlatformRef)); }, providers: [angular1Providers] });
+UpgradeModule.ɵinj = /*@__PURE__*/ ɵɵdefineInjector({ providers: [angular1Providers] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,
         args: [{ providers: [angular1Providers] }]
