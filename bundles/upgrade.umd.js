@@ -1,5 +1,5 @@
 /**
- * @license Angular v12.0.0-next.3+33.sha-1735430
+ * @license Angular v12.0.0-next.3+36.sha-03d47d5
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('12.0.0-next.3+33.sha-1735430');
+    var VERSION = new i0.Version('12.0.0-next.3+36.sha-03d47d5');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -1682,7 +1682,7 @@
         return UpgradeNg1ComponentAdapter;
     }());
     UpgradeNg1ComponentAdapter.ɵfac = function UpgradeNg1ComponentAdapter_Factory(t) { i0.ɵɵinvalidFactory(); };
-    UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [i0.ɵɵNgOnChangesFeature] });
+    UpgradeNg1ComponentAdapter.ɵdir = /*@__PURE__*/ i0.ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [i0.ɵɵNgOnChangesFeature] });
     (function () {
         (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(UpgradeNg1ComponentAdapter, [{
                 type: i0.Directive

@@ -1,5 +1,5 @@
 /**
- * @license Angular v12.0.0-next.3+33.sha-1735430
+ * @license Angular v12.0.0-next.3+36.sha-03d47d5
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -908,7 +908,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('12.0.0-next.3+33.sha-1735430');
+const VERSION = new Version('12.0.0-next.3+36.sha-03d47d5');
 
 /**
  * @license
@@ -1615,7 +1615,7 @@ class UpgradeComponent {
     }
 }
 UpgradeComponent.ɵfac = function UpgradeComponent_Factory(t) { ɵɵinvalidFactory(); };
-UpgradeComponent.ɵdir = ɵɵdefineDirective({ type: UpgradeComponent, features: [ɵɵNgOnChangesFeature] });
+UpgradeComponent.ɵdir = /*@__PURE__*/ ɵɵdefineDirective({ type: UpgradeComponent, features: [ɵɵNgOnChangesFeature] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(UpgradeComponent, [{
         type: Directive
     }], function () { return [{ type: undefined }, { type: ElementRef }, { type: Injector }]; }, null); })();
@@ -1888,8 +1888,8 @@ class UpgradeModule {
         }
     }
 }
-UpgradeModule.ɵmod = ɵɵdefineNgModule({ type: UpgradeModule });
-UpgradeModule.ɵinj = ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(ɵɵinject(Injector), ɵɵinject(NgZone), ɵɵinject(PlatformRef)); }, providers: [angular1Providers] });
+UpgradeModule.ɵmod = /*@__PURE__*/ ɵɵdefineNgModule({ type: UpgradeModule });
+UpgradeModule.ɵinj = /*@__PURE__*/ ɵɵdefineInjector({ factory: function UpgradeModule_Factory(t) { return new (t || UpgradeModule)(ɵɵinject(Injector), ɵɵinject(NgZone), ɵɵinject(PlatformRef)); }, providers: [angular1Providers] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(UpgradeModule, [{
         type: NgModule,
         args: [{ providers: [angular1Providers] }]

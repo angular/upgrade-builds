@@ -1,5 +1,5 @@
 /**
- * @license Angular v12.0.0-next.3+33.sha-1735430
+ * @license Angular v12.0.0-next.3+36.sha-03d47d5
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -130,8 +130,8 @@ class AngularTestingModule {
         injector$1 = i;
     }
 }
-AngularTestingModule.ɵmod = ɵɵdefineNgModule({ type: AngularTestingModule });
-AngularTestingModule.ɵinj = ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+AngularTestingModule.ɵmod = /*@__PURE__*/ ɵɵdefineNgModule({ type: AngularTestingModule });
+AngularTestingModule.ɵinj = /*@__PURE__*/ ɵɵdefineInjector({ factory: function AngularTestingModule_Factory(t) { return new (t || AngularTestingModule)(ɵɵinject(Injector)); }, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
 (function () { (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassMetadata(AngularTestingModule, [{
         type: NgModule,
         args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
