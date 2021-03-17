@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { ElementRef, Injector, SimpleChanges } from '@angular/core';
-import { IAugmentedJQuery, IController, IDirective, IInjectorService, ILinkFn, IScope } from './angular1';
+import { IAugmentedJQuery, IController, IDirective, IInjectorService, ILinkFn, IScope, SingleOrListOrMap } from './angular1';
 export interface IBindingDestination {
     [key: string]: any;
     $onChanges?: (changes: SimpleChanges) => void;
@@ -32,9 +32,7 @@ export declare class UpgradeHelper {
     compileTemplate(template?: string): ILinkFn;
     onDestroy($scope: IScope, controllerInstance?: any): void;
     prepareTransclusion(): ILinkFn | undefined;
-    resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): IControllerInstance | {
-        [key: string]: IControllerInstance;
-    } | IControllerInstance[] | null;
+    resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): SingleOrListOrMap<IControllerInstance> | null;
     private compileHtml;
     private extractChildNodes;
     private getDirectiveRequire;
