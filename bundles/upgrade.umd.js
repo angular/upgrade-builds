@@ -1,6 +1,6 @@
 /**
- * @license Angular v10.1.0-next.4+26.sha-6248d6c
- * (c) 2010-2020 Google LLC. https://angular.io/
+ * @license Angular v12.0.0-next.5+9.sha-bff0d8f
+ * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
 
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('10.1.0-next.4+26.sha-6248d6c');
+    var VERSION = new core.Version('12.0.0-next.5+9.sha-bff0d8f');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -41,11 +41,13 @@
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
+                if (Object.prototype.hasOwnProperty.call(b, p))
                     d[p] = b[p]; };
         return extendStatics(d, b);
     };
     function __extends(d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -188,10 +190,10 @@
             k2 = k;
         o[k2] = m[k];
     });
-    function __exportStar(m, exports) {
+    function __exportStar(m, o) {
         for (var p in m)
-            if (p !== "default" && !exports.hasOwnProperty(p))
-                __createBinding(exports, m, p);
+            if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p))
+                __createBinding(o, m, p);
     }
     function __values(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -231,11 +233,13 @@
         }
         return ar;
     }
+    /** @deprecated */
     function __spread() {
         for (var ar = [], i = 0; i < arguments.length; i++)
             ar = ar.concat(__read(arguments[i]));
         return ar;
     }
+    /** @deprecated */
     function __spreadArrays() {
         for (var s = 0, i = 0, il = arguments.length; i < il; i++)
             s += arguments[i].length;
@@ -244,7 +248,11 @@
                 r[k] = a[j];
         return r;
     }
-    ;
+    function __spreadArray(to, from) {
+        for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+            to[j] = from[i];
+        return to;
+    }
     function __await(v) {
         return this instanceof __await ? (this.v = v, this) : new __await(v);
     }
@@ -301,7 +309,7 @@
         var result = {};
         if (mod != null)
             for (var k in mod)
-                if (Object.hasOwnProperty.call(mod, k))
+                if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
                     __createBinding(result, mod, k);
         __setModuleDefault(result, mod);
         return result;
@@ -412,6 +420,7 @@
     var $INTERVAL = '$interval';
     var $PARSE = '$parse';
     var $PROVIDE = '$provide';
+    var $ROOT_ELEMENT = '$rootElement';
     var $ROOT_SCOPE = '$rootScope';
     var $SCOPE = '$scope';
     var $TEMPLATE_CACHE = '$templateCache';
@@ -479,8 +488,41 @@
         }
         throw e;
     }
+    /**
+     * Clean the jqLite/jQuery data on the element and all its descendants.
+     * Equivalent to how jqLite/jQuery invoke `cleanData()` on an Element when removed:
+     *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/jqLite.js#L349-L355
+     *   https://github.com/jquery/jquery/blob/6984d1747623dbc5e87fd6c261a5b6b1628c107c/src/manipulation.js#L182
+     *
+     * NOTE:
+     * `cleanData()` will also invoke the AngularJS `$destroy` DOM event on the element:
+     *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/Angular.js#L1932-L1945
+     *
+     * @param node The DOM node whose data needs to be cleaned.
+     */
+    function cleanData(node) {
+        element.cleanData([node]);
+        if (isParentNode(node)) {
+            element.cleanData(node.querySelectorAll('*'));
+        }
+    }
     function controllerKey(name) {
         return '$' + name + 'Controller';
+    }
+    /**
+     * Destroy an AngularJS app given the app `$injector`.
+     *
+     * NOTE: Destroying an app is not officially supported by AngularJS, but try to do our best by
+     *       destroying `$rootScope` and clean the jqLite/jQuery data on `$rootElement` and all
+     *       descendants.
+     *
+     * @param $injector The `$injector` of the AngularJS app to destroy.
+     */
+    function destroyApp($injector) {
+        var $rootElement = $injector.get($ROOT_ELEMENT);
+        var $rootScope = $injector.get($ROOT_SCOPE);
+        $rootScope.$destroy();
+        cleanData($rootElement[0]);
     }
     function directiveNormalize(name) {
         return name.replace(DIRECTIVE_PREFIX_REGEXP, '')
@@ -500,6 +542,9 @@
     }
     function isFunction(value) {
         return typeof value === 'function';
+    }
+    function isParentNode(node) {
+        return isFunction(node.querySelectorAll);
     }
     function validateInjectionKey($injector, downgradedModule, injectionKey, attemptedAction) {
         var upgradeAppType = getUpgradeAppType($injector);
@@ -584,13 +629,12 @@
         __UNINITIALIZED__: true
     };
     var DowngradeComponentAdapter = /** @class */ (function () {
-        function DowngradeComponentAdapter(element, attrs, scope, ngModel, parentInjector, $injector, $compile, $parse, componentFactory, wrapCallback) {
+        function DowngradeComponentAdapter(element, attrs, scope, ngModel, parentInjector, $compile, $parse, componentFactory, wrapCallback) {
             this.element = element;
             this.attrs = attrs;
             this.scope = scope;
             this.ngModel = ngModel;
             this.parentInjector = parentInjector;
-            this.$injector = $injector;
             this.$compile = $compile;
             this.$parse = $parse;
             this.componentFactory = componentFactory;
@@ -764,11 +808,32 @@
             var testabilityRegistry = this.componentRef.injector.get(core.TestabilityRegistry);
             var destroyComponentRef = this.wrapCallback(function () { return _this.componentRef.destroy(); });
             var destroyed = false;
-            this.element.on('$destroy', function () { return _this.componentScope.$destroy(); });
+            this.element.on('$destroy', function () {
+                // The `$destroy` event may have been triggered by the `cleanData()` call in the
+                // `componentScope` `$destroy` handler below. In that case, we don't want to call
+                // `componentScope.$destroy()` again.
+                if (!destroyed)
+                    _this.componentScope.$destroy();
+            });
             this.componentScope.$on('$destroy', function () {
                 if (!destroyed) {
                     destroyed = true;
                     testabilityRegistry.unregisterApplication(_this.componentRef.location.nativeElement);
+                    // The `componentScope` might be getting destroyed, because an ancestor element is being
+                    // removed/destroyed. If that is the case, jqLite/jQuery would normally invoke `cleanData()`
+                    // on the removed element and all descendants.
+                    //   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/jqLite.js#L349-L355
+                    //   https://github.com/jquery/jquery/blob/6984d1747623dbc5e87fd6c261a5b6b1628c107c/src/manipulation.js#L182
+                    //
+                    // Here, however, `destroyComponentRef()` may under some circumstances remove the element
+                    // from the DOM and therefore it will no longer be a descendant of the removed element when
+                    // `cleanData()` is called. This would result in a memory leak, because the element's data
+                    // and event handlers (and all objects directly or indirectly referenced by them) would be
+                    // retained.
+                    //
+                    // To ensure the element is always properly cleaned up, we manually call `cleanData()` on
+                    // this element and its descendants before destroying the `ComponentRef`.
+                    cleanData(_this.element[0]);
                     destroyComponentRef();
                 }
             });
@@ -794,7 +859,6 @@
      */
     function groupNodesBySelector(ngContentSelectors, nodes) {
         var projectableNodes = [];
-        var wildcardNgContentIndex;
         for (var i = 0, ii = ngContentSelectors.length; i < ii; ++i) {
             projectableNodes[i] = [];
         }
@@ -1026,7 +1090,7 @@
                             throw new Error("Expecting ComponentFactory for: " + getTypeName(info.component));
                         }
                         var injectorPromise = new ParentInjectorPromise(element);
-                        var facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $injector, $compile, $parse, componentFactory, wrapCallback);
+                        var facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $compile, $parse, componentFactory, wrapCallback);
                         var projectableNodes = facade.compileContents();
                         facade.createComponent(projectableNodes);
                         facade.setupInputs(isNgUpgradeLite, info.propagateDigest);
@@ -1161,8 +1225,13 @@
             var injectableName = isFunction(token) ? getTypeName(token) : String(token);
             var attemptedAction = "instantiating injectable '" + injectableName + "'";
             validateInjectionKey($injector, downgradedModule, injectorKey, attemptedAction);
-            var injector = $injector.get(injectorKey);
-            return injector.get(token);
+            try {
+                var injector = $injector.get(injectorKey);
+                return injector.get(token);
+            }
+            catch (err) {
+                throw new Error("Error while " + attemptedAction + ": " + (err.message || err));
+            }
         };
         factory['$inject'] = [$INJECTOR];
         return factory;
@@ -1173,7 +1242,6 @@
     // Classes
     var UpgradeHelper = /** @class */ (function () {
         function UpgradeHelper(injector, name, elementRef, directive) {
-            this.injector = injector;
             this.name = name;
             this.$injector = injector.get($INJECTOR);
             this.$compile = this.$injector.get($COMPILE);
@@ -1249,14 +1317,7 @@
                 controllerInstance.$onDestroy();
             }
             $scope.$destroy();
-            // Clean the jQuery/jqLite data on the component+child elements.
-            // Equivelent to how jQuery/jqLite invoke `cleanData` on an Element (this.element)
-            //  https://github.com/jquery/jquery/blob/e743cbd28553267f955f71ea7248377915613fd9/src/manipulation.js#L223
-            //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/jqLite.js#L306-L312
-            // `cleanData` will invoke the AngularJS `$destroy` DOM event
-            //  https://github.com/angular/angular.js/blob/26ddc5f830f902a3d22f4b2aab70d86d4d688c82/src/Angular.js#L1911-L1924
-            element.cleanData([this.element]);
-            element.cleanData(this.element.querySelectorAll('*'));
+            cleanData(this.element);
         };
         UpgradeHelper.prototype.prepareTransclusion = function () {
             var _this = this;
@@ -1408,7 +1469,7 @@
         for (var _i = 1; _i < arguments.length; _i++) {
             args[_i - 1] = arguments[_i];
         }
-        return isFunction(property) ? property.apply(void 0, __spread(args)) : property;
+        return isFunction(property) ? property.apply(void 0, __spreadArray([], __read(args))) : property;
     }
     // NOTE: Only works for `typeof T !== 'object'`.
     function isMap(value) {
@@ -2120,7 +2181,6 @@
             var delayApplyExps = [];
             var original$applyFn;
             var rootScopePrototype;
-            var rootScope;
             var upgradeAdapter = this;
             var ng1Module = this.ng1Module = module_(this.idPrefix, modules);
             var platformRef = platformBrowserDynamic.platformBrowserDynamic();
@@ -2147,7 +2207,7 @@
                             else {
                                 throw new Error('Failed to find \'$apply\' on \'$rootScope\'!');
                             }
-                            return rootScope = rootScopeDelegate;
+                            return rootScopeDelegate;
                         }
                     ]);
                     if (ng1Injector.has($$TESTABILITY)) {
@@ -2233,6 +2293,12 @@
                             rootScope.$on('$destroy', function () {
                                 subscription.unsubscribe();
                             });
+                            // Destroy the AngularJS app once the Angular `PlatformRef` is destroyed.
+                            // This does not happen in a typical SPA scenario, but it might be useful for
+                            // other use-cases where disposing of an Angular/AngularJS app is necessary
+                            // (such as Hot Module Replacement (HMR)).
+                            // See https://github.com/angular/angular/issues/39935.
+                            platformRef.onDestroy(function () { return destroyApp(ng1Injector); });
                         });
                     })
                         .catch(function (e) { return _this.ng2BootstrapDeferred.reject(e); });

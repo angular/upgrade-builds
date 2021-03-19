@@ -1,6 +1,6 @@
 /**
- * @license Angular v10.1.0-next.4+26.sha-6248d6c
- * (c) 2010-2020 Google LLC. https://angular.io/
+ * @license Angular v12.0.0-next.5+9.sha-bff0d8f
+ * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
 
@@ -13,6 +13,7 @@ import { NgZone } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { PlatformRef } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Type } from '@angular/core';
@@ -493,6 +494,12 @@ export declare class UpgradeModule {
     /** The bootstrap zone for the upgrade application */
     ngZone: NgZone;
     /**
+     * The owning `NgModuleRef`s `PlatformRef` instance.
+     * This is used to tie the lifecycle of the bootstrapped AngularJS apps to that of the Angular
+     * `PlatformRef`.
+     */
+    private platformRef;
+    /**
      * The AngularJS `$injector` for the upgrade application.
      */
     $injector: any;
@@ -502,7 +509,13 @@ export declare class UpgradeModule {
     /** The root `Injector` for the upgrade application. */
     injector: Injector, 
     /** The bootstrap zone for the upgrade application */
-    ngZone: NgZone);
+    ngZone: NgZone, 
+    /**
+     * The owning `NgModuleRef`s `PlatformRef` instance.
+     * This is used to tie the lifecycle of the bootstrapped AngularJS apps to that of the Angular
+     * `PlatformRef`.
+     */
+    platformRef: PlatformRef);
     /**
      * Bootstrap an AngularJS application from this NgModule
      * @param element the element on which to bootstrap the AngularJS application
