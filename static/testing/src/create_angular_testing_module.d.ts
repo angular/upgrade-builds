@@ -11,9 +11,9 @@ import * as i0 from "@angular/core";
 export declare function $injectorFactory(): angular.IInjectorService | null;
 export declare class AngularTestingModule {
     constructor(i: Injector);
-    static ɵfac: i0.ɵɵFactoryDef<AngularTestingModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDefWithMeta<AngularTestingModule, never, never, never>;
-    static ɵinj: i0.ɵɵInjectorDef<AngularTestingModule>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<AngularTestingModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<AngularTestingModule, never, never, never>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<AngularTestingModule>;
 }
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
