@@ -1,27 +1,22 @@
 {
   "name": "@angular/upgrade",
-  "version": "9.0.0-rc.1+246.sha-d3cfad7.with-local-changes",
+  "version": "12.0.0-next.8+77.sha-917664e",
   "description": "Angular - the library for easing update from v1 to v2",
-  "main": "./bundles/upgrade.umd.js",
-  "module": "./fesm5/upgrade.js",
-  "es2015": "./fesm2015/upgrade.js",
-  "esm5": "./esm5/upgrade.js",
-  "esm2015": "./esm2015/upgrade.js",
-  "fesm5": "./fesm5/upgrade.js",
-  "fesm2015": "./fesm2015/upgrade.js",
-  "typings": "./upgrade.d.ts",
   "author": "angular",
   "license": "MIT",
+  "dependencies": {
+    "tslib": "^2.1.0"
+  },
   "peerDependencies": {
-    "@angular/core": "9.0.0-rc.1+246.sha-d3cfad7.with-local-changes",
-    "@angular/compiler": "9.0.0-rc.1+246.sha-d3cfad7.with-local-changes",
-    "@angular/platform-browser": "9.0.0-rc.1+246.sha-d3cfad7.with-local-changes",
-    "@angular/platform-browser-dynamic": "9.0.0-rc.1+246.sha-d3cfad7.with-local-changes",
-    "tslib": "^1.10.0"
+    "@angular/core": "12.0.0-next.8+77.sha-917664e",
+    "@angular/compiler": "12.0.0-next.8+77.sha-917664e",
+    "@angular/platform-browser": "12.0.0-next.8+77.sha-917664e",
+    "@angular/platform-browser-dynamic": "12.0.0-next.8+77.sha-917664e"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/angular/angular.git"
+    "url": "https://github.com/angular/angular.git",
+    "directory": "packages/upgrade"
   },
   "ng-update": {
     "packageGroup": [
@@ -36,8 +31,6 @@
       "@angular/platform-browser-dynamic",
       "@angular/forms",
       "@angular/platform-server",
-      "@angular/platform-webworker",
-      "@angular/platform-webworker-dynamic",
       "@angular/upgrade",
       "@angular/router",
       "@angular/language-service",
@@ -48,5 +41,11 @@
   "sideEffects": false,
   "publishConfig": {
     "registry": "https://wombat-dressing-room.appspot.com"
-  }
+  },
+  "main": "./bundles/upgrade.umd.js",
+  "fesm2015": "./fesm2015/upgrade.js",
+  "esm2015": "./esm2015/upgrade.js",
+  "typings": "./upgrade.d.ts",
+  "module": "./fesm2015/upgrade.js",
+  "es2015": "./fesm2015/upgrade.js"
 }
