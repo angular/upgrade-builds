@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.2.11+8.sha-42c64aa
+ * @license Angular v11.2.11+9.sha-dd46b87
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -1227,7 +1227,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('11.2.11+8.sha-42c64aa');
+    var VERSION = new core.Version('11.2.11+9.sha-dd46b87');
 
     /**
      * @license
@@ -2051,7 +2051,7 @@
      *
      * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng1'}
      *
-     * Finally, kick off the whole process, by bootstraping your top level Angular `NgModule`.
+     * Finally, kick off the whole process, by bootstrapping your top level Angular `NgModule`.
      *
      * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng2'}
      *
@@ -2162,7 +2162,15 @@
                                             }, delay, count, invokeApply], pass));
                                     });
                                 };
-                                wrappedInterval['cancel'] = intervalDelegate.cancel;
+                                Object.keys(intervalDelegate)
+                                    .forEach(function (prop) { return wrappedInterval[prop] = intervalDelegate[prop]; });
+                                // the `flush` method will be present when ngMocks is used
+                                if (intervalDelegate.hasOwnProperty('flush')) {
+                                    wrappedInterval['flush'] = function () {
+                                        intervalDelegate['flush']();
+                                        return wrappedInterval;
+                                    };
+                                }
                                 return wrappedInterval;
                             }
                         ]);
