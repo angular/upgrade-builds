@@ -1,5 +1,5 @@
 /**
- * @license Angular v12.0.0-next.8+206.sha-de4fafb
+ * @license Angular v12.0.0-next.8+208.sha-98fc4f4
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -464,7 +464,7 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
  *
  * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng1'}
  *
- * Finally, kick off the whole process, by bootstraping your top level Angular `NgModule`.
+ * Finally, kick off the whole process, by bootstrapping your top level Angular `NgModule`.
  *
  * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng2'}
  *
