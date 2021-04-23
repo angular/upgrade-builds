@@ -106,7 +106,7 @@ import * as i0 from "@angular/core";
  *
  * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng1'}
  *
- * Finally, kick off the whole process, by bootstraping your top level Angular `NgModule`.
+ * Finally, kick off the whole process, by bootstrapping your top level Angular `NgModule`.
  *
  * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng2'}
  *
