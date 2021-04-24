@@ -1,5 +1,5 @@
 /**
- * @license Angular v12.0.0-next.8+111.sha-baf0b3b
+ * @license Angular v12.0.0-next.8+215.sha-b3d9c5e
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -908,7 +908,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('12.0.0-next.8+111.sha-baf0b3b');
+const VERSION = new Version('12.0.0-next.8+215.sha-b3d9c5e');
 
 /**
  * @license
@@ -1729,7 +1729,7 @@ UpgradeComponent.ctorParameters = () => [
  *
  * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng1'}
  *
- * Finally, kick off the whole process, by bootstraping your top level Angular `NgModule`.
+ * Finally, kick off the whole process, by bootstrapping your top level Angular `NgModule`.
  *
  * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng2'}
  *
@@ -1830,7 +1830,15 @@ class UpgradeModule {
                                     }, delay, count, invokeApply, ...pass);
                                 });
                             };
-                            wrappedInterval['cancel'] = intervalDelegate.cancel;
+                            Object.keys(intervalDelegate)
+                                .forEach(prop => wrappedInterval[prop] = intervalDelegate[prop]);
+                            // the `flush` method will be present when ngMocks is used
+                            if (intervalDelegate.hasOwnProperty('flush')) {
+                                wrappedInterval['flush'] = () => {
+                                    intervalDelegate['flush']();
+                                    return wrappedInterval;
+                                };
+                            }
                             return wrappedInterval;
                         }
                     ]);
