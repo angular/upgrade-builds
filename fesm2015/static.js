@@ -1,5 +1,5 @@
 /**
- * @license Angular v12.0.0-next.8+256.sha-b1ae31c
+ * @license Angular v12.0.0-next.8+257.sha-cd004d4
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -908,7 +908,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('12.0.0-next.8+256.sha-b1ae31c');
+const VERSION = new Version('12.0.0-next.8+257.sha-cd004d4');
 
 /**
  * @license
