@@ -1,5 +1,5 @@
 /**
- * @license Angular v11.2.11+24.sha-e758658
+ * @license Angular v11.2.11+25.sha-eedbb75
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -908,7 +908,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('11.2.11+24.sha-e758658');
+const VERSION = new Version('11.2.11+25.sha-eedbb75');
 
 /**
  * @license
