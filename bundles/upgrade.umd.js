@@ -1,5 +1,5 @@
 /**
- * @license Angular v13.0.0-next.1+34.sha-7e71370.with-local-changes
+ * @license Angular v13.0.0-next.1+35.sha-ec4dcdf.with-local-changes
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new i0.Version('13.0.0-next.1+34.sha-7e71370.with-local-changes');
+    var VERSION = new i0.Version('13.0.0-next.1+35.sha-ec4dcdf.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -257,7 +257,7 @@
                     ar[i] = from[i];
                 }
             }
-        return to.concat(ar || from);
+        return to.concat(ar || Array.prototype.slice.call(from));
     }
     function __await(v) {
         return this instanceof __await ? (this.v = v, this) : new __await(v);
