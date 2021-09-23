@@ -1,5 +1,5 @@
 /**
- * @license Angular v13.0.0-next.7+10.sha-cc427d1.with-local-changes
+ * @license Angular v13.0.0-next.7+11.sha-ea61ec2.with-local-changes
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@
     /**
      * @publicApi
      */
-    var VERSION = new core.Version('13.0.0-next.7+10.sha-cc427d1.with-local-changes');
+    var VERSION = new core.Version('13.0.0-next.7+11.sha-ea61ec2.with-local-changes');
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -1478,7 +1478,7 @@
         for (var _i = 1; _i < arguments.length; _i++) {
             args[_i - 1] = arguments[_i];
         }
-        return isFunction(property) ? property.apply(void 0, __spreadArray([], __read(args))) : property;
+        return isFunction(property) ? property.apply(void 0, __spreadArray([], __read(args), false)) : property;
     }
     // NOTE: Only works for `typeof T !== 'object'`.
     function isMap(value) {
