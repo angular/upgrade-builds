@@ -1,11 +1,12 @@
 /**
- * @license Angular v13.0.0-next.9+10.sha-9eba260.with-local-changes
+ * @license Angular v13.0.0-next.9+84.sha-c15b8c7.with-local-changes
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
+import * as i0 from '@angular/core';
 import { Injector } from '@angular/core';
 import { NgModuleFactory } from '@angular/core';
 import { NgModuleRef } from '@angular/core';
@@ -268,11 +269,6 @@ export declare function getAngularJSGlobal(): any;
  */
 export declare function getAngularLib(): any;
 
-declare interface IInjectorService {
-    get(key: string): any;
-    has(key: string): boolean;
-}
-
 /**
  * Resets the AngularJS global.
  *
@@ -364,6 +360,8 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private initializeOutputs;
     private bindOutputs;
     private forwardChanges;
+    static ɵfac: i0.ɵɵFactoryDeclaration<UpgradeComponent, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<UpgradeComponent, never, never, {}, {}, never>;
 }
 
 /**
@@ -524,25 +522,14 @@ export declare class UpgradeModule {
      * @param [config] optional extra AngularJS bootstrap configuration
      */
     bootstrap(element: Element, modules?: string[], config?: any): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<UpgradeModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<UpgradeModule, never, never, never>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<UpgradeModule>;
 }
 
 /**
  * @publicApi
  */
 export declare const VERSION: Version;
-
-export declare function ɵangular_packages_upgrade_static_static_a(): IInjectorService;
-
-export declare function ɵangular_packages_upgrade_static_static_b(i: IInjectorService): any;
-
-export declare function ɵangular_packages_upgrade_static_static_c(i: IInjectorService): any;
-
-export declare function ɵangular_packages_upgrade_static_static_d(i: IInjectorService): any;
-
-export declare const ɵangular_packages_upgrade_static_static_e: {
-    provide: string;
-    useFactory: typeof ɵangular_packages_upgrade_static_static_b;
-    deps: string[];
-}[];
 
 export { }

@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "13.0.0-next.9+10.sha-9eba260.with-local-changes",
+  "version": "13.0.0-next.9+84.sha-c15b8c7.with-local-changes",
   "description": "Angular - the library for easing update from v1 to v2",
   "author": "angular",
   "license": "MIT",
@@ -11,10 +11,10 @@
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@angular/core": "13.0.0-next.9+10.sha-9eba260.with-local-changes",
-    "@angular/compiler": "13.0.0-next.9+10.sha-9eba260.with-local-changes",
-    "@angular/platform-browser": "13.0.0-next.9+10.sha-9eba260.with-local-changes",
-    "@angular/platform-browser-dynamic": "13.0.0-next.9+10.sha-9eba260.with-local-changes"
+    "@angular/core": "13.0.0-next.9+84.sha-c15b8c7.with-local-changes",
+    "@angular/compiler": "13.0.0-next.9+84.sha-c15b8c7.with-local-changes",
+    "@angular/platform-browser": "13.0.0-next.9+84.sha-c15b8c7.with-local-changes",
+    "@angular/platform-browser-dynamic": "13.0.0-next.9+84.sha-c15b8c7.with-local-changes"
   },
   "repository": {
     "type": "git",
@@ -42,10 +42,34 @@
     ]
   },
   "sideEffects": false,
-  "main": "./bundles/upgrade.umd.js",
-  "fesm2015": "./fesm2015/upgrade.js",
-  "esm2015": "./esm2015/upgrade.js",
+  "fesm2020": "./fesm2020/upgrade.mjs",
+  "fesm2015": "./fesm2015/upgrade.mjs",
+  "esm2020": "./esm2020/upgrade.mjs",
   "typings": "./upgrade.d.ts",
-  "module": "./fesm2015/upgrade.js",
-  "es2015": "./fesm2015/upgrade.js"
+  "module": "./fesm2015/upgrade.mjs",
+  "es2020": "./fesm2020/upgrade.mjs",
+  "type": "module",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./upgrade.d.ts",
+      "es2015": "./fesm2015/upgrade.mjs",
+      "node": "./fesm2015/upgrade.mjs",
+      "default": "./fesm2020/upgrade.mjs"
+    },
+    "./static": {
+      "types": "./static/static.d.ts",
+      "es2015": "./fesm2015/static.mjs",
+      "node": "./fesm2015/static.mjs",
+      "default": "./fesm2020/static.mjs"
+    },
+    "./static/testing": {
+      "types": "./static/testing/testing.d.ts",
+      "es2015": "./fesm2015/static/testing.mjs",
+      "node": "./fesm2015/static/testing.mjs",
+      "default": "./fesm2020/static/testing.mjs"
+    }
+  }
 }

@@ -1,25 +1,10 @@
 /**
- * @license Angular v13.0.0-next.9+10.sha-9eba260.with-local-changes
+ * @license Angular v13.0.0-next.9+84.sha-c15b8c7.with-local-changes
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { Type } from '@angular/core';
-
-declare let angular: {
-    bootstrap: (e: Element, modules: (string | IInjectable)[], config?: IAngularBootstrapConfig) => IInjectorService;
-    module: (prefix: string, dependencies?: string[]) => IModule;
-    element: {
-        (e: string | Element | Document | IAugmentedJQuery): IAugmentedJQuery;
-        cleanData: (nodes: Node[] | NodeList) => void;
-    };
-    injector: (modules: Array<string | IInjectable>, strictDi?: boolean) => IInjectorService;
-    version: {
-        major: number;
-    };
-    resumeBootstrap: () => void;
-    getTestability: (e: Element) => ITestabilityService;
-};
 
 
 /**
@@ -157,122 +142,5 @@ export declare function createAngularJSTestingModule(angularModules: any[]): str
  * @publicApi
  */
 export declare function createAngularTestingModule(angularJSModules: string[], strictDi?: boolean): Type<any>;
-
-declare type DirectiveRequireProperty = SingleOrListOrMap<string>;
-
-declare type DirectiveTranscludeProperty = boolean | 'element' | {
-    [key: string]: string;
-};
-
-declare interface IAngularBootstrapConfig {
-    strictDi?: boolean;
-}
-
-declare interface IAnnotatedFunction extends Function {
-    $inject?: Function extends {
-        $inject?: string[];
-    } ? Ng1Token[] : ReadonlyArray<Ng1Token>;
-}
-
-declare type IAugmentedJQuery = Node[] & {
-    on?: (name: string, fn: () => void) => void;
-    data?: (name: string, value?: any) => any;
-    text?: () => string;
-    inheritedData?: (name: string, value?: any) => any;
-    children?: () => IAugmentedJQuery;
-    contents?: () => IAugmentedJQuery;
-    parent?: () => IAugmentedJQuery;
-    empty?: () => void;
-    append?: (content: IAugmentedJQuery | string) => IAugmentedJQuery;
-    controller?: (name: string) => any;
-    isolateScope?: () => IScope;
-    injector?: () => IInjectorService;
-    triggerHandler?: (eventTypeOrObject: string | Event, extraParameters?: any[]) => IAugmentedJQuery;
-    remove?: () => void;
-    removeData?: () => void;
-};
-
-declare interface IComponent {
-    bindings?: {
-        [key: string]: string;
-    };
-    controller?: string | IInjectable;
-    controllerAs?: string;
-    require?: DirectiveRequireProperty;
-    template?: string | Function;
-    templateUrl?: string | Function;
-    transclude?: DirectiveTranscludeProperty;
-}
-
-declare type IInjectable = (Ng1Token | Function)[] | IAnnotatedFunction;
-
-declare interface IInjectorService {
-    get(key: string): any;
-    has(key: string): boolean;
-}
-
-declare interface IModule {
-    name: string;
-    requires: (string | IInjectable)[];
-    config(fn: IInjectable): IModule;
-    directive(selector: string, factory: IInjectable): IModule;
-    component(selector: string, component: IComponent): IModule;
-    controller(name: string, type: IInjectable): IModule;
-    factory(key: Ng1Token, factoryFn: IInjectable): IModule;
-    value(key: Ng1Token, value: any): IModule;
-    constant(token: Ng1Token, value: any): IModule;
-    run(a: IInjectable): IModule;
-}
-
-declare interface IRootScopeService {
-    $new(isolate?: boolean): IScope;
-    $id: string;
-    $parent: IScope;
-    $root: IScope;
-    $watch(exp: Ng1Expression, fn?: (a1?: any, a2?: any) => void): Function;
-    $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
-    $destroy(): any;
-    $apply(exp?: Ng1Expression): any;
-    $digest(): any;
-    $evalAsync(exp: Ng1Expression, locals?: any): void;
-    $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
-    $$childTail: IScope;
-    $$childHead: IScope;
-    $$nextSibling: IScope;
-    [key: string]: any;
-}
-
-declare interface IScope extends IRootScopeService {
-}
-
-declare interface ITestabilityService {
-    findBindings(element: Element, expression: string, opt_exactMatch?: boolean): Element[];
-    findModels(element: Element, expression: string, opt_exactMatch?: boolean): Element[];
-    getLocation(): string;
-    setLocation(url: string): void;
-    whenStable(callback: Function): void;
-}
-
-declare type Ng1Expression = string | Function;
-
-
-declare type Ng1Token = string;
-
-declare type SingleOrListOrMap<T> = T | T[] | {
-    [key: string]: T;
-};
-
-export declare const ɵangular_packages_upgrade_static_testing_testing_a: typeof angular.module;
-
-export declare const ɵangular_packages_upgrade_static_testing_testing_b = "$$angularUpgradeAppType";
-
-export declare const enum ɵangular_packages_upgrade_static_testing_testing_c {
-    None = 0,
-    Dynamic = 1,
-    Static = 2,
-    Lite = 3
-}
-
-export declare const ɵangular_packages_upgrade_static_testing_testing_d = "$$angularInjector";
 
 export { }

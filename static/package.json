@@ -1,10 +1,10 @@
 {
   "name": "@angular/upgrade/static",
   "sideEffects": false,
-  "main": "../bundles/upgrade-static.umd.js",
-  "fesm2015": "../fesm2015/static.js",
-  "esm2015": "../esm2015/static/static.js",
+  "fesm2020": "../fesm2020/static.mjs",
+  "fesm2015": "../fesm2015/static.mjs",
+  "esm2020": "../esm2020/static/static.mjs",
   "typings": "./static.d.ts",
-  "module": "../fesm2015/static.js",
-  "es2015": "../fesm2015/static.js"
+  "module": "../fesm2015/static.mjs",
+  "es2020": "../fesm2020/static.mjs"
 }
