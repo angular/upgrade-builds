@@ -1,0 +1,81 @@
+{
+  "name": "@angular/upgrade",
+  "version": "13.0.0-next.13+5.sha-48aa003.with-local-changes",
+  "description": "Angular - the library for easing update from v1 to v2",
+  "author": "angular",
+  "license": "MIT",
+  "engines": {
+    "node": "^12.20.0 || ^14.15.0 || >=16.10.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/core": "13.0.0-next.13+5.sha-48aa003.with-local-changes",
+    "@angular/compiler": "13.0.0-next.13+5.sha-48aa003.with-local-changes",
+    "@angular/platform-browser": "13.0.0-next.13+5.sha-48aa003.with-local-changes",
+    "@angular/platform-browser-dynamic": "13.0.0-next.13+5.sha-48aa003.with-local-changes"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angular/angular.git",
+    "directory": "packages/upgrade"
+  },
+  "ng-update": {
+    "packageGroup": [
+      "@angular/core",
+      "@angular/bazel",
+      "@angular/common",
+      "@angular/compiler",
+      "@angular/compiler-cli",
+      "@angular/animations",
+      "@angular/elements",
+      "@angular/platform-browser",
+      "@angular/platform-browser-dynamic",
+      "@angular/forms",
+      "@angular/platform-server",
+      "@angular/upgrade",
+      "@angular/router",
+      "@angular/language-service",
+      "@angular/localize",
+      "@angular/service-worker"
+    ]
+  },
+  "sideEffects": false,
+  "fesm2020": "./fesm2020/upgrade.mjs",
+  "fesm2015": "./fesm2015/upgrade.mjs",
+  "esm2020": "./esm2020/upgrade.mjs",
+  "typings": "./upgrade.d.ts",
+  "module": "./fesm2015/upgrade.mjs",
+  "es2020": "./fesm2020/upgrade.mjs",
+  "type": "module",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./upgrade.d.ts",
+      "esm2020": "./esm2020/upgrade.mjs",
+      "es2020": "./fesm2020/upgrade.mjs",
+      "es2015": "./fesm2015/upgrade.mjs",
+      "node": "./fesm2015/upgrade.mjs",
+      "default": "./fesm2020/upgrade.mjs"
+    },
+    "./static": {
+      "types": "./static/static.d.ts",
+      "esm2020": "./esm2020/static/static.mjs",
+      "es2020": "./fesm2020/static.mjs",
+      "es2015": "./fesm2015/static.mjs",
+      "node": "./fesm2015/static.mjs",
+      "default": "./fesm2020/static.mjs"
+    },
+    "./static/testing": {
+      "types": "./static/testing/testing.d.ts",
+      "esm2020": "./esm2020/static/testing/testing.mjs",
+      "es2020": "./fesm2020/static/testing.mjs",
+      "es2015": "./fesm2015/static/testing.mjs",
+      "node": "./fesm2015/static/testing.mjs",
+      "default": "./fesm2020/static/testing.mjs"
+    }
+  }
+}
