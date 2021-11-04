@@ -1,5 +1,5 @@
 /**
- * @license Angular v13.1.0-next.0+7.sha-b6798f3.with-local-changes
+ * @license Angular v13.1.0-next.0+17.sha-36388b3.with-local-changes
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -162,9 +162,11 @@ export declare function downgradeInjectable(token: any, downgradedModule?: strin
  * The Angular module will be bootstrapped once (when requested for the first time) and the same
  * reference will be used from that point onwards.
  *
- * `downgradeModule()` requires either an `NgModuleFactory` or a function:
+ * `downgradeModule()` requires either an `NgModuleFactory`, `NgModule` class or a function:
  * - `NgModuleFactory`: If you pass an `NgModuleFactory`, it will be used to instantiate a module
  *   using `platformBrowser`'s {@link PlatformRef#bootstrapModuleFactory bootstrapModuleFactory()}.
+ * - `NgModule` class: If you pass an NgModule class, it will be used to instantiate a module
+ *   using `platformBrowser`'s {@link PlatformRef#bootstrapModule bootstrapModule()}.
  * - `Function`: If you pass a function, it is expected to return a promise resolving to an
  *   `NgModuleRef`. The function is called with an array of extra {@link StaticProvider Providers}
  *   that are expected to be available from the returned `NgModuleRef`'s `Injector`.
@@ -253,7 +255,7 @@ export declare function downgradeInjectable(token: any, downgradedModule?: strin
  *
  * @publicApi
  */
-export declare function downgradeModule<T>(moduleFactoryOrBootstrapFn: NgModuleFactory<T> | ((extraProviders: StaticProvider[]) => Promise<NgModuleRef<T>>)): string;
+export declare function downgradeModule<T>(moduleOrBootstrapFn: Type<T> | NgModuleFactory<T> | ((extraProviders: StaticProvider[]) => Promise<NgModuleRef<T>>)): string;
 
 /**
  * Returns the current AngularJS global.

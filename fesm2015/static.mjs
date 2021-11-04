@@ -1,11 +1,11 @@
 /**
- * @license Angular v13.1.0-next.0+7.sha-b6798f3.with-local-changes
+ * @license Angular v13.1.0-next.0+17.sha-36388b3.with-local-changes
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
-import { Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, EventEmitter, Directive, isDevMode, NgModule } from '@angular/core';
+import { ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, EventEmitter, Directive, isDevMode, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 /**
@@ -218,6 +218,10 @@ function getUpgradeAppType($injector) {
 }
 function isFunction(value) {
     return typeof value === 'function';
+}
+function isNgModuleType(value) {
+    // NgModule class should have the `ɵmod` static property attached by AOT or JIT compiler.
+    return isFunction(value) && !!value[ɵNG_MOD_DEF];
 }
 function isParentNode(node) {
     return isFunction(node.querySelectorAll);
@@ -909,7 +913,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('13.1.0-next.0+7.sha-b6798f3.with-local-changes');
+const VERSION = new Version('13.1.0-next.0+17.sha-36388b3.with-local-changes');
 
 /**
  * @license
@@ -1003,9 +1007,11 @@ let moduleUid = 0;
  * The Angular module will be bootstrapped once (when requested for the first time) and the same
  * reference will be used from that point onwards.
  *
- * `downgradeModule()` requires either an `NgModuleFactory` or a function:
+ * `downgradeModule()` requires either an `NgModuleFactory`, `NgModule` class or a function:
  * - `NgModuleFactory`: If you pass an `NgModuleFactory`, it will be used to instantiate a module
  *   using `platformBrowser`'s {@link PlatformRef#bootstrapModuleFactory bootstrapModuleFactory()}.
+ * - `NgModule` class: If you pass an NgModule class, it will be used to instantiate a module
+ *   using `platformBrowser`'s {@link PlatformRef#bootstrapModule bootstrapModule()}.
  * - `Function`: If you pass a function, it is expected to return a promise resolving to an
  *   `NgModuleRef`. The function is called with an array of extra {@link StaticProvider Providers}
  *   that are expected to be available from the returned `NgModuleRef`'s `Injector`.
@@ -1094,13 +1100,23 @@ let moduleUid = 0;
  *
  * @publicApi
  */
-function downgradeModule(moduleFactoryOrBootstrapFn) {
+function downgradeModule(moduleOrBootstrapFn) {
     const lazyModuleName = `${UPGRADE_MODULE_NAME}.lazy${++moduleUid}`;
     const lazyModuleRefKey = `${LAZY_MODULE_REF}${lazyModuleName}`;
     const lazyInjectorKey = `${INJECTOR_KEY}${lazyModuleName}`;
-    const bootstrapFn = isFunction(moduleFactoryOrBootstrapFn) ?
-        moduleFactoryOrBootstrapFn :
-        (extraProviders) => platformBrowser(extraProviders).bootstrapModuleFactory(moduleFactoryOrBootstrapFn);
+    let bootstrapFn;
+    if (isNgModuleType(moduleOrBootstrapFn)) {
+        // NgModule class
+        bootstrapFn = (extraProviders) => platformBrowser(extraProviders).bootstrapModule(moduleOrBootstrapFn);
+    }
+    else if (!isFunction(moduleOrBootstrapFn)) {
+        // NgModule factory
+        bootstrapFn = (extraProviders) => platformBrowser(extraProviders).bootstrapModuleFactory(moduleOrBootstrapFn);
+    }
+    else {
+        // bootstrap function
+        bootstrapFn = moduleOrBootstrapFn;
+    }
     let injector;
     // Create an ng1 module to bootstrap.
     module_(lazyModuleName, [])
@@ -1616,9 +1632,9 @@ class UpgradeComponent {
         }
     }
 }
-UpgradeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.1.0-next.0+7.sha-b6798f3.with-local-changes", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeComponent.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.1.0-next.0+7.sha-b6798f3.with-local-changes", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.1.0-next.0+7.sha-b6798f3.with-local-changes", ngImport: i0, type: UpgradeComponent, decorators: [{
+UpgradeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.1.0-next.0+17.sha-36388b3.with-local-changes", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeComponent.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.1.0-next.0+17.sha-36388b3.with-local-changes", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.1.0-next.0+17.sha-36388b3.with-local-changes", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }]; } });
 
@@ -1898,10 +1914,10 @@ class UpgradeModule {
         }
     }
 }
-UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.1.0-next.0+7.sha-b6798f3.with-local-changes", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "13.1.0-next.0+7.sha-b6798f3.with-local-changes", ngImport: i0, type: UpgradeModule });
-UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "13.1.0-next.0+7.sha-b6798f3.with-local-changes", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.1.0-next.0+7.sha-b6798f3.with-local-changes", ngImport: i0, type: UpgradeModule, decorators: [{
+UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.1.0-next.0+17.sha-36388b3.with-local-changes", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "13.1.0-next.0+17.sha-36388b3.with-local-changes", ngImport: i0, type: UpgradeModule });
+UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "13.1.0-next.0+17.sha-36388b3.with-local-changes", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.1.0-next.0+17.sha-36388b3.with-local-changes", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }]; } });
