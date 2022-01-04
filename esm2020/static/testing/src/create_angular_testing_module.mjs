@@ -19,10 +19,10 @@ export class AngularTestingModule {
         injector = i;
     }
 }
-AngularTestingModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.2.0-next.1+1.sha-8ebc946.with-local-changes", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
-AngularTestingModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "13.2.0-next.1+1.sha-8ebc946.with-local-changes", ngImport: i0, type: AngularTestingModule });
-AngularTestingModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "13.2.0-next.1+1.sha-8ebc946.with-local-changes", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.2.0-next.1+1.sha-8ebc946.with-local-changes", ngImport: i0, type: AngularTestingModule, decorators: [{
+AngularTestingModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.2.0-next.1+2.sha-58e8f5e.with-local-changes", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+AngularTestingModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "13.2.0-next.1+2.sha-58e8f5e.with-local-changes", ngImport: i0, type: AngularTestingModule });
+AngularTestingModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "13.2.0-next.1+2.sha-58e8f5e.with-local-changes", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.2.0-next.1+2.sha-58e8f5e.with-local-changes", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
             args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }]; } });

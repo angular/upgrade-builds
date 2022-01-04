@@ -1,5 +1,5 @@
 /**
- * @license Angular v13.2.0-next.1+1.sha-8ebc946.with-local-changes
+ * @license Angular v13.2.0-next.1+2.sha-58e8f5e.with-local-changes
  * (c) 2010-2021 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -19,7 +19,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('13.2.0-next.1+1.sha-8ebc946.with-local-changes');
+const VERSION = new Version('13.2.0-next.1+2.sha-58e8f5e.with-local-changes');
 
 /**
  * @license
@@ -1360,9 +1360,9 @@ class UpgradeNg1ComponentAdapter {
         this.destinationObj[this.propertyMap[name]] = value;
     }
 }
-UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.2.0-next.1+1.sha-8ebc946.with-local-changes", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.2.0-next.1+1.sha-8ebc946.with-local-changes", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.2.0-next.1+1.sha-8ebc946.with-local-changes", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.2.0-next.1+2.sha-58e8f5e.with-local-changes", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.2.0-next.1+2.sha-58e8f5e.with-local-changes", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.2.0-next.1+2.sha-58e8f5e.with-local-changes", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
