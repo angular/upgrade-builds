@@ -1,5 +1,5 @@
 /**
- * @license Angular v13.2.5+15.sha-43bbaf8
+ * @license Angular v13.2.5+16.sha-8390e12
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -19,7 +19,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('13.2.5+15.sha-43bbaf8');
+const VERSION = new Version('13.2.5+16.sha-8390e12');
 
 /**
  * @license
@@ -1360,9 +1360,9 @@ class UpgradeNg1ComponentAdapter {
         this.destinationObj[this.propertyMap[name]] = value;
     }
 }
-UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.2.5+15.sha-43bbaf8", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.2.5+15.sha-43bbaf8", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.2.5+15.sha-43bbaf8", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.2.5+16.sha-8390e12", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.2.5+16.sha-8390e12", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.2.5+16.sha-8390e12", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
