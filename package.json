@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "14.0.0-next.6+3.sha-c7cab69",
+  "version": "14.0.0-next.6+6.sha-79580bb",
   "description": "Angular - the library for easing update from v1 to v2",
   "author": "angular",
   "license": "MIT",
@@ -11,10 +11,10 @@
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@angular/core": "14.0.0-next.6+3.sha-c7cab69",
-    "@angular/compiler": "14.0.0-next.6+3.sha-c7cab69",
-    "@angular/platform-browser": "14.0.0-next.6+3.sha-c7cab69",
-    "@angular/platform-browser-dynamic": "14.0.0-next.6+3.sha-c7cab69"
+    "@angular/core": "14.0.0-next.6+6.sha-79580bb",
+    "@angular/compiler": "14.0.0-next.6+6.sha-79580bb",
+    "@angular/platform-browser": "14.0.0-next.6+6.sha-79580bb",
+    "@angular/platform-browser-dynamic": "14.0.0-next.6+6.sha-79580bb"
   },
   "repository": {
     "type": "git",
