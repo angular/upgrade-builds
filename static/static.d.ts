@@ -1,5 +1,5 @@
 /**
- * @license Angular v14.0.0-next.13+44.sha-989e840
+ * @license Angular v14.0.0-next.13+54.sha-b8d3389
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -483,7 +483,7 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private bindOutputs;
     private forwardChanges;
     static ɵfac: i0.ɵɵFactoryDeclaration<UpgradeComponent, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<UpgradeComponent, never, never, {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<UpgradeComponent, never, never, {}, {}, never, never, false>;
 }
 
 /**
