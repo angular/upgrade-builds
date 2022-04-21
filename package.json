@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "14.0.0-next.14+9.sha-3dee3d1",
+  "version": "14.0.0-next.14+16.sha-612d6e0",
   "description": "Angular - the library for easing update from v1 to v2",
   "author": "angular",
   "license": "MIT",
@@ -11,10 +11,10 @@
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@angular/core": "14.0.0-next.14+9.sha-3dee3d1",
-    "@angular/compiler": "14.0.0-next.14+9.sha-3dee3d1",
-    "@angular/platform-browser": "14.0.0-next.14+9.sha-3dee3d1",
-    "@angular/platform-browser-dynamic": "14.0.0-next.14+9.sha-3dee3d1"
+    "@angular/core": "14.0.0-next.14+16.sha-612d6e0",
+    "@angular/compiler": "14.0.0-next.14+16.sha-612d6e0",
+    "@angular/platform-browser": "14.0.0-next.14+16.sha-612d6e0",
+    "@angular/platform-browser-dynamic": "14.0.0-next.14+16.sha-612d6e0"
   },
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
   "fesm2020": "./fesm2020/upgrade.mjs",
   "fesm2015": "./fesm2015/upgrade.mjs",
   "esm2020": "./esm2020/upgrade.mjs",
-  "typings": "./upgrade.d.ts",
+  "typings": "./index.d.ts",
   "module": "./fesm2015/upgrade.mjs",
   "es2020": "./fesm2020/upgrade.mjs",
   "type": "module",
@@ -54,7 +54,7 @@
       "default": "./package.json"
     },
     ".": {
-      "types": "./upgrade.d.ts",
+      "types": "./index.d.ts",
       "esm2020": "./esm2020/upgrade.mjs",
       "es2020": "./fesm2020/upgrade.mjs",
       "es2015": "./fesm2015/upgrade.mjs",
@@ -62,7 +62,7 @@
       "default": "./fesm2020/upgrade.mjs"
     },
     "./static": {
-      "types": "./static/static.d.ts",
+      "types": "./static/index.d.ts",
       "esm2020": "./esm2020/static/static.mjs",
       "es2020": "./fesm2020/static.mjs",
       "es2015": "./fesm2015/static.mjs",
@@ -70,7 +70,7 @@
       "default": "./fesm2020/static.mjs"
     },
     "./static/testing": {
-      "types": "./static/testing/testing.d.ts",
+      "types": "./static/testing/index.d.ts",
       "esm2020": "./esm2020/static/testing/testing.mjs",
       "es2020": "./fesm2020/static/testing.mjs",
       "es2015": "./fesm2015/static/testing.mjs",
