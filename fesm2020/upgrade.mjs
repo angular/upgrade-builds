@@ -1,5 +1,5 @@
 /**
- * @license Angular v14.0.0-next.14+29.sha-9d755fa
+ * @license Angular v14.0.0-next.14+30.sha-f1cc4a6
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -19,7 +19,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('14.0.0-next.14+29.sha-9d755fa');
+const VERSION = new Version('14.0.0-next.14+30.sha-f1cc4a6');
 
 /**
  * @license
@@ -1360,9 +1360,9 @@ class UpgradeNg1ComponentAdapter {
         this.destinationObj[this.propertyMap[name]] = value;
     }
 }
-UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.14+29.sha-9d755fa", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "14.0.0-next.14+29.sha-9d755fa", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.14+29.sha-9d755fa", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.14+30.sha-f1cc4a6", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "14.0.0-next.14+30.sha-f1cc4a6", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.14+30.sha-f1cc4a6", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
