@@ -1,5 +1,5 @@
 /**
- * @license Angular v14.0.0-next.15+sha-29039fc
+ * @license Angular v14.0.0-next.15+sha-fcc548a
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -131,10 +131,10 @@ class AngularTestingModule {
         injector = i;
     }
 }
-AngularTestingModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
-AngularTestingModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: AngularTestingModule });
-AngularTestingModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: AngularTestingModule, decorators: [{
+AngularTestingModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-fcc548a", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+AngularTestingModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-fcc548a", ngImport: i0, type: AngularTestingModule });
+AngularTestingModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-fcc548a", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-fcc548a", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
             args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }]; } });
@@ -205,7 +205,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.15+s
  */
 function createAngularTestingModule(angularJSModules, strictDi) {
     module_('$$angularJSTestingModule', angularJSModules)
-        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+        .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
         .factory(INJECTOR_KEY, () => injector);
     $injector = injector$1(['ng', '$$angularJSTestingModule'], strictDi);
     return AngularTestingModule;
@@ -287,7 +287,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  */
 function createAngularJSTestingModule(angularModules) {
     return module_('$$angularJSTestingModule', [])
-        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+        .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
         .factory(INJECTOR_KEY, [
         $INJECTOR,
         ($injector) => {
