@@ -1,5 +1,5 @@
 /**
- * @license Angular v14.0.0-next.15+sha-d4fc12f
+ * @license Angular v14.0.0-next.15+sha-29039fc
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -214,7 +214,7 @@ function getDowngradedModuleCount($injector) {
 }
 function getUpgradeAppType($injector) {
     return $injector.has(UPGRADE_APP_TYPE_KEY) ? $injector.get(UPGRADE_APP_TYPE_KEY) :
-        0 /* None */;
+        0 /* UpgradeAppType.None */;
 }
 function isFunction(value) {
     return typeof value === 'function';
@@ -231,15 +231,15 @@ function validateInjectionKey($injector, downgradedModule, injectionKey, attempt
     const downgradedModuleCount = getDowngradedModuleCount($injector);
     // Check for common errors.
     switch (upgradeAppType) {
-        case 1 /* Dynamic */:
-        case 2 /* Static */:
+        case 1 /* UpgradeAppType.Dynamic */:
+        case 2 /* UpgradeAppType.Static */:
             if (downgradedModule) {
                 throw new Error(`Error while ${attemptedAction}: 'downgradedModule' unexpectedly specified.\n` +
                     'You should not specify a value for \'downgradedModule\', unless you are downgrading ' +
                     'more than one Angular module (via \'downgradeModule()\').');
             }
             break;
-        case 3 /* Lite */:
+        case 3 /* UpgradeAppType.Lite */:
             if (!downgradedModule && (downgradedModuleCount >= 2)) {
                 throw new Error(`Error while ${attemptedAction}: 'downgradedModule' not specified.\n` +
                     'This application contains more than one downgraded Angular module, thus you need to ' +
@@ -691,7 +691,7 @@ function downgradeComponent(info) {
         //   NOTE: This is not needed, when using `UpgradeModule`, because `$digest()` will be run
         //         inside the Angular zone (except if explicitly escaped, in which case we shouldn't
         //         force it back in).
-        const isNgUpgradeLite = getUpgradeAppType($injector) === 3 /* Lite */;
+        const isNgUpgradeLite = getUpgradeAppType($injector) === 3 /* UpgradeAppType.Lite */;
         const wrapCallback = !isNgUpgradeLite ? cb => cb : cb => () => NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
         let ngZone;
         // When downgrading multiple modules, special handling is needed wrt injectors.
@@ -913,7 +913,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('14.0.0-next.15+sha-d4fc12f');
+const VERSION = new Version('14.0.0-next.15+sha-29039fc');
 
 /**
  * @license
@@ -1122,7 +1122,7 @@ function downgradeModule(moduleOrBootstrapFn) {
     let injector;
     // Create an ng1 module to bootstrap.
     module_(lazyModuleName, [])
-        .constant(UPGRADE_APP_TYPE_KEY, 3 /* Lite */)
+        .constant(UPGRADE_APP_TYPE_KEY, 3 /* UpgradeAppType.Lite */)
         .factory(INJECTOR_KEY, [lazyInjectorKey, identity])
         .factory(lazyInjectorKey, () => {
         if (!injector) {
@@ -1634,9 +1634,9 @@ class UpgradeComponent {
         }
     }
 }
-UpgradeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-d4fc12f", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeComponent.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-d4fc12f", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-d4fc12f", ngImport: i0, type: UpgradeComponent, decorators: [{
+UpgradeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeComponent.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }]; } });
 
@@ -1798,7 +1798,7 @@ class UpgradeModule {
         const INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
         // Create an ng1 module to bootstrap
         module_(INIT_MODULE_NAME, [])
-            .constant(UPGRADE_APP_TYPE_KEY, 2 /* Static */)
+            .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
             .value(INJECTOR_KEY, this.injector)
             .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (injector) => ({ injector })])
             .config([
@@ -1916,10 +1916,10 @@ class UpgradeModule {
         }
     }
 }
-UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-d4fc12f", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-d4fc12f", ngImport: i0, type: UpgradeModule });
-UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-d4fc12f", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-d4fc12f", ngImport: i0, type: UpgradeModule, decorators: [{
+UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: UpgradeModule });
+UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.0-next.15+sha-29039fc", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }]; } });
