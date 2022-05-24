@@ -1,5 +1,5 @@
 /**
- * @license Angular v14.1.0-next.0+sha-8629f2d
+ * @license Angular v13.3.9+18.sha-3e3f8fc
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -19,7 +19,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('14.1.0-next.0+sha-8629f2d');
+const VERSION = new Version('13.3.9+18.sha-3e3f8fc');
 
 /**
  * @license
@@ -150,7 +150,7 @@ class PropertyBinding {
         this.bracketAttr = `[${this.attr}]`;
         this.parenAttr = `(${this.attr})`;
         this.bracketParenAttr = `[(${this.attr})]`;
-        const capitalAttr = this.attr.charAt(0).toUpperCase() + this.attr.slice(1);
+        const capitalAttr = this.attr.charAt(0).toUpperCase() + this.attr.substr(1);
         this.onAttr = `on${capitalAttr}`;
         this.bindAttr = `bind${capitalAttr}`;
         this.bindonAttr = `bindon${capitalAttr}`;
@@ -227,7 +227,7 @@ function getDowngradedModuleCount($injector) {
 }
 function getUpgradeAppType($injector) {
     return $injector.has(UPGRADE_APP_TYPE_KEY) ? $injector.get(UPGRADE_APP_TYPE_KEY) :
-        0 /* UpgradeAppType.None */;
+        0 /* None */;
 }
 function isFunction(value) {
     return typeof value === 'function';
@@ -244,15 +244,15 @@ function validateInjectionKey($injector, downgradedModule, injectionKey, attempt
     const downgradedModuleCount = getDowngradedModuleCount($injector);
     // Check for common errors.
     switch (upgradeAppType) {
-        case 1 /* UpgradeAppType.Dynamic */:
-        case 2 /* UpgradeAppType.Static */:
+        case 1 /* Dynamic */:
+        case 2 /* Static */:
             if (downgradedModule) {
                 throw new Error(`Error while ${attemptedAction}: 'downgradedModule' unexpectedly specified.\n` +
                     'You should not specify a value for \'downgradedModule\', unless you are downgrading ' +
                     'more than one Angular module (via \'downgradeModule()\').');
             }
             break;
-        case 3 /* UpgradeAppType.Lite */:
+        case 3 /* Lite */:
             if (!downgradedModule && (downgradedModuleCount >= 2)) {
                 throw new Error(`Error while ${attemptedAction}: 'downgradedModule' not specified.\n` +
                     'This application contains more than one downgraded Angular module, thus you need to ' +
@@ -704,7 +704,7 @@ function downgradeComponent(info) {
         //   NOTE: This is not needed, when using `UpgradeModule`, because `$digest()` will be run
         //         inside the Angular zone (except if explicitly escaped, in which case we shouldn't
         //         force it back in).
-        const isNgUpgradeLite = getUpgradeAppType($injector) === 3 /* UpgradeAppType.Lite */;
+        const isNgUpgradeLite = getUpgradeAppType($injector) === 3 /* Lite */;
         const wrapCallback = !isNgUpgradeLite ? cb => cb : cb => () => NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
         let ngZone;
         // When downgrading multiple modules, special handling is needed wrt injectors.
@@ -1360,9 +1360,9 @@ class UpgradeNg1ComponentAdapter {
         this.destinationObj[this.propertyMap[name]] = value;
     }
 }
-UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-8629f2d", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "14.1.0-next.0+sha-8629f2d", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-8629f2d", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "13.3.9+18.sha-3e3f8fc", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "13.3.9+18.sha-3e3f8fc", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.3.9+18.sha-3e3f8fc", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
@@ -1848,7 +1848,7 @@ class UpgradeAdapter {
         const platformRef = platformBrowserDynamic();
         this.ngZone = new NgZone({ enableLongStackTrace: Zone.hasOwnProperty('longStackTraceZoneSpec') });
         this.ng2BootstrapDeferred = new Deferred();
-        ng1Module.constant(UPGRADE_APP_TYPE_KEY, 1 /* UpgradeAppType.Dynamic */)
+        ng1Module.constant(UPGRADE_APP_TYPE_KEY, 1 /* Dynamic */)
             .factory(INJECTOR_KEY, () => this.moduleRef.injector.get(Injector))
             .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (injector) => ({ injector })])
             .constant(NG_ZONE_KEY, this.ngZone)
