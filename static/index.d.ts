@@ -1,5 +1,5 @@
 /**
- * @license Angular v14.1.0-next.0+sha-6c44222
+ * @license Angular v14.1.0-next.0+sha-e9cb045
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -561,11 +561,11 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
  * This class is an `NgModule`, which you import to provide AngularJS core services,
  * and has an instance method used to bootstrap the hybrid upgrade application.
  *
- * * Core AngularJS services
+ * * Core AngularJS services<br />
  *   Importing this `NgModule` will add providers for the core
  *   [AngularJS services](https://docs.angularjs.org/api/ng/service) to the root injector.
  *
- * * Bootstrap
+ * * Bootstrap<br />
  *   The runtime instance of this class contains a {@link UpgradeModule#bootstrap `bootstrap()`}
  *   method, which you use to bootstrap the top level AngularJS module onto an element in the
  *   DOM for the hybrid upgrade app.
@@ -643,8 +643,10 @@ export declare class UpgradeModule {
      * @param element the element on which to bootstrap the AngularJS application
      * @param [modules] the AngularJS modules to bootstrap for this application
      * @param [config] optional extra AngularJS bootstrap configuration
+     * @return The value returned by
+     *     [angular.bootstrap()](https://docs.angularjs.org/api/ng/function/angular.bootstrap).
      */
-    bootstrap(element: Element, modules?: string[], config?: any): void;
+    bootstrap(element: Element, modules?: string[], config?: any): any;
     static ɵfac: i0.ɵɵFactoryDeclaration<UpgradeModule, never>;
     static ɵmod: i0.ɵɵNgModuleDeclaration<UpgradeModule, never, never, never>;
     static ɵinj: i0.ɵɵInjectorDeclaration<UpgradeModule>;

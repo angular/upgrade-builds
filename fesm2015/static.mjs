@@ -1,5 +1,5 @@
 /**
- * @license Angular v14.1.0-next.0+sha-6c44222
+ * @license Angular v14.1.0-next.0+sha-e9cb045
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -913,7 +913,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('14.1.0-next.0+sha-6c44222');
+const VERSION = new Version('14.1.0-next.0+sha-e9cb045');
 
 /**
  * @license
@@ -1634,9 +1634,9 @@ class UpgradeComponent {
         }
     }
 }
-UpgradeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-6c44222", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeComponent.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "14.1.0-next.0+sha-6c44222", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-6c44222", ngImport: i0, type: UpgradeComponent, decorators: [{
+UpgradeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-e9cb045", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeComponent.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "14.1.0-next.0+sha-e9cb045", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-e9cb045", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }]; } });
 
@@ -1721,11 +1721,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.1.0-next.0+sh
  * This class is an `NgModule`, which you import to provide AngularJS core services,
  * and has an instance method used to bootstrap the hybrid upgrade application.
  *
- * * Core AngularJS services
+ * * Core AngularJS services<br />
  *   Importing this `NgModule` will add providers for the core
  *   [AngularJS services](https://docs.angularjs.org/api/ng/service) to the root injector.
  *
- * * Bootstrap
+ * * Bootstrap<br />
  *   The runtime instance of this class contains a {@link UpgradeModule#bootstrap `bootstrap()`}
  *   method, which you use to bootstrap the top level AngularJS module onto an element in the
  *   DOM for the hybrid upgrade app.
@@ -1793,6 +1793,8 @@ class UpgradeModule {
      * @param element the element on which to bootstrap the AngularJS application
      * @param [modules] the AngularJS modules to bootstrap for this application
      * @param [config] optional extra AngularJS bootstrap configuration
+     * @return The value returned by
+     *     [angular.bootstrap()](https://docs.angularjs.org/api/ng/function/angular.bootstrap).
      */
     bootstrap(element$1, modules = [], config /*angular.IAngularBootstrapConfig*/) {
         const INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
@@ -1901,9 +1903,7 @@ class UpgradeModule {
         const windowAngular = window['angular'];
         windowAngular.resumeBootstrap = undefined;
         // Bootstrap the AngularJS application inside our zone
-        this.ngZone.run(() => {
-            bootstrap(element$1, [upgradeModule.name], config);
-        });
+        const returnValue = this.ngZone.run(() => bootstrap(element$1, [upgradeModule.name], config));
         // Patch resumeBootstrap() to run inside the ngZone
         if (windowAngular.resumeBootstrap) {
             const originalResumeBootstrap = windowAngular.resumeBootstrap;
@@ -1914,12 +1914,13 @@ class UpgradeModule {
                 return ngZone.run(() => windowAngular.resumeBootstrap.apply(this, args));
             };
         }
+        return returnValue;
     }
 }
-UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-6c44222", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "14.1.0-next.0+sha-6c44222", ngImport: i0, type: UpgradeModule });
-UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-6c44222", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-6c44222", ngImport: i0, type: UpgradeModule, decorators: [{
+UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-e9cb045", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "14.1.0-next.0+sha-e9cb045", ngImport: i0, type: UpgradeModule });
+UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-e9cb045", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.1.0-next.0+sha-e9cb045", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }]; } });
