@@ -1,5 +1,5 @@
 /**
- * @license Angular v14.0.6+sha-89edfe7
+ * @license Angular v14.0.6+sha-41253f9
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -19,7 +19,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('14.0.6+sha-89edfe7');
+const VERSION = new Version('14.0.6+sha-41253f9');
 
 /**
  * @license
@@ -1162,6 +1162,12 @@ const INITIAL_VALUE = {
     __UNINITIALIZED__: true
 };
 const NOT_SUPPORTED = 'NOT_SUPPORTED';
+function getInputPropertyMapName(name) {
+    return `input_${name}`;
+}
+function getOutputPropertyMapName(name) {
+    return `output_${name}`;
+}
 class UpgradeNg1ComponentAdapterBuilder {
     constructor(name) {
         this.name = name;
@@ -1204,9 +1210,9 @@ class UpgradeNg1ComponentAdapterBuilder {
                 const bindingOptions = definition.charAt(1);
                 const attrName = definition.substring(bindingOptions === '?' ? 2 : 1) || propName;
                 // QUESTION: What about `=*`? Ignore? Throw? Support?
-                const inputName = `input_${attrName}`;
+                const inputName = getInputPropertyMapName(attrName);
                 const inputNameRename = `${inputName}: ${attrName}`;
-                const outputName = `output_${attrName}`;
+                const outputName = getOutputPropertyMapName(attrName);
                 const outputNameRename = `${outputName}: ${attrName}`;
                 const outputNameRenameChange = `${outputNameRename}Change`;
                 switch (bindingType) {
@@ -1329,8 +1335,9 @@ class UpgradeNg1ComponentAdapter {
         const ng1Changes = {};
         Object.keys(changes).forEach(name => {
             const change = changes[name];
-            this.setComponentProperty(name, change.currentValue);
-            ng1Changes[this.propertyMap[name]] = change;
+            const propertyMapName = getInputPropertyMapName(name);
+            this.setComponentProperty(propertyMapName, change.currentValue);
+            ng1Changes[this.propertyMap[propertyMapName]] = change;
         });
         if (isFunction(this.destinationObj.$onChanges)) {
             this.destinationObj.$onChanges(ng1Changes);
@@ -1360,9 +1367,9 @@ class UpgradeNg1ComponentAdapter {
         this.destinationObj[this.propertyMap[name]] = value;
     }
 }
-UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.6+sha-89edfe7", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "14.0.6+sha-89edfe7", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.6+sha-89edfe7", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.0.6+sha-41253f9", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "14.0.6+sha-41253f9", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.0.6+sha-41253f9", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
