@@ -1,5 +1,5 @@
 /**
- * @license Angular v15.0.4+sha-125b3df
+ * @license Angular v15.0.4+sha-d7ff276
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -8,13 +8,6 @@ import * as i0 from '@angular/core';
 import { ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Version, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, EventEmitter, Directive, NgModule } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
 }
@@ -81,13 +74,6 @@ const injector = (modules, strictDi) => angular.injector(modules, strictDi);
 const resumeBootstrap = () => angular.resumeBootstrap();
 const getTestability = e => angular.getTestability(e);
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 const $COMPILE = '$compile';
 const $CONTROLLER = '$controller';
 const $DELEGATE = '$delegate';
@@ -115,13 +101,6 @@ const REQUIRE_NG_MODEL = '?ngModel';
 const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 /**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
  * A `PropertyBinding` represents a mapping between a property name
  * and an attribute name. It is parsed from a string of the form
  * `"prop: attr"`; or simply `"propAndAttr" where the property
@@ -144,13 +123,6 @@ class PropertyBinding {
     }
 }
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 const DIRECTIVE_PREFIX_REGEXP = /^(?:x|data)[:\-_]/i;
 const DIRECTIVE_SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
 function onError(e) {
@@ -296,13 +268,6 @@ function strictEquals(val1, val2) {
     return val1 === val2 || (val1 !== val1 && val2 !== val2);
 }
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 const INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true
 };
@@ -568,13 +533,6 @@ function matchesSelector(el, selector) {
     return el.nodeType === Node.ELEMENT_NODE ? _matches.call(el, selector) : false;
 }
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 function isThenable(obj) {
     return !!obj && isFunction(obj.then);
 }
@@ -625,13 +583,6 @@ class SyncPromise {
     }
 }
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 /**
  * @description
  *
@@ -819,13 +770,6 @@ class ParentInjectorPromise extends SyncPromise {
 }
 
 /**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-/**
  * @description
  *
  * A helper function to allow an Angular service to be accessible from AngularJS.
@@ -904,24 +848,15 @@ function downgradeInjectable(token, downgradedModule = '') {
 }
 
 /**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
+ * @module
+ * @description
+ * Entry point for all public APIs of the upgrade package.
  */
 /**
  * @publicApi
  */
-const VERSION = new Version('15.0.4+sha-125b3df');
+const VERSION = new Version('15.0.4+sha-d7ff276');
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 // We have to do a little dance to get the ng1 injector into the module injector.
 // We store the ng1 injector so that the provider in the module injector can access it
 // Then we "get" the ng1 injector from the module injector, which triggers the provider to read
@@ -958,13 +893,6 @@ const angular1Providers = [
     { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
 ];
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 class NgAdapterInjector {
     constructor(modInjector) {
         this.modInjector = modInjector;
@@ -981,13 +909,6 @@ class NgAdapterInjector {
     }
 }
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 let moduleUid = 0;
 /**
  * @description
@@ -1164,13 +1085,6 @@ function identity(x) {
     return x;
 }
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 // Constants
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 // Classes
@@ -1405,13 +1319,6 @@ function notSupported(name, feature) {
     throw new Error(`Upgraded directive '${name}' contains unsupported feature: '${feature}'.`);
 }
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 const NOT_SUPPORTED = 'NOT_SUPPORTED';
 const INITIAL_VALUE = {
     __UNINITIALIZED__: true
@@ -1634,19 +1541,12 @@ class UpgradeComponent {
         }
     }
 }
-UpgradeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.4+sha-125b3df", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeComponent.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "15.0.4+sha-125b3df", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.4+sha-125b3df", ngImport: i0, type: UpgradeComponent, decorators: [{
+UpgradeComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.4+sha-d7ff276", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeComponent.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "15.0.4+sha-d7ff276", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.4+sha-d7ff276", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }]; } });
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 /**
  * @description
  *
@@ -1917,30 +1817,17 @@ class UpgradeModule {
         return returnValue;
     }
 }
-UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.4+sha-125b3df", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "15.0.4+sha-125b3df", ngImport: i0, type: UpgradeModule });
-UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "15.0.4+sha-125b3df", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.4+sha-125b3df", ngImport: i0, type: UpgradeModule, decorators: [{
+UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.0.4+sha-d7ff276", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "15.0.4+sha-d7ff276", ngImport: i0, type: UpgradeModule });
+UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "15.0.4+sha-d7ff276", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.0.4+sha-d7ff276", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }]; } });
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
 // This file only re-exports items to appear in the public api. Keep it that way.
 
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
+// This file is not used to build this module. It is only used during editing
 
 /**
  * Generated bundle index. Do not edit.
