@@ -1,5 +1,5 @@
 /**
- * @license Angular v15.2.0-next.2+sha-fd539a2
+ * @license Angular v15.2.0-next.2+sha-5915c72
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -449,20 +449,15 @@ export declare function setAngularLib(ng: any): void;
  * @extensible
  */
 export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
-    private name;
-    private elementRef;
-    private injector;
     private helper;
-    private $injector;
-    private element;
     private $element;
     private $componentScope;
     private directive;
     private bindings;
-    private controllerInstance;
-    private bindingDestination;
+    private controllerInstance?;
+    private bindingDestination?;
     private pendingChanges;
-    private unregisterDoCheckWatcher;
+    private unregisterDoCheckWatcher?;
     /**
      * Create a new `UpgradeComponent` instance. You should not normally need to do this.
      * Instead you should derive a new class from this one and call the super constructor

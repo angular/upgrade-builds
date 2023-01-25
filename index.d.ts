@@ -1,5 +1,5 @@
 /**
- * @license Angular v15.2.0-next.2+sha-fd539a2
+ * @license Angular v15.2.0-next.2+sha-5915c72
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -131,10 +131,7 @@ export declare class UpgradeAdapter {
     private idPrefix;
     private downgradedComponents;
     private upgradedProviders;
-    private ngZone;
-    private ng1Module;
     private moduleRef;
-    private ng2BootstrapDeferred;
     constructor(ng2AppModule: Type<any>, compilerOptions?: CompilerOptions | undefined);
     /**
      * Allows Angular Component to be used from AngularJS.
