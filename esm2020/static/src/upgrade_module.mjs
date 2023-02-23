@@ -282,10 +282,10 @@ export class UpgradeModule {
         return returnValue;
     }
 }
-UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.2.0+sha-7677963", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "15.2.0+sha-7677963", ngImport: i0, type: UpgradeModule });
-UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "15.2.0+sha-7677963", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.2.0+sha-7677963", ngImport: i0, type: UpgradeModule, decorators: [{
+UpgradeModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.2.0+sha-d7835e4", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+UpgradeModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "15.2.0+sha-d7835e4", ngImport: i0, type: UpgradeModule });
+UpgradeModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "15.2.0+sha-d7835e4", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.2.0+sha-d7835e4", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }]; } });
