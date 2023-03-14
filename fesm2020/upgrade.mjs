@@ -1,5 +1,5 @@
 /**
- * @license Angular v16.0.0-next.2+sha-0814f20
+ * @license Angular v16.0.0-next.2+sha-be97c87
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('16.0.0-next.2+sha-0814f20');
+const VERSION = new Version('16.0.0-next.2+sha-be97c87');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -1250,9 +1250,8 @@ class UpgradeNg1ComponentAdapter {
     }
     ngOnChanges(changes) {
         const ng1Changes = {};
-        Object.keys(changes).forEach(name => {
-            const change = changes[name];
-            const propertyMapName = getInputPropertyMapName(name);
+        Object.keys(changes).forEach(propertyMapName => {
+            const change = changes[propertyMapName];
             this.setComponentProperty(propertyMapName, change.currentValue);
             ng1Changes[this.propertyMap[propertyMapName]] = change;
         });
@@ -1284,9 +1283,9 @@ class UpgradeNg1ComponentAdapter {
         this.destinationObj[this.propertyMap[name]] = value;
     }
 }
-UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2+sha-0814f20", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2+sha-0814f20", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2+sha-0814f20", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.2+sha-be97c87", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.2+sha-be97c87", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.2+sha-be97c87", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
