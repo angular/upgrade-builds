@@ -1,5 +1,5 @@
 /**
- * @license Angular v16.0.0-next.4+sha-0dd5c47
+ * @license Angular v16.0.0-next.4+sha-132c00c
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('16.0.0-next.4+sha-0dd5c47');
+const VERSION = new Version('16.0.0-next.4+sha-132c00c');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -38,7 +38,7 @@ try {
         angular = window.angular;
     }
 }
-catch (_a) {
+catch {
     // ignore in CJS mode.
 }
 /**
@@ -529,12 +529,11 @@ function findMatchingNgContentIndex(element, ngContentSelectors) {
     return ngContentIndices.length ? ngContentIndices[0] : null;
 }
 function matchesSelector(el, selector) {
-    var _a;
     const elProto = Element.prototype;
     return el.nodeType === Node.ELEMENT_NODE
         // matches is supported by all browsers from 2014 onwards except non-chromium edge
         ?
-            ((_a = elProto.matches) !== null && _a !== void 0 ? _a : elProto.msMatchesSelector).call(el, selector) :
+            (elProto.matches ?? elProto.msMatchesSelector).call(el, selector) :
         false;
 }
 
@@ -657,7 +656,6 @@ function downgradeComponent(info) {
             terminal: true,
             require: [REQUIRE_INJECTOR, REQUIRE_NG_MODEL],
             link: (scope, element, attrs, required) => {
-                var _a;
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
                 // been compiled.
@@ -671,7 +669,7 @@ function downgradeComponent(info) {
                     const attemptedAction = `instantiating component '${getTypeName(info.component)}'`;
                     validateInjectionKey($injector, downgradedModule, lazyModuleRefKey, attemptedAction);
                     const lazyModuleRef = $injector.get(lazyModuleRefKey);
-                    moduleInjector = (_a = lazyModuleRef.injector) !== null && _a !== void 0 ? _a : lazyModuleRef.promise;
+                    moduleInjector = lazyModuleRef.injector ?? lazyModuleRef.promise;
                 }
                 // Notes:
                 //
@@ -861,7 +859,7 @@ class UpgradeHelper {
         this.$controller = this.$injector.get($CONTROLLER);
         this.element = elementRef.nativeElement;
         this.$element = element(this.element);
-        this.directive = directive !== null && directive !== void 0 ? directive : UpgradeHelper.getDirective(this.$injector, name);
+        this.directive = directive ?? UpgradeHelper.getDirective(this.$injector, name);
     }
     static getDirective($injector, name) {
         const directives = $injector.get(name + 'Directive');
@@ -910,12 +908,11 @@ class UpgradeHelper {
         }
     }
     buildController(controllerType, $scope) {
-        var _a, _b;
         // TODO: Document that we do not pre-assign bindings on the controller instance.
         // Quoted properties below so that this code can be optimized with Closure Compiler.
         const locals = { '$scope': $scope, '$element': this.$element };
         const controller = this.$controller(controllerType, locals, null, this.directive.controllerAs);
-        (_b = (_a = this.$element).data) === null || _b === void 0 ? void 0 : _b.call(_a, controllerKey(this.directive.name), controller);
+        this.$element.data?.(controllerKey(this.directive.name), controller);
         return controller;
     }
     compileTemplate(template) {
@@ -1285,10 +1282,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.4+sha-132c00c", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.4+sha-132c00c", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
 }
-UpgradeNg1ComponentAdapter.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.4+sha-0dd5c47", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-UpgradeNg1ComponentAdapter.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.4+sha-0dd5c47", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 });
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.4+sha-0dd5c47", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.4+sha-132c00c", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
