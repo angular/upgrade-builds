@@ -1,5 +1,5 @@
 /**
- * @license Angular v16.0.0-next.4+sha-6161c50
+ * @license Angular v16.0.0-next.4+sha-585e34b
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('16.0.0-next.4+sha-6161c50');
+const VERSION = new Version('16.0.0-next.4+sha-585e34b');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -1282,10 +1282,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.4+sha-6161c50", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.4+sha-6161c50", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.0.0-next.4+sha-585e34b", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.0.0-next.4+sha-585e34b", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.4+sha-6161c50", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.0.0-next.4+sha-585e34b", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
@@ -1832,8 +1832,7 @@ class UpgradeAdapter {
                                 { provide: $COMPILE, useFactory: () => ng1Injector.get($COMPILE) },
                                 this.upgradedProviders
                             ],
-                            imports: [resolveForwardRef(this.ng2AppModule)],
-                            entryComponents: this.downgradedComponents
+                            imports: [resolveForwardRef(this.ng2AppModule)]
                         })
                     ], DynamicNgUpgradeModule);
                     platformRef.bootstrapModule(DynamicNgUpgradeModule, [this.compilerOptions, { ngZone }])
