@@ -1,5 +1,5 @@
 /**
- * @license Angular v16.2.0-next.0+sha-1ad4d55
+ * @license Angular v16.2.0-next.0+sha-f199305
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -59,8 +59,8 @@ import { Version } from '@angular/core';
  *   <br />
  *   (This option is only necessary when using `downgradeModule()` to downgrade more than one
  *   Angular module.)
- * - `propagateDigest?: boolean`: Whether to perform {@link ChangeDetectorRef#detectChanges
- *   change detection} on the component on every
+ * - `propagateDigest?: boolean`: Whether to perform {@link ChangeDetectorRef#detectChanges} on the
+ * component on every
  *   [$digest](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest). If set to `false`,
  *   change detection will still be performed when any of the component's inputs changes.
  *   (Default: true)
