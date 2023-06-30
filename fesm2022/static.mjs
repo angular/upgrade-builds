@@ -1,5 +1,5 @@
 /**
- * @license Angular v16.1.3+sha-4073cc0
+ * @license Angular v16.1.3+sha-b9c28ca
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -644,6 +644,11 @@ function downgradeComponent(info) {
             restrict: 'E',
             terminal: true,
             require: [REQUIRE_INJECTOR, REQUIRE_NG_MODEL],
+            // Controller needs to be set so that `angular-component-router.js` (from beta Angular 2)
+            // configuration properties can be made available. See:
+            // See G3: javascript/angular2/angular1_router_lib.js
+            // https://github.com/angular/angular.js/blob/47bf11ee94664367a26ed8c91b9b586d3dd420f5/src/ng/compile.js#L1670-L1691.
+            controller: function () { },
             link: (scope, element, attrs, required) => {
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
@@ -845,7 +850,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('16.1.3+sha-4073cc0');
+const VERSION = new Version('16.1.3+sha-b9c28ca');
 
 // We have to do a little dance to get the ng1 injector into the module injector.
 // We store the ng1 injector so that the provider in the module injector can access it
@@ -1540,10 +1545,10 @@ class UpgradeComponent {
             bindingDestination.$onChanges(changes);
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.3+sha-4073cc0", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.1.3+sha-4073cc0", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.3+sha-b9c28ca", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.1.3+sha-b9c28ca", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.3+sha-4073cc0", ngImport: i0, type: UpgradeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.3+sha-b9c28ca", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }]; } });
 
@@ -1816,11 +1821,11 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.3+sha-4073cc0", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.1.3+sha-4073cc0", ngImport: i0, type: UpgradeModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "16.1.3+sha-4073cc0", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.3+sha-b9c28ca", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.1.3+sha-b9c28ca", ngImport: i0, type: UpgradeModule }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "16.1.3+sha-b9c28ca", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.3+sha-4073cc0", ngImport: i0, type: UpgradeModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.3+sha-b9c28ca", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }]; } });
