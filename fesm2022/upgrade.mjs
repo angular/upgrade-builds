@@ -1,5 +1,5 @@
 /**
- * @license Angular v16.1.3+sha-b9c28ca
+ * @license Angular v16.1.3+sha-7aa6e58
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('16.1.3+sha-b9c28ca');
+const VERSION = new Version('16.1.3+sha-7aa6e58');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -1287,10 +1287,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.3+sha-b9c28ca", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.1.3+sha-b9c28ca", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.3+sha-7aa6e58", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.1.3+sha-7aa6e58", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.3+sha-b9c28ca", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.3+sha-7aa6e58", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
