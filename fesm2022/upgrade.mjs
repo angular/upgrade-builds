@@ -1,5 +1,5 @@
 /**
- * @license Angular v16.1.4+sha-e35cc07
+ * @license Angular v16.1.4+sha-de01f75
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('16.1.4+sha-e35cc07');
+const VERSION = new Version('16.1.4+sha-de01f75');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -436,10 +436,11 @@ class DowngradeComponentAdapter {
         }
         const emitter = componentRef.instance[output.prop];
         if (emitter) {
-            emitter.subscribe({
+            const subscription = emitter.subscribe({
                 next: isAssignment ? (v) => setter(this.scope, v) :
                     (v) => getter(this.scope, { '$event': v })
             });
+            componentRef.onDestroy(() => subscription.unsubscribe());
         }
         else {
             throw new Error(`Missing emitter '${output.prop}' on component '${getTypeName(this.componentFactory.componentType)}'!`);
@@ -1287,10 +1288,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.4+sha-e35cc07", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.1.4+sha-e35cc07", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.4+sha-de01f75", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "16.1.4+sha-de01f75", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.4+sha-e35cc07", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.4+sha-de01f75", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }]; } });
 
