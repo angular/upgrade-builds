@@ -1,5 +1,5 @@
 /**
- * @license Angular v16.2.1+sha-cf463a6
+ * @license Angular v16.2.1+sha-39ace86
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -48,9 +48,9 @@ declare type Ng1Expression = string | Function;
  *
  * The `UpgradeAdapter` allows:
  * 1. creation of Angular component from AngularJS component directive
- *    (See [UpgradeAdapter#upgradeNg1Component()])
+ *    (See {@link UpgradeAdapter#upgradeNg1Component})
  * 2. creation of AngularJS directive from Angular component.
- *    (See [UpgradeAdapter#downgradeNg2Component()])
+ *    (See {@link UpgradeAdapter#downgradeNg2Component})
  * 3. Bootstrapping of a hybrid Angular application which contains both of the frameworks
  *    coexisting in a single application.
  *
