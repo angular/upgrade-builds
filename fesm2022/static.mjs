@@ -1,5 +1,5 @@
 /**
- * @license Angular v17.0.0-next.1+sha-a610eb1
+ * @license Angular v17.0.0-next.1+sha-0b6aae8
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -74,6 +74,20 @@ const injector = (modules, strictDi) => angular.injector(modules, strictDi);
 const resumeBootstrap = () => angular.resumeBootstrap();
 const getTestability = e => angular.getTestability(e);
 
+var angular1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    setAngularLib: setAngularLib,
+    getAngularLib: getAngularLib,
+    setAngularJSGlobal: setAngularJSGlobal,
+    getAngularJSGlobal: getAngularJSGlobal,
+    bootstrap: bootstrap,
+    module_: module_,
+    element: element,
+    injector: injector,
+    resumeBootstrap: resumeBootstrap,
+    getTestability: getTestability
+});
+
 const $COMPILE = '$compile';
 const $CONTROLLER = '$controller';
 const $DELEGATE = '$delegate';
@@ -99,6 +113,35 @@ const UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
 const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
 const REQUIRE_NG_MODEL = '?ngModel';
 const UPGRADE_MODULE_NAME = '$$UpgradeModule';
+
+var constants = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    $COMPILE: $COMPILE,
+    $CONTROLLER: $CONTROLLER,
+    $DELEGATE: $DELEGATE,
+    $EXCEPTION_HANDLER: $EXCEPTION_HANDLER,
+    $HTTP_BACKEND: $HTTP_BACKEND,
+    $INJECTOR: $INJECTOR,
+    $INTERVAL: $INTERVAL,
+    $PARSE: $PARSE,
+    $PROVIDE: $PROVIDE,
+    $ROOT_ELEMENT: $ROOT_ELEMENT,
+    $ROOT_SCOPE: $ROOT_SCOPE,
+    $SCOPE: $SCOPE,
+    $TEMPLATE_CACHE: $TEMPLATE_CACHE,
+    $TEMPLATE_REQUEST: $TEMPLATE_REQUEST,
+    $$TESTABILITY: $$TESTABILITY,
+    COMPILER_KEY: COMPILER_KEY,
+    DOWNGRADED_MODULE_COUNT_KEY: DOWNGRADED_MODULE_COUNT_KEY,
+    GROUP_PROJECTABLE_NODES_KEY: GROUP_PROJECTABLE_NODES_KEY,
+    INJECTOR_KEY: INJECTOR_KEY,
+    LAZY_MODULE_REF: LAZY_MODULE_REF,
+    NG_ZONE_KEY: NG_ZONE_KEY,
+    UPGRADE_APP_TYPE_KEY: UPGRADE_APP_TYPE_KEY,
+    REQUIRE_INJECTOR: REQUIRE_INJECTOR,
+    REQUIRE_NG_MODEL: REQUIRE_NG_MODEL,
+    UPGRADE_MODULE_NAME: UPGRADE_MODULE_NAME
+});
 
 /**
  * A `PropertyBinding` represents a mapping between a property name
@@ -258,6 +301,24 @@ function hookupNgModel(ngModel, component) {
 function strictEquals(val1, val2) {
     return val1 === val2 || (val1 !== val1 && val2 !== val2);
 }
+
+var util = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    onError: onError,
+    cleanData: cleanData,
+    controllerKey: controllerKey,
+    destroyApp: destroyApp,
+    directiveNormalize: directiveNormalize,
+    getTypeName: getTypeName,
+    getDowngradedModuleCount: getDowngradedModuleCount,
+    getUpgradeAppType: getUpgradeAppType,
+    isFunction: isFunction,
+    isNgModuleType: isNgModuleType,
+    validateInjectionKey: validateInjectionKey,
+    Deferred: Deferred,
+    hookupNgModel: hookupNgModel,
+    strictEquals: strictEquals
+});
 
 const INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true
@@ -851,235 +912,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('17.0.0-next.1+sha-a610eb1');
-
-// We have to do a little dance to get the ng1 injector into the module injector.
-// We store the ng1 injector so that the provider in the module injector can access it
-// Then we "get" the ng1 injector from the module injector, which triggers the provider to read
-// the stored injector and release the reference to it.
-let tempInjectorRef = null;
-function setTempInjectorRef(injector) {
-    tempInjectorRef = injector;
-}
-function injectorFactory() {
-    if (!tempInjectorRef) {
-        throw new Error('Trying to get the AngularJS injector before it being set.');
-    }
-    const injector = tempInjectorRef;
-    tempInjectorRef = null; // clear the value to prevent memory leaks
-    return injector;
-}
-function rootScopeFactory(i) {
-    return i.get('$rootScope');
-}
-function compileFactory(i) {
-    return i.get('$compile');
-}
-function parseFactory(i) {
-    return i.get('$parse');
-}
-const angular1Providers = [
-    // We must use exported named functions for the ng2 factories to keep the compiler happy:
-    // > Metadata collected contains an error that will be reported at runtime:
-    // >   Function calls are not supported.
-    // >   Consider replacing the function or lambda with a reference to an exported function
-    { provide: '$injector', useFactory: injectorFactory, deps: [] },
-    { provide: '$rootScope', useFactory: rootScopeFactory, deps: ['$injector'] },
-    { provide: '$compile', useFactory: compileFactory, deps: ['$injector'] },
-    { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
-];
-
-class NgAdapterInjector {
-    constructor(modInjector) {
-        this.modInjector = modInjector;
-    }
-    // When Angular locate a service in the component injector tree, the not found value is set to
-    // `NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR`. In such a case we should not walk up to the module
-    // injector.
-    // AngularJS only supports a single tree and should always check the module injector.
-    get(token, notFoundValue) {
-        if (notFoundValue === ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR) {
-            return notFoundValue;
-        }
-        return this.modInjector.get(token, notFoundValue);
-    }
-}
-
-let moduleUid = 0;
-/**
- * @description
- *
- * A helper function for creating an AngularJS module that can bootstrap an Angular module
- * "on-demand" (possibly lazily) when a {@link downgradeComponent downgraded component} needs to be
- * instantiated.
- *
- * *Part of the [upgrade/static](api?query=upgrade/static) library for hybrid upgrade apps that
- * support AOT compilation.*
- *
- * It allows loading/bootstrapping the Angular part of a hybrid application lazily and not having to
- * pay the cost up-front. For example, you can have an AngularJS application that uses Angular for
- * specific routes and only instantiate the Angular modules if/when the user visits one of these
- * routes.
- *
- * The Angular module will be bootstrapped once (when requested for the first time) and the same
- * reference will be used from that point onwards.
- *
- * `downgradeModule()` requires either an `NgModuleFactory`, `NgModule` class or a function:
- * - `NgModuleFactory`: If you pass an `NgModuleFactory`, it will be used to instantiate a module
- *   using `platformBrowser`'s {@link PlatformRef#bootstrapModuleFactory bootstrapModuleFactory()}.
- *   NOTE: this type of the argument is deprecated. Please either provide an `NgModule` class or a
- *   bootstrap function instead.
- * - `NgModule` class: If you pass an NgModule class, it will be used to instantiate a module
- *   using `platformBrowser`'s {@link PlatformRef#bootstrapModule bootstrapModule()}.
- * - `Function`: If you pass a function, it is expected to return a promise resolving to an
- *   `NgModuleRef`. The function is called with an array of extra {@link StaticProvider Providers}
- *   that are expected to be available from the returned `NgModuleRef`'s `Injector`.
- *
- * `downgradeModule()` returns the name of the created AngularJS wrapper module. You can use it to
- * declare a dependency in your main AngularJS module.
- *
- * {@example upgrade/static/ts/lite/module.ts region="basic-how-to"}
- *
- * For more details on how to use `downgradeModule()` see
- * [Upgrading for Performance](guide/upgrade-performance).
- *
- * @usageNotes
- *
- * Apart from `UpgradeModule`, you can use the rest of the `upgrade/static` helpers as usual to
- * build a hybrid application. Note that the Angular pieces (e.g. downgraded services) will not be
- * available until the downgraded module has been bootstrapped, i.e. by instantiating a downgraded
- * component.
- *
- * <div class="alert is-important">
- *
- *   You cannot use `downgradeModule()` and `UpgradeModule` in the same hybrid application.<br />
- *   Use one or the other.
- *
- * </div>
- *
- * ### Differences with `UpgradeModule`
- *
- * Besides their different API, there are two important internal differences between
- * `downgradeModule()` and `UpgradeModule` that affect the behavior of hybrid applications:
- *
- * 1. Unlike `UpgradeModule`, `downgradeModule()` does not bootstrap the main AngularJS module
- *    inside the {@link NgZone Angular zone}.
- * 2. Unlike `UpgradeModule`, `downgradeModule()` does not automatically run a
- *    [$digest()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest) when changes are
- *    detected in the Angular part of the application.
- *
- * What this means is that applications using `UpgradeModule` will run change detection more
- * frequently in order to ensure that both frameworks are properly notified about possible changes.
- * This will inevitably result in more change detection runs than necessary.
- *
- * `downgradeModule()`, on the other side, does not try to tie the two change detection systems as
- * tightly, restricting the explicit change detection runs only to cases where it knows it is
- * necessary (e.g. when the inputs of a downgraded component change). This improves performance,
- * especially in change-detection-heavy applications, but leaves it up to the developer to manually
- * notify each framework as needed.
- *
- * For a more detailed discussion of the differences and their implications, see
- * [Upgrading for Performance](guide/upgrade-performance).
- *
- * <div class="alert is-helpful">
- *
- *   You can manually trigger a change detection run in AngularJS using
- *   [scope.$apply(...)](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) or
- *   [$rootScope.$digest()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest).
- *
- *   You can manually trigger a change detection run in Angular using {@link NgZone#run
- *   ngZone.run(...)}.
- *
- * </div>
- *
- * ### Downgrading multiple modules
- *
- * It is possible to downgrade multiple modules and include them in an AngularJS application. In
- * that case, each downgraded module will be bootstrapped when an associated downgraded component or
- * injectable needs to be instantiated.
- *
- * Things to keep in mind, when downgrading multiple modules:
- *
- * - Each downgraded component/injectable needs to be explicitly associated with a downgraded
- *   module. See `downgradeComponent()` and `downgradeInjectable()` for more details.
- *
- * - If you want some injectables to be shared among all downgraded modules, you can provide them as
- *   `StaticProvider`s, when creating the `PlatformRef` (e.g. via `platformBrowser` or
- *   `platformBrowserDynamic`).
- *
- * - When using {@link PlatformRef#bootstrapmodule `bootstrapModule()`} or
- *   {@link PlatformRef#bootstrapmodulefactory `bootstrapModuleFactory()`} to bootstrap the
- *   downgraded modules, each one is considered a "root" module. As a consequence, a new instance
- *   will be created for every injectable provided in `"root"` (via
- *   {@link Injectable#providedIn `providedIn`}).
- *   If this is not your intention, you can have a shared module (that will act as act as the "root"
- *   module) and create all downgraded modules using that module's injector:
- *
- *   {@example upgrade/static/ts/lite-multi-shared/module.ts region="shared-root-module"}
- *
- * @publicApi
- */
-function downgradeModule(moduleOrBootstrapFn) {
-    const lazyModuleName = `${UPGRADE_MODULE_NAME}.lazy${++moduleUid}`;
-    const lazyModuleRefKey = `${LAZY_MODULE_REF}${lazyModuleName}`;
-    const lazyInjectorKey = `${INJECTOR_KEY}${lazyModuleName}`;
-    let bootstrapFn;
-    if (isNgModuleType(moduleOrBootstrapFn)) {
-        // NgModule class
-        bootstrapFn = (extraProviders) => platformBrowser(extraProviders).bootstrapModule(moduleOrBootstrapFn);
-    }
-    else if (!isFunction(moduleOrBootstrapFn)) {
-        // NgModule factory
-        bootstrapFn = (extraProviders) => platformBrowser(extraProviders).bootstrapModuleFactory(moduleOrBootstrapFn);
-    }
-    else {
-        // bootstrap function
-        bootstrapFn = moduleOrBootstrapFn;
-    }
-    let injector;
-    // Create an ng1 module to bootstrap.
-    module_(lazyModuleName, [])
-        .constant(UPGRADE_APP_TYPE_KEY, 3 /* UpgradeAppType.Lite */)
-        .factory(INJECTOR_KEY, [lazyInjectorKey, identity])
-        .factory(lazyInjectorKey, () => {
-        if (!injector) {
-            throw new Error('Trying to get the Angular injector before bootstrapping the corresponding ' +
-                'Angular module.');
-        }
-        return injector;
-    })
-        .factory(LAZY_MODULE_REF, [lazyModuleRefKey, identity])
-        .factory(lazyModuleRefKey, [
-        $INJECTOR,
-        ($injector) => {
-            setTempInjectorRef($injector);
-            const result = {
-                promise: bootstrapFn(angular1Providers).then(ref => {
-                    injector = result.injector = new NgAdapterInjector(ref.injector);
-                    injector.get($INJECTOR);
-                    // Destroy the AngularJS app once the Angular `PlatformRef` is destroyed.
-                    // This does not happen in a typical SPA scenario, but it might be useful for
-                    // other use-cases where disposing of an Angular/AngularJS app is necessary
-                    // (such as Hot Module Replacement (HMR)).
-                    // See https://github.com/angular/angular/issues/39935.
-                    injector.get(PlatformRef).onDestroy(() => destroyApp($injector));
-                    return injector;
-                })
-            };
-            return result;
-        }
-    ])
-        .config([
-        $INJECTOR, $PROVIDE,
-        ($injector, $provide) => {
-            $provide.constant(DOWNGRADED_MODULE_COUNT_KEY, getDowngradedModuleCount($injector) + 1);
-        }
-    ]);
-    return lazyModuleName;
-}
-function identity(x) {
-    return x;
-}
+const VERSION = new Version('17.0.0-next.1+sha-0b6aae8');
 
 // Constants
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
@@ -1314,6 +1147,245 @@ function notSupported(name, feature) {
     throw new Error(`Upgraded directive '${name}' contains unsupported feature: '${feature}'.`);
 }
 
+var upgrade_helper = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    UpgradeHelper: UpgradeHelper
+});
+
+/**
+ * Note: We intentionally use cross entry-point relative paths here. This
+ * is because the primary entry-point is deprecated and we also don't have
+ * it available in G3.
+ */
+
+// We have to do a little dance to get the ng1 injector into the module injector.
+// We store the ng1 injector so that the provider in the module injector can access it
+// Then we "get" the ng1 injector from the module injector, which triggers the provider to read
+// the stored injector and release the reference to it.
+let tempInjectorRef = null;
+function setTempInjectorRef(injector) {
+    tempInjectorRef = injector;
+}
+function injectorFactory() {
+    if (!tempInjectorRef) {
+        throw new Error('Trying to get the AngularJS injector before it being set.');
+    }
+    const injector = tempInjectorRef;
+    tempInjectorRef = null; // clear the value to prevent memory leaks
+    return injector;
+}
+function rootScopeFactory(i) {
+    return i.get('$rootScope');
+}
+function compileFactory(i) {
+    return i.get('$compile');
+}
+function parseFactory(i) {
+    return i.get('$parse');
+}
+const angular1Providers = [
+    // We must use exported named functions for the ng2 factories to keep the compiler happy:
+    // > Metadata collected contains an error that will be reported at runtime:
+    // >   Function calls are not supported.
+    // >   Consider replacing the function or lambda with a reference to an exported function
+    { provide: '$injector', useFactory: injectorFactory, deps: [] },
+    { provide: '$rootScope', useFactory: rootScopeFactory, deps: ['$injector'] },
+    { provide: '$compile', useFactory: compileFactory, deps: ['$injector'] },
+    { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
+];
+
+class NgAdapterInjector {
+    constructor(modInjector) {
+        this.modInjector = modInjector;
+    }
+    // When Angular locate a service in the component injector tree, the not found value is set to
+    // `NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR`. In such a case we should not walk up to the module
+    // injector.
+    // AngularJS only supports a single tree and should always check the module injector.
+    get(token, notFoundValue) {
+        if (notFoundValue === ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR) {
+            return notFoundValue;
+        }
+        return this.modInjector.get(token, notFoundValue);
+    }
+}
+
+let moduleUid = 0;
+/**
+ * @description
+ *
+ * A helper function for creating an AngularJS module that can bootstrap an Angular module
+ * "on-demand" (possibly lazily) when a {@link downgradeComponent downgraded component} needs to be
+ * instantiated.
+ *
+ * *Part of the [upgrade/static](api?query=upgrade/static) library for hybrid upgrade apps that
+ * support AOT compilation.*
+ *
+ * It allows loading/bootstrapping the Angular part of a hybrid application lazily and not having to
+ * pay the cost up-front. For example, you can have an AngularJS application that uses Angular for
+ * specific routes and only instantiate the Angular modules if/when the user visits one of these
+ * routes.
+ *
+ * The Angular module will be bootstrapped once (when requested for the first time) and the same
+ * reference will be used from that point onwards.
+ *
+ * `downgradeModule()` requires either an `NgModuleFactory`, `NgModule` class or a function:
+ * - `NgModuleFactory`: If you pass an `NgModuleFactory`, it will be used to instantiate a module
+ *   using `platformBrowser`'s {@link PlatformRef#bootstrapModuleFactory bootstrapModuleFactory()}.
+ *   NOTE: this type of the argument is deprecated. Please either provide an `NgModule` class or a
+ *   bootstrap function instead.
+ * - `NgModule` class: If you pass an NgModule class, it will be used to instantiate a module
+ *   using `platformBrowser`'s {@link PlatformRef#bootstrapModule bootstrapModule()}.
+ * - `Function`: If you pass a function, it is expected to return a promise resolving to an
+ *   `NgModuleRef`. The function is called with an array of extra {@link StaticProvider Providers}
+ *   that are expected to be available from the returned `NgModuleRef`'s `Injector`.
+ *
+ * `downgradeModule()` returns the name of the created AngularJS wrapper module. You can use it to
+ * declare a dependency in your main AngularJS module.
+ *
+ * {@example upgrade/static/ts/lite/module.ts region="basic-how-to"}
+ *
+ * For more details on how to use `downgradeModule()` see
+ * [Upgrading for Performance](guide/upgrade-performance).
+ *
+ * @usageNotes
+ *
+ * Apart from `UpgradeModule`, you can use the rest of the `upgrade/static` helpers as usual to
+ * build a hybrid application. Note that the Angular pieces (e.g. downgraded services) will not be
+ * available until the downgraded module has been bootstrapped, i.e. by instantiating a downgraded
+ * component.
+ *
+ * <div class="alert is-important">
+ *
+ *   You cannot use `downgradeModule()` and `UpgradeModule` in the same hybrid application.<br />
+ *   Use one or the other.
+ *
+ * </div>
+ *
+ * ### Differences with `UpgradeModule`
+ *
+ * Besides their different API, there are two important internal differences between
+ * `downgradeModule()` and `UpgradeModule` that affect the behavior of hybrid applications:
+ *
+ * 1. Unlike `UpgradeModule`, `downgradeModule()` does not bootstrap the main AngularJS module
+ *    inside the {@link NgZone Angular zone}.
+ * 2. Unlike `UpgradeModule`, `downgradeModule()` does not automatically run a
+ *    [$digest()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest) when changes are
+ *    detected in the Angular part of the application.
+ *
+ * What this means is that applications using `UpgradeModule` will run change detection more
+ * frequently in order to ensure that both frameworks are properly notified about possible changes.
+ * This will inevitably result in more change detection runs than necessary.
+ *
+ * `downgradeModule()`, on the other side, does not try to tie the two change detection systems as
+ * tightly, restricting the explicit change detection runs only to cases where it knows it is
+ * necessary (e.g. when the inputs of a downgraded component change). This improves performance,
+ * especially in change-detection-heavy applications, but leaves it up to the developer to manually
+ * notify each framework as needed.
+ *
+ * For a more detailed discussion of the differences and their implications, see
+ * [Upgrading for Performance](guide/upgrade-performance).
+ *
+ * <div class="alert is-helpful">
+ *
+ *   You can manually trigger a change detection run in AngularJS using
+ *   [scope.$apply(...)](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) or
+ *   [$rootScope.$digest()](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest).
+ *
+ *   You can manually trigger a change detection run in Angular using {@link NgZone#run
+ *   ngZone.run(...)}.
+ *
+ * </div>
+ *
+ * ### Downgrading multiple modules
+ *
+ * It is possible to downgrade multiple modules and include them in an AngularJS application. In
+ * that case, each downgraded module will be bootstrapped when an associated downgraded component or
+ * injectable needs to be instantiated.
+ *
+ * Things to keep in mind, when downgrading multiple modules:
+ *
+ * - Each downgraded component/injectable needs to be explicitly associated with a downgraded
+ *   module. See `downgradeComponent()` and `downgradeInjectable()` for more details.
+ *
+ * - If you want some injectables to be shared among all downgraded modules, you can provide them as
+ *   `StaticProvider`s, when creating the `PlatformRef` (e.g. via `platformBrowser` or
+ *   `platformBrowserDynamic`).
+ *
+ * - When using {@link PlatformRef#bootstrapmodule `bootstrapModule()`} or
+ *   {@link PlatformRef#bootstrapmodulefactory `bootstrapModuleFactory()`} to bootstrap the
+ *   downgraded modules, each one is considered a "root" module. As a consequence, a new instance
+ *   will be created for every injectable provided in `"root"` (via
+ *   {@link Injectable#providedIn `providedIn`}).
+ *   If this is not your intention, you can have a shared module (that will act as act as the "root"
+ *   module) and create all downgraded modules using that module's injector:
+ *
+ *   {@example upgrade/static/ts/lite-multi-shared/module.ts region="shared-root-module"}
+ *
+ * @publicApi
+ */
+function downgradeModule(moduleOrBootstrapFn) {
+    const lazyModuleName = `${UPGRADE_MODULE_NAME}.lazy${++moduleUid}`;
+    const lazyModuleRefKey = `${LAZY_MODULE_REF}${lazyModuleName}`;
+    const lazyInjectorKey = `${INJECTOR_KEY}${lazyModuleName}`;
+    let bootstrapFn;
+    if (isNgModuleType(moduleOrBootstrapFn)) {
+        // NgModule class
+        bootstrapFn = (extraProviders) => platformBrowser(extraProviders).bootstrapModule(moduleOrBootstrapFn);
+    }
+    else if (!isFunction(moduleOrBootstrapFn)) {
+        // NgModule factory
+        bootstrapFn = (extraProviders) => platformBrowser(extraProviders).bootstrapModuleFactory(moduleOrBootstrapFn);
+    }
+    else {
+        // bootstrap function
+        bootstrapFn = moduleOrBootstrapFn;
+    }
+    let injector;
+    // Create an ng1 module to bootstrap.
+    module_(lazyModuleName, [])
+        .constant(UPGRADE_APP_TYPE_KEY, 3 /* ɵutil.UpgradeAppType.Lite */)
+        .factory(INJECTOR_KEY, [lazyInjectorKey, identity])
+        .factory(lazyInjectorKey, () => {
+        if (!injector) {
+            throw new Error('Trying to get the Angular injector before bootstrapping the corresponding ' +
+                'Angular module.');
+        }
+        return injector;
+    })
+        .factory(LAZY_MODULE_REF, [lazyModuleRefKey, identity])
+        .factory(lazyModuleRefKey, [
+        $INJECTOR,
+        ($injector) => {
+            setTempInjectorRef($injector);
+            const result = {
+                promise: bootstrapFn(angular1Providers).then(ref => {
+                    injector = result.injector = new NgAdapterInjector(ref.injector);
+                    injector.get($INJECTOR);
+                    // Destroy the AngularJS app once the Angular `PlatformRef` is destroyed.
+                    // This does not happen in a typical SPA scenario, but it might be useful for
+                    // other use-cases where disposing of an Angular/AngularJS app is necessary
+                    // (such as Hot Module Replacement (HMR)).
+                    // See https://github.com/angular/angular/issues/39935.
+                    injector.get(PlatformRef).onDestroy(() => destroyApp($injector));
+                    return injector;
+                })
+            };
+            return result;
+        }
+    ])
+        .config([
+        $INJECTOR, $PROVIDE,
+        ($injector, $provide) => {
+            $provide.constant(DOWNGRADED_MODULE_COUNT_KEY, getDowngradedModuleCount($injector) + 1);
+        }
+    ]);
+    return lazyModuleName;
+}
+function identity(x) {
+    return x;
+}
+
 const NOT_SUPPORTED = 'NOT_SUPPORTED';
 const INITIAL_VALUE = {
     __UNINITIALIZED__: true
@@ -1546,10 +1618,10 @@ class UpgradeComponent {
             bindingDestination.$onChanges(changes);
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-a610eb1", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "17.0.0-next.1+sha-a610eb1", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-0b6aae8", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "17.0.0-next.1+sha-0b6aae8", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-a610eb1", ngImport: i0, type: UpgradeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-0b6aae8", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: function () { return [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }]; } });
 
@@ -1706,7 +1778,7 @@ class UpgradeModule {
         const INIT_MODULE_NAME = UPGRADE_MODULE_NAME + '.init';
         // Create an ng1 module to bootstrap
         module_(INIT_MODULE_NAME, [])
-            .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+            .constant(UPGRADE_APP_TYPE_KEY, 2 /* ɵutil.UpgradeAppType.Static */)
             .value(INJECTOR_KEY, this.injector)
             .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (injector) => ({ injector })])
             .config([
@@ -1822,11 +1894,11 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-a610eb1", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.0.0-next.1+sha-a610eb1", ngImport: i0, type: UpgradeModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-a610eb1", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-0b6aae8", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.0.0-next.1+sha-0b6aae8", ngImport: i0, type: UpgradeModule }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-0b6aae8", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-a610eb1", ngImport: i0, type: UpgradeModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-0b6aae8", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }]; } });
@@ -1839,5 +1911,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.1+sh
  * Generated bundle index. Do not edit.
  */
 
-export { UpgradeComponent, UpgradeModule, VERSION, downgradeComponent, downgradeInjectable, downgradeModule, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib };
+export { UpgradeComponent, UpgradeModule, VERSION, downgradeComponent, downgradeInjectable, downgradeModule, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, angular1 as ɵangular1, constants as ɵconstants, upgrade_helper as ɵupgradeHelper, util as ɵutil };
 //# sourceMappingURL=static.mjs.map
