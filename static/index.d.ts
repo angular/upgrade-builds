@@ -1,5 +1,5 @@
 /**
- * @license Angular v17.0.0-next.1+sha-7ed4c56
+ * @license Angular v17.0.0-next.1+sha-5ee6c7e
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,6 +20,98 @@ import { SimpleChanges } from '@angular/core';
 import { StaticProvider } from '@angular/core';
 import { Type } from '@angular/core';
 import { Version } from '@angular/core';
+
+declare const $$TESTABILITY = "$$testability";
+
+
+declare const $COMPILE = "$compile";
+
+declare const $CONTROLLER = "$controller";
+
+declare const $DELEGATE = "$delegate";
+
+declare const $EXCEPTION_HANDLER = "$exceptionHandler";
+
+declare const $HTTP_BACKEND = "$httpBackend";
+
+declare const $INJECTOR = "$injector";
+
+declare const $INTERVAL = "$interval";
+
+declare const $PARSE = "$parse";
+
+declare const $PROVIDE = "$provide";
+
+declare const $ROOT_ELEMENT = "$rootElement";
+
+declare const $ROOT_SCOPE = "$rootScope";
+
+declare const $SCOPE = "$scope";
+
+declare const $TEMPLATE_CACHE = "$templateCache";
+
+declare const $TEMPLATE_REQUEST = "$templateRequest";
+
+declare let angular: {
+    bootstrap: (e: Element, modules: (string | IInjectable)[], config?: IAngularBootstrapConfig) => IInjectorService;
+    module: (prefix: string, dependencies?: string[]) => IModule;
+    element: {
+        (e: string | Element | Document | IAugmentedJQuery): IAugmentedJQuery;
+        cleanData: (nodes: Node[] | NodeList) => void;
+    };
+    injector: (modules: Array<string | IInjectable>, strictDi?: boolean) => IInjectorService;
+    version: {
+        major: number;
+    };
+    resumeBootstrap: () => void;
+    getTestability: (e: Element) => ITestabilityService;
+};
+
+declare const bootstrap: typeof angular.bootstrap;
+
+/**
+ * Clean the jqLite/jQuery data on the element and all its descendants.
+ * Equivalent to how jqLite/jQuery invoke `cleanData()` on an Element when removed:
+ *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/jqLite.js#L349-L355
+ *   https://github.com/jquery/jquery/blob/6984d1747623dbc5e87fd6c261a5b6b1628c107c/src/manipulation.js#L182
+ *
+ * NOTE:
+ * `cleanData()` will also invoke the AngularJS `$destroy` DOM event on the element:
+ *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/Angular.js#L1932-L1945
+ *
+ * @param node The DOM node whose data needs to be cleaned.
+ */
+declare function cleanData(node: Node): void;
+
+declare const COMPILER_KEY = "$$angularCompiler";
+
+declare function controllerKey(name: string): string;
+
+declare class Deferred<R> {
+    promise: Promise<R>;
+    resolve: (value: R | PromiseLike<R>) => void;
+    reject: (error?: any) => void;
+    constructor();
+}
+
+/**
+ * Destroy an AngularJS app given the app `$injector`.
+ *
+ * NOTE: Destroying an app is not officially supported by AngularJS, but try to do our best by
+ *       destroying `$rootScope` and clean the jqLite/jQuery data on `$rootElement` and all
+ *       descendants.
+ *
+ * @param $injector The `$injector` of the AngularJS app to destroy.
+ */
+declare function destroyApp($injector: IInjectorService): void;
+
+declare function directiveNormalize(name: string): string;
+
+declare type DirectiveRequireProperty = SingleOrListOrMap<string>;
+
+declare type DirectiveTranscludeProperty = boolean | 'element' | {
+    [key: string]: string;
+};
 
 /**
  * @description
@@ -81,6 +173,8 @@ export declare function downgradeComponent(info: {
     /** @deprecated since v4. This parameter is no longer used */
     selectors?: string[];
 }): any;
+
+declare const DOWNGRADED_MODULE_COUNT_KEY = "$$angularDowngradedModuleCount";
 
 
 /**
@@ -378,6 +472,8 @@ export declare function downgradeModule<T>(moduleOrBootstrapFn: Type<T> | ((extr
  */
 export declare function downgradeModule<T>(moduleOrBootstrapFn: NgModuleFactory<T>): string;
 
+declare const element: typeof angular.element;
+
 /**
  * Returns the current AngularJS global.
  *
@@ -391,6 +487,304 @@ export declare function getAngularJSGlobal(): any;
  * @publicApi
  */
 export declare function getAngularLib(): any;
+
+declare function getDowngradedModuleCount($injector: IInjectorService): number;
+
+declare const getTestability: typeof angular.getTestability;
+
+declare function getTypeName(type: Type<any>): string;
+
+declare function getUpgradeAppType($injector: IInjectorService): UpgradeAppType;
+
+declare const GROUP_PROJECTABLE_NODES_KEY = "$$angularGroupProjectableNodes";
+
+/**
+ * Glue the AngularJS `NgModelController` (if it exists) to the component
+ * (if it implements the needed subset of the `ControlValueAccessor` interface).
+ */
+declare function hookupNgModel(ngModel: INgModelController, component: any): void;
+
+declare interface IAngularBootstrapConfig {
+    strictDi?: boolean;
+}
+
+declare interface IAnnotatedFunction extends Function {
+    $inject?: Function extends {
+        $inject?: string[];
+    } ? Ng1Token[] : ReadonlyArray<Ng1Token>;
+}
+
+declare interface IAttributes {
+    $observe(attr: string, fn: (v: string) => void): void;
+    [key: string]: any;
+}
+
+declare type IAugmentedJQuery = Node[] & {
+    on?: (name: string, fn: () => void) => void;
+    data?: (name: string, value?: any) => any;
+    text?: () => string;
+    inheritedData?: (name: string, value?: any) => any;
+    children?: () => IAugmentedJQuery;
+    contents?: () => IAugmentedJQuery;
+    parent?: () => IAugmentedJQuery;
+    empty?: () => void;
+    append?: (content: IAugmentedJQuery | string) => IAugmentedJQuery;
+    controller?: (name: string) => any;
+    isolateScope?: () => IScope;
+    injector?: () => IInjectorService;
+    triggerHandler?: (eventTypeOrObject: string | Event, extraParameters?: any[]) => IAugmentedJQuery;
+    remove?: () => void;
+    removeData?: () => void;
+};
+
+declare interface IBindingDestination {
+    [key: string]: any;
+    $onChanges?: (changes: SimpleChanges) => void;
+}
+
+declare interface ICacheObject {
+    put<T>(key: string, value?: T): T;
+    get(key: string): any;
+}
+
+declare interface ICloneAttachFunction {
+    (clonedElement: IAugmentedJQuery, scope: IScope): any;
+}
+
+declare interface ICompiledExpression {
+    (context: any, locals: any): any;
+    assign?: (context: any, value: any) => any;
+}
+
+declare interface ICompileService {
+    (element: Element | NodeList | Node[] | string, transclude?: Function): ILinkFn;
+}
+
+declare interface IComponent {
+    bindings?: {
+        [key: string]: string;
+    };
+    controller?: string | IInjectable;
+    controllerAs?: string;
+    require?: DirectiveRequireProperty;
+    template?: string | Function;
+    templateUrl?: string | Function;
+    transclude?: DirectiveTranscludeProperty;
+}
+
+declare type IController = string | IInjectable;
+
+declare interface IControllerInstance extends IBindingDestination {
+    $doCheck?: () => void;
+    $onDestroy?: () => void;
+    $onInit?: () => void;
+    $postLink?: () => void;
+}
+
+declare interface IControllerService {
+    (controllerConstructor: IController, locals?: any, later?: any, ident?: any): any;
+    (controllerName: string, locals?: any): any;
+}
+
+declare interface IDirective {
+    compile?: IDirectiveCompileFn;
+    controller?: IController;
+    controllerAs?: string;
+    bindToController?: boolean | {
+        [key: string]: string;
+    };
+    link?: IDirectiveLinkFn | IDirectivePrePost;
+    name?: string;
+    priority?: number;
+    replace?: boolean;
+    require?: DirectiveRequireProperty;
+    restrict?: string;
+    scope?: boolean | {
+        [key: string]: string;
+    };
+    template?: string | Function;
+    templateUrl?: string | Function;
+    templateNamespace?: string;
+    terminal?: boolean;
+    transclude?: DirectiveTranscludeProperty;
+}
+
+declare interface IDirectiveCompileFn {
+    (templateElement: IAugmentedJQuery, templateAttributes: IAttributes, transclude: ITranscludeFunction): IDirectivePrePost;
+}
+
+declare interface IDirectiveLinkFn {
+    (scope: IScope, instanceElement: IAugmentedJQuery, instanceAttributes: IAttributes, controller: any, transclude: ITranscludeFunction): void;
+}
+
+declare interface IDirectivePrePost {
+    pre?: IDirectiveLinkFn;
+    post?: IDirectiveLinkFn;
+}
+
+declare interface IHttpBackendService {
+    (method: string, url: string, post?: any, callback?: Function, headers?: any, timeout?: number, withCredentials?: boolean): void;
+}
+
+declare type IInjectable = (Ng1Token | Function)[] | IAnnotatedFunction;
+
+declare interface IInjectorService {
+    get(key: string): any;
+    has(key: string): boolean;
+}
+
+declare interface IIntervalService {
+    (func: Function, delay: number, count?: number, invokeApply?: boolean, ...args: any[]): Promise<any>;
+    cancel(promise: Promise<any>): boolean;
+}
+
+declare interface ILinkFn {
+    (scope: IScope, cloneAttachFn?: ICloneAttachFunction, options?: ILinkFnOptions): IAugmentedJQuery;
+    $$slots?: {
+        [slotName: string]: ILinkFn;
+    };
+}
+
+declare interface ILinkFnOptions {
+    parentBoundTranscludeFn?: Function;
+    transcludeControllers?: {
+        [key: string]: any;
+    };
+    futureParentElement?: Node;
+}
+
+declare interface IModule {
+    name: string;
+    requires: (string | IInjectable)[];
+    config(fn: IInjectable): IModule;
+    directive(selector: string, factory: IInjectable): IModule;
+    component(selector: string, component: IComponent): IModule;
+    controller(name: string, type: IInjectable): IModule;
+    factory(key: Ng1Token, factoryFn: IInjectable): IModule;
+    value(key: Ng1Token, value: any): IModule;
+    constant(token: Ng1Token, value: any): IModule;
+    run(a: IInjectable): IModule;
+}
+
+declare interface INgModelController {
+    $render(): void;
+    $isEmpty(value: any): boolean;
+    $setValidity(validationErrorKey: string, isValid: boolean): void;
+    $setPristine(): void;
+    $setDirty(): void;
+    $setUntouched(): void;
+    $setTouched(): void;
+    $rollbackViewValue(): void;
+    $validate(): void;
+    $commitViewValue(): void;
+    $setViewValue(value: any, trigger: string): void;
+    $viewValue: any;
+    $modelValue: any;
+    $parsers: Function[];
+    $formatters: Function[];
+    $validators: {
+        [key: string]: Function;
+    };
+    $asyncValidators: {
+        [key: string]: Function;
+    };
+    $viewChangeListeners: Function[];
+    $error: Object;
+    $pending: Object;
+    $untouched: boolean;
+    $touched: boolean;
+    $pristine: boolean;
+    $dirty: boolean;
+    $valid: boolean;
+    $invalid: boolean;
+    $name: string;
+}
+
+declare const injector: typeof angular.injector;
+
+declare const INJECTOR_KEY = "$$angularInjector";
+
+declare interface IParseService {
+    (expression: string): ICompiledExpression;
+}
+
+declare interface IProvider {
+    $get: IInjectable;
+}
+
+declare interface IProvideService {
+    provider(token: Ng1Token, provider: IProvider): IProvider;
+    factory(token: Ng1Token, factory: IInjectable): IProvider;
+    service(token: Ng1Token, type: IInjectable): IProvider;
+    value(token: Ng1Token, value: any): IProvider;
+    constant(token: Ng1Token, value: any): void;
+    decorator(token: Ng1Token, factory: IInjectable): void;
+}
+
+declare interface IRootScopeService {
+    $new(isolate?: boolean): IScope;
+    $id: string;
+    $parent: IScope;
+    $root: IScope;
+    $watch(exp: Ng1Expression, fn?: (a1?: any, a2?: any) => void): Function;
+    $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
+    $destroy(): any;
+    $apply(exp?: Ng1Expression): any;
+    $digest(): any;
+    $evalAsync(exp: Ng1Expression, locals?: any): void;
+    $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
+    $$childTail: IScope;
+    $$childHead: IScope;
+    $$nextSibling: IScope;
+    [key: string]: any;
+}
+
+declare interface IScope extends IRootScopeService {
+}
+
+declare function isFunction(value: any): value is Function;
+
+declare function isNgModuleType(value: any): value is Type<unknown>;
+
+declare interface ITemplateCacheService extends ICacheObject {
+}
+
+declare interface ITestabilityService {
+    findBindings(element: Element, expression: string, opt_exactMatch?: boolean): Element[];
+    findModels(element: Element, expression: string, opt_exactMatch?: boolean): Element[];
+    getLocation(): string;
+    setLocation(url: string): void;
+    whenStable(callback: Function): void;
+}
+
+declare interface ITranscludeFunction {
+    (scope: IScope, cloneAttachFn: ICloneAttachFunction): IAugmentedJQuery;
+    (cloneAttachFn?: ICloneAttachFunction): IAugmentedJQuery;
+}
+
+declare const LAZY_MODULE_REF = "$$angularLazyModuleRef";
+
+declare interface LazyModuleRef {
+    injector?: Injector;
+    promise?: Promise<Injector>;
+}
+
+declare const module_: typeof angular.module;
+
+declare type Ng1Expression = string | Function;
+
+
+declare type Ng1Token = string;
+
+declare const NG_ZONE_KEY = "$$angularNgZone";
+
+declare function onError(e: any): void;
+
+declare const REQUIRE_INJECTOR: string;
+
+declare const REQUIRE_NG_MODEL = "?ngModel";
+
+declare const resumeBootstrap: typeof angular.resumeBootstrap;
 
 /**
  * Resets the AngularJS global.
@@ -407,6 +801,26 @@ export declare function setAngularJSGlobal(ng: any): void;
  * @publicApi
  */
 export declare function setAngularLib(ng: any): void;
+
+declare type SingleOrListOrMap<T> = T | T[] | {
+    [key: string]: T;
+};
+
+/**
+ * Test two values for strict equality, accounting for the fact that `NaN !== NaN`.
+ */
+declare function strictEquals(val1: any, val2: any): boolean;
+
+declare const UPGRADE_APP_TYPE_KEY = "$$angularUpgradeAppType";
+
+declare const UPGRADE_MODULE_NAME = "$$UpgradeModule";
+
+declare const enum UpgradeAppType {
+    None = 0,
+    Dynamic = 1,
+    Static = 2,
+    Lite = 3
+}
 
 /**
  * @description
@@ -484,6 +898,28 @@ export declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnD
     private forwardChanges;
     static ɵfac: i0.ɵɵFactoryDeclaration<UpgradeComponent, never>;
     static ɵdir: i0.ɵɵDirectiveDeclaration<UpgradeComponent, never, never, {}, {}, never, never, false, never>;
+}
+
+declare class UpgradeHelper {
+    private name;
+    readonly $injector: IInjectorService;
+    readonly element: Element;
+    readonly $element: IAugmentedJQuery;
+    readonly directive: IDirective;
+    private readonly $compile;
+    private readonly $controller;
+    constructor(injector: Injector, name: string, elementRef: ElementRef, directive?: IDirective);
+    static getDirective($injector: IInjectorService, name: string): IDirective;
+    static getTemplate($injector: IInjectorService, directive: IDirective, fetchRemoteTemplate?: boolean, $element?: IAugmentedJQuery): string | Promise<string>;
+    buildController(controllerType: IController, $scope: IScope): any;
+    compileTemplate(template?: string): ILinkFn;
+    onDestroy($scope: IScope, controllerInstance?: any): void;
+    prepareTransclusion(): ILinkFn | undefined;
+    resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): SingleOrListOrMap<IControllerInstance> | null;
+    private compileHtml;
+    private extractChildNodes;
+    private getDirectiveRequire;
+    private resolveRequire;
 }
 
 /**
@@ -651,9 +1087,125 @@ export declare class UpgradeModule {
     static ɵinj: i0.ɵɵInjectorDeclaration<UpgradeModule>;
 }
 
+declare function validateInjectionKey($injector: IInjectorService, downgradedModule: string, injectionKey: string, attemptedAction: string): void;
+
 /**
  * @publicApi
  */
 export declare const VERSION: Version;
+
+declare namespace ɵangular1 {
+    export {
+        setAngularLib,
+        getAngularLib,
+        setAngularJSGlobal,
+        getAngularJSGlobal,
+        Ng1Token,
+        Ng1Expression,
+        IAnnotatedFunction,
+        IInjectable,
+        SingleOrListOrMap,
+        IModule,
+        ICompileService,
+        ILinkFn,
+        ILinkFnOptions,
+        IRootScopeService,
+        IScope,
+        IAngularBootstrapConfig,
+        IDirective,
+        DirectiveRequireProperty,
+        DirectiveTranscludeProperty,
+        IDirectiveCompileFn,
+        IDirectivePrePost,
+        IDirectiveLinkFn,
+        IComponent,
+        IAttributes,
+        ITranscludeFunction,
+        ICloneAttachFunction,
+        IAugmentedJQuery,
+        IProvider,
+        IProvideService,
+        IParseService,
+        ICompiledExpression,
+        IHttpBackendService,
+        ICacheObject,
+        ITemplateCacheService,
+        IController,
+        IControllerService,
+        IInjectorService,
+        IIntervalService,
+        ITestabilityService,
+        INgModelController,
+        bootstrap,
+        module_,
+        element,
+        injector,
+        resumeBootstrap,
+        getTestability
+    }
+}
+export { ɵangular1 }
+
+declare namespace ɵconstants {
+    export {
+        $COMPILE,
+        $CONTROLLER,
+        $DELEGATE,
+        $EXCEPTION_HANDLER,
+        $HTTP_BACKEND,
+        $INJECTOR,
+        $INTERVAL,
+        $PARSE,
+        $PROVIDE,
+        $ROOT_ELEMENT,
+        $ROOT_SCOPE,
+        $SCOPE,
+        $TEMPLATE_CACHE,
+        $TEMPLATE_REQUEST,
+        $$TESTABILITY,
+        COMPILER_KEY,
+        DOWNGRADED_MODULE_COUNT_KEY,
+        GROUP_PROJECTABLE_NODES_KEY,
+        INJECTOR_KEY,
+        LAZY_MODULE_REF,
+        NG_ZONE_KEY,
+        UPGRADE_APP_TYPE_KEY,
+        REQUIRE_INJECTOR,
+        REQUIRE_NG_MODEL,
+        UPGRADE_MODULE_NAME
+    }
+}
+export { ɵconstants }
+
+declare namespace ɵupgradeHelper {
+    export {
+        IBindingDestination,
+        IControllerInstance,
+        UpgradeHelper
+    }
+}
+export { ɵupgradeHelper }
+
+declare namespace ɵutil {
+    export {
+        onError,
+        cleanData,
+        controllerKey,
+        destroyApp,
+        directiveNormalize,
+        getTypeName,
+        getDowngradedModuleCount,
+        getUpgradeAppType,
+        isFunction,
+        isNgModuleType,
+        validateInjectionKey,
+        hookupNgModel,
+        strictEquals,
+        Deferred,
+        LazyModuleRef,
+        UpgradeAppType
+    }
+}
+export { ɵutil }
 
 export { }

@@ -1,104 +1,13 @@
 /**
- * @license Angular v17.0.0-next.1+sha-7ed4c56
+ * @license Angular v17.0.0-next.1+sha-5ee6c7e
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
 import { NgModule, Injector } from '@angular/core';
+import { ɵconstants, ɵangular1 } from '@angular/upgrade/static';
 import { TestBed } from '@angular/core/testing';
-
-function noNg() {
-    throw new Error('AngularJS v1.x is not loaded!');
-}
-const noNgElement = (() => noNg());
-noNgElement.cleanData = noNg;
-let angular = {
-    bootstrap: noNg,
-    module: noNg,
-    element: noNgElement,
-    injector: noNg,
-    version: undefined,
-    resumeBootstrap: noNg,
-    getTestability: noNg
-};
-try {
-    if (window.hasOwnProperty('angular')) {
-        angular = window.angular;
-    }
-}
-catch {
-    // ignore in CJS mode.
-}
-/**
- * @deprecated Use `setAngularJSGlobal` instead.
- *
- * @publicApi
- */
-function setAngularLib(ng) {
-    setAngularJSGlobal(ng);
-}
-/**
- * @deprecated Use `getAngularJSGlobal` instead.
- *
- * @publicApi
- */
-function getAngularLib() {
-    return getAngularJSGlobal();
-}
-/**
- * Resets the AngularJS global.
- *
- * Used when AngularJS is loaded lazily, and not available on `window`.
- *
- * @publicApi
- */
-function setAngularJSGlobal(ng) {
-    angular = ng;
-}
-/**
- * Returns the current AngularJS global.
- *
- * @publicApi
- */
-function getAngularJSGlobal() {
-    return angular;
-}
-const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
-// Do not declare as `module` to avoid webpack bug
-// (see https://github.com/angular/angular/issues/30050).
-const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
-const element = (e => angular.element(e));
-element.cleanData = nodes => angular.element.cleanData(nodes);
-const injector$1 = (modules, strictDi) => angular.injector(modules, strictDi);
-const resumeBootstrap = () => angular.resumeBootstrap();
-const getTestability = e => angular.getTestability(e);
-
-const $COMPILE = '$compile';
-const $CONTROLLER = '$controller';
-const $DELEGATE = '$delegate';
-const $EXCEPTION_HANDLER = '$exceptionHandler';
-const $HTTP_BACKEND = '$httpBackend';
-const $INJECTOR = '$injector';
-const $INTERVAL = '$interval';
-const $PARSE = '$parse';
-const $PROVIDE = '$provide';
-const $ROOT_ELEMENT = '$rootElement';
-const $ROOT_SCOPE = '$rootScope';
-const $SCOPE = '$scope';
-const $TEMPLATE_CACHE = '$templateCache';
-const $TEMPLATE_REQUEST = '$templateRequest';
-const $$TESTABILITY = '$$testability';
-const COMPILER_KEY = '$$angularCompiler';
-const DOWNGRADED_MODULE_COUNT_KEY = '$$angularDowngradedModuleCount';
-const GROUP_PROJECTABLE_NODES_KEY = '$$angularGroupProjectableNodes';
-const INJECTOR_KEY = '$$angularInjector';
-const LAZY_MODULE_REF = '$$angularLazyModuleRef';
-const NG_ZONE_KEY = '$$angularNgZone';
-const UPGRADE_APP_TYPE_KEY = '$$angularUpgradeAppType';
-const REQUIRE_INJECTOR = '?^^' + INJECTOR_KEY;
-const REQUIRE_NG_MODEL = '?ngModel';
-const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 let $injector = null;
 let injector;
@@ -109,13 +18,13 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-7ed4c56", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.0.0-next.1+sha-7ed4c56", ngImport: i0, type: AngularTestingModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-7ed4c56", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-5ee6c7e", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.0.0-next.1+sha-5ee6c7e", ngImport: i0, type: AngularTestingModule }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-5ee6c7e", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-7ed4c56", ngImport: i0, type: AngularTestingModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.1+sha-5ee6c7e", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
-            args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
+            args: [{ providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: function () { return [{ type: i0.Injector }]; } });
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
@@ -183,10 +92,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.1+sh
  * @publicApi
  */
 function createAngularTestingModule(angularJSModules, strictDi) {
-    module_('$$angularJSTestingModule', angularJSModules)
-        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
-        .factory(INJECTOR_KEY, () => injector);
-    $injector = injector$1(['ng', '$$angularJSTestingModule'], strictDi);
+    ɵangular1.module_('$$angularJSTestingModule', angularJSModules)
+        .constant(ɵconstants.UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+        .factory(ɵconstants.INJECTOR_KEY, () => injector);
+    $injector = ɵangular1.injector(['ng', '$$angularJSTestingModule'], strictDi);
     return AngularTestingModule;
 }
 
@@ -258,14 +167,14 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * @publicApi
  */
 function createAngularJSTestingModule(angularModules) {
-    return module_('$$angularJSTestingModule', [])
-        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
-        .factory(INJECTOR_KEY, [
-        $INJECTOR,
+    return ɵangular1.module_('$$angularJSTestingModule', [])
+        .constant(ɵconstants.UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+        .factory(ɵconstants.INJECTOR_KEY, [
+        ɵconstants.$INJECTOR,
         ($injector) => {
             TestBed.configureTestingModule({
                 imports: angularModules,
-                providers: [{ provide: $INJECTOR, useValue: $injector }]
+                providers: [{ provide: ɵconstants.$INJECTOR, useValue: $injector }]
             });
             return TestBed.inject(Injector);
         }
