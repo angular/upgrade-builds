@@ -1,5 +1,5 @@
 /**
- * @license Angular v17.2.0-next.0+sha-274a489
+ * @license Angular v17.2.0-next.0+sha-c4b880a
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -20,7 +20,7 @@ let angular = {
     injector: noNg,
     version: undefined,
     resumeBootstrap: noNg,
-    getTestability: noNg
+    getTestability: noNg,
 };
 try {
     if (window.hasOwnProperty('angular')) {
@@ -68,11 +68,11 @@ const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
 // Do not declare as `module` to avoid webpack bug
 // (see https://github.com/angular/angular/issues/30050).
 const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
-const element = (e => angular.element(e));
-element.cleanData = nodes => angular.element.cleanData(nodes);
+const element = ((e) => angular.element(e));
+element.cleanData = (nodes) => angular.element.cleanData(nodes);
 const injector = (modules, strictDi) => angular.injector(modules, strictDi);
 const resumeBootstrap = () => angular.resumeBootstrap();
-const getTestability = e => angular.getTestability(e);
+const getTestability = (e) => angular.getTestability(e);
 
 var angular1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -207,7 +207,8 @@ function destroyApp($injector) {
     cleanData($rootElement[0]);
 }
 function directiveNormalize(name) {
-    return name.replace(DIRECTIVE_PREFIX_REGEXP, '')
+    return name
+        .replace(DIRECTIVE_PREFIX_REGEXP, '')
         .replace(DIRECTIVE_SPECIAL_CHARS_REGEXP, (_, letter) => letter.toUpperCase());
 }
 function getTypeName(type) {
@@ -215,12 +216,14 @@ function getTypeName(type) {
     return type.overriddenName || type.name || type.toString().split('\n')[0];
 }
 function getDowngradedModuleCount($injector) {
-    return $injector.has(DOWNGRADED_MODULE_COUNT_KEY) ? $injector.get(DOWNGRADED_MODULE_COUNT_KEY) :
-        0;
+    return $injector.has(DOWNGRADED_MODULE_COUNT_KEY)
+        ? $injector.get(DOWNGRADED_MODULE_COUNT_KEY)
+        : 0;
 }
 function getUpgradeAppType($injector) {
-    return $injector.has(UPGRADE_APP_TYPE_KEY) ? $injector.get(UPGRADE_APP_TYPE_KEY) :
-        0 /* UpgradeAppType.None */;
+    return $injector.has(UPGRADE_APP_TYPE_KEY)
+        ? $injector.get(UPGRADE_APP_TYPE_KEY)
+        : 0 /* UpgradeAppType.None */;
 }
 function isFunction(value) {
     return typeof value === 'function';
@@ -241,15 +244,15 @@ function validateInjectionKey($injector, downgradedModule, injectionKey, attempt
         case 2 /* UpgradeAppType.Static */:
             if (downgradedModule) {
                 throw new Error(`Error while ${attemptedAction}: 'downgradedModule' unexpectedly specified.\n` +
-                    'You should not specify a value for \'downgradedModule\', unless you are downgrading ' +
-                    'more than one Angular module (via \'downgradeModule()\').');
+                    "You should not specify a value for 'downgradedModule', unless you are downgrading " +
+                    "more than one Angular module (via 'downgradeModule()').");
             }
             break;
         case 3 /* UpgradeAppType.Lite */:
-            if (!downgradedModule && (downgradedModuleCount >= 2)) {
+            if (!downgradedModule && downgradedModuleCount >= 2) {
                 throw new Error(`Error while ${attemptedAction}: 'downgradedModule' not specified.\n` +
                     'This application contains more than one downgraded Angular module, thus you need to ' +
-                    'always specify \'downgradedModule\' when downgrading components and injectables.');
+                    "always specify 'downgradedModule' when downgrading components and injectables.");
             }
             if (!$injector.has(injectionKey)) {
                 throw new Error(`Error while ${attemptedAction}: Unable to find the specified downgraded module.\n` +
@@ -277,8 +280,7 @@ class Deferred {
  *     compatibility.
  */
 function supportsNgModel(component) {
-    return typeof component.writeValue === 'function' &&
-        typeof component.registerOnChange === 'function';
+    return (typeof component.writeValue === 'function' && typeof component.registerOnChange === 'function');
 }
 /**
  * Glue the AngularJS `NgModelController` (if it exists) to the component
@@ -321,7 +323,7 @@ var util = /*#__PURE__*/Object.freeze({
 });
 
 const INITIAL_VALUE$1 = {
-    __UNINITIALIZED__: true
+    __UNINITIALIZED__: true,
 };
 class DowngradeComponentAdapter {
     constructor(element, attrs, scope, ngModel, parentInjector, $compile, $parse, componentFactory, wrapCallback) {
@@ -342,9 +344,9 @@ class DowngradeComponentAdapter {
     compileContents() {
         const compiledProjectableNodes = [];
         const projectableNodes = this.groupProjectableNodes();
-        const linkFns = projectableNodes.map(nodes => this.$compile(nodes));
+        const linkFns = projectableNodes.map((nodes) => this.$compile(nodes));
         this.element.empty();
-        linkFns.forEach(linkFn => {
+        linkFns.forEach((linkFn) => {
             linkFn(this.scope, (clone) => {
                 compiledProjectableNodes.push(clone);
                 this.element.append(clone);
@@ -361,7 +363,11 @@ class DowngradeComponentAdapter {
     }
     createComponent(projectableNodes) {
         const providers = [{ provide: $SCOPE, useValue: this.componentScope }];
-        const childInjector = Injector.create({ providers: providers, parent: this.parentInjector, name: 'DowngradeComponentAdapter' });
+        const childInjector = Injector.create({
+            providers: providers,
+            parent: this.parentInjector,
+            name: 'DowngradeComponentAdapter',
+        });
         const componentRef = this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
         const viewChangeDetector = componentRef.injector.get(ChangeDetectorRef);
         const changeDetector = componentRef.changeDetectorRef;
@@ -371,7 +377,8 @@ class DowngradeComponentAdapter {
         // testability hook.
         const testability = componentRef.injector.get(Testability, null);
         if (testability) {
-            componentRef.injector.get(TestabilityRegistry)
+            componentRef.injector
+                .get(TestabilityRegistry)
                 .registerApplication(componentRef.location.nativeElement, testability);
         }
         hookupNgModel(this.ngModel, componentRef.instance);
@@ -384,7 +391,7 @@ class DowngradeComponentAdapter {
             const inputBinding = new PropertyBinding(input.propName, input.templateName);
             let expr = null;
             if (attrs.hasOwnProperty(inputBinding.attr)) {
-                const observeFn = (prop => {
+                const observeFn = ((prop) => {
                     let prevValue = INITIAL_VALUE$1;
                     return (currValue) => {
                         // Initially, both `$observe()` and `$watch()` will call this function.
@@ -487,8 +494,9 @@ class DowngradeComponentAdapter {
         const emitter = componentRef.instance[output.prop];
         if (emitter) {
             const subscription = emitter.subscribe({
-                next: isAssignment ? (v) => setter(this.scope, v) :
-                    (v) => getter(this.scope, { '$event': v })
+                next: isAssignment
+                    ? (v) => setter(this.scope, v)
+                    : (v) => getter(this.scope, { '$event': v }),
             });
             componentRef.onDestroy(() => subscription.unsubscribe());
         }
@@ -582,10 +590,9 @@ function findMatchingNgContentIndex(element, ngContentSelectors) {
 function matchesSelector(el, selector) {
     const elProto = Element.prototype;
     return el.nodeType === Node.ELEMENT_NODE
-        // matches is supported by all browsers from 2014 onwards except non-chromium edge
-        ?
-            (elProto.matches ?? elProto.msMatchesSelector).call(el, selector) :
-        false;
+        ? // matches is supported by all browsers from 2014 onwards except non-chromium edge
+            (elProto.matches ?? elProto.msMatchesSelector).call(el, selector)
+        : false;
 }
 
 function isThenable(obj) {
@@ -610,7 +617,7 @@ class SyncPromise {
         };
         valuesOrPromises.forEach((p, idx) => {
             if (isThenable(p)) {
-                p.then(v => resolve(idx, v));
+                p.then((v) => resolve(idx, v));
             }
             else {
                 resolve(idx, p);
@@ -625,7 +632,7 @@ class SyncPromise {
         this.value = value;
         this.resolved = true;
         // Run the queued callbacks.
-        this.callbacks.forEach(callback => callback(value));
+        this.callbacks.forEach((callback) => callback(value));
         this.callbacks.length = 0;
     }
     then(callback) {
@@ -698,10 +705,12 @@ function downgradeComponent(info) {
         //         inside the Angular zone (except if explicitly escaped, in which case we shouldn't
         //         force it back in).
         const isNgUpgradeLite = getUpgradeAppType($injector) === 3 /* UpgradeAppType.Lite */;
-        const wrapCallback = !isNgUpgradeLite ? cb => cb : cb => () => NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
+        const wrapCallback = !isNgUpgradeLite
+            ? (cb) => cb
+            : (cb) => () => (NgZone.isInAngularZone() ? cb() : ngZone.run(cb));
         let ngZone;
         // When downgrading multiple modules, special handling is needed wrt injectors.
-        const hasMultipleDowngradedModules = isNgUpgradeLite && (getDowngradedModuleCount($injector) > 1);
+        const hasMultipleDowngradedModules = isNgUpgradeLite && getDowngradedModuleCount($injector) > 1;
         return {
             restrict: 'E',
             terminal: true,
@@ -784,20 +793,21 @@ function downgradeComponent(info) {
                         scope.$evalAsync(() => { });
                     }
                 };
-                const downgradeFn = !isNgUpgradeLite ? doDowngrade : (pInjector, mInjector) => {
-                    if (!ngZone) {
-                        ngZone = pInjector.get(NgZone);
-                    }
-                    wrapCallback(() => doDowngrade(pInjector, mInjector))();
-                };
+                const downgradeFn = !isNgUpgradeLite
+                    ? doDowngrade
+                    : (pInjector, mInjector) => {
+                        if (!ngZone) {
+                            ngZone = pInjector.get(NgZone);
+                        }
+                        wrapCallback(() => doDowngrade(pInjector, mInjector))();
+                    };
                 // NOTE:
                 // Not using `ParentInjectorPromise.all()` (which is inherited from `SyncPromise`), because
                 // Closure Compiler (or some related tool) complains:
                 // `TypeError: ...$src$downgrade_component_ParentInjectorPromise.all is not a function`
-                SyncPromise.all([finalParentInjector, finalModuleInjector])
-                    .then(([pInjector, mInjector]) => downgradeFn(pInjector, mInjector));
+                SyncPromise.all([finalParentInjector, finalModuleInjector]).then(([pInjector, mInjector]) => downgradeFn(pInjector, mInjector));
                 ranAsync = true;
-            }
+            },
         };
     };
     // bracket-notation because of closure - see #14441
@@ -912,7 +922,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('17.2.0-next.0+sha-274a489');
+const VERSION = new Version('17.2.0-next.0+sha-c4b880a');
 
 // Constants
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
@@ -983,8 +993,7 @@ class UpgradeHelper {
     }
     compileTemplate(template) {
         if (template === undefined) {
-            template =
-                UpgradeHelper.getTemplate(this.$injector, this.directive, false, this.$element);
+            template = UpgradeHelper.getTemplate(this.$injector, this.directive, false, this.$element);
         }
         return this.compileHtml(template);
     }
@@ -1014,7 +1023,7 @@ class UpgradeHelper {
                 const slotMap = Object.create(null);
                 const filledSlots = Object.create(null);
                 // Parse the element selectors.
-                Object.keys(transclude).forEach(slotName => {
+                Object.keys(transclude).forEach((slotName) => {
                     let selector = transclude[slotName];
                     const optional = selector.charAt(0) === '?';
                     selector = optional ? selector.substring(1) : selector;
@@ -1023,7 +1032,7 @@ class UpgradeHelper {
                     filledSlots[slotName] = optional; // Consider optional slots as filled.
                 });
                 // Add the matching elements into their slot.
-                contentChildNodes.forEach(node => {
+                contentChildNodes.forEach((node) => {
                     const slotName = slotMap[directiveNormalize(node.nodeName.toLowerCase())];
                     if (slotName) {
                         filledSlots[slotName] = true;
@@ -1035,12 +1044,14 @@ class UpgradeHelper {
                     }
                 });
                 // Check for required slots that were not filled.
-                Object.keys(filledSlots).forEach(slotName => {
+                Object.keys(filledSlots).forEach((slotName) => {
                     if (!filledSlots[slotName]) {
                         throw new Error(`Required transclusion slot '${slotName}' on directive: ${this.name}`);
                     }
                 });
-                Object.keys(slots).filter(slotName => slots[slotName]).forEach(slotName => {
+                Object.keys(slots)
+                    .filter((slotName) => slots[slotName])
+                    .forEach((slotName) => {
                     const nodes = slots[slotName];
                     slots[slotName] = (scope, cloneAttach) => {
                         return cloneAttach(nodes, scope);
@@ -1059,7 +1070,7 @@ class UpgradeHelper {
             // to empty text nodes (which can only be a result of Angular removing their initial content).
             // NOTE: Transcluded text content that starts with whitespace followed by an interpolation
             //       will still fail to be detected by AngularJS v1.6+
-            $template.forEach(node => {
+            $template.forEach((node) => {
                 if (node.nodeType === Node.TEXT_NODE && !node.nodeValue) {
                     node.nodeValue = '\u200C';
                 }
@@ -1072,7 +1083,7 @@ class UpgradeHelper {
         const requiredControllers = this.resolveRequire(directiveRequire);
         if (controllerInstance && this.directive.bindToController && isMap(directiveRequire)) {
             const requiredControllersMap = requiredControllers;
-            Object.keys(requiredControllersMap).forEach(key => {
+            Object.keys(requiredControllersMap).forEach((key) => {
                 controllerInstance[key] = requiredControllersMap[key];
             });
         }
@@ -1085,7 +1096,7 @@ class UpgradeHelper {
     extractChildNodes() {
         const childNodes = [];
         let childNode;
-        while (childNode = this.element.firstChild) {
+        while ((childNode = this.element.firstChild)) {
             this.element.removeChild(childNode);
             childNodes.push(childNode);
         }
@@ -1109,11 +1120,11 @@ class UpgradeHelper {
             return null;
         }
         else if (Array.isArray(require)) {
-            return require.map(req => this.resolveRequire(req));
+            return require.map((req) => this.resolveRequire(req));
         }
         else if (typeof require === 'object') {
             const value = {};
-            Object.keys(require).forEach(key => value[key] = this.resolveRequire(require[key]));
+            Object.keys(require).forEach((key) => (value[key] = this.resolveRequire(require[key])));
             return value;
         }
         else if (typeof require === 'string') {
@@ -1191,7 +1202,7 @@ const angular1Providers = [
     { provide: '$injector', useFactory: injectorFactory, deps: [] },
     { provide: '$rootScope', useFactory: rootScopeFactory, deps: ['$injector'] },
     { provide: '$compile', useFactory: compileFactory, deps: ['$injector'] },
-    { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] }
+    { provide: '$parse', useFactory: parseFactory, deps: ['$injector'] },
 ];
 
 class NgAdapterInjector {
@@ -1359,7 +1370,7 @@ function downgradeModule(moduleOrBootstrapFn) {
         ($injector) => {
             setTempInjectorRef($injector);
             const result = {
-                promise: bootstrapFn(angular1Providers).then(ref => {
+                promise: bootstrapFn(angular1Providers).then((ref) => {
                     injector = result.injector = new NgAdapterInjector(ref.injector);
                     injector.get($INJECTOR);
                     // Destroy the AngularJS app once the Angular `PlatformRef` is destroyed.
@@ -1369,16 +1380,17 @@ function downgradeModule(moduleOrBootstrapFn) {
                     // See https://github.com/angular/angular/issues/39935.
                     injector.get(PlatformRef).onDestroy(() => destroyApp($injector));
                     return injector;
-                })
+                }),
             };
             return result;
-        }
+        },
     ])
         .config([
-        $INJECTOR, $PROVIDE,
+        $INJECTOR,
+        $PROVIDE,
         ($injector, $provide) => {
             $provide.constant(DOWNGRADED_MODULE_COUNT_KEY, getDowngradedModuleCount($injector) + 1);
-        }
+        },
     ]);
     return lazyModuleName;
 }
@@ -1388,7 +1400,7 @@ function identity(x) {
 
 const NOT_SUPPORTED = 'NOT_SUPPORTED';
 const INITIAL_VALUE = {
-    __UNINITIALIZED__: true
+    __UNINITIALIZED__: true,
 };
 class Bindings {
     constructor() {
@@ -1475,9 +1487,9 @@ class UpgradeComponent {
         // Instantiate controller
         const controllerType = this.directive.controller;
         const bindToController = this.directive.bindToController;
-        let controllerInstance = controllerType ?
-            this.helper.buildController(controllerType, this.$componentScope) :
-            undefined;
+        let controllerInstance = controllerType
+            ? this.helper.buildController(controllerType, this.$componentScope)
+            : undefined;
         let bindingDestination;
         if (!bindToController) {
             bindingDestination = this.$componentScope;
@@ -1567,7 +1579,7 @@ class UpgradeComponent {
         const context = btcIsObject ? directive.bindToController : directive.scope;
         const bindings = new Bindings();
         if (typeof context == 'object') {
-            Object.keys(context).forEach(propName => {
+            Object.keys(context).forEach((propName) => {
                 const definition = context[propName];
                 const bindingType = definition.charAt(0);
                 // QUESTION: What about `=*`? Ignore? Throw? Support?
@@ -1597,15 +1609,16 @@ class UpgradeComponent {
     }
     initializeOutputs() {
         // Initialize the outputs for `=` and `&` bindings
-        this.bindings.twoWayBoundProperties.concat(this.bindings.expressionBoundProperties)
-            .forEach(propName => {
+        this.bindings.twoWayBoundProperties
+            .concat(this.bindings.expressionBoundProperties)
+            .forEach((propName) => {
             const outputName = this.bindings.propertyToOutputMap[propName];
             this[outputName] = new EventEmitter();
         });
     }
     bindOutputs(bindingDestination) {
         // Bind `&` bindings to the corresponding outputs
-        this.bindings.expressionBoundProperties.forEach(propName => {
+        this.bindings.expressionBoundProperties.forEach((propName) => {
             const outputName = this.bindings.propertyToOutputMap[propName];
             const emitter = this[outputName];
             bindingDestination[propName] = (value) => emitter.emit(value);
@@ -1613,15 +1626,15 @@ class UpgradeComponent {
     }
     forwardChanges(changes, bindingDestination) {
         // Forward input changes to `bindingDestination`
-        Object.keys(changes).forEach(propName => bindingDestination[propName] = changes[propName].currentValue);
+        Object.keys(changes).forEach((propName) => (bindingDestination[propName] = changes[propName].currentValue));
         if (isFunction(bindingDestination.$onChanges)) {
             bindingDestination.$onChanges(changes);
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "17.2.0-next.0+sha-274a489", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "17.2.0-next.0+sha-c4b880a", type: UpgradeComponent, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: UpgradeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }] });
 
@@ -1780,9 +1793,13 @@ class UpgradeModule {
         module_(INIT_MODULE_NAME, [])
             .constant(UPGRADE_APP_TYPE_KEY, 2 /* ɵutil.UpgradeAppType.Static */)
             .value(INJECTOR_KEY, this.injector)
-            .factory(LAZY_MODULE_REF, [INJECTOR_KEY, (injector) => ({ injector })])
+            .factory(LAZY_MODULE_REF, [
+            INJECTOR_KEY,
+            (injector) => ({ injector }),
+        ])
             .config([
-            $PROVIDE, $INJECTOR,
+            $PROVIDE,
+            $INJECTOR,
             ($provide, $injector) => {
                 if ($injector.has($$TESTABILITY)) {
                     $provide.decorator($$TESTABILITY, [
@@ -1804,7 +1821,7 @@ class UpgradeModule {
                             };
                             testabilityDelegate.whenStable = newWhenStable;
                             return testabilityDelegate;
-                        }
+                        },
                     ]);
                 }
                 if ($injector.has($INTERVAL)) {
@@ -1827,8 +1844,7 @@ class UpgradeModule {
                                     }, delay, count, invokeApply, ...pass);
                                 });
                             };
-                            Object.keys(intervalDelegate)
-                                .forEach(prop => wrappedInterval[prop] = intervalDelegate[prop]);
+                            Object.keys(intervalDelegate).forEach((prop) => (wrappedInterval[prop] = intervalDelegate[prop]));
                             // the `flush` method will be present when ngMocks is used
                             if (intervalDelegate.hasOwnProperty('flush')) {
                                 wrappedInterval['flush'] = () => {
@@ -1837,10 +1853,10 @@ class UpgradeModule {
                                 };
                             }
                             return wrappedInterval;
-                        }
+                        },
                     ]);
                 }
-            }
+            },
         ])
             .run([
             $INJECTOR,
@@ -1874,7 +1890,7 @@ class UpgradeModule {
                         subscription.unsubscribe();
                     });
                 }, 0);
-            }
+            },
         ]);
         const upgradeModule = module_(UPGRADE_MODULE_NAME, [INIT_MODULE_NAME].concat(modules));
         // Make sure resumeBootstrap() only exists if the current bootstrap is deferred
@@ -1894,11 +1910,11 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: UpgradeModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: UpgradeModule }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: UpgradeModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: () => [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }] });

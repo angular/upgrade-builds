@@ -1,5 +1,5 @@
 /**
- * @license Angular v17.2.0-next.0+sha-274a489
+ * @license Angular v17.2.0-next.0+sha-c4b880a
  * (c) 2010-2022 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,11 +18,11 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: AngularTestingModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: AngularTestingModule }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-274a489", ngImport: i0, type: AngularTestingModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.0-next.0+sha-c4b880a", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
             args: [{ providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: () => [{ type: i0.Injector }] });
@@ -92,7 +92,8 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.2.0-next.0+sh
  * @publicApi
  */
 function createAngularTestingModule(angularJSModules, strictDi) {
-    ɵangular1.module_('$$angularJSTestingModule', angularJSModules)
+    ɵangular1
+        .module_('$$angularJSTestingModule', angularJSModules)
         .constant(ɵconstants.UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
         .factory(ɵconstants.INJECTOR_KEY, () => injector);
     $injector = ɵangular1.injector(['ng', '$$angularJSTestingModule'], strictDi);
@@ -167,19 +168,19 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * @publicApi
  */
 function createAngularJSTestingModule(angularModules) {
-    return ɵangular1.module_('$$angularJSTestingModule', [])
+    return ɵangular1
+        .module_('$$angularJSTestingModule', [])
         .constant(ɵconstants.UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
         .factory(ɵconstants.INJECTOR_KEY, [
         ɵconstants.$INJECTOR,
         ($injector) => {
             TestBed.configureTestingModule({
                 imports: angularModules,
-                providers: [{ provide: ɵconstants.$INJECTOR, useValue: $injector }]
+                providers: [{ provide: ɵconstants.$INJECTOR, useValue: $injector }],
             });
             return TestBed.inject(Injector);
-        }
-    ])
-        .name;
+        },
+    ]).name;
 }
 
 /**
