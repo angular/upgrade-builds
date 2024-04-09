@@ -1,5 +1,5 @@
 /**
- * @license Angular v18.0.0-next.3+sha-216199d
+ * @license Angular v18.0.0-next.3+sha-1c6553e
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -140,7 +140,7 @@ declare type DirectiveTranscludeProperty = boolean | 'element' | {
  * {@example upgrade/static/ts/full/module.ts region="ng2-heroes-wrapper"}
  *
  * For more details and examples on downgrading Angular components to AngularJS components please
- * visit the [Upgrade guide](guide/upgrade#using-angular-components-from-angularjs-code).
+ * visit the [Upgrade guide](https://angular.io/guide/upgrade#using-angular-components-from-angularjs-code).
  *
  * @param info contains information about the Component that is being downgraded:
  *
@@ -274,7 +274,7 @@ export declare function downgradeInjectable(token: any, downgradedModule?: strin
  * {@example upgrade/static/ts/lite/module.ts region="basic-how-to"}
  *
  * For more details on how to use `downgradeModule()` see
- * [Upgrading for Performance](guide/upgrade-performance).
+ * [Upgrading for Performance](https://angular.io/guide/upgrade).
  *
  * @usageNotes
  *
@@ -312,7 +312,7 @@ export declare function downgradeInjectable(token: any, downgradedModule?: strin
  * notify each framework as needed.
  *
  * For a more detailed discussion of the differences and their implications, see
- * [Upgrading for Performance](guide/upgrade-performance).
+ * [Upgrading for Performance](https://angular.io/guide/upgrade).
  *
  * <div class="alert is-helpful">
  *
@@ -389,7 +389,7 @@ export declare function downgradeModule<T>(moduleOrBootstrapFn: Type<T> | ((extr
  * {@example upgrade/static/ts/lite/module.ts region="basic-how-to"}
  *
  * For more details on how to use `downgradeModule()` see
- * [Upgrading for Performance](guide/upgrade-performance).
+ * [Upgrading for Performance](https://angular.io/guide/upgrade).
  *
  * @usageNotes
  *
@@ -427,7 +427,7 @@ export declare function downgradeModule<T>(moduleOrBootstrapFn: Type<T> | ((extr
  * notify each framework as needed.
  *
  * For a more detailed discussion of the differences and their implications, see
- * [Upgrading for Performance](guide/upgrade-performance).
+ * [Upgrading for Performance](https://angular.io/guide/upgrade).
  *
  * <div class="alert is-helpful">
  *

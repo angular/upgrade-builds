@@ -1,5 +1,5 @@
 /**
- * @license Angular v18.0.0-next.3+sha-216199d
+ * @license Angular v18.0.0-next.3+sha-1c6553e
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('18.0.0-next.3+sha-216199d');
+const VERSION = new Version('18.0.0-next.3+sha-1c6553e');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -622,7 +622,7 @@ class SyncPromise {
  * {@example upgrade/static/ts/full/module.ts region="ng2-heroes-wrapper"}
  *
  * For more details and examples on downgrading Angular components to AngularJS components please
- * visit the [Upgrade guide](guide/upgrade#using-angular-components-from-angularjs-code).
+ * visit the [Upgrade guide](https://angular.io/guide/upgrade#using-angular-components-from-angularjs-code).
  *
  * @param info contains information about the Component that is being downgraded:
  *
@@ -1302,10 +1302,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.0.0-next.3+sha-216199d", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.0.0-next.3+sha-216199d", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.0.0-next.3+sha-1c6553e", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.0.0-next.3+sha-1c6553e", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.0.0-next.3+sha-216199d", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.0.0-next.3+sha-1c6553e", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
@@ -1389,7 +1389,7 @@ let upgradeCount = 0;
  * ```
  *
  * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
- * [Ahead-of-Time compilation](guide/aot-compiler).
+ * [Ahead-of-Time compilation](tools/cli/aot-compiler).
  * @publicApi
  */
 class UpgradeAdapter {
@@ -1911,7 +1911,7 @@ class UpgradeAdapter {
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.
  *
  * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
- * [Ahead-of-Time compilation](guide/aot-compiler).
+ * [Ahead-of-Time compilation](tools/cli/aot-compiler).
  * @publicApi
  */
 class UpgradeAdapterRef {

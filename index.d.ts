@@ -1,5 +1,5 @@
 /**
- * @license Angular v18.0.0-next.3+sha-216199d
+ * @license Angular v18.0.0-next.3+sha-1c6553e
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -123,7 +123,7 @@ declare type Ng1Expression = string | Function;
  * ```
  *
  * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
- * [Ahead-of-Time compilation](guide/aot-compiler).
+ * [Ahead-of-Time compilation](tools/cli/aot-compiler).
  * @publicApi
  */
 export declare class UpgradeAdapter {
@@ -443,7 +443,7 @@ export declare class UpgradeAdapter {
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.
  *
  * @deprecated Deprecated since v5. Use `upgrade/static` instead, which also supports
- * [Ahead-of-Time compilation](guide/aot-compiler).
+ * [Ahead-of-Time compilation](tools/cli/aot-compiler).
  * @publicApi
  */
 export declare class UpgradeAdapterRef {
