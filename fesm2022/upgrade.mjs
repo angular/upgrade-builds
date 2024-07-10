@@ -1,12 +1,12 @@
 /**
- * @license Angular v18.2.0-next.0+sha-6271a16
+ * @license Angular v18.2.0-next.0+sha-7f550ea
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
-import { Version, ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Directive, Inject, ElementRef, EventEmitter, Compiler, NgModule, resolveForwardRef } from '@angular/core';
-import { __decorate, __param, __metadata } from 'tslib';
+import { Version, ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Inject, ElementRef, Directive, EventEmitter, Compiler, NgModule, resolveForwardRef } from '@angular/core';
+import { __decorate, __metadata } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 /**
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('18.2.0-next.0+sha-6271a16');
+const VERSION = new Version('18.2.0-next.0+sha-7f550ea');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -1126,6 +1126,11 @@ class UpgradeNg1ComponentAdapterBuilder {
             constructor(scope, injector, elementRef) {
                 super(new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
             }
+            static { this.ctorParameters = () => [
+                { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] }] },
+                { type: Injector },
+                { type: ElementRef }
+            ]; }
         };
         MyClass = __decorate([
             Directive({
@@ -1134,7 +1139,6 @@ class UpgradeNg1ComponentAdapterBuilder {
                 inputs: this.inputsRename,
                 outputs: this.outputsRename,
             }),
-            __param(0, Inject($SCOPE)),
             __metadata("design:paramtypes", [Object, Injector, ElementRef])
         ], MyClass);
         this.type = MyClass;
@@ -1302,10 +1306,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.0-next.0+sha-6271a16", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.0-next.0+sha-6271a16", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.0-next.0+sha-7f550ea", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.0-next.0+sha-7f550ea", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.0-next.0+sha-6271a16", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.0-next.0+sha-7f550ea", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
