@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "18.2.0-next.1+sha-4ac39ae",
+  "version": "18.2.0-next.1+sha-d4ff6bc",
   "description": "Angular - the library for easing update from v1 to v2",
   "author": "angular",
   "license": "MIT",
@@ -11,10 +11,10 @@
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@angular/core": "18.2.0-next.1+sha-4ac39ae",
-    "@angular/compiler": "18.2.0-next.1+sha-4ac39ae",
-    "@angular/platform-browser": "18.2.0-next.1+sha-4ac39ae",
-    "@angular/platform-browser-dynamic": "18.2.0-next.1+sha-4ac39ae"
+    "@angular/core": "18.2.0-next.1+sha-d4ff6bc",
+    "@angular/compiler": "18.2.0-next.1+sha-d4ff6bc",
+    "@angular/platform-browser": "18.2.0-next.1+sha-d4ff6bc",
+    "@angular/platform-browser-dynamic": "18.2.0-next.1+sha-d4ff6bc"
   },
   "repository": {
     "type": "git",
