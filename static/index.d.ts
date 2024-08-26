@@ -1,5 +1,5 @@
 /**
- * @license Angular v18.2.1+sha-6d3a2af
+ * @license Angular v18.2.1+sha-03ec620
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -812,6 +812,30 @@ declare type SingleOrListOrMap<T> = T | T[] | {
  */
 declare function strictEquals(val1: any, val2: any): boolean;
 
+
+/**
+ * @fileoverview
+ * While Angular only uses Trusted Types internally for the time being,
+ * references to Trusted Types could leak into our public API, which would force
+ * anyone compiling against @angular/upgrade to provide the @types/trusted-types
+ * package in their compilation unit.
+ *
+ * Until https://github.com/microsoft/TypeScript/issues/30024 is resolved, we
+ * will keep Angular's public API surface free of references to Trusted Types.
+ * For internal and semi-private APIs that need to reference Trusted Types, the
+ * minimal type definitions for the Trusted Types API provided by this module
+ * should be used instead. They are marked as "declare" to prevent them from
+ * being renamed by compiler optimization.
+ *
+ * Adapted from
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/trusted-types/index.d.ts
+ * but restricted to the API surface used within Angular, mimicking the approach
+ * in packages/core/src/util/security/trusted_type_defs.ts.
+ */
+declare type TrustedHTML = string & {
+    __brand__: 'TrustedHTML';
+};
+
 declare const UPGRADE_APP_TYPE_KEY = "$$angularUpgradeAppType";
 
 declare const UPGRADE_MODULE_NAME = "$$UpgradeModule";
@@ -911,9 +935,9 @@ declare class UpgradeHelper {
     private readonly $controller;
     constructor(injector: Injector, name: string, elementRef: ElementRef, directive?: IDirective);
     static getDirective($injector: IInjectorService, name: string): IDirective;
-    static getTemplate($injector: IInjectorService, directive: IDirective, fetchRemoteTemplate?: boolean, $element?: IAugmentedJQuery): string | Promise<string>;
+    static getTemplate($injector: IInjectorService, directive: IDirective, fetchRemoteTemplate?: boolean, $element?: IAugmentedJQuery): string | TrustedHTML | Promise<string | TrustedHTML>;
     buildController(controllerType: IController, $scope: IScope): any;
-    compileTemplate(template?: string): ILinkFn;
+    compileTemplate(template?: string | TrustedHTML): ILinkFn;
     onDestroy($scope: IScope, controllerInstance?: any): void;
     prepareTransclusion(): ILinkFn | undefined;
     resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): SingleOrListOrMap<IControllerInstance> | null;

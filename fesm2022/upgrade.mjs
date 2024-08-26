@@ -1,5 +1,5 @@
 /**
- * @license Angular v18.2.1+sha-6d3a2af
+ * @license Angular v18.2.1+sha-03ec620
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('18.2.1+sha-6d3a2af');
+const VERSION = new Version('18.2.1+sha-03ec620');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -864,6 +864,47 @@ function downgradeInjectable(token, downgradedModule = '') {
     return factory;
 }
 
+/**
+ * The Trusted Types policy, or null if Trusted Types are not
+ * enabled/supported, or undefined if the policy has not been created yet.
+ */
+let policy;
+/**
+ * Returns the Trusted Types policy, or null if Trusted Types are not
+ * enabled/supported. The first call to this function will create the policy.
+ */
+function getPolicy() {
+    if (policy === undefined) {
+        policy = null;
+        const windowWithTrustedTypes = window;
+        if (windowWithTrustedTypes.trustedTypes) {
+            try {
+                policy = windowWithTrustedTypes.trustedTypes.createPolicy('angular#unsafe-upgrade', {
+                    createHTML: (s) => s,
+                });
+            }
+            catch {
+                // trustedTypes.createPolicy throws if called with a name that is
+                // already registered, even in report-only mode. Until the API changes,
+                // catch the error not to break the applications functionally. In such
+                // cases, the code will fall back to using strings.
+            }
+        }
+    }
+    return policy;
+}
+/**
+ * Unsafely promote a legacy AngularJS template to a TrustedHTML, falling back
+ * to strings when Trusted Types are not available.
+ * @security This is a security-sensitive function; any use of this function
+ * must go through security review. In particular, the template string should
+ * always be under full control of the application author, as untrusted input
+ * can cause an XSS vulnerability.
+ */
+function trustedHTMLFromLegacyTemplate(html) {
+    return getPolicy()?.createHTML(html) || html;
+}
+
 // Constants
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 // Classes
@@ -895,14 +936,14 @@ class UpgradeHelper {
     }
     static getTemplate($injector, directive, fetchRemoteTemplate = false, $element) {
         if (directive.template !== undefined) {
-            return getOrCall(directive.template, $element);
+            return trustedHTMLFromLegacyTemplate(getOrCall(directive.template, $element));
         }
         else if (directive.templateUrl) {
             const $templateCache = $injector.get($TEMPLATE_CACHE);
             const url = getOrCall(directive.templateUrl, $element);
             const template = $templateCache.get(url);
             if (template !== undefined) {
-                return template;
+                return trustedHTMLFromLegacyTemplate(template);
             }
             else if (!fetchRemoteTemplate) {
                 throw new Error('loading directive templates asynchronously is not supported');
@@ -911,7 +952,7 @@ class UpgradeHelper {
                 const $httpBackend = $injector.get($HTTP_BACKEND);
                 $httpBackend('GET', url, null, (status, response) => {
                     if (status === 200) {
-                        resolve($templateCache.put(url, response));
+                        resolve(trustedHTMLFromLegacyTemplate($templateCache.put(url, response)));
                     }
                     else {
                         reject(`GET component template from '${url}' returned '${status}: ${response}'`);
@@ -1241,7 +1282,7 @@ class UpgradeNg1ComponentAdapter {
     ngOnInit() {
         // Collect contents, insert and compile template
         const attachChildNodes = this.helper.prepareTransclusion();
-        const linkFn = this.helper.compileTemplate(this.template);
+        const linkFn = this.helper.compileTemplate(trustedHTMLFromLegacyTemplate(this.template));
         // Instantiate controller (if not already done so)
         const controllerType = this.directive.controller;
         const bindToController = this.directive.bindToController;
@@ -1306,10 +1347,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.1+sha-6d3a2af", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.1+sha-6d3a2af", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.1+sha-03ec620", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "18.2.1+sha-03ec620", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.1+sha-6d3a2af", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.1+sha-03ec620", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
