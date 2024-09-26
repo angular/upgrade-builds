@@ -1,11 +1,11 @@
 /**
- * @license Angular v19.0.0-next.7+sha-1549afe
+ * @license Angular v19.0.0-next.7+sha-0aae371
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
-import { Version, ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, NgZone, ComponentFactoryResolver, Inject, ElementRef, Directive, EventEmitter, Compiler, NgModule, resolveForwardRef } from '@angular/core';
+import { Version, ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, ɵSIGNAL, NgZone, ComponentFactoryResolver, Inject, ElementRef, Directive, EventEmitter, Compiler, NgModule, resolveForwardRef } from '@angular/core';
 import { __decorate, __metadata } from 'tslib';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('19.0.0-next.7+sha-1549afe');
+const VERSION = new Version('19.0.0-next.7+sha-0aae371');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -276,7 +276,7 @@ const INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true,
 };
 class DowngradeComponentAdapter {
-    constructor(element, attrs, scope, ngModel, parentInjector, $compile, $parse, componentFactory, wrapCallback) {
+    constructor(element, attrs, scope, ngModel, parentInjector, $compile, $parse, componentFactory, wrapCallback, unsafelyOverwriteSignalInputs) {
         this.element = element;
         this.attrs = attrs;
         this.scope = scope;
@@ -286,6 +286,7 @@ class DowngradeComponentAdapter {
         this.$parse = $parse;
         this.componentFactory = componentFactory;
         this.wrapCallback = wrapCallback;
+        this.unsafelyOverwriteSignalInputs = unsafelyOverwriteSignalInputs;
         this.implementsOnChanges = false;
         this.inputChangeCount = 0;
         this.inputChanges = {};
@@ -341,7 +342,7 @@ class DowngradeComponentAdapter {
             const inputBinding = new PropertyBinding(input.propName, input.templateName);
             let expr = null;
             if (attrs.hasOwnProperty(inputBinding.attr)) {
-                const observeFn = ((prop) => {
+                const observeFn = ((prop, isSignal) => {
                     let prevValue = INITIAL_VALUE$1;
                     return (currValue) => {
                         // Initially, both `$observe()` and `$watch()` will call this function.
@@ -349,11 +350,11 @@ class DowngradeComponentAdapter {
                             if (prevValue === INITIAL_VALUE$1) {
                                 prevValue = currValue;
                             }
-                            this.updateInput(componentRef, prop, prevValue, currValue);
+                            this.updateInput(componentRef, prop, prevValue, currValue, isSignal);
                             prevValue = currValue;
                         }
                     };
-                })(inputBinding.prop);
+                })(inputBinding.prop, input.isSignal);
                 attrs.$observe(inputBinding.attr, observeFn);
                 // Use `$watch()` (in addition to `$observe()`) in order to initialize the input in time
                 // for `ngOnChanges()`. This is necessary if we are already in a `$digest`, which means that
@@ -377,7 +378,7 @@ class DowngradeComponentAdapter {
                 expr = attrs[inputBinding.bracketParenAttr];
             }
             if (expr != null) {
-                const watchFn = ((prop) => (currValue, prevValue) => this.updateInput(componentRef, prop, prevValue, currValue))(inputBinding.prop);
+                const watchFn = ((prop, isSignal) => (currValue, prevValue) => this.updateInput(componentRef, prop, prevValue, currValue, isSignal))(inputBinding.prop, input.isSignal);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
@@ -488,12 +489,18 @@ class DowngradeComponentAdapter {
             }
         });
     }
-    updateInput(componentRef, prop, prevValue, currValue) {
+    updateInput(componentRef, prop, prevValue, currValue, isSignal) {
         if (this.implementsOnChanges) {
             this.inputChanges[prop] = new SimpleChange(prevValue, currValue, prevValue === currValue);
         }
         this.inputChangeCount++;
-        componentRef.instance[prop] = currValue;
+        if (isSignal && !this.unsafelyOverwriteSignalInputs) {
+            const node = componentRef.instance[prop][ɵSIGNAL];
+            node.applyValueToInputSignal(node, currValue);
+        }
+        else {
+            componentRef.instance[prop] = currValue;
+        }
     }
     groupProjectableNodes() {
         let ngContentSelectors = this.componentFactory.ngContentSelectors;
@@ -646,6 +653,7 @@ class SyncPromise {
  */
 function downgradeComponent(info) {
     const directiveFactory = function ($compile, $injector, $parse) {
+        const unsafelyOverwriteSignalInputs = info.unsafelyOverwriteSignalInputs ?? false;
         // When using `downgradeModule()`, we need to handle certain things specially. For example:
         // - We always need to attach the component view to the `ApplicationRef` for it to be
         //   dirty-checked.
@@ -733,7 +741,7 @@ function downgradeComponent(info) {
                         throw new Error(`Expecting ComponentFactory for: ${getTypeName(info.component)}`);
                     }
                     const injectorPromise = new ParentInjectorPromise(element);
-                    const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $compile, $parse, componentFactory, wrapCallback);
+                    const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $compile, $parse, componentFactory, wrapCallback, unsafelyOverwriteSignalInputs);
                     const projectableNodes = facade.compileContents();
                     const componentRef = facade.createComponentAndSetup(projectableNodes, isNgUpgradeLite, info.propagateDigest);
                     injectorPromise.resolve(componentRef.injector);
@@ -1347,10 +1355,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0-next.7+sha-1549afe", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.0.0-next.7+sha-1549afe", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0-next.7+sha-0aae371", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.0.0-next.7+sha-0aae371", type: UpgradeNg1ComponentAdapter, usesOnChanges: true, ngImport: i0 }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0-next.7+sha-1549afe", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0-next.7+sha-0aae371", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
