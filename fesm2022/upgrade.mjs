@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.0.0-next.11+sha-395cb34
+ * @license Angular v19.0.0-next.11+sha-f815d7b
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('19.0.0-next.11+sha-395cb34');
+const VERSION = new Version('19.0.0-next.11+sha-f815d7b');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -118,6 +118,14 @@ const UPGRADE_MODULE_NAME = '$$UpgradeModule';
  * and attribute have the same identifier.
  */
 class PropertyBinding {
+    prop;
+    attr;
+    bracketAttr;
+    bracketParenAttr;
+    parenAttr;
+    onAttr;
+    bindAttr;
+    bindonAttr;
     constructor(prop, attr) {
         this.prop = prop;
         this.attr = attr;
@@ -235,6 +243,9 @@ function validateInjectionKey($injector, downgradedModule, injectionKey, attempt
     }
 }
 class Deferred {
+    promise;
+    resolve;
+    reject;
     constructor() {
         this.promise = new Promise((res, rej) => {
             this.resolve = res;
@@ -276,6 +287,20 @@ const INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true,
 };
 class DowngradeComponentAdapter {
+    element;
+    attrs;
+    scope;
+    ngModel;
+    parentInjector;
+    $compile;
+    $parse;
+    componentFactory;
+    wrapCallback;
+    unsafelyOverwriteSignalInputs;
+    implementsOnChanges = false;
+    inputChangeCount = 0;
+    inputChanges = {};
+    componentScope;
     constructor(element, attrs, scope, ngModel, parentInjector, $compile, $parse, componentFactory, wrapCallback, unsafelyOverwriteSignalInputs) {
         this.element = element;
         this.attrs = attrs;
@@ -287,9 +312,6 @@ class DowngradeComponentAdapter {
         this.componentFactory = componentFactory;
         this.wrapCallback = wrapCallback;
         this.unsafelyOverwriteSignalInputs = unsafelyOverwriteSignalInputs;
-        this.implementsOnChanges = false;
-        this.inputChangeCount = 0;
-        this.inputChanges = {};
         this.componentScope = scope.$new();
     }
     compileContents() {
@@ -559,10 +581,9 @@ function isThenable(obj) {
  * Synchronous, promise-like object.
  */
 class SyncPromise {
-    constructor() {
-        this.resolved = false;
-        this.callbacks = [];
-    }
+    value;
+    resolved = false;
+    callbacks = [];
     static all(valuesOrPromises) {
         const aggrPromise = new SyncPromise();
         let resolvedCount = 0;
@@ -777,10 +798,11 @@ function downgradeComponent(info) {
  * to preserve the synchronous nature of AngularJS's `$compile`.
  */
 class ParentInjectorPromise extends SyncPromise {
+    element;
+    injectorKey = controllerKey(INJECTOR_KEY);
     constructor(element) {
         super();
         this.element = element;
-        this.injectorKey = controllerKey(INJECTOR_KEY);
         // Store the promise on the element.
         element.data(this.injectorKey, this);
     }
@@ -917,6 +939,13 @@ function trustedHTMLFromLegacyTemplate(html) {
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 // Classes
 class UpgradeHelper {
+    name;
+    $injector;
+    element;
+    $element;
+    directive;
+    $compile;
+    $controller;
     constructor(injector, name, elementRef, directive) {
         this.name = name;
         this.$injector = injector.get($INJECTOR);
@@ -1159,27 +1188,30 @@ function getOutputPropertyMapName(name) {
     return `output_${name}`;
 }
 class UpgradeNg1ComponentAdapterBuilder {
+    name;
+    type;
+    inputs = [];
+    inputsRename = [];
+    outputs = [];
+    outputsRename = [];
+    propertyOutputs = [];
+    checkProperties = [];
+    propertyMap = {};
+    directive = null;
+    template;
     constructor(name) {
         this.name = name;
-        this.inputs = [];
-        this.inputsRename = [];
-        this.outputs = [];
-        this.outputsRename = [];
-        this.propertyOutputs = [];
-        this.checkProperties = [];
-        this.propertyMap = {};
-        this.directive = null;
         const selector = name.replace(CAMEL_CASE, (all, next) => '-' + next.toLowerCase());
         const self = this;
         let MyClass = class MyClass extends UpgradeNg1ComponentAdapter {
             constructor(scope, injector, elementRef) {
                 super(new UpgradeHelper(injector, name, elementRef, self.directive || undefined), scope, self.template, self.inputs, self.outputs, self.propertyOutputs, self.checkProperties, self.propertyMap);
             }
-            static { this.ctorParameters = () => [
+            static ctorParameters = () => [
                 { type: undefined, decorators: [{ type: Inject, args: [$SCOPE,] }] },
                 { type: Injector },
                 { type: ElementRef }
-            ]; }
+            ];
         };
         MyClass = __decorate([
             Directive({
@@ -1253,6 +1285,20 @@ class UpgradeNg1ComponentAdapterBuilder {
     }
 }
 class UpgradeNg1ComponentAdapter {
+    helper;
+    template;
+    inputs;
+    outputs;
+    propOuts;
+    checkProperties;
+    propertyMap;
+    controllerInstance = null;
+    destinationObj = null;
+    checkLastValues = [];
+    directive;
+    element;
+    $element = null;
+    componentScope;
     constructor(helper, scope, template, inputs, outputs, propOuts, checkProperties, propertyMap) {
         this.helper = helper;
         this.template = template;
@@ -1261,10 +1307,6 @@ class UpgradeNg1ComponentAdapter {
         this.propOuts = propOuts;
         this.checkProperties = checkProperties;
         this.propertyMap = propertyMap;
-        this.controllerInstance = null;
-        this.destinationObj = null;
-        this.checkLastValues = [];
-        this.$element = null;
         this.directive = helper.directive;
         this.element = helper.element;
         this.$element = helper.$element;
@@ -1356,10 +1398,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0-next.11+sha-395cb34", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.0.0-next.11+sha-395cb34", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 }); }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0-next.11+sha-f815d7b", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.0.0-next.11+sha-f815d7b", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0-next.11+sha-395cb34", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0-next.11+sha-f815d7b", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
@@ -1447,22 +1489,24 @@ let upgradeCount = 0;
  * @publicApi
  */
 class UpgradeAdapter {
+    ng2AppModule;
+    compilerOptions;
+    idPrefix = `NG2_UPGRADE_${upgradeCount++}_`;
+    downgradedComponents = [];
+    /**
+     * An internal map of ng1 components which need to up upgraded to ng2.
+     *
+     * We can't upgrade until injector is instantiated and we can retrieve the component metadata.
+     * For this reason we keep a list of components to upgrade until ng1 injector is bootstrapped.
+     *
+     * @internal
+     */
+    ng1ComponentsToBeUpgraded = {};
+    upgradedProviders = [];
+    moduleRef = null;
     constructor(ng2AppModule, compilerOptions) {
         this.ng2AppModule = ng2AppModule;
         this.compilerOptions = compilerOptions;
-        this.idPrefix = `NG2_UPGRADE_${upgradeCount++}_`;
-        this.downgradedComponents = [];
-        /**
-         * An internal map of ng1 components which need to up upgraded to ng2.
-         *
-         * We can't upgrade until injector is instantiated and we can retrieve the component metadata.
-         * For this reason we keep a list of components to upgrade until ng1 injector is bootstrapped.
-         *
-         * @internal
-         */
-        this.ng1ComponentsToBeUpgraded = {};
-        this.upgradedProviders = [];
-        this.moduleRef = null;
         if (!ng2AppModule) {
             throw new Error('UpgradeAdapter cannot be instantiated without an NgModule of the Angular app.');
         }
@@ -1969,14 +2013,12 @@ class UpgradeAdapter {
  * @publicApi
  */
 class UpgradeAdapterRef {
-    constructor() {
-        /* @internal */
-        this._readyFn = null;
-        this.ng1RootScope = null;
-        this.ng1Injector = null;
-        this.ng2ModuleRef = null;
-        this.ng2Injector = null;
-    }
+    /* @internal */
+    _readyFn = null;
+    ng1RootScope = null;
+    ng1Injector = null;
+    ng2ModuleRef = null;
+    ng2Injector = null;
     /* @internal */
     _bootstrapDone(ngModuleRef, ng1Injector) {
         this.ng2ModuleRef = ngModuleRef;
