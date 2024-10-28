@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.1.0-next.0+sha-0f2f7ec
+ * @license Angular v19.1.0-next.0+sha-db467e1
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -150,6 +150,14 @@ var constants = /*#__PURE__*/Object.freeze({
  * and attribute have the same identifier.
  */
 class PropertyBinding {
+    prop;
+    attr;
+    bracketAttr;
+    bracketParenAttr;
+    parenAttr;
+    onAttr;
+    bindAttr;
+    bindonAttr;
     constructor(prop, attr) {
         this.prop = prop;
         this.attr = attr;
@@ -267,6 +275,9 @@ function validateInjectionKey($injector, downgradedModule, injectionKey, attempt
     }
 }
 class Deferred {
+    promise;
+    resolve;
+    reject;
     constructor() {
         this.promise = new Promise((res, rej) => {
             this.resolve = res;
@@ -326,6 +337,20 @@ const INITIAL_VALUE$1 = {
     __UNINITIALIZED__: true,
 };
 class DowngradeComponentAdapter {
+    element;
+    attrs;
+    scope;
+    ngModel;
+    parentInjector;
+    $compile;
+    $parse;
+    componentFactory;
+    wrapCallback;
+    unsafelyOverwriteSignalInputs;
+    implementsOnChanges = false;
+    inputChangeCount = 0;
+    inputChanges = {};
+    componentScope;
     constructor(element, attrs, scope, ngModel, parentInjector, $compile, $parse, componentFactory, wrapCallback, unsafelyOverwriteSignalInputs) {
         this.element = element;
         this.attrs = attrs;
@@ -337,9 +362,6 @@ class DowngradeComponentAdapter {
         this.componentFactory = componentFactory;
         this.wrapCallback = wrapCallback;
         this.unsafelyOverwriteSignalInputs = unsafelyOverwriteSignalInputs;
-        this.implementsOnChanges = false;
-        this.inputChangeCount = 0;
-        this.inputChanges = {};
         this.componentScope = scope.$new();
     }
     compileContents() {
@@ -609,10 +631,9 @@ function isThenable(obj) {
  * Synchronous, promise-like object.
  */
 class SyncPromise {
-    constructor() {
-        this.resolved = false;
-        this.callbacks = [];
-    }
+    value;
+    resolved = false;
+    callbacks = [];
     static all(valuesOrPromises) {
         const aggrPromise = new SyncPromise();
         let resolvedCount = 0;
@@ -827,10 +848,11 @@ function downgradeComponent(info) {
  * to preserve the synchronous nature of AngularJS's `$compile`.
  */
 class ParentInjectorPromise extends SyncPromise {
+    element;
+    injectorKey = controllerKey(INJECTOR_KEY);
     constructor(element) {
         super();
         this.element = element;
-        this.injectorKey = controllerKey(INJECTOR_KEY);
         // Store the promise on the element.
         element.data(this.injectorKey, this);
     }
@@ -930,7 +952,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('19.1.0-next.0+sha-0f2f7ec');
+const VERSION = new Version('19.1.0-next.0+sha-db467e1');
 
 /**
  * The Trusted Types policy, or null if Trusted Types are not
@@ -977,6 +999,13 @@ function trustedHTMLFromLegacyTemplate(html) {
 const REQUIRE_PREFIX_RE = /^(\^\^?)?(\?)?(\^\^?)?/;
 // Classes
 class UpgradeHelper {
+    name;
+    $injector;
+    element;
+    $element;
+    directive;
+    $compile;
+    $controller;
     constructor(injector, name, elementRef, directive) {
         this.name = name;
         this.$injector = injector.get($INJECTOR);
@@ -1255,6 +1284,7 @@ const angular1Providers = [
 ];
 
 class NgAdapterInjector {
+    modInjector;
     constructor(modInjector) {
         this.modInjector = modInjector;
     }
@@ -1452,12 +1482,10 @@ const INITIAL_VALUE = {
     __UNINITIALIZED__: true,
 };
 class Bindings {
-    constructor() {
-        this.twoWayBoundProperties = [];
-        this.twoWayBoundLastValues = [];
-        this.expressionBoundProperties = [];
-        this.propertyToOutputMap = {};
-    }
+    twoWayBoundProperties = [];
+    twoWayBoundLastValues = [];
+    expressionBoundProperties = [];
+    propertyToOutputMap = {};
 }
 /**
  * @description
@@ -1500,6 +1528,18 @@ class Bindings {
  * @extensible
  */
 class UpgradeComponent {
+    helper;
+    $element;
+    $componentScope;
+    directive;
+    bindings;
+    controllerInstance;
+    bindingDestination;
+    // We will be instantiating the controller in the `ngOnInit` hook, when the
+    // first `ngOnChanges` will have been already triggered. We store the
+    // `SimpleChanges` and "play them back" later.
+    pendingChanges = null;
+    unregisterDoCheckWatcher;
     /**
      * Create a new `UpgradeComponent` instance. You should not normally need to do this.
      * Instead you should derive a new class from this one and call the super constructor
@@ -1512,10 +1552,6 @@ class UpgradeComponent {
      *   injection into the base class constructor.
      */
     constructor(name, elementRef, injector) {
-        // We will be instantiating the controller in the `ngOnInit` hook, when the
-        // first `ngOnChanges` will have been already triggered. We store the
-        // `SimpleChanges` and "play them back" later.
-        this.pendingChanges = null;
         this.helper = new UpgradeHelper(injector, name, elementRef);
         this.$element = this.helper.$element;
         this.directive = this.helper.directive;
@@ -1680,10 +1716,10 @@ class UpgradeComponent {
             bindingDestination.$onChanges(changes);
         }
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-0f2f7ec", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive }); }
-    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.1.0-next.0+sha-0f2f7ec", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 }); }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-db467e1", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.1.0-next.0+sha-db467e1", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-0f2f7ec", ngImport: i0, type: UpgradeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-db467e1", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }] });
 
@@ -1813,6 +1849,14 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.1.0-next.0+sh
  * @publicApi
  */
 class UpgradeModule {
+    ngZone;
+    platformRef;
+    /**
+     * The AngularJS `$injector` for the upgrade application.
+     */
+    $injector;
+    /** The Angular Injector **/
+    injector;
     constructor(
     /** The root `Injector` for the upgrade application. */
     injector, 
@@ -1959,11 +2003,11 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-0f2f7ec", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.1.0-next.0+sha-0f2f7ec", ngImport: i0, type: UpgradeModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-0f2f7ec", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] }); }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-db467e1", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.1.0-next.0+sha-db467e1", ngImport: i0, type: UpgradeModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-db467e1", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-0f2f7ec", ngImport: i0, type: UpgradeModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.1.0-next.0+sha-db467e1", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: () => [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }] });
