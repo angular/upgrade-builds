@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.0.0-rc.3+sha-b2802e5
+ * @license Angular v19.0.0+sha-e7566c3
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,11 +18,11 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0-rc.3+sha-b2802e5", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.0.0-rc.3+sha-b2802e5", ngImport: i0, type: AngularTestingModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.0.0-rc.3+sha-b2802e5", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0+sha-e7566c3", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.0.0+sha-e7566c3", ngImport: i0, type: AngularTestingModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.0.0+sha-e7566c3", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0-rc.3+sha-b2802e5", ngImport: i0, type: AngularTestingModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0+sha-e7566c3", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
             args: [{ providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: () => [{ type: i0.Injector }] });
