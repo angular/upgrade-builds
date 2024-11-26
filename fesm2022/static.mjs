@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.0.0+sha-4c1abc4
+ * @license Angular v19.0.1+sha-18091e7
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -952,7 +952,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('19.0.0+sha-4c1abc4');
+const VERSION = new Version('19.0.1+sha-18091e7');
 
 /**
  * The Trusted Types policy, or null if Trusted Types are not
@@ -1716,10 +1716,10 @@ class UpgradeComponent {
             bindingDestination.$onChanges(changes);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0+sha-4c1abc4", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.0.0+sha-4c1abc4", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1+sha-18091e7", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.0.1+sha-18091e7", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0+sha-4c1abc4", ngImport: i0, type: UpgradeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1+sha-18091e7", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }] });
 
@@ -2003,11 +2003,11 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.0+sha-4c1abc4", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.0.0+sha-4c1abc4", ngImport: i0, type: UpgradeModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.0.0+sha-4c1abc4", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1+sha-18091e7", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.0.1+sha-18091e7", ngImport: i0, type: UpgradeModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.0.1+sha-18091e7", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0+sha-4c1abc4", ngImport: i0, type: UpgradeModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1+sha-18091e7", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: () => [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }] });
