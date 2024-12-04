@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.1.0-next.1+sha-dc7d555
+ * @license Angular v19.1.0-next.1+sha-0513fbc
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -84,7 +84,7 @@ declare type Ng1Expression = string | Function;
  *
  * ### Example
  *
- * ```
+ * ```ts
  * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module), myCompilerOptions);
  * const module = angular.module('myExample', []);
  * module.directive('ng2Comp', adapter.downgradeNg2Component(Ng2Component));
