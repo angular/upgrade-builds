@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.0.2+sha-5f3ba06
+ * @license Angular v19.0.2+sha-7ad1f27
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,11 +18,11 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.2+sha-5f3ba06", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.0.2+sha-5f3ba06", ngImport: i0, type: AngularTestingModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.0.2+sha-5f3ba06", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.2+sha-7ad1f27", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.0.2+sha-7ad1f27", ngImport: i0, type: AngularTestingModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.0.2+sha-7ad1f27", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.2+sha-5f3ba06", ngImport: i0, type: AngularTestingModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.2+sha-7ad1f27", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
             args: [{ providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: () => [{ type: i0.Injector }] });
@@ -40,7 +40,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.2+sha-5f3ba
  * The `Ng2AppModule` is the Angular part of our hybrid application and the `ng1AppModule` is the
  * AngularJS part.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts" region="angular-setup"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angular-setup'}
  *
  * Once this is done we can get hold of services via the Angular `Injector` as normal.
  * Services that are (or have dependencies on) an upgraded AngularJS service, will be instantiated
@@ -49,7 +49,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.2+sha-5f3ba
  * In the following code snippet, `HeroesService` is an Angular service that depends upon an
  * AngularJS service, `titleCase`.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts" region="angular-spec"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angular-spec'}
  *
  * <div class="docs-alert docs-alert-important">
  *
@@ -116,8 +116,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * The AngularJS `ng1AppModule`, which is the AngularJS part of our hybrid application and the
  * `Ng2AppModule`, which is the Angular part.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts"
- * region="angularjs-setup"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angularjs-setup'}
  *
  * Once this is done we can get hold of services via the AngularJS `$injector` as normal.
  * Services that are (or have dependencies on) a downgraded Angular service, will be instantiated as
@@ -126,8 +125,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * In the following code snippet, `heroesService` is a downgraded Angular service that we are
  * accessing from AngularJS.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts"
- * region="angularjs-spec"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angularjs-spec'}
  *
  * <div class="docs-alert docs-alert-important">
  *
