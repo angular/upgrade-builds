@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.0.1+sha-ad927bc
+ * @license Angular v19.0.1+sha-b8a2ae0
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -211,7 +211,7 @@ declare const DOWNGRADED_MODULE_COUNT_KEY = "$$angularDowngradedModuleCount";
  *
  * {@example upgrade/static/ts/full/module.ts region="example-app"}
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  *   When using `downgradeModule()`, downgraded injectables will not be available until the Angular
  *   module that provides them is instantiated. In order to be safe, you need to ensure that the
@@ -283,7 +283,7 @@ export declare function downgradeInjectable(token: any, downgradedModule?: strin
  * available until the downgraded module has been bootstrapped, i.e. by instantiating a downgraded
  * component.
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  *   You cannot use `downgradeModule()` and `UpgradeModule` in the same hybrid application.<br />
  *   Use one or the other.
@@ -314,7 +314,7 @@ export declare function downgradeInjectable(token: any, downgradedModule?: strin
  * For a more detailed discussion of the differences and their implications, see
  * [Upgrading for Performance](https://angular.io/guide/upgrade).
  *
- * <div class="alert is-helpful">
+ * <div class="docs-alert docs-alert-helpful">
  *
  *   You can manually trigger a change detection run in AngularJS using
  *   [scope.$apply(...)](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) or
@@ -398,7 +398,7 @@ export declare function downgradeModule<T>(moduleOrBootstrapFn: Type<T> | ((extr
  * available until the downgraded module has been bootstrapped, i.e. by instantiating a downgraded
  * component.
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  *   You cannot use `downgradeModule()` and `UpgradeModule` in the same hybrid application.<br />
  *   Use one or the other.
@@ -429,7 +429,7 @@ export declare function downgradeModule<T>(moduleOrBootstrapFn: Type<T> | ((extr
  * For a more detailed discussion of the differences and their implications, see
  * [Upgrading for Performance](https://angular.io/guide/upgrade).
  *
- * <div class="alert is-helpful">
+ * <div class="docs-alert docs-alert-helpful">
  *
  *   You can manually trigger a change detection run in AngularJS using
  *   [scope.$apply(...)](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$apply) or

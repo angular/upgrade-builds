@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.0.1+sha-ad927bc
+ * @license Angular v19.0.1+sha-b8a2ae0
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -37,7 +37,7 @@ import { Type } from '@angular/core';
  * <code-example path="upgrade/static/ts/full/module.spec.ts"
  * region="angularjs-spec"></code-example>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * This helper is for testing services not components.
  * For Component testing you must still bootstrap a hybrid app. See `UpgradeModule` or
@@ -45,7 +45,7 @@ import { Type } from '@angular/core';
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The resulting configuration does not wire up AngularJS digests to Zone hooks. It is the
  * responsibility of the test writer to call `$rootScope.$apply`, as necessary, to trigger
@@ -53,7 +53,7 @@ import { Type } from '@angular/core';
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The helper sets up global variables to hold the shared Angular and AngularJS injectors.
  *
@@ -102,7 +102,7 @@ export declare function createAngularJSTestingModule(angularModules: any[]): str
  *
  * <code-example path="upgrade/static/ts/full/module.spec.ts" region="angular-spec"></code-example>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * This helper is for testing services not Components.
  * For Component testing you must still bootstrap a hybrid app. See `UpgradeModule` or
@@ -110,7 +110,7 @@ export declare function createAngularJSTestingModule(angularModules: any[]): str
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The resulting configuration does not wire up AngularJS digests to Zone hooks. It is the
  * responsibility of the test writer to call `$rootScope.$apply`, as necessary, to trigger
@@ -118,7 +118,7 @@ export declare function createAngularJSTestingModule(angularModules: any[]): str
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The helper sets up global variables to hold the shared Angular and AngularJS injectors.
  *

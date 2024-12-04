@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.0.1+sha-ad927bc
+ * @license Angular v19.0.1+sha-b8a2ae0
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,11 +18,11 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1+sha-ad927bc", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.0.1+sha-ad927bc", ngImport: i0, type: AngularTestingModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.0.1+sha-ad927bc", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.1+sha-b8a2ae0", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.0.1+sha-b8a2ae0", ngImport: i0, type: AngularTestingModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.0.1+sha-b8a2ae0", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1+sha-ad927bc", ngImport: i0, type: AngularTestingModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1+sha-b8a2ae0", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
             args: [{ providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: () => [{ type: i0.Injector }] });
@@ -51,7 +51,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1+sha-ad927
  *
  * <code-example path="upgrade/static/ts/full/module.spec.ts" region="angular-spec"></code-example>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * This helper is for testing services not Components.
  * For Component testing you must still bootstrap a hybrid app. See `UpgradeModule` or
@@ -59,7 +59,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1+sha-ad927
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The resulting configuration does not wire up AngularJS digests to Zone hooks. It is the
  * responsibility of the test writer to call `$rootScope.$apply`, as necessary, to trigger
@@ -67,7 +67,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.1+sha-ad927
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The helper sets up global variables to hold the shared Angular and AngularJS injectors.
  *
@@ -129,7 +129,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * <code-example path="upgrade/static/ts/full/module.spec.ts"
  * region="angularjs-spec"></code-example>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * This helper is for testing services not components.
  * For Component testing you must still bootstrap a hybrid app. See `UpgradeModule` or
@@ -137,7 +137,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The resulting configuration does not wire up AngularJS digests to Zone hooks. It is the
  * responsibility of the test writer to call `$rootScope.$apply`, as necessary, to trigger
@@ -145,7 +145,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The helper sets up global variables to hold the shared Angular and AngularJS injectors.
  *
