@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.1.0-next.1+sha-0513fbc
+ * @license Angular v19.1.0-next.1+sha-60e5900
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -24,8 +24,7 @@ import { Type } from '@angular/core';
  * The AngularJS `ng1AppModule`, which is the AngularJS part of our hybrid application and the
  * `Ng2AppModule`, which is the Angular part.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts"
- * region="angularjs-setup"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angularjs-setup'}
  *
  * Once this is done we can get hold of services via the AngularJS `$injector` as normal.
  * Services that are (or have dependencies on) a downgraded Angular service, will be instantiated as
@@ -34,8 +33,7 @@ import { Type } from '@angular/core';
  * In the following code snippet, `heroesService` is a downgraded Angular service that we are
  * accessing from AngularJS.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts"
- * region="angularjs-spec"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angularjs-spec'}
  *
  * <div class="docs-alert docs-alert-important">
  *
@@ -91,7 +89,7 @@ export declare function createAngularJSTestingModule(angularModules: any[]): str
  * The `Ng2AppModule` is the Angular part of our hybrid application and the `ng1AppModule` is the
  * AngularJS part.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts" region="angular-setup"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angular-setup'}
  *
  * Once this is done we can get hold of services via the Angular `Injector` as normal.
  * Services that are (or have dependencies on) an upgraded AngularJS service, will be instantiated
@@ -100,7 +98,7 @@ export declare function createAngularJSTestingModule(angularModules: any[]): str
  * In the following code snippet, `HeroesService` is an Angular service that depends upon an
  * AngularJS service, `titleCase`.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts" region="angular-spec"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angular-spec'}
  *
  * <div class="docs-alert docs-alert-important">
  *
