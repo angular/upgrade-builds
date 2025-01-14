@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.2.0-next.0+sha-265265a
+ * @license Angular v19.2.0-next.0+sha-b9155b5
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -166,7 +166,7 @@ export declare class UpgradeAdapter {
      *
      * ### Example
      *
-     * ```
+     * ```angular-ts
      * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
      * const module = angular.module('myExample', []);
      * module.directive('greet', adapter.downgradeNg2Component(Greeter));
@@ -240,7 +240,7 @@ export declare class UpgradeAdapter {
      *
      * ### Example
      *
-     * ```
+     * ```angular-ts
      * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
      * const module = angular.module('myExample', []);
      *
@@ -282,7 +282,7 @@ export declare class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```ts
      * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
      *
      * // configure the adapter with upgrade/downgrade components and services
@@ -327,7 +327,7 @@ export declare class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```angular-ts
      * const adapter = new UpgradeAdapter(MyNg2Module);
      * const module = angular.module('myExample', []);
      * module.directive('ng2', adapter.downgradeNg2Component(Ng2));
@@ -369,7 +369,7 @@ export declare class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```ts
      * class Login { ... }
      * class Server { ... }
      *
@@ -403,7 +403,7 @@ export declare class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```ts
      * class Example {
      * }
      *
@@ -431,7 +431,7 @@ export declare class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```ts
      * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
      * upgradeAdapter.declareNg1Module(['heroApp']);
      * ```
