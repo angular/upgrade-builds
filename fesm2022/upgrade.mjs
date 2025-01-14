@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.0.6+sha-e44bf24
+ * @license Angular v19.0.6+sha-5a2d0ed
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('19.0.6+sha-e44bf24');
+const VERSION = new Version('19.0.6+sha-5a2d0ed');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -1398,10 +1398,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.6+sha-e44bf24", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.0.6+sha-e44bf24", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.0.6+sha-5a2d0ed", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.0.6+sha-5a2d0ed", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.6+sha-e44bf24", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.6+sha-5a2d0ed", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
@@ -1543,7 +1543,7 @@ class UpgradeAdapter {
      *
      * ### Example
      *
-     * ```
+     * ```angular-ts
      * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
      * const module = angular.module('myExample', []);
      * module.directive('greet', adapter.downgradeNg2Component(Greeter));
@@ -1620,7 +1620,7 @@ class UpgradeAdapter {
      *
      * ### Example
      *
-     * ```
+     * ```angular-ts
      * const adapter = new UpgradeAdapter(forwardRef(() => MyNg2Module));
      * const module = angular.module('myExample', []);
      *
@@ -1670,7 +1670,7 @@ class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```ts
      * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
      *
      * // configure the adapter with upgrade/downgrade components and services
@@ -1728,7 +1728,7 @@ class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```angular-ts
      * const adapter = new UpgradeAdapter(MyNg2Module);
      * const module = angular.module('myExample', []);
      * module.directive('ng2', adapter.downgradeNg2Component(Ng2));
@@ -1801,7 +1801,7 @@ class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```ts
      * class Login { ... }
      * class Server { ... }
      *
@@ -1840,7 +1840,7 @@ class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```ts
      * class Example {
      * }
      *
@@ -1870,7 +1870,7 @@ class UpgradeAdapter {
      * @usageNotes
      * ### Example
      *
-     * ```
+     * ```ts
      * const upgradeAdapter = new UpgradeAdapter(MyNg2Module);
      * upgradeAdapter.declareNg1Module(['heroApp']);
      * ```
