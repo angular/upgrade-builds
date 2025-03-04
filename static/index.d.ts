@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.2.0+sha-3f01166
+ * @license Angular v19.2.0+sha-aff6d3d
  * (c) 2010-2024 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -970,7 +970,7 @@ declare class UpgradeHelper {
  *    {@link UpgradeModule#upgrading-an-angular-1-service Upgrading an AngularJS service} below.
  * 4. Creation of an AngularJS service that wraps and exposes an Angular injectable
  *    so that it can be injected into an AngularJS context. See `downgradeInjectable`.
- * 3. Bootstrapping of a hybrid Angular application which contains both of the frameworks
+ * 5. Bootstrapping of a hybrid Angular application which contains both of the frameworks
  *    coexisting in a single application.
  *
  * @usageNotes
@@ -1036,7 +1036,7 @@ declare class UpgradeHelper {
  *
  * ### Examples
  *
- * Import the `UpgradeModule` into your top level {@link NgModule Angular `NgModule`}.
+ * Import the `UpgradeModule` into your top level Angular {@link NgModule NgModule}.
  *
  * {@example upgrade/static/ts/full/module.ts region='ng2-module'}
  *
@@ -1050,7 +1050,6 @@ declare class UpgradeHelper {
  *
  * {@example upgrade/static/ts/full/module.ts region='bootstrap-ng2'}
  *
- * {@a upgrading-an-angular-1-service}
  * ### Upgrading an AngularJS service
  *
  * There is no specific API for upgrading an AngularJS service. Instead you should just follow the
