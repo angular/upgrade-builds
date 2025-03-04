@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0-next.0+sha-bb14fe8
+ * @license Angular v20.0.0-next.0+sha-286e4da
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -17,7 +17,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 /**
  * @publicApi
  */
-const VERSION = new Version('20.0.0-next.0+sha-bb14fe8');
+const VERSION = new Version('20.0.0-next.0+sha-286e4da');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -661,10 +661,9 @@ class SyncPromise {
  *   <br />
  *   (This option is only necessary when using `downgradeModule()` to downgrade more than one
  *   Angular module.)
- * - `propagateDigest?: boolean`: Whether to perform {@link ChangeDetectorRef#detectChanges} on the
- * component on every
- *   [$digest](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest). If set to `false`,
- *   change detection will still be performed when any of the component's inputs changes.
+ * - `propagateDigest?: boolean`: Whether to perform {@link /api/core/ChangeDetectorRef#detectChanges detectChanges} on the
+ * component on every {@link https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest $digest}.
+ *   If set to `false`, change detection will still be performed when any of the component's inputs changes.
  *   (Default: true)
  *
  * @returns a factory function that can be used to register the component in an
@@ -1398,10 +1397,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-bb14fe8", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.0-next.0+sha-bb14fe8", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-286e4da", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.0-next.0+sha-286e4da", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-bb14fe8", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-286e4da", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 

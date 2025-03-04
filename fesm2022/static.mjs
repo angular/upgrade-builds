@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0-next.0+sha-bb14fe8
+ * @license Angular v20.0.0-next.0+sha-286e4da
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -711,10 +711,9 @@ class SyncPromise {
  *   <br />
  *   (This option is only necessary when using `downgradeModule()` to downgrade more than one
  *   Angular module.)
- * - `propagateDigest?: boolean`: Whether to perform {@link ChangeDetectorRef#detectChanges} on the
- * component on every
- *   [$digest](https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest). If set to `false`,
- *   change detection will still be performed when any of the component's inputs changes.
+ * - `propagateDigest?: boolean`: Whether to perform {@link /api/core/ChangeDetectorRef#detectChanges detectChanges} on the
+ * component on every {@link https://docs.angularjs.org/api/ng/type/$rootScope.Scope#$digest $digest}.
+ *   If set to `false`, change detection will still be performed when any of the component's inputs changes.
  *   (Default: true)
  *
  * @returns a factory function that can be used to register the component in an
@@ -952,7 +951,7 @@ function downgradeInjectable(token, downgradedModule = '') {
 /**
  * @publicApi
  */
-const VERSION = new Version('20.0.0-next.0+sha-bb14fe8');
+const VERSION = new Version('20.0.0-next.0+sha-286e4da');
 
 /**
  * The Trusted Types policy, or null if Trusted Types are not
@@ -1406,7 +1405,7 @@ let moduleUid = 0;
  *   {@link PlatformRef#bootstrapmodulefactory `bootstrapModuleFactory()`} to bootstrap the
  *   downgraded modules, each one is considered a "root" module. As a consequence, a new instance
  *   will be created for every injectable provided in `"root"` (via
- *   {@link Injectable#providedIn `providedIn`}).
+ *   {@link /api/core/Injectable#providedIn providedIn}
  *   If this is not your intention, you can have a shared module (that will act as act as the "root"
  *   module) and create all downgraded modules using that module's injector:
  *
@@ -1716,10 +1715,10 @@ class UpgradeComponent {
             bindingDestination.$onChanges(changes);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-bb14fe8", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.0-next.0+sha-bb14fe8", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-286e4da", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.0-next.0+sha-286e4da", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-bb14fe8", ngImport: i0, type: UpgradeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-286e4da", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }] });
 
@@ -2002,11 +2001,11 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-bb14fe8", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "20.0.0-next.0+sha-bb14fe8", ngImport: i0, type: UpgradeModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-bb14fe8", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-286e4da", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "20.0.0-next.0+sha-286e4da", ngImport: i0, type: UpgradeModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-286e4da", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-bb14fe8", ngImport: i0, type: UpgradeModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.0-next.0+sha-286e4da", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: () => [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }] });
