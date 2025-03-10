@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.2.1+sha-44155c9
+ * @license Angular v19.2.1+sha-23ca885
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -14,7 +14,7 @@ import { Version, ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, Testab
 /**
  * @publicApi
  */
-const VERSION = new Version('19.2.1+sha-44155c9');
+const VERSION = new Version('19.2.1+sha-23ca885');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
