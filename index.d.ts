@@ -1,48 +1,12 @@
 /**
- * @license Angular v19.2.1+sha-56b551d
+ * @license Angular v19.2.1+sha-044dac9
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
-
-import { CompilerOptions } from '@angular/core';
-import { Injector } from '@angular/core';
-import { NgModuleRef } from '@angular/core';
-import { Type } from '@angular/core';
-import { Version } from '@angular/core';
-
-declare interface IAngularBootstrapConfig {
-    strictDi?: boolean;
-}
-
-declare interface IInjectorService {
-    get(key: string): any;
-    has(key: string): boolean;
-}
-
-declare interface IRootScopeService {
-    $new(isolate?: boolean): IScope;
-    $id: string;
-    $parent: IScope;
-    $root: IScope;
-    $watch(exp: Ng1Expression, fn?: (a1?: any, a2?: any) => void): Function;
-    $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
-    $destroy(): any;
-    $apply(exp?: Ng1Expression): any;
-    $digest(): any;
-    $evalAsync(exp: Ng1Expression, locals?: any): void;
-    $on(event: string, fn?: (event?: any, ...args: any[]) => void): Function;
-    $$childTail: IScope;
-    $$childHead: IScope;
-    $$nextSibling: IScope;
-    $$phase: any;
-    [key: string]: any;
-}
-
-declare interface IScope extends IRootScopeService {
-}
-
-declare type Ng1Expression = string | Function;
+import { I as IRootScopeService, a as IInjectorService, b as IAngularBootstrapConfig } from './angular1.d-DnOc0Rx9.js';
+export { V as VERSION } from './angular1.d-DnOc0Rx9.js';
+import { Type, CompilerOptions, NgModuleRef, Injector } from '@angular/core';
 
 /**
  * Use `UpgradeAdapter` to allow AngularJS and Angular to coexist in a single application.
@@ -126,7 +90,7 @@ declare type Ng1Expression = string | Function;
  * [Ahead-of-Time compilation](tools/cli/aot-compiler).
  * @publicApi
  */
-export declare class UpgradeAdapter {
+declare class UpgradeAdapter {
     private ng2AppModule;
     private compilerOptions?;
     private idPrefix;
@@ -438,7 +402,6 @@ export declare class UpgradeAdapter {
      */
     private declareNg1Module;
 }
-
 /**
  * Use `UpgradeAdapterRef` to control a hybrid AngularJS / Angular application.
  *
@@ -446,7 +409,7 @@ export declare class UpgradeAdapter {
  * [Ahead-of-Time compilation](tools/cli/aot-compiler).
  * @publicApi
  */
-export declare class UpgradeAdapterRef {
+declare class UpgradeAdapterRef {
     ng1RootScope: IRootScopeService;
     ng1Injector: IInjectorService;
     ng2ModuleRef: NgModuleRef<any>;
@@ -465,9 +428,4 @@ export declare class UpgradeAdapterRef {
     dispose(): void;
 }
 
-/**
- * @publicApi
- */
-export declare const VERSION: Version;
-
-export { }
+export { UpgradeAdapter, UpgradeAdapterRef };

@@ -1,10 +1,10 @@
 /**
- * @license Angular v19.2.1+sha-56b551d
+ * @license Angular v19.2.1+sha-044dac9
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { Version, ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, ɵSIGNAL, NgZone, ComponentFactoryResolver } from '@angular/core';
+import { Version, ɵNG_MOD_DEF as _NG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, ɵSIGNAL as _SIGNAL, NgZone, ComponentFactoryResolver } from '@angular/core';
 
 /**
  * @module
@@ -14,7 +14,7 @@ import { Version, ɵNG_MOD_DEF, Injector, ChangeDetectorRef, Testability, Testab
 /**
  * @publicApi
  */
-const VERSION = new Version('19.2.1+sha-56b551d');
+const VERSION = new Version('19.2.1+sha-044dac9');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -84,16 +84,16 @@ const getTestability = (e) => angular.getTestability(e);
 
 var angular1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    setAngularLib: setAngularLib,
-    getAngularLib: getAngularLib,
-    setAngularJSGlobal: setAngularJSGlobal,
-    getAngularJSGlobal: getAngularJSGlobal,
     bootstrap: bootstrap,
-    module_: module_,
     element: element,
+    getAngularJSGlobal: getAngularJSGlobal,
+    getAngularLib: getAngularLib,
+    getTestability: getTestability,
     injector: injector,
+    module_: module_,
     resumeBootstrap: resumeBootstrap,
-    getTestability: getTestability
+    setAngularJSGlobal: setAngularJSGlobal,
+    setAngularLib: setAngularLib
 });
 
 const $COMPILE = '$compile';
@@ -124,6 +124,7 @@ const UPGRADE_MODULE_NAME = '$$UpgradeModule';
 
 var constants = /*#__PURE__*/Object.freeze({
     __proto__: null,
+    $$TESTABILITY: $$TESTABILITY,
     $COMPILE: $COMPILE,
     $CONTROLLER: $CONTROLLER,
     $DELEGATE: $DELEGATE,
@@ -138,16 +139,15 @@ var constants = /*#__PURE__*/Object.freeze({
     $SCOPE: $SCOPE,
     $TEMPLATE_CACHE: $TEMPLATE_CACHE,
     $TEMPLATE_REQUEST: $TEMPLATE_REQUEST,
-    $$TESTABILITY: $$TESTABILITY,
     COMPILER_KEY: COMPILER_KEY,
     DOWNGRADED_MODULE_COUNT_KEY: DOWNGRADED_MODULE_COUNT_KEY,
     GROUP_PROJECTABLE_NODES_KEY: GROUP_PROJECTABLE_NODES_KEY,
     INJECTOR_KEY: INJECTOR_KEY,
     LAZY_MODULE_REF: LAZY_MODULE_REF,
     NG_ZONE_KEY: NG_ZONE_KEY,
-    UPGRADE_APP_TYPE_KEY: UPGRADE_APP_TYPE_KEY,
     REQUIRE_INJECTOR: REQUIRE_INJECTOR,
     REQUIRE_NG_MODEL: REQUIRE_NG_MODEL,
+    UPGRADE_APP_TYPE_KEY: UPGRADE_APP_TYPE_KEY,
     UPGRADE_MODULE_NAME: UPGRADE_MODULE_NAME
 });
 
@@ -246,7 +246,7 @@ function isFunction(value) {
 }
 function isNgModuleType(value) {
     // NgModule class should have the `ɵmod` static property attached by AOT or JIT compiler.
-    return isFunction(value) && !!value[ɵNG_MOD_DEF];
+    return isFunction(value) && !!value[_NG_MOD_DEF];
 }
 function isParentNode(node) {
     return isFunction(node.querySelectorAll);
@@ -325,20 +325,20 @@ function strictEquals(val1, val2) {
 
 var util = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    onError: onError,
+    Deferred: Deferred,
     cleanData: cleanData,
     controllerKey: controllerKey,
     destroyApp: destroyApp,
     directiveNormalize: directiveNormalize,
-    getTypeName: getTypeName,
     getDowngradedModuleCount: getDowngradedModuleCount,
+    getTypeName: getTypeName,
     getUpgradeAppType: getUpgradeAppType,
+    hookupNgModel: hookupNgModel,
     isFunction: isFunction,
     isNgModuleType: isNgModuleType,
-    validateInjectionKey: validateInjectionKey,
-    Deferred: Deferred,
-    hookupNgModel: hookupNgModel,
-    strictEquals: strictEquals
+    onError: onError,
+    strictEquals: strictEquals,
+    validateInjectionKey: validateInjectionKey
 });
 
 const INITIAL_VALUE = {
@@ -575,7 +575,7 @@ class DowngradeComponentAdapter {
         }
         this.inputChangeCount++;
         if (isSignal && !this.unsafelyOverwriteSignalInputs) {
-            const node = componentRef.instance[prop][ɵSIGNAL];
+            const node = componentRef.instance[prop][_SIGNAL];
             node.applyValueToInputSignal(node, currValue);
         }
         else {
@@ -1238,5 +1238,5 @@ var upgrade_helper = /*#__PURE__*/Object.freeze({
     UpgradeHelper: UpgradeHelper
 });
 
-export { $SCOPE as $, setAngularLib as A, angular1 as B, COMPILER_KEY as C, Deferred as D, constants as E, upgrade_helper as F, util as G, INJECTOR_KEY as I, LAZY_MODULE_REF as L, NG_ZONE_KEY as N, UpgradeHelper as U, VERSION as V, $INJECTOR as a, bootstrap as b, controllerKey as c, downgradeComponent as d, element as e, downgradeInjectable as f, UPGRADE_APP_TYPE_KEY as g, $ROOT_SCOPE as h, isFunction as i, $$TESTABILITY as j, $COMPILE as k, destroyApp as l, module_ as m, $PROVIDE as n, onError as o, DOWNGRADED_MODULE_COUNT_KEY as p, getDowngradedModuleCount as q, UPGRADE_MODULE_NAME as r, strictEquals as s, trustedHTMLFromLegacyTemplate as t, isNgModuleType as u, $DELEGATE as v, $INTERVAL as w, getAngularJSGlobal as x, getAngularLib as y, setAngularJSGlobal as z };
-//# sourceMappingURL=upgrade_helper-05369591.mjs.map
+export { $SCOPE as $, setAngularLib as A, angular1 as B, COMPILER_KEY as C, Deferred as D, constants as E, upgrade_helper as F, util as G, INJECTOR_KEY as I, LAZY_MODULE_REF as L, NG_ZONE_KEY as N, UpgradeHelper as U, VERSION as V, $INJECTOR as a, bootstrap as b, controllerKey as c, downgradeComponent as d, element as e, downgradeInjectable as f, UPGRADE_APP_TYPE_KEY as g, $ROOT_SCOPE as h, isFunction as i, $$TESTABILITY as j, $COMPILE as k, destroyApp as l, module_ as m, UPGRADE_MODULE_NAME as n, onError as o, $PROVIDE as p, DOWNGRADED_MODULE_COUNT_KEY as q, getDowngradedModuleCount as r, strictEquals as s, trustedHTMLFromLegacyTemplate as t, isNgModuleType as u, $DELEGATE as v, $INTERVAL as w, getAngularJSGlobal as x, getAngularLib as y, setAngularJSGlobal as z };
+//# sourceMappingURL=upgrade_helper-BOLCivYz.mjs.map
