@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0-next.1+sha-4fa5d18
+ * @license Angular v20.0.0-next.1+sha-b27b7ef
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -14,7 +14,7 @@ import { Version, ɵNG_MOD_DEF as _NG_MOD_DEF, Injector, ChangeDetectorRef, Test
 /**
  * @publicApi
  */
-const VERSION = new Version('20.0.0-next.1+sha-4fa5d18');
+const VERSION = new Version('20.0.0-next.1+sha-b27b7ef');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
