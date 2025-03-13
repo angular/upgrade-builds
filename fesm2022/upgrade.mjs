@@ -1,11 +1,11 @@
 /**
- * @license Angular v19.2.2+sha-3856629
+ * @license Angular v19.2.2+sha-9e1a103
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { U as UpgradeHelper, $ as $SCOPE, t as trustedHTMLFromLegacyTemplate, i as isFunction, s as strictEquals, d as downgradeComponent, o as onError, b as bootstrap, e as element, c as controllerKey, a as $INJECTOR, f as downgradeInjectable, m as module_, D as Deferred, g as UPGRADE_APP_TYPE_KEY, I as INJECTOR_KEY, L as LAZY_MODULE_REF, N as NG_ZONE_KEY, C as COMPILER_KEY, h as $ROOT_SCOPE, j as $$TESTABILITY, k as $COMPILE, l as destroyApp } from './upgrade_helper-BOLCivYz.mjs';
-export { V as VERSION } from './upgrade_helper-BOLCivYz.mjs';
+import { U as UpgradeHelper, $ as $SCOPE, t as trustedHTMLFromLegacyTemplate, i as isFunction, s as strictEquals, d as downgradeComponent, o as onError, b as bootstrap, e as element, c as controllerKey, a as $INJECTOR, f as downgradeInjectable, m as module_, D as Deferred, g as UPGRADE_APP_TYPE_KEY, I as INJECTOR_KEY, L as LAZY_MODULE_REF, N as NG_ZONE_KEY, C as COMPILER_KEY, h as $ROOT_SCOPE, j as $$TESTABILITY, k as $COMPILE, l as destroyApp } from './upgrade_helper-DMR5pJ--.mjs';
+export { V as VERSION } from './upgrade_helper-DMR5pJ--.mjs';
 import { __decorate, __metadata } from 'tslib';
 import * as i0 from '@angular/core';
 import { Directive, Injector, ElementRef, Inject, EventEmitter, NgZone, Compiler, NgModule, resolveForwardRef, Testability } from '@angular/core';
@@ -233,10 +233,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.2+sha-3856629", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.2.2+sha-3856629", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.2+sha-9e1a103", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.2.2+sha-9e1a103", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.2+sha-3856629", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.2+sha-9e1a103", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
