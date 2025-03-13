@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0-next.2+sha-adecf4c
+ * @license Angular v20.0.0-next.2+sha-cd7c170
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -14,7 +14,7 @@ import { Version, ɵNG_MOD_DEF as _NG_MOD_DEF, Injector, ChangeDetectorRef, Test
 /**
  * @publicApi
  */
-const VERSION = new Version('20.0.0-next.2+sha-adecf4c');
+const VERSION = new Version('20.0.0-next.2+sha-cd7c170');
 
 function noNg() {
     throw new Error('AngularJS v1.x is not loaded!');
@@ -524,11 +524,9 @@ class DowngradeComponentAdapter {
         }
         const emitter = componentRef.instance[output.prop];
         if (emitter) {
-            const subscription = emitter.subscribe({
-                next: isAssignment
-                    ? (v) => setter(this.scope, v)
-                    : (v) => getter(this.scope, { '$event': v }),
-            });
+            const subscription = emitter.subscribe(isAssignment
+                ? (v) => setter(this.scope, v)
+                : (v) => getter(this.scope, { '$event': v }));
             componentRef.onDestroy(() => subscription.unsubscribe());
         }
         else {
@@ -1239,4 +1237,4 @@ var upgrade_helper = /*#__PURE__*/Object.freeze({
 });
 
 export { $SCOPE as $, setAngularLib as A, angular1 as B, COMPILER_KEY as C, Deferred as D, constants as E, upgrade_helper as F, util as G, INJECTOR_KEY as I, LAZY_MODULE_REF as L, NG_ZONE_KEY as N, UpgradeHelper as U, VERSION as V, $INJECTOR as a, bootstrap as b, controllerKey as c, downgradeComponent as d, element as e, downgradeInjectable as f, UPGRADE_APP_TYPE_KEY as g, $ROOT_SCOPE as h, isFunction as i, $$TESTABILITY as j, $COMPILE as k, destroyApp as l, module_ as m, UPGRADE_MODULE_NAME as n, onError as o, $PROVIDE as p, DOWNGRADED_MODULE_COUNT_KEY as q, getDowngradedModuleCount as r, strictEquals as s, trustedHTMLFromLegacyTemplate as t, isNgModuleType as u, $DELEGATE as v, $INTERVAL as w, getAngularJSGlobal as x, getAngularLib as y, setAngularJSGlobal as z };
-//# sourceMappingURL=upgrade_helper-BOLCivYz.mjs.map
+//# sourceMappingURL=upgrade_helper-DMR5pJ--.mjs.map
