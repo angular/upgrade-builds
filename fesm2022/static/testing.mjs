@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.2.3+sha-9ac4057
+ * @license Angular v19.2.3+sha-00a9331
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,11 +18,11 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.3+sha-9ac4057", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.2.3+sha-9ac4057", ngImport: i0, type: AngularTestingModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.2.3+sha-9ac4057", ngImport: i0, type: AngularTestingModule, providers: [{ provide: _constants.$INJECTOR, useFactory: $injectorFactory }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.3+sha-00a9331", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.2.3+sha-00a9331", ngImport: i0, type: AngularTestingModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.2.3+sha-00a9331", ngImport: i0, type: AngularTestingModule, providers: [{ provide: _constants.$INJECTOR, useFactory: $injectorFactory }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.3+sha-9ac4057", ngImport: i0, type: AngularTestingModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.3+sha-00a9331", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
             args: [{ providers: [{ provide: _constants.$INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: () => [{ type: i0.Injector }] });
