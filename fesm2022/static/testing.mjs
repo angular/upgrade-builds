@@ -1,12 +1,12 @@
 /**
- * @license Angular v19.2.4+sha-4c16eae
+ * @license Angular v19.2.4+sha-d9fc010
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
 import { NgModule, Injector } from '@angular/core';
-import { ɵangular1 as _angular1, ɵconstants as _constants } from '@angular/upgrade/static';
+import { m as module_, U as UPGRADE_APP_TYPE_KEY, I as INJECTOR_KEY, x as injector$1, a as $INJECTOR } from '../constants-BN4MeWvk.mjs';
 import { TestBed } from '@angular/core/testing';
 
 let $injector = null;
@@ -18,13 +18,13 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.4+sha-4c16eae", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.2.4+sha-4c16eae", ngImport: i0, type: AngularTestingModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.2.4+sha-4c16eae", ngImport: i0, type: AngularTestingModule, providers: [{ provide: _constants.$INJECTOR, useFactory: $injectorFactory }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.4+sha-d9fc010", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "19.2.4+sha-d9fc010", ngImport: i0, type: AngularTestingModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "19.2.4+sha-d9fc010", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.4+sha-4c16eae", ngImport: i0, type: AngularTestingModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.4+sha-d9fc010", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
-            args: [{ providers: [{ provide: _constants.$INJECTOR, useFactory: $injectorFactory }] }]
+            args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: () => [{ type: i0.Injector }] });
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
@@ -92,11 +92,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.4+sha-4c16e
  * @publicApi
  */
 function createAngularTestingModule(angularJSModules, strictDi) {
-    _angular1
-        .module_('$$angularJSTestingModule', angularJSModules)
-        .constant(_constants.UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
-        .factory(_constants.INJECTOR_KEY, () => injector);
-    $injector = _angular1.injector(['ng', '$$angularJSTestingModule'], strictDi);
+    module_('$$angularJSTestingModule', angularJSModules)
+        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+        .factory(INJECTOR_KEY, () => injector);
+    $injector = injector$1(['ng', '$$angularJSTestingModule'], strictDi);
     return AngularTestingModule;
 }
 
@@ -166,15 +165,14 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * @publicApi
  */
 function createAngularJSTestingModule(angularModules) {
-    return _angular1
-        .module_('$$angularJSTestingModule', [])
-        .constant(_constants.UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
-        .factory(_constants.INJECTOR_KEY, [
-        _constants.$INJECTOR,
+    return module_('$$angularJSTestingModule', [])
+        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+        .factory(INJECTOR_KEY, [
+        $INJECTOR,
         ($injector) => {
             TestBed.configureTestingModule({
                 imports: angularModules,
-                providers: [{ provide: _constants.$INJECTOR, useValue: $injector }],
+                providers: [{ provide: $INJECTOR, useValue: $injector }],
             });
             return TestBed.inject(Injector);
         },
