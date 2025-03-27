@@ -1,11 +1,11 @@
 /**
- * @license Angular v20.0.0-next.4+sha-5948cd0
+ * @license Angular v20.0.0-next.4+sha-0b34c58
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { I as IRootScopeService, a as IInjectorService, b as IAngularBootstrapConfig } from './angular1.d-DnOc0Rx9.js';
-export { V as VERSION } from './angular1.d-DnOc0Rx9.js';
+import { I as IRootScopeService, a as IInjectorService, b as IAngularBootstrapConfig } from './angular1.d-CPuPiJ8G.js';
+export { V as VERSION } from './angular1.d-CPuPiJ8G.js';
 import { Type, CompilerOptions, NgModuleRef, Injector } from '@angular/core';
 
 /**
