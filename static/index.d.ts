@@ -1,11 +1,11 @@
 /**
- * @license Angular v19.2.4+sha-fdde642
+ * @license Angular v19.2.4+sha-84f3ba0
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { a as IInjectorService, c as IAugmentedJQuery, d as IDirective, e as IController, f as IScope, g as ILinkFn, S as SingleOrListOrMap, h as INgModelController } from '../angular1.d-DnOc0Rx9.js';
-export { V as VERSION, i as getAngularJSGlobal, j as getAngularLib, s as setAngularJSGlobal, k as setAngularLib, l as ɵangular1 } from '../angular1.d-DnOc0Rx9.js';
+import { a as IInjectorService, c as IAugmentedJQuery, d as IDirective, e as IController, f as IScope, g as ILinkFn, S as SingleOrListOrMap, h as INgModelController } from '../angular1.d-CPuPiJ8G.js';
+export { V as VERSION, i as getAngularJSGlobal, j as getAngularLib, s as setAngularJSGlobal, k as setAngularLib, l as ɵangular1 } from '../angular1.d-CPuPiJ8G.js';
 import * as i0 from '@angular/core';
 import { Type, StaticProvider, NgModuleRef, NgModuleFactory, OnInit, OnChanges, DoCheck, OnDestroy, ElementRef, Injector, SimpleChanges, NgZone, PlatformRef } from '@angular/core';
 
@@ -657,7 +657,33 @@ declare const constants_d_REQUIRE_NG_MODEL: typeof REQUIRE_NG_MODEL;
 declare const constants_d_UPGRADE_APP_TYPE_KEY: typeof UPGRADE_APP_TYPE_KEY;
 declare const constants_d_UPGRADE_MODULE_NAME: typeof UPGRADE_MODULE_NAME;
 declare namespace constants_d {
-  export { constants_d_$$TESTABILITY as $$TESTABILITY, constants_d_$COMPILE as $COMPILE, constants_d_$CONTROLLER as $CONTROLLER, constants_d_$DELEGATE as $DELEGATE, constants_d_$EXCEPTION_HANDLER as $EXCEPTION_HANDLER, constants_d_$HTTP_BACKEND as $HTTP_BACKEND, constants_d_$INJECTOR as $INJECTOR, constants_d_$INTERVAL as $INTERVAL, constants_d_$PARSE as $PARSE, constants_d_$PROVIDE as $PROVIDE, constants_d_$ROOT_ELEMENT as $ROOT_ELEMENT, constants_d_$ROOT_SCOPE as $ROOT_SCOPE, constants_d_$SCOPE as $SCOPE, constants_d_$TEMPLATE_CACHE as $TEMPLATE_CACHE, constants_d_$TEMPLATE_REQUEST as $TEMPLATE_REQUEST, constants_d_COMPILER_KEY as COMPILER_KEY, constants_d_DOWNGRADED_MODULE_COUNT_KEY as DOWNGRADED_MODULE_COUNT_KEY, constants_d_GROUP_PROJECTABLE_NODES_KEY as GROUP_PROJECTABLE_NODES_KEY, constants_d_INJECTOR_KEY as INJECTOR_KEY, constants_d_LAZY_MODULE_REF as LAZY_MODULE_REF, constants_d_NG_ZONE_KEY as NG_ZONE_KEY, constants_d_REQUIRE_INJECTOR as REQUIRE_INJECTOR, constants_d_REQUIRE_NG_MODEL as REQUIRE_NG_MODEL, constants_d_UPGRADE_APP_TYPE_KEY as UPGRADE_APP_TYPE_KEY, constants_d_UPGRADE_MODULE_NAME as UPGRADE_MODULE_NAME };
+  export {
+    constants_d_$$TESTABILITY as $$TESTABILITY,
+    constants_d_$COMPILE as $COMPILE,
+    constants_d_$CONTROLLER as $CONTROLLER,
+    constants_d_$DELEGATE as $DELEGATE,
+    constants_d_$EXCEPTION_HANDLER as $EXCEPTION_HANDLER,
+    constants_d_$HTTP_BACKEND as $HTTP_BACKEND,
+    constants_d_$INJECTOR as $INJECTOR,
+    constants_d_$INTERVAL as $INTERVAL,
+    constants_d_$PARSE as $PARSE,
+    constants_d_$PROVIDE as $PROVIDE,
+    constants_d_$ROOT_ELEMENT as $ROOT_ELEMENT,
+    constants_d_$ROOT_SCOPE as $ROOT_SCOPE,
+    constants_d_$SCOPE as $SCOPE,
+    constants_d_$TEMPLATE_CACHE as $TEMPLATE_CACHE,
+    constants_d_$TEMPLATE_REQUEST as $TEMPLATE_REQUEST,
+    constants_d_COMPILER_KEY as COMPILER_KEY,
+    constants_d_DOWNGRADED_MODULE_COUNT_KEY as DOWNGRADED_MODULE_COUNT_KEY,
+    constants_d_GROUP_PROJECTABLE_NODES_KEY as GROUP_PROJECTABLE_NODES_KEY,
+    constants_d_INJECTOR_KEY as INJECTOR_KEY,
+    constants_d_LAZY_MODULE_REF as LAZY_MODULE_REF,
+    constants_d_NG_ZONE_KEY as NG_ZONE_KEY,
+    constants_d_REQUIRE_INJECTOR as REQUIRE_INJECTOR,
+    constants_d_REQUIRE_NG_MODEL as REQUIRE_NG_MODEL,
+    constants_d_UPGRADE_APP_TYPE_KEY as UPGRADE_APP_TYPE_KEY,
+    constants_d_UPGRADE_MODULE_NAME as UPGRADE_MODULE_NAME,
+  };
 }
 
 /**
@@ -720,7 +746,8 @@ type upgrade_helper_d_IControllerInstance = IControllerInstance;
 type upgrade_helper_d_UpgradeHelper = UpgradeHelper;
 declare const upgrade_helper_d_UpgradeHelper: typeof UpgradeHelper;
 declare namespace upgrade_helper_d {
-  export { type upgrade_helper_d_IBindingDestination as IBindingDestination, type upgrade_helper_d_IControllerInstance as IControllerInstance, upgrade_helper_d_UpgradeHelper as UpgradeHelper };
+  export { upgrade_helper_d_UpgradeHelper as UpgradeHelper };
+  export type { upgrade_helper_d_IBindingDestination as IBindingDestination, upgrade_helper_d_IControllerInstance as IControllerInstance };
 }
 
 declare function onError(e: any): void;
@@ -800,7 +827,8 @@ declare const util_d_onError: typeof onError;
 declare const util_d_strictEquals: typeof strictEquals;
 declare const util_d_validateInjectionKey: typeof validateInjectionKey;
 declare namespace util_d {
-  export { util_d_Deferred as Deferred, type util_d_LazyModuleRef as LazyModuleRef, util_d_UpgradeAppType as UpgradeAppType, util_d_cleanData as cleanData, util_d_controllerKey as controllerKey, util_d_destroyApp as destroyApp, util_d_directiveNormalize as directiveNormalize, util_d_getDowngradedModuleCount as getDowngradedModuleCount, util_d_getTypeName as getTypeName, util_d_getUpgradeAppType as getUpgradeAppType, util_d_hookupNgModel as hookupNgModel, util_d_isFunction as isFunction, util_d_isNgModuleType as isNgModuleType, util_d_onError as onError, util_d_strictEquals as strictEquals, util_d_validateInjectionKey as validateInjectionKey };
+  export { util_d_Deferred as Deferred, util_d_UpgradeAppType as UpgradeAppType, util_d_cleanData as cleanData, util_d_controllerKey as controllerKey, util_d_destroyApp as destroyApp, util_d_directiveNormalize as directiveNormalize, util_d_getDowngradedModuleCount as getDowngradedModuleCount, util_d_getTypeName as getTypeName, util_d_getUpgradeAppType as getUpgradeAppType, util_d_hookupNgModel as hookupNgModel, util_d_isFunction as isFunction, util_d_isNgModuleType as isNgModuleType, util_d_onError as onError, util_d_strictEquals as strictEquals, util_d_validateInjectionKey as validateInjectionKey };
+  export type { util_d_LazyModuleRef as LazyModuleRef };
 }
 
 export { UpgradeComponent, UpgradeModule, downgradeComponent, downgradeInjectable, downgradeModule, constants_d as ɵconstants, upgrade_helper_d as ɵupgradeHelper, util_d as ɵutil };
