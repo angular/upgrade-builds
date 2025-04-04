@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.2.5+sha-1b36f6e
+ * @license Angular v19.2.5+sha-e9a719e
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -139,5 +139,5 @@ var constants = /*#__PURE__*/Object.freeze({
     UPGRADE_MODULE_NAME: UPGRADE_MODULE_NAME
 });
 
-export { $SCOPE as $, COMPILER_KEY as C, DOWNGRADED_MODULE_COUNT_KEY as D, INJECTOR_KEY as I, LAZY_MODULE_REF as L, NG_ZONE_KEY as N, REQUIRE_INJECTOR as R, UPGRADE_APP_TYPE_KEY as U, $INJECTOR as a, bootstrap as b, $ROOT_SCOPE as c, $$TESTABILITY as d, element as e, $COMPILE as f, UPGRADE_MODULE_NAME as g, $PROVIDE as h, $DELEGATE as i, $INTERVAL as j, getAngularJSGlobal as k, getAngularLib as l, module_ as m, setAngularLib as n, angular1 as o, constants as p, $ROOT_ELEMENT as q, $PARSE as r, setAngularJSGlobal as s, REQUIRE_NG_MODEL as t, $CONTROLLER as u, $TEMPLATE_CACHE as v, $HTTP_BACKEND as w, injector as x };
-//# sourceMappingURL=constants-BN4MeWvk.mjs.map
+export { $$TESTABILITY, $COMPILE, $CONTROLLER, $DELEGATE, $HTTP_BACKEND, $INJECTOR, $INTERVAL, $PARSE, $PROVIDE, $ROOT_ELEMENT, $ROOT_SCOPE, $SCOPE, $TEMPLATE_CACHE, COMPILER_KEY, DOWNGRADED_MODULE_COUNT_KEY, INJECTOR_KEY, LAZY_MODULE_REF, NG_ZONE_KEY, REQUIRE_INJECTOR, REQUIRE_NG_MODEL, UPGRADE_APP_TYPE_KEY, UPGRADE_MODULE_NAME, angular1, bootstrap, constants, element, getAngularJSGlobal, getAngularLib, injector, module_, setAngularJSGlobal, setAngularLib };
+//# sourceMappingURL=constants-nqBIph3y.mjs.map
