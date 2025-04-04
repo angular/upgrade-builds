@@ -1,11 +1,11 @@
 /**
- * @license Angular v20.0.0-next.5+sha-1899358
+ * @license Angular v20.0.0-next.5+sha-3ea0163
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { Version, ɵNG_MOD_DEF as _NG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, ɵSIGNAL as _SIGNAL, NgZone, ComponentFactoryResolver } from '@angular/core';
-import { e as element, q as $ROOT_ELEMENT, c as $ROOT_SCOPE, D as DOWNGRADED_MODULE_COUNT_KEY, U as UPGRADE_APP_TYPE_KEY, $ as $SCOPE, f as $COMPILE, a as $INJECTOR, r as $PARSE, R as REQUIRE_INJECTOR, t as REQUIRE_NG_MODEL, L as LAZY_MODULE_REF, I as INJECTOR_KEY, u as $CONTROLLER, v as $TEMPLATE_CACHE, w as $HTTP_BACKEND } from './constants-BN4MeWvk.mjs';
+import { element, $ROOT_ELEMENT, $ROOT_SCOPE, DOWNGRADED_MODULE_COUNT_KEY, UPGRADE_APP_TYPE_KEY, $SCOPE, $COMPILE, $INJECTOR, $PARSE, REQUIRE_INJECTOR, REQUIRE_NG_MODEL, LAZY_MODULE_REF, INJECTOR_KEY, $CONTROLLER, $TEMPLATE_CACHE, $HTTP_BACKEND } from './constants-nqBIph3y.mjs';
 
 /**
  * @module
@@ -15,7 +15,7 @@ import { e as element, q as $ROOT_ELEMENT, c as $ROOT_SCOPE, D as DOWNGRADED_MOD
 /**
  * @publicApi
  */
-const VERSION = new Version('20.0.0-next.5+sha-1899358');
+const VERSION = new Version('20.0.0-next.5+sha-3ea0163');
 
 /**
  * A `PropertyBinding` represents a mapping between a property name
@@ -1102,5 +1102,5 @@ var upgrade_helper = /*#__PURE__*/Object.freeze({
     UpgradeHelper: UpgradeHelper
 });
 
-export { Deferred as D, UpgradeHelper as U, VERSION as V, downgradeInjectable as a, destroyApp as b, controllerKey as c, downgradeComponent as d, isNgModuleType as e, util as f, getDowngradedModuleCount as g, isFunction as i, onError as o, strictEquals as s, trustedHTMLFromLegacyTemplate as t, upgrade_helper as u };
-//# sourceMappingURL=upgrade_helper-BopwrkGG.mjs.map
+export { Deferred, UpgradeHelper, VERSION, controllerKey, destroyApp, downgradeComponent, downgradeInjectable, getDowngradedModuleCount, isFunction, isNgModuleType, onError, strictEquals, trustedHTMLFromLegacyTemplate, upgrade_helper, util };
+//# sourceMappingURL=upgrade_helper-C850j0tg.mjs.map

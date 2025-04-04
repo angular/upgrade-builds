@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0-next.5+sha-1899358
+ * @license Angular v20.0.0-next.5+sha-3ea0163
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -332,5 +332,5 @@ declare namespace angular1_d {
   export type { angular1_d_DirectiveRequireProperty as DirectiveRequireProperty, angular1_d_DirectiveTranscludeProperty as DirectiveTranscludeProperty, angular1_d_IAngularBootstrapConfig as IAngularBootstrapConfig, angular1_d_IAnnotatedFunction as IAnnotatedFunction, angular1_d_IAttributes as IAttributes, angular1_d_IAugmentedJQuery as IAugmentedJQuery, angular1_d_ICacheObject as ICacheObject, angular1_d_ICloneAttachFunction as ICloneAttachFunction, angular1_d_ICompileService as ICompileService, angular1_d_ICompiledExpression as ICompiledExpression, angular1_d_IComponent as IComponent, angular1_d_IController as IController, angular1_d_IControllerService as IControllerService, angular1_d_IDirective as IDirective, angular1_d_IDirectiveCompileFn as IDirectiveCompileFn, angular1_d_IDirectiveLinkFn as IDirectiveLinkFn, angular1_d_IDirectivePrePost as IDirectivePrePost, angular1_d_IHttpBackendService as IHttpBackendService, angular1_d_IInjectable as IInjectable, angular1_d_IInjectorService as IInjectorService, angular1_d_IIntervalService as IIntervalService, angular1_d_ILinkFn as ILinkFn, angular1_d_ILinkFnOptions as ILinkFnOptions, angular1_d_IModule as IModule, angular1_d_INgModelController as INgModelController, angular1_d_IParseService as IParseService, angular1_d_IProvideService as IProvideService, angular1_d_IProvider as IProvider, angular1_d_IRootScopeService as IRootScopeService, angular1_d_IScope as IScope, angular1_d_ITemplateCacheService as ITemplateCacheService, angular1_d_ITestabilityService as ITestabilityService, angular1_d_ITranscludeFunction as ITranscludeFunction, angular1_d_Ng1Expression as Ng1Expression, angular1_d_Ng1Token as Ng1Token, angular1_d_SingleOrListOrMap as SingleOrListOrMap };
 }
 
-export { VERSION as V, getAngularJSGlobal as i, getAngularLib as j, setAngularLib as k, angular1_d as l, setAngularJSGlobal as s };
-export type { IRootScopeService as I, SingleOrListOrMap as S, IInjectorService as a, IAngularBootstrapConfig as b, IAugmentedJQuery as c, IDirective as d, IController as e, IScope as f, ILinkFn as g, INgModelController as h };
+export { VERSION, angular1_d, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib };
+export type { IAngularBootstrapConfig, IAugmentedJQuery, IController, IDirective, IInjectorService, ILinkFn, INgModelController, IRootScopeService, IScope, SingleOrListOrMap };
