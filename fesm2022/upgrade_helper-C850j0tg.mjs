@@ -1,5 +1,5 @@
 /**
- * @license Angular v19.2.8+sha-46c1ade
+ * @license Angular v19.2.8+sha-222ae18
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { element, $ROOT_ELEMENT, $ROOT_SCOPE, DOWNGRADED_MODULE_COUNT_KEY, UPGRA
 /**
  * @publicApi
  */
-const VERSION = new Version('19.2.8+sha-46c1ade');
+const VERSION = new Version('19.2.8+sha-222ae18');
 
 /**
  * A `PropertyBinding` represents a mapping between a property name
