@@ -1,12 +1,12 @@
 /**
- * @license Angular v18.1.0-next.0+sha-87c5f3c
- * (c) 2010-2024 Google LLC. https://angular.io/
+ * @license Angular v20.0.0-next.9+sha-f4d60ff
+ * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
 import { NgModule, Injector } from '@angular/core';
-import { ɵconstants, ɵangular1 } from '@angular/upgrade/static';
+import { module_, UPGRADE_APP_TYPE_KEY, INJECTOR_KEY, injector as injector$1, $INJECTOR } from '../constants-nqBIph3y.mjs';
 import { TestBed } from '@angular/core/testing';
 
 let $injector = null;
@@ -18,13 +18,13 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.1.0-next.0+sha-87c5f3c", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.1.0-next.0+sha-87c5f3c", ngImport: i0, type: AngularTestingModule }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.1.0-next.0+sha-87c5f3c", ngImport: i0, type: AngularTestingModule, providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }); }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.0-next.9+sha-f4d60ff", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "20.0.0-next.9+sha-f4d60ff", ngImport: i0, type: AngularTestingModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "20.0.0-next.9+sha-f4d60ff", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.1.0-next.0+sha-87c5f3c", ngImport: i0, type: AngularTestingModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.0-next.9+sha-f4d60ff", ngImport: i0, type: AngularTestingModule, decorators: [{
             type: NgModule,
-            args: [{ providers: [{ provide: ɵconstants.$INJECTOR, useFactory: $injectorFactory }] }]
+            args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
         }], ctorParameters: () => [{ type: i0.Injector }] });
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
@@ -40,7 +40,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.1.0-next.0+sh
  * The `Ng2AppModule` is the Angular part of our hybrid application and the `ng1AppModule` is the
  * AngularJS part.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts" region="angular-setup"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angular-setup'}
  *
  * Once this is done we can get hold of services via the Angular `Injector` as normal.
  * Services that are (or have dependencies on) an upgraded AngularJS service, will be instantiated
@@ -49,9 +49,9 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.1.0-next.0+sh
  * In the following code snippet, `HeroesService` is an Angular service that depends upon an
  * AngularJS service, `titleCase`.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts" region="angular-spec"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angular-spec'}
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * This helper is for testing services not Components.
  * For Component testing you must still bootstrap a hybrid app. See `UpgradeModule` or
@@ -59,7 +59,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.1.0-next.0+sh
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The resulting configuration does not wire up AngularJS digests to Zone hooks. It is the
  * responsibility of the test writer to call `$rootScope.$apply`, as necessary, to trigger
@@ -67,7 +67,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.1.0-next.0+sh
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The helper sets up global variables to hold the shared Angular and AngularJS injectors.
  *
@@ -92,11 +92,10 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.1.0-next.0+sh
  * @publicApi
  */
 function createAngularTestingModule(angularJSModules, strictDi) {
-    ɵangular1
-        .module_('$$angularJSTestingModule', angularJSModules)
-        .constant(ɵconstants.UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
-        .factory(ɵconstants.INJECTOR_KEY, () => injector);
-    $injector = ɵangular1.injector(['ng', '$$angularJSTestingModule'], strictDi);
+    module_('$$angularJSTestingModule', angularJSModules)
+        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+        .factory(INJECTOR_KEY, () => injector);
+    $injector = injector$1(['ng', '$$angularJSTestingModule'], strictDi);
     return AngularTestingModule;
 }
 
@@ -116,8 +115,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * The AngularJS `ng1AppModule`, which is the AngularJS part of our hybrid application and the
  * `Ng2AppModule`, which is the Angular part.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts"
- * region="angularjs-setup"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angularjs-setup'}
  *
  * Once this is done we can get hold of services via the AngularJS `$injector` as normal.
  * Services that are (or have dependencies on) a downgraded Angular service, will be instantiated as
@@ -126,10 +124,9 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * In the following code snippet, `heroesService` is a downgraded Angular service that we are
  * accessing from AngularJS.
  *
- * <code-example path="upgrade/static/ts/full/module.spec.ts"
- * region="angularjs-spec"></code-example>
+ * {@example upgrade/static/ts/full/module.spec.ts region='angularjs-spec'}
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * This helper is for testing services not components.
  * For Component testing you must still bootstrap a hybrid app. See `UpgradeModule` or
@@ -137,7 +134,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The resulting configuration does not wire up AngularJS digests to Zone hooks. It is the
  * responsibility of the test writer to call `$rootScope.$apply`, as necessary, to trigger
@@ -145,7 +142,7 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  *
  * </div>
  *
- * <div class="alert is-important">
+ * <div class="docs-alert docs-alert-important">
  *
  * The helper sets up global variables to hold the shared Angular and AngularJS injectors.
  *
@@ -168,24 +165,19 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  * @publicApi
  */
 function createAngularJSTestingModule(angularModules) {
-    return ɵangular1
-        .module_('$$angularJSTestingModule', [])
-        .constant(ɵconstants.UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
-        .factory(ɵconstants.INJECTOR_KEY, [
-        ɵconstants.$INJECTOR,
+    return module_('$$angularJSTestingModule', [])
+        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
+        .factory(INJECTOR_KEY, [
+        $INJECTOR,
         ($injector) => {
             TestBed.configureTestingModule({
                 imports: angularModules,
-                providers: [{ provide: ɵconstants.$INJECTOR, useValue: $injector }],
+                providers: [{ provide: $INJECTOR, useValue: $injector }],
             });
             return TestBed.inject(Injector);
         },
     ]).name;
 }
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { createAngularJSTestingModule, createAngularTestingModule };
 //# sourceMappingURL=testing.mjs.map

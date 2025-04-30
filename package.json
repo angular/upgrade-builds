@@ -1,20 +1,20 @@
 {
   "name": "@angular/upgrade",
-  "version": "18.1.0-next.0+sha-87c5f3c",
+  "version": "20.0.0-next.9+sha-f4d60ff",
   "description": "Angular - the library for easing update from v1 to v2",
   "author": "angular",
   "license": "MIT",
   "engines": {
-    "node": "^18.13.0 || >=20.9.0"
+    "node": "^20.11.1 || >=22.11.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@angular/core": "18.1.0-next.0+sha-87c5f3c",
-    "@angular/compiler": "18.1.0-next.0+sha-87c5f3c",
-    "@angular/platform-browser": "18.1.0-next.0+sha-87c5f3c",
-    "@angular/platform-browser-dynamic": "18.1.0-next.0+sha-87c5f3c"
+    "@angular/core": "20.0.0-next.9+sha-f4d60ff",
+    "@angular/compiler": "20.0.0-next.9+sha-f4d60ff",
+    "@angular/platform-browser": "20.0.0-next.9+sha-f4d60ff",
+    "@angular/platform-browser-dynamic": "20.0.0-next.9+sha-f4d60ff"
   },
   "repository": {
     "type": "git",
@@ -51,20 +51,14 @@
     },
     ".": {
       "types": "./index.d.ts",
-      "esm2022": "./esm2022/upgrade.mjs",
-      "esm": "./esm2022/upgrade.mjs",
       "default": "./fesm2022/upgrade.mjs"
     },
     "./static": {
       "types": "./static/index.d.ts",
-      "esm2022": "./esm2022/static/static.mjs",
-      "esm": "./esm2022/static/static.mjs",
       "default": "./fesm2022/static.mjs"
     },
     "./static/testing": {
       "types": "./static/testing/index.d.ts",
-      "esm2022": "./esm2022/static/testing/testing.mjs",
-      "esm": "./esm2022/static/testing/testing.mjs",
       "default": "./fesm2022/static/testing.mjs"
     }
   }
