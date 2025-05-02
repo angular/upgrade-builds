@@ -1,6 +1,6 @@
 {
   "name": "@angular/upgrade",
-  "version": "20.1.0-next.0+sha-5fe726d",
+  "version": "20.1.0-next.0+sha-1e79d47",
   "description": "Angular - the library for easing update from v1 to v2",
   "author": "angular",
   "license": "MIT",
@@ -11,10 +11,10 @@
     "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@angular/core": "20.1.0-next.0+sha-5fe726d",
-    "@angular/compiler": "20.1.0-next.0+sha-5fe726d",
-    "@angular/platform-browser": "20.1.0-next.0+sha-5fe726d",
-    "@angular/platform-browser-dynamic": "20.1.0-next.0+sha-5fe726d"
+    "@angular/core": "20.1.0-next.0+sha-1e79d47",
+    "@angular/compiler": "20.1.0-next.0+sha-1e79d47",
+    "@angular/platform-browser": "20.1.0-next.0+sha-1e79d47",
+    "@angular/platform-browser-dynamic": "20.1.0-next.0+sha-1e79d47"
   },
   "repository": {
     "type": "git",
