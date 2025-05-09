@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0-rc.0+sha-5b77cf5
+ * @license Angular v20.0.0-rc.0+sha-3d9cb63
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -425,13 +425,13 @@ declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnDestroy 
      *   injection into the base class constructor.
      */
     constructor(name: string, elementRef: ElementRef, injector: Injector);
-    /** @nodoc */
+    /** @docs-private */
     ngOnInit(): void;
-    /** @nodoc */
+    /** @docs-private */
     ngOnChanges(changes: SimpleChanges): void;
-    /** @nodoc */
+    /** @docs-private */
     ngDoCheck(): void;
-    /** @nodoc */
+    /** @docs-private */
     ngOnDestroy(): void;
     private initializeBindings;
     private initializeOutputs;
