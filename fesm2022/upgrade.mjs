@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0-rc.0+sha-f7bfdc7
+ * @license Angular v20.0.0-rc.0+sha-592a754
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -234,12 +234,12 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.0-rc.0+sha-f7bfdc7", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.0-rc.0+sha-f7bfdc7", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = function UpgradeNg1ComponentAdapter_Factory(__ngFactoryType__) { i0.ɵɵinvalidFactory(); };
+    static ɵdir = /*@__PURE__*/ i0.ɵɵdefineDirective({ type: UpgradeNg1ComponentAdapter, features: [i0.ɵɵNgOnChangesFeature] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.0-rc.0+sha-f7bfdc7", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
-            type: Directive
-        }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
+(() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(UpgradeNg1ComponentAdapter, [{
+        type: Directive
+    }], () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }], null); })();
 
 let upgradeCount = 0;
 /**
