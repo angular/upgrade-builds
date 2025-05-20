@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.1.0-next.0+sha-b77042a
+ * @license Angular v20.1.0-next.0+sha-fc14ca5
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -481,12 +481,12 @@ class UpgradeComponent {
             bindingDestination.$onChanges(changes);
         }
     }
-    static ɵfac = function UpgradeComponent_Factory(__ngFactoryType__) { i0.ɵɵinvalidFactory(); };
-    static ɵdir = /*@__PURE__*/ i0.ɵɵdefineDirective({ type: UpgradeComponent, features: [i0.ɵɵNgOnChangesFeature] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "0.0.0", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "0.0.0", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-(() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(UpgradeComponent, [{
-        type: Directive
-    }], () => [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }], null); })();
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0", ngImport: i0, type: UpgradeComponent, decorators: [{
+            type: Directive
+        }], ctorParameters: () => [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }] });
 
 /**
  * @description
@@ -767,14 +767,14 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static ɵfac = function UpgradeModule_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || UpgradeModule)(i0.ɵɵinject(i0.Injector), i0.ɵɵinject(i0.NgZone), i0.ɵɵinject(i0.PlatformRef)); };
-    static ɵmod = /*@__PURE__*/ i0.ɵɵdefineNgModule({ type: UpgradeModule });
-    static ɵinj = /*@__PURE__*/ i0.ɵɵdefineInjector({ providers: [angular1Providers] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "0.0.0", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "0.0.0", ngImport: i0, type: UpgradeModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
 }
-(() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(UpgradeModule, [{
-        type: NgModule,
-        args: [{ providers: [angular1Providers] }]
-    }], () => [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }], null); })();
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0", ngImport: i0, type: UpgradeModule, decorators: [{
+            type: NgModule,
+            args: [{ providers: [angular1Providers] }]
+        }], ctorParameters: () => [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }] });
 
 export { UpgradeComponent, UpgradeModule, downgradeModule };
 //# sourceMappingURL=static.mjs.map
