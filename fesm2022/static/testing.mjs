@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0-rc.1+sha-de602b4
+ * @license Angular v20.0.0-rc.1+sha-650bac5
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -18,14 +18,14 @@ class AngularTestingModule {
     constructor(i) {
         injector = i;
     }
-    static ɵfac = function AngularTestingModule_Factory(__ngFactoryType__) { return new (__ngFactoryType__ || AngularTestingModule)(i0.ɵɵinject(i0.Injector)); };
-    static ɵmod = /*@__PURE__*/ i0.ɵɵdefineNgModule({ type: AngularTestingModule });
-    static ɵinj = /*@__PURE__*/ i0.ɵɵdefineInjector({ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "0.0.0", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "0.0.0", ngImport: i0, type: AngularTestingModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
 }
-(() => { (typeof ngDevMode === "undefined" || ngDevMode) && i0.ɵsetClassMetadata(AngularTestingModule, [{
-        type: NgModule,
-        args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
-    }], () => [{ type: i0.Injector }], null); })();
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0", ngImport: i0, type: AngularTestingModule, decorators: [{
+            type: NgModule,
+            args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
+        }], ctorParameters: () => [{ type: i0.Injector }] });
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
  * services.
