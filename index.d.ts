@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.0+sha-f7d33ee
+ * @license Angular v20.0.0+sha-1802d36
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -137,11 +137,11 @@ declare class UpgradeAdapter {
      *
      * @Component({
      *   selector: 'greet',
-     *   template: '{{salutation}} {{name}}! - <ng-content></ng-content>'
+     *   template: '{{salutation()}} {{name()}}! - <ng-content></ng-content>'
      * })
      * class Greeter {
-     *   @Input() salutation: string;
-     *   @Input() name: string;
+     *   salutation = input.required<string>();
+     *   name: input.required<string>();
      * }
      *
      * @NgModule({
