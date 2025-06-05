@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.1+sha-49e273a
+ * @license Angular v20.0.1+sha-e98ef80
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -8,9 +8,9 @@ import { UpgradeHelper, trustedHTMLFromLegacyTemplate, isFunction, strictEquals,
 export { VERSION } from './upgrade_helper-C850j0tg.mjs';
 import { __decorate, __metadata } from 'tslib';
 import * as i0 from '@angular/core';
-import { Directive, Injector, ElementRef, Inject, EventEmitter, NgZone, Compiler, NgModule, resolveForwardRef, Testability } from '@angular/core';
+import { Inject, Injector, ElementRef, Directive, EventEmitter, NgZone, Compiler, NgModule, resolveForwardRef, Testability } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { $SCOPE, bootstrap, element, $INJECTOR, module_, UPGRADE_APP_TYPE_KEY, INJECTOR_KEY, LAZY_MODULE_REF, NG_ZONE_KEY, COMPILER_KEY, $ROOT_SCOPE, $$TESTABILITY, $COMPILE } from './constants-nqBIph3y.mjs';
+import { $SCOPE, bootstrap, element, INJECTOR_KEY, $INJECTOR, module_, UPGRADE_APP_TYPE_KEY, LAZY_MODULE_REF, NG_ZONE_KEY, COMPILER_KEY, $ROOT_SCOPE, $$TESTABILITY, $COMPILE } from './constants-nqBIph3y.mjs';
 
 const CAMEL_CASE = /([A-Z])/g;
 const INITIAL_VALUE = {
@@ -234,10 +234,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.1+sha-49e273a", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.1+sha-49e273a", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.1+sha-e98ef80", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.1+sha-e98ef80", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.1+sha-49e273a", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.1+sha-e98ef80", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
