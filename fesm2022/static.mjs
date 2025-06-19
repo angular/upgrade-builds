@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.4+sha-8752014
+ * @license Angular v20.0.4+sha-144c429
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -9,7 +9,7 @@ export { getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, a
 import { destroyApp, getDowngradedModuleCount, isNgModuleType, isFunction, UpgradeHelper, controllerKey } from './upgrade_helper-C850j0tg.mjs';
 export { VERSION, downgradeComponent, downgradeInjectable, upgrade_helper as ɵupgradeHelper, util as ɵutil } from './upgrade_helper-C850j0tg.mjs';
 import * as i0 from '@angular/core';
-import { ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR as _NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, EventEmitter, Directive, NgModule, Testability } from '@angular/core';
+import { ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR as _NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, EventEmitter, Directive, ApplicationRef, ɵNoopNgZone as _NoopNgZone, NgModule, Testability } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 
 // We have to do a little dance to get the ng1 injector into the module injector.
@@ -481,10 +481,10 @@ class UpgradeComponent {
             bindingDestination.$onChanges(changes);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.4+sha-8752014", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.4+sha-8752014", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.4+sha-144c429", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.4+sha-144c429", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.4+sha-8752014", ngImport: i0, type: UpgradeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.4+sha-144c429", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }] });
 
@@ -621,6 +621,7 @@ class UpgradeModule {
     $injector;
     /** The Angular Injector **/
     injector;
+    applicationRef;
     constructor(
     /** The root `Injector` for the upgrade application. */
     injector, 
@@ -635,6 +636,7 @@ class UpgradeModule {
         this.ngZone = ngZone;
         this.platformRef = platformRef;
         this.injector = new NgAdapterInjector(injector);
+        this.applicationRef = this.injector.get(ApplicationRef);
     }
     /**
      * Bootstrap an AngularJS application from this NgModule
@@ -734,15 +736,26 @@ class UpgradeModule {
                 // Wire up the ng1 rootScope to run a digest cycle whenever the zone settles
                 // We need to do this in the next tick so that we don't prevent the bootup stabilizing
                 setTimeout(() => {
-                    const subscription = this.ngZone.onMicrotaskEmpty.subscribe(() => {
-                        if ($rootScope.$$phase) {
-                            if (typeof ngDevMode === 'undefined' || ngDevMode) {
-                                console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                    const synchronize = () => {
+                        this.ngZone.run(() => {
+                            if ($rootScope.$$phase) {
+                                if (typeof ngDevMode === 'undefined' || ngDevMode) {
+                                    console.warn('A digest was triggered while one was already in progress. This may mean that something is triggering digests outside the Angular zone.');
+                                }
+                                $rootScope.$evalAsync();
                             }
-                            return $rootScope.$evalAsync();
-                        }
-                        return $rootScope.$digest();
-                    });
+                            else {
+                                $rootScope.$digest();
+                            }
+                        });
+                    };
+                    const subscription = 
+                    // We _DO NOT_ usually want to have any code that does one thing for zoneless and another for ZoneJS.
+                    // This is only here because there is not enough coverage for hybrid apps anymore so we cannot
+                    // be confident that making UpgradeModule work with zoneless is a non-breaking change.
+                    this.ngZone instanceof _NoopNgZone
+                        ? this.applicationRef.afterTick.subscribe(() => synchronize())
+                        : this.ngZone.onMicrotaskEmpty.subscribe(() => synchronize());
                     $rootScope.$on('$destroy', () => {
                         subscription.unsubscribe();
                     });
@@ -767,11 +780,11 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.4+sha-8752014", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "20.0.4+sha-8752014", ngImport: i0, type: UpgradeModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "20.0.4+sha-8752014", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.4+sha-144c429", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "20.0.4+sha-144c429", ngImport: i0, type: UpgradeModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "20.0.4+sha-144c429", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.4+sha-8752014", ngImport: i0, type: UpgradeModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.4+sha-144c429", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: () => [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }] });

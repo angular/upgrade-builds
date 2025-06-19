@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.4+sha-8752014
+ * @license Angular v20.0.4+sha-144c429
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -580,6 +580,7 @@ declare class UpgradeModule {
     $injector: any;
     /** The Angular Injector **/
     injector: Injector;
+    private readonly applicationRef;
     constructor(
     /** The root `Injector` for the upgrade application. */
     injector: Injector, 
