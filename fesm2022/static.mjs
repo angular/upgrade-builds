@@ -1,13 +1,13 @@
 /**
- * @license Angular v20.0.4+sha-f9fe897
+ * @license Angular v20.0.4+sha-76dbd72
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { module_, UPGRADE_APP_TYPE_KEY, INJECTOR_KEY, LAZY_MODULE_REF, $INJECTOR, $PROVIDE, DOWNGRADED_MODULE_COUNT_KEY, UPGRADE_MODULE_NAME, $SCOPE, $$TESTABILITY, $DELEGATE, $INTERVAL, element, bootstrap } from './constants-nqBIph3y.mjs';
-export { getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, angular1 as ɵangular1, constants as ɵconstants } from './constants-nqBIph3y.mjs';
-import { destroyApp, getDowngradedModuleCount, isNgModuleType, isFunction, UpgradeHelper, controllerKey } from './upgrade_helper-C850j0tg.mjs';
-export { VERSION, downgradeComponent, downgradeInjectable, upgrade_helper as ɵupgradeHelper, util as ɵutil } from './upgrade_helper-C850j0tg.mjs';
+import { module_, UPGRADE_APP_TYPE_KEY, INJECTOR_KEY, LAZY_MODULE_REF, $INJECTOR, $PROVIDE, DOWNGRADED_MODULE_COUNT_KEY, UPGRADE_MODULE_NAME, $SCOPE, $$TESTABILITY, $DELEGATE, $INTERVAL, element, bootstrap } from './constants.mjs';
+export { getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, angular1 as ɵangular1, constants as ɵconstants } from './constants.mjs';
+import { destroyApp, getDowngradedModuleCount, isNgModuleType, isFunction, UpgradeHelper, controllerKey } from './upgrade_helper.mjs';
+export { VERSION, downgradeComponent, downgradeInjectable, upgrade_helper as ɵupgradeHelper, util as ɵutil } from './upgrade_helper.mjs';
 import * as i0 from '@angular/core';
 import { ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR as _NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, EventEmitter, Directive, ApplicationRef, ɵNoopNgZone as _NoopNgZone, NgModule, Testability } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
@@ -481,10 +481,10 @@ class UpgradeComponent {
             bindingDestination.$onChanges(changes);
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.4+sha-f9fe897", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.4+sha-f9fe897", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.4+sha-76dbd72", ngImport: i0, type: UpgradeComponent, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.4+sha-76dbd72", type: UpgradeComponent, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.4+sha-f9fe897", ngImport: i0, type: UpgradeComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.4+sha-76dbd72", ngImport: i0, type: UpgradeComponent, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: undefined }, { type: i0.ElementRef }, { type: i0.Injector }] });
 
@@ -780,11 +780,11 @@ class UpgradeModule {
         }
         return returnValue;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.4+sha-f9fe897", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "20.0.4+sha-f9fe897", ngImport: i0, type: UpgradeModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "20.0.4+sha-f9fe897", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.4+sha-76dbd72", ngImport: i0, type: UpgradeModule, deps: [{ token: i0.Injector }, { token: i0.NgZone }, { token: i0.PlatformRef }], target: i0.ɵɵFactoryTarget.NgModule });
+    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "20.0.4+sha-76dbd72", ngImport: i0, type: UpgradeModule });
+    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "20.0.4+sha-76dbd72", ngImport: i0, type: UpgradeModule, providers: [angular1Providers] });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.4+sha-f9fe897", ngImport: i0, type: UpgradeModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.4+sha-76dbd72", ngImport: i0, type: UpgradeModule, decorators: [{
             type: NgModule,
             args: [{ providers: [angular1Providers] }]
         }], ctorParameters: () => [{ type: i0.Injector }, { type: i0.NgZone }, { type: i0.PlatformRef }] });

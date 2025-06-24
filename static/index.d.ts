@@ -1,11 +1,11 @@
 /**
- * @license Angular v20.0.4+sha-f9fe897
+ * @license Angular v20.0.4+sha-76dbd72
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import { IInjectorService, IAugmentedJQuery, IDirective, IController, IScope, ILinkFn, SingleOrListOrMap, INgModelController } from '../angular1.d-C3xPg7Lm.js';
-export { VERSION, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, angular1_d as ɵangular1 } from '../angular1.d-C3xPg7Lm.js';
+import { IInjectorService, IAugmentedJQuery, IDirective, IController, IScope, ILinkFn, SingleOrListOrMap, INgModelController } from '../angular1.d.js';
+export { VERSION, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, angular1_d as ɵangular1 } from '../angular1.d.js';
 import * as i0 from '@angular/core';
 import { Type, StaticProvider, NgModuleRef, NgModuleFactory, OnInit, OnChanges, DoCheck, OnDestroy, ElementRef, Injector, SimpleChanges, NgZone, PlatformRef } from '@angular/core';
 

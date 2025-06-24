@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.0.4+sha-f9fe897
+ * @license Angular v20.0.4+sha-76dbd72
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -140,4 +140,4 @@ var constants = /*#__PURE__*/Object.freeze({
 });
 
 export { $$TESTABILITY, $COMPILE, $CONTROLLER, $DELEGATE, $HTTP_BACKEND, $INJECTOR, $INTERVAL, $PARSE, $PROVIDE, $ROOT_ELEMENT, $ROOT_SCOPE, $SCOPE, $TEMPLATE_CACHE, COMPILER_KEY, DOWNGRADED_MODULE_COUNT_KEY, INJECTOR_KEY, LAZY_MODULE_REF, NG_ZONE_KEY, REQUIRE_INJECTOR, REQUIRE_NG_MODEL, UPGRADE_APP_TYPE_KEY, UPGRADE_MODULE_NAME, angular1, bootstrap, constants, element, getAngularJSGlobal, getAngularLib, injector, module_, setAngularJSGlobal, setAngularLib };
-//# sourceMappingURL=constants-nqBIph3y.mjs.map
+//# sourceMappingURL=constants.mjs.map
