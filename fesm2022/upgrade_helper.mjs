@@ -1,11 +1,11 @@
 /**
- * @license Angular v20.1.0-next.2+sha-1cff7cf
+ * @license Angular v20.1.0-next.2+sha-07df4e1
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import { Version, ɵNG_MOD_DEF as _NG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, ɵSIGNAL as _SIGNAL, NgZone, ComponentFactoryResolver } from '@angular/core';
-import { element, $ROOT_ELEMENT, $ROOT_SCOPE, DOWNGRADED_MODULE_COUNT_KEY, UPGRADE_APP_TYPE_KEY, $SCOPE, $COMPILE, $INJECTOR, $PARSE, REQUIRE_INJECTOR, REQUIRE_NG_MODEL, LAZY_MODULE_REF, INJECTOR_KEY, $CONTROLLER, $TEMPLATE_CACHE, $HTTP_BACKEND } from './constants-nqBIph3y.mjs';
+import { element, $ROOT_ELEMENT, $ROOT_SCOPE, DOWNGRADED_MODULE_COUNT_KEY, UPGRADE_APP_TYPE_KEY, $SCOPE, $COMPILE, $INJECTOR, $PARSE, REQUIRE_INJECTOR, REQUIRE_NG_MODEL, LAZY_MODULE_REF, INJECTOR_KEY, $CONTROLLER, $TEMPLATE_CACHE, $HTTP_BACKEND } from './constants.mjs';
 
 /**
  * @module
@@ -15,7 +15,7 @@ import { element, $ROOT_ELEMENT, $ROOT_SCOPE, DOWNGRADED_MODULE_COUNT_KEY, UPGRA
 /**
  * @publicApi
  */
-const VERSION = new Version('20.1.0-next.2+sha-1cff7cf');
+const VERSION = new Version('20.1.0-next.2+sha-07df4e1');
 
 /**
  * A `PropertyBinding` represents a mapping between a property name
@@ -1103,4 +1103,4 @@ var upgrade_helper = /*#__PURE__*/Object.freeze({
 });
 
 export { Deferred, UpgradeHelper, VERSION, controllerKey, destroyApp, downgradeComponent, downgradeInjectable, getDowngradedModuleCount, isFunction, isNgModuleType, onError, strictEquals, trustedHTMLFromLegacyTemplate, upgrade_helper, util };
-//# sourceMappingURL=upgrade_helper-C850j0tg.mjs.map
+//# sourceMappingURL=upgrade_helper.mjs.map
