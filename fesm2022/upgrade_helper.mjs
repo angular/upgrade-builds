@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.2.0-next.1+sha-d3b770d
+ * @license Angular v20.2.0-next.1+sha-448a7f7
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { element, $ROOT_ELEMENT, $ROOT_SCOPE, DOWNGRADED_MODULE_COUNT_KEY, UPGRA
 /**
  * @publicApi
  */
-const VERSION = new Version('20.2.0-next.1+sha-d3b770d');
+const VERSION = new Version('20.2.0-next.1+sha-448a7f7');
 
 /**
  * A `PropertyBinding` represents a mapping between a property name
