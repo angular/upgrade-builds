@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.1.3+sha-622e108
+ * @license Angular v20.1.3+sha-cd256ef
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
@@ -234,10 +234,10 @@ class UpgradeNg1ComponentAdapter {
     setComponentProperty(name, value) {
         this.destinationObj[this.propertyMap[name]] = value;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.1.3+sha-622e108", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.1.3+sha-622e108", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.1.3+sha-cd256ef", ngImport: i0, type: UpgradeNg1ComponentAdapter, deps: "invalid", target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.1.3+sha-cd256ef", type: UpgradeNg1ComponentAdapter, isStandalone: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.1.3+sha-622e108", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.1.3+sha-cd256ef", ngImport: i0, type: UpgradeNg1ComponentAdapter, decorators: [{
             type: Directive
         }], ctorParameters: () => [{ type: UpgradeHelper }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }, { type: undefined }] });
 
