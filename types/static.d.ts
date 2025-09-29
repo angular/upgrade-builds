@@ -1,12 +1,12 @@
 /**
- * @license Angular v21.0.0-next.5+sha-377d1a0
+ * @license Angular v21.0.0-next.5+sha-fc643c9
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
 import { Type, StaticProvider, NgModuleRef, NgModuleFactory, OnInit, OnChanges, DoCheck, OnDestroy, ElementRef, Injector, SimpleChanges, NgZone, PlatformRef } from '@angular/core';
-export { VERSION } from '../index.js';
+export { VERSION } from './upgrade.js';
 
 type Ng1Token = string;
 type Ng1Expression = string | Function;
