@@ -1,31 +1,11 @@
 /**
- * @license Angular v21.0.0-next.5+sha-51a0b59
+ * @license Angular v21.0.0-next.5+sha-2f6caef
  * (c) 2010-2025 Google LLC. https://angular.io/
  * License: MIT
  */
 
-import * as i0 from '@angular/core';
-import { NgModule, Injector } from '@angular/core';
-import { $INJECTOR, module_, UPGRADE_APP_TYPE_KEY, INJECTOR_KEY, injector as injector$1 } from '../constants-3Uuni9SQ.mjs';
-import { TestBed } from '@angular/core/testing';
+import { Type } from '@angular/core';
 
-let $injector = null;
-let injector;
-function $injectorFactory() {
-    return $injector;
-}
-class AngularTestingModule {
-    constructor(i) {
-        injector = i;
-    }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "21.0.0-next.5+sha-51a0b59", ngImport: i0, type: AngularTestingModule, deps: [{ token: i0.Injector }], target: i0.ɵɵFactoryTarget.NgModule });
-    static ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "21.0.0-next.5+sha-51a0b59", ngImport: i0, type: AngularTestingModule });
-    static ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "21.0.0-next.5+sha-51a0b59", ngImport: i0, type: AngularTestingModule, providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "21.0.0-next.5+sha-51a0b59", ngImport: i0, type: AngularTestingModule, decorators: [{
-            type: NgModule,
-            args: [{ providers: [{ provide: $INJECTOR, useFactory: $injectorFactory }] }]
-        }], ctorParameters: () => [{ type: i0.Injector }] });
 /**
  * A helper function to use when unit testing Angular services that depend upon upgraded AngularJS
  * services.
@@ -91,13 +71,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "21.0.0-next.5+sh
  *
  * @publicApi
  */
-function createAngularTestingModule(angularJSModules, strictDi) {
-    module_('$$angularJSTestingModule', angularJSModules)
-        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
-        .factory(INJECTOR_KEY, () => injector);
-    $injector = injector$1(['ng', '$$angularJSTestingModule'], strictDi);
-    return AngularTestingModule;
-}
+declare function createAngularTestingModule(angularJSModules: string[], strictDi?: boolean): Type<any>;
 
 /**
  * A helper function to use when unit testing AngularJS services that depend upon downgraded Angular
@@ -164,20 +138,6 @@ function createAngularTestingModule(angularJSModules, strictDi) {
  *
  * @publicApi
  */
-function createAngularJSTestingModule(angularModules) {
-    return module_('$$angularJSTestingModule', [])
-        .constant(UPGRADE_APP_TYPE_KEY, 2 /* UpgradeAppType.Static */)
-        .factory(INJECTOR_KEY, [
-        $INJECTOR,
-        ($injector) => {
-            TestBed.configureTestingModule({
-                imports: angularModules,
-                providers: [{ provide: $INJECTOR, useValue: $injector }],
-            });
-            return TestBed.inject(Injector);
-        },
-    ]).name;
-}
+declare function createAngularJSTestingModule(angularModules: any[]): string;
 
 export { createAngularJSTestingModule, createAngularTestingModule };
-//# sourceMappingURL=testing.mjs.map
