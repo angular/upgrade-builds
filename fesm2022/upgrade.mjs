@@ -1,5 +1,5 @@
 /**
- * @license Angular v21.0.0-next.8+sha-c60ab33
+ * @license Angular v21.0.0-next.8+sha-810505f
  * (c) 2010-2025 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -14,7 +14,7 @@ import { Version } from '@angular/core';
 /**
  * @publicApi
  */
-const VERSION = new Version('21.0.0-next.8+sha-c60ab33');
+const VERSION = new Version('21.0.0-next.8+sha-810505f');
 
 export { VERSION };
 //# sourceMappingURL=upgrade.mjs.map
