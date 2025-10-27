@@ -1,74 +1,47 @@
 /**
- * @license Angular v21.1.0-next.0+sha-a5678f6
+ * @license Angular v21.1.0-next.0+sha-b8c8bc6
  * (c) 2010-2025 Google LLC. https://angular.dev/
  * License: MIT
  */
 
 function noNg() {
-    throw new Error('AngularJS v1.x is not loaded!');
+  throw new Error('AngularJS v1.x is not loaded!');
 }
-const noNgElement = (() => noNg());
+const noNgElement = () => noNg();
 noNgElement.cleanData = noNg;
 let angular = {
-    bootstrap: noNg,
-    module: noNg,
-    element: noNgElement,
-    injector: noNg,
-    version: undefined,
-    resumeBootstrap: noNg,
-    getTestability: noNg,
+  bootstrap: noNg,
+  module: noNg,
+  element: noNgElement,
+  injector: noNg,
+  version: undefined,
+  resumeBootstrap: noNg,
+  getTestability: noNg
 };
 try {
-    if (window.hasOwnProperty('angular')) {
-        angular = window.angular;
-    }
-}
-catch {
-    // ignore in CJS mode.
-}
-/**
- * @deprecated Use `setAngularJSGlobal` instead.
- *
- * @publicApi
- */
+  if (window.hasOwnProperty('angular')) {
+    angular = window.angular;
+  }
+} catch {}
 function setAngularLib(ng) {
-    setAngularJSGlobal(ng);
+  setAngularJSGlobal(ng);
 }
-/**
- * @deprecated Use `getAngularJSGlobal` instead.
- *
- * @publicApi
- */
 function getAngularLib() {
-    return getAngularJSGlobal();
+  return getAngularJSGlobal();
 }
-/**
- * Resets the AngularJS global.
- *
- * Used when AngularJS is loaded lazily, and not available on `window`.
- *
- * @publicApi
- */
 function setAngularJSGlobal(ng) {
-    angular = ng;
+  angular = ng;
 }
-/**
- * Returns the current AngularJS global.
- *
- * @publicApi
- */
 function getAngularJSGlobal() {
-    return angular;
+  return angular;
 }
 const bootstrap = (e, modules, config) => angular.bootstrap(e, modules, config);
-// Do not declare as `module` to avoid webpack bug
-// (see https://github.com/angular/angular/issues/30050).
 const module_ = (prefix, dependencies) => angular.module(prefix, dependencies);
-const element = ((e) => angular.element(e));
-element.cleanData = (nodes) => angular.element.cleanData(nodes);
+const element = e => angular.element(e);
+element.cleanData = nodes => angular.element.cleanData(nodes);
 const injector = (modules, strictDi) => angular.injector(modules, strictDi);
 const resumeBootstrap = () => angular.resumeBootstrap();
-const getTestability = (e) => angular.getTestability(e);
+const getTestability = e => angular.getTestability(e);
 
 var angular1 = /*#__PURE__*/Object.freeze({
     __proto__: null,
