@@ -1,5 +1,5 @@
 /**
- * @license Angular v21.1.0-next.0+sha-f80b51a
+ * @license Angular v21.1.0-next.0+sha-64cb085
  * (c) 2010-2025 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -20,7 +20,7 @@ class AngularTestingModule {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "21.1.0-next.0+sha-f80b51a",
+    version: "21.1.0-next.0+sha-64cb085",
     ngImport: i0,
     type: AngularTestingModule,
     deps: [{
@@ -30,13 +30,13 @@ class AngularTestingModule {
   });
   static ɵmod = i0.ɵɵngDeclareNgModule({
     minVersion: "14.0.0",
-    version: "21.1.0-next.0+sha-f80b51a",
+    version: "21.1.0-next.0+sha-64cb085",
     ngImport: i0,
     type: AngularTestingModule
   });
   static ɵinj = i0.ɵɵngDeclareInjector({
     minVersion: "12.0.0",
-    version: "21.1.0-next.0+sha-f80b51a",
+    version: "21.1.0-next.0+sha-64cb085",
     ngImport: i0,
     type: AngularTestingModule,
     providers: [{
@@ -47,7 +47,7 @@ class AngularTestingModule {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "21.1.0-next.0+sha-f80b51a",
+  version: "21.1.0-next.0+sha-64cb085",
   ngImport: i0,
   type: AngularTestingModule,
   decorators: [{
