@@ -1,5 +1,5 @@
 /**
- * @license Angular v22.0.0-next.0+sha-a5981b8
+ * @license Angular v22.0.0-next.0+sha-957466d
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -112,5 +112,5 @@ var constants = /*#__PURE__*/Object.freeze({
     UPGRADE_MODULE_NAME: UPGRADE_MODULE_NAME
 });
 
-export { $$TESTABILITY, $COMPILE, $CONTROLLER, $DELEGATE, $HTTP_BACKEND, $INJECTOR, $INTERVAL, $PARSE, $PROVIDE, $ROOT_ELEMENT, $ROOT_SCOPE, $SCOPE, $TEMPLATE_CACHE, DOWNGRADED_MODULE_COUNT_KEY, INJECTOR_KEY, LAZY_MODULE_REF, REQUIRE_INJECTOR, REQUIRE_NG_MODEL, UPGRADE_APP_TYPE_KEY, UPGRADE_MODULE_NAME, angular1, bootstrap, constants, element, getAngularJSGlobal, getAngularLib, injector, module_, setAngularJSGlobal, setAngularLib };
+export { $$TESTABILITY, $COMPILE, $CONTROLLER, $DELEGATE, $HTTP_BACKEND, $INJECTOR, $INTERVAL, $PARSE, $PROVIDE, $ROOT_ELEMENT, $ROOT_SCOPE, $SCOPE, $TEMPLATE_CACHE, DOWNGRADED_MODULE_COUNT_KEY, INJECTOR_KEY, LAZY_MODULE_REF, REQUIRE_INJECTOR, REQUIRE_NG_MODEL, UPGRADE_APP_TYPE_KEY, UPGRADE_MODULE_NAME, angular1, bootstrap, constants, element, getAngularJSGlobal, injector, module_, setAngularJSGlobal };
 //# sourceMappingURL=_constants-chunk.mjs.map

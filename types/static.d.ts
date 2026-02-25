@@ -1,11 +1,11 @@
 /**
- * @license Angular v22.0.0-next.0+sha-a5981b8
+ * @license Angular v22.0.0-next.0+sha-957466d
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
-import { Type, StaticProvider, NgModuleRef, NgModuleFactory, OnInit, OnChanges, DoCheck, OnDestroy, ElementRef, Injector, SimpleChanges, NgZone, PlatformRef } from '@angular/core';
+import { Type, SimpleChanges, Injector, ElementRef, StaticProvider, NgModuleRef, NgModuleFactory, OnInit, OnChanges, DoCheck, OnDestroy, NgZone, PlatformRef } from '@angular/core';
 export { VERSION } from './upgrade.js';
 
 type Ng1Token = string;
@@ -444,6 +444,232 @@ declare function downgradeComponent(info: {
  * @publicApi
  */
 declare function downgradeInjectable(token: any, downgradedModule?: string): Function;
+
+declare const $COMPILE = "$compile";
+declare const $CONTROLLER = "$controller";
+declare const $DELEGATE = "$delegate";
+declare const $EXCEPTION_HANDLER = "$exceptionHandler";
+declare const $HTTP_BACKEND = "$httpBackend";
+declare const $INJECTOR = "$injector";
+declare const $INTERVAL = "$interval";
+declare const $PARSE = "$parse";
+declare const $PROVIDE = "$provide";
+declare const $ROOT_ELEMENT = "$rootElement";
+declare const $ROOT_SCOPE = "$rootScope";
+declare const $SCOPE = "$scope";
+declare const $TEMPLATE_CACHE = "$templateCache";
+declare const $TEMPLATE_REQUEST = "$templateRequest";
+declare const $$TESTABILITY = "$$testability";
+declare const COMPILER_KEY = "$$angularCompiler";
+declare const DOWNGRADED_MODULE_COUNT_KEY = "$$angularDowngradedModuleCount";
+declare const GROUP_PROJECTABLE_NODES_KEY = "$$angularGroupProjectableNodes";
+declare const INJECTOR_KEY = "$$angularInjector";
+declare const LAZY_MODULE_REF = "$$angularLazyModuleRef";
+declare const NG_ZONE_KEY = "$$angularNgZone";
+declare const UPGRADE_APP_TYPE_KEY = "$$angularUpgradeAppType";
+declare const REQUIRE_INJECTOR: string;
+declare const REQUIRE_NG_MODEL = "?ngModel";
+declare const UPGRADE_MODULE_NAME = "$$UpgradeModule";
+
+declare const constants_d_$$TESTABILITY: typeof $$TESTABILITY;
+declare const constants_d_$COMPILE: typeof $COMPILE;
+declare const constants_d_$CONTROLLER: typeof $CONTROLLER;
+declare const constants_d_$DELEGATE: typeof $DELEGATE;
+declare const constants_d_$EXCEPTION_HANDLER: typeof $EXCEPTION_HANDLER;
+declare const constants_d_$HTTP_BACKEND: typeof $HTTP_BACKEND;
+declare const constants_d_$INJECTOR: typeof $INJECTOR;
+declare const constants_d_$INTERVAL: typeof $INTERVAL;
+declare const constants_d_$PARSE: typeof $PARSE;
+declare const constants_d_$PROVIDE: typeof $PROVIDE;
+declare const constants_d_$ROOT_ELEMENT: typeof $ROOT_ELEMENT;
+declare const constants_d_$ROOT_SCOPE: typeof $ROOT_SCOPE;
+declare const constants_d_$SCOPE: typeof $SCOPE;
+declare const constants_d_$TEMPLATE_CACHE: typeof $TEMPLATE_CACHE;
+declare const constants_d_$TEMPLATE_REQUEST: typeof $TEMPLATE_REQUEST;
+declare const constants_d_COMPILER_KEY: typeof COMPILER_KEY;
+declare const constants_d_DOWNGRADED_MODULE_COUNT_KEY: typeof DOWNGRADED_MODULE_COUNT_KEY;
+declare const constants_d_GROUP_PROJECTABLE_NODES_KEY: typeof GROUP_PROJECTABLE_NODES_KEY;
+declare const constants_d_INJECTOR_KEY: typeof INJECTOR_KEY;
+declare const constants_d_LAZY_MODULE_REF: typeof LAZY_MODULE_REF;
+declare const constants_d_NG_ZONE_KEY: typeof NG_ZONE_KEY;
+declare const constants_d_REQUIRE_INJECTOR: typeof REQUIRE_INJECTOR;
+declare const constants_d_REQUIRE_NG_MODEL: typeof REQUIRE_NG_MODEL;
+declare const constants_d_UPGRADE_APP_TYPE_KEY: typeof UPGRADE_APP_TYPE_KEY;
+declare const constants_d_UPGRADE_MODULE_NAME: typeof UPGRADE_MODULE_NAME;
+declare namespace constants_d {
+  export {
+    constants_d_$$TESTABILITY as $$TESTABILITY,
+    constants_d_$COMPILE as $COMPILE,
+    constants_d_$CONTROLLER as $CONTROLLER,
+    constants_d_$DELEGATE as $DELEGATE,
+    constants_d_$EXCEPTION_HANDLER as $EXCEPTION_HANDLER,
+    constants_d_$HTTP_BACKEND as $HTTP_BACKEND,
+    constants_d_$INJECTOR as $INJECTOR,
+    constants_d_$INTERVAL as $INTERVAL,
+    constants_d_$PARSE as $PARSE,
+    constants_d_$PROVIDE as $PROVIDE,
+    constants_d_$ROOT_ELEMENT as $ROOT_ELEMENT,
+    constants_d_$ROOT_SCOPE as $ROOT_SCOPE,
+    constants_d_$SCOPE as $SCOPE,
+    constants_d_$TEMPLATE_CACHE as $TEMPLATE_CACHE,
+    constants_d_$TEMPLATE_REQUEST as $TEMPLATE_REQUEST,
+    constants_d_COMPILER_KEY as COMPILER_KEY,
+    constants_d_DOWNGRADED_MODULE_COUNT_KEY as DOWNGRADED_MODULE_COUNT_KEY,
+    constants_d_GROUP_PROJECTABLE_NODES_KEY as GROUP_PROJECTABLE_NODES_KEY,
+    constants_d_INJECTOR_KEY as INJECTOR_KEY,
+    constants_d_LAZY_MODULE_REF as LAZY_MODULE_REF,
+    constants_d_NG_ZONE_KEY as NG_ZONE_KEY,
+    constants_d_REQUIRE_INJECTOR as REQUIRE_INJECTOR,
+    constants_d_REQUIRE_NG_MODEL as REQUIRE_NG_MODEL,
+    constants_d_UPGRADE_APP_TYPE_KEY as UPGRADE_APP_TYPE_KEY,
+    constants_d_UPGRADE_MODULE_NAME as UPGRADE_MODULE_NAME,
+  };
+}
+
+/**
+ * @fileoverview
+ * While Angular only uses Trusted Types internally for the time being,
+ * references to Trusted Types could leak into our public API, which would force
+ * anyone compiling against @angular/upgrade to provide the @types/trusted-types
+ * package in their compilation unit.
+ *
+ * Until https://github.com/microsoft/TypeScript/issues/30024 is resolved, we
+ * will keep Angular's public API surface free of references to Trusted Types.
+ * For internal and semi-private APIs that need to reference Trusted Types, the
+ * minimal type definitions for the Trusted Types API provided by this module
+ * should be used instead. They are marked as "declare" to prevent them from
+ * being renamed by compiler optimization.
+ *
+ * Adapted from
+ * https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/trusted-types/index.d.ts
+ * but restricted to the API surface used within Angular, mimicking the approach
+ * in packages/core/src/util/security/trusted_type_defs.ts.
+ */
+type TrustedHTML = string & {
+    __brand__: 'TrustedHTML';
+};
+
+interface IBindingDestination {
+    [key: string]: any;
+    $onChanges?: (changes: SimpleChanges) => void;
+}
+interface IControllerInstance extends IBindingDestination {
+    $doCheck?: () => void;
+    $onDestroy?: () => void;
+    $onInit?: () => void;
+    $postLink?: () => void;
+}
+declare class UpgradeHelper {
+    private name;
+    readonly $injector: IInjectorService;
+    readonly element: Element;
+    readonly $element: IAugmentedJQuery;
+    readonly directive: IDirective;
+    private readonly $compile;
+    private readonly $controller;
+    constructor(injector: Injector, name: string, elementRef: ElementRef, directive?: IDirective);
+    static getDirective($injector: IInjectorService, name: string): IDirective;
+    static getTemplate($injector: IInjectorService, directive: IDirective, fetchRemoteTemplate?: boolean, $element?: IAugmentedJQuery): string | TrustedHTML | Promise<string | TrustedHTML>;
+    buildController(controllerType: IController, $scope: IScope): any;
+    compileTemplate(template?: string | TrustedHTML): ILinkFn;
+    onDestroy($scope: IScope, controllerInstance?: any): void;
+    prepareTransclusion(): ILinkFn | undefined;
+    resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): SingleOrListOrMap<IControllerInstance> | null;
+    private compileHtml;
+    private extractChildNodes;
+    private getDirectiveRequire;
+    private resolveRequire;
+}
+
+type upgrade_helper_d_IBindingDestination = IBindingDestination;
+type upgrade_helper_d_IControllerInstance = IControllerInstance;
+type upgrade_helper_d_UpgradeHelper = UpgradeHelper;
+declare const upgrade_helper_d_UpgradeHelper: typeof UpgradeHelper;
+declare namespace upgrade_helper_d {
+  export { upgrade_helper_d_UpgradeHelper as UpgradeHelper };
+  export type { upgrade_helper_d_IBindingDestination as IBindingDestination, upgrade_helper_d_IControllerInstance as IControllerInstance };
+}
+
+declare function onError(e: any): void;
+/**
+ * Clean the jqLite/jQuery data on the element and all its descendants.
+ * Equivalent to how jqLite/jQuery invoke `cleanData()` on an Element when removed:
+ *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/jqLite.js#L349-L355
+ *   https://github.com/jquery/jquery/blob/6984d1747623dbc5e87fd6c261a5b6b1628c107c/src/manipulation.js#L182
+ *
+ * NOTE:
+ * `cleanData()` will also invoke the AngularJS `$destroy` DOM event on the element:
+ *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/Angular.js#L1932-L1945
+ *
+ * @param node The DOM node whose data needs to be cleaned.
+ */
+declare function cleanData(node: Node): void;
+declare function controllerKey(name: string): string;
+/**
+ * Destroy an AngularJS app given the app `$injector`.
+ *
+ * NOTE: Destroying an app is not officially supported by AngularJS, but try to do our best by
+ *       destroying `$rootScope` and clean the jqLite/jQuery data on `$rootElement` and all
+ *       descendants.
+ *
+ * @param $injector The `$injector` of the AngularJS app to destroy.
+ */
+declare function destroyApp($injector: IInjectorService): void;
+declare function directiveNormalize(name: string): string;
+declare function getTypeName(type: Type<any>): string;
+declare function getDowngradedModuleCount($injector: IInjectorService): number;
+declare function getUpgradeAppType($injector: IInjectorService): UpgradeAppType;
+declare function isFunction(value: any): value is Function;
+declare function isNgModuleType(value: any): value is Type<unknown>;
+declare function validateInjectionKey($injector: IInjectorService, downgradedModule: string, injectionKey: string, attemptedAction: string): void;
+declare class Deferred<R> {
+    promise: Promise<R>;
+    resolve: (value: R | PromiseLike<R>) => void;
+    reject: (error?: any) => void;
+    constructor();
+}
+interface LazyModuleRef {
+    injector?: Injector;
+    promise?: Promise<Injector>;
+}
+declare const enum UpgradeAppType {
+    None = 0,
+    Dynamic = 1,
+    Static = 2,
+    Lite = 3
+}
+/**
+ * Glue the AngularJS `NgModelController` (if it exists) to the component
+ * (if it implements the needed subset of the `ControlValueAccessor` interface).
+ */
+declare function hookupNgModel(ngModel: INgModelController, component: any): void;
+/**
+ * Test two values for strict equality, accounting for the fact that `NaN !== NaN`.
+ */
+declare function strictEquals(val1: any, val2: any): boolean;
+
+type util_d_Deferred<R> = Deferred<R>;
+declare const util_d_Deferred: typeof Deferred;
+type util_d_LazyModuleRef = LazyModuleRef;
+type util_d_UpgradeAppType = UpgradeAppType;
+declare const util_d_UpgradeAppType: typeof UpgradeAppType;
+declare const util_d_cleanData: typeof cleanData;
+declare const util_d_controllerKey: typeof controllerKey;
+declare const util_d_destroyApp: typeof destroyApp;
+declare const util_d_directiveNormalize: typeof directiveNormalize;
+declare const util_d_getDowngradedModuleCount: typeof getDowngradedModuleCount;
+declare const util_d_getTypeName: typeof getTypeName;
+declare const util_d_getUpgradeAppType: typeof getUpgradeAppType;
+declare const util_d_hookupNgModel: typeof hookupNgModel;
+declare const util_d_isFunction: typeof isFunction;
+declare const util_d_isNgModuleType: typeof isNgModuleType;
+declare const util_d_onError: typeof onError;
+declare const util_d_strictEquals: typeof strictEquals;
+declare const util_d_validateInjectionKey: typeof validateInjectionKey;
+declare namespace util_d {
+  export { util_d_Deferred as Deferred, util_d_UpgradeAppType as UpgradeAppType, util_d_cleanData as cleanData, util_d_controllerKey as controllerKey, util_d_destroyApp as destroyApp, util_d_directiveNormalize as directiveNormalize, util_d_getDowngradedModuleCount as getDowngradedModuleCount, util_d_getTypeName as getTypeName, util_d_getUpgradeAppType as getUpgradeAppType, util_d_hookupNgModel as hookupNgModel, util_d_isFunction as isFunction, util_d_isNgModuleType as isNgModuleType, util_d_onError as onError, util_d_strictEquals as strictEquals, util_d_validateInjectionKey as validateInjectionKey };
+  export type { util_d_LazyModuleRef as LazyModuleRef };
+}
 
 /**
  * @description
@@ -920,230 +1146,4 @@ declare class UpgradeModule {
     static ɵinj: i0.ɵɵInjectorDeclaration<UpgradeModule>;
 }
 
-declare const $COMPILE = "$compile";
-declare const $CONTROLLER = "$controller";
-declare const $DELEGATE = "$delegate";
-declare const $EXCEPTION_HANDLER = "$exceptionHandler";
-declare const $HTTP_BACKEND = "$httpBackend";
-declare const $INJECTOR = "$injector";
-declare const $INTERVAL = "$interval";
-declare const $PARSE = "$parse";
-declare const $PROVIDE = "$provide";
-declare const $ROOT_ELEMENT = "$rootElement";
-declare const $ROOT_SCOPE = "$rootScope";
-declare const $SCOPE = "$scope";
-declare const $TEMPLATE_CACHE = "$templateCache";
-declare const $TEMPLATE_REQUEST = "$templateRequest";
-declare const $$TESTABILITY = "$$testability";
-declare const COMPILER_KEY = "$$angularCompiler";
-declare const DOWNGRADED_MODULE_COUNT_KEY = "$$angularDowngradedModuleCount";
-declare const GROUP_PROJECTABLE_NODES_KEY = "$$angularGroupProjectableNodes";
-declare const INJECTOR_KEY = "$$angularInjector";
-declare const LAZY_MODULE_REF = "$$angularLazyModuleRef";
-declare const NG_ZONE_KEY = "$$angularNgZone";
-declare const UPGRADE_APP_TYPE_KEY = "$$angularUpgradeAppType";
-declare const REQUIRE_INJECTOR: string;
-declare const REQUIRE_NG_MODEL = "?ngModel";
-declare const UPGRADE_MODULE_NAME = "$$UpgradeModule";
-
-declare const constants_d_$$TESTABILITY: typeof $$TESTABILITY;
-declare const constants_d_$COMPILE: typeof $COMPILE;
-declare const constants_d_$CONTROLLER: typeof $CONTROLLER;
-declare const constants_d_$DELEGATE: typeof $DELEGATE;
-declare const constants_d_$EXCEPTION_HANDLER: typeof $EXCEPTION_HANDLER;
-declare const constants_d_$HTTP_BACKEND: typeof $HTTP_BACKEND;
-declare const constants_d_$INJECTOR: typeof $INJECTOR;
-declare const constants_d_$INTERVAL: typeof $INTERVAL;
-declare const constants_d_$PARSE: typeof $PARSE;
-declare const constants_d_$PROVIDE: typeof $PROVIDE;
-declare const constants_d_$ROOT_ELEMENT: typeof $ROOT_ELEMENT;
-declare const constants_d_$ROOT_SCOPE: typeof $ROOT_SCOPE;
-declare const constants_d_$SCOPE: typeof $SCOPE;
-declare const constants_d_$TEMPLATE_CACHE: typeof $TEMPLATE_CACHE;
-declare const constants_d_$TEMPLATE_REQUEST: typeof $TEMPLATE_REQUEST;
-declare const constants_d_COMPILER_KEY: typeof COMPILER_KEY;
-declare const constants_d_DOWNGRADED_MODULE_COUNT_KEY: typeof DOWNGRADED_MODULE_COUNT_KEY;
-declare const constants_d_GROUP_PROJECTABLE_NODES_KEY: typeof GROUP_PROJECTABLE_NODES_KEY;
-declare const constants_d_INJECTOR_KEY: typeof INJECTOR_KEY;
-declare const constants_d_LAZY_MODULE_REF: typeof LAZY_MODULE_REF;
-declare const constants_d_NG_ZONE_KEY: typeof NG_ZONE_KEY;
-declare const constants_d_REQUIRE_INJECTOR: typeof REQUIRE_INJECTOR;
-declare const constants_d_REQUIRE_NG_MODEL: typeof REQUIRE_NG_MODEL;
-declare const constants_d_UPGRADE_APP_TYPE_KEY: typeof UPGRADE_APP_TYPE_KEY;
-declare const constants_d_UPGRADE_MODULE_NAME: typeof UPGRADE_MODULE_NAME;
-declare namespace constants_d {
-  export {
-    constants_d_$$TESTABILITY as $$TESTABILITY,
-    constants_d_$COMPILE as $COMPILE,
-    constants_d_$CONTROLLER as $CONTROLLER,
-    constants_d_$DELEGATE as $DELEGATE,
-    constants_d_$EXCEPTION_HANDLER as $EXCEPTION_HANDLER,
-    constants_d_$HTTP_BACKEND as $HTTP_BACKEND,
-    constants_d_$INJECTOR as $INJECTOR,
-    constants_d_$INTERVAL as $INTERVAL,
-    constants_d_$PARSE as $PARSE,
-    constants_d_$PROVIDE as $PROVIDE,
-    constants_d_$ROOT_ELEMENT as $ROOT_ELEMENT,
-    constants_d_$ROOT_SCOPE as $ROOT_SCOPE,
-    constants_d_$SCOPE as $SCOPE,
-    constants_d_$TEMPLATE_CACHE as $TEMPLATE_CACHE,
-    constants_d_$TEMPLATE_REQUEST as $TEMPLATE_REQUEST,
-    constants_d_COMPILER_KEY as COMPILER_KEY,
-    constants_d_DOWNGRADED_MODULE_COUNT_KEY as DOWNGRADED_MODULE_COUNT_KEY,
-    constants_d_GROUP_PROJECTABLE_NODES_KEY as GROUP_PROJECTABLE_NODES_KEY,
-    constants_d_INJECTOR_KEY as INJECTOR_KEY,
-    constants_d_LAZY_MODULE_REF as LAZY_MODULE_REF,
-    constants_d_NG_ZONE_KEY as NG_ZONE_KEY,
-    constants_d_REQUIRE_INJECTOR as REQUIRE_INJECTOR,
-    constants_d_REQUIRE_NG_MODEL as REQUIRE_NG_MODEL,
-    constants_d_UPGRADE_APP_TYPE_KEY as UPGRADE_APP_TYPE_KEY,
-    constants_d_UPGRADE_MODULE_NAME as UPGRADE_MODULE_NAME,
-  };
-}
-
-/**
- * @fileoverview
- * While Angular only uses Trusted Types internally for the time being,
- * references to Trusted Types could leak into our public API, which would force
- * anyone compiling against @angular/upgrade to provide the @types/trusted-types
- * package in their compilation unit.
- *
- * Until https://github.com/microsoft/TypeScript/issues/30024 is resolved, we
- * will keep Angular's public API surface free of references to Trusted Types.
- * For internal and semi-private APIs that need to reference Trusted Types, the
- * minimal type definitions for the Trusted Types API provided by this module
- * should be used instead. They are marked as "declare" to prevent them from
- * being renamed by compiler optimization.
- *
- * Adapted from
- * https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/trusted-types/index.d.ts
- * but restricted to the API surface used within Angular, mimicking the approach
- * in packages/core/src/util/security/trusted_type_defs.ts.
- */
-type TrustedHTML = string & {
-    __brand__: 'TrustedHTML';
-};
-
-interface IBindingDestination {
-    [key: string]: any;
-    $onChanges?: (changes: SimpleChanges) => void;
-}
-interface IControllerInstance extends IBindingDestination {
-    $doCheck?: () => void;
-    $onDestroy?: () => void;
-    $onInit?: () => void;
-    $postLink?: () => void;
-}
-declare class UpgradeHelper {
-    private name;
-    readonly $injector: IInjectorService;
-    readonly element: Element;
-    readonly $element: IAugmentedJQuery;
-    readonly directive: IDirective;
-    private readonly $compile;
-    private readonly $controller;
-    constructor(injector: Injector, name: string, elementRef: ElementRef, directive?: IDirective);
-    static getDirective($injector: IInjectorService, name: string): IDirective;
-    static getTemplate($injector: IInjectorService, directive: IDirective, fetchRemoteTemplate?: boolean, $element?: IAugmentedJQuery): string | TrustedHTML | Promise<string | TrustedHTML>;
-    buildController(controllerType: IController, $scope: IScope): any;
-    compileTemplate(template?: string | TrustedHTML): ILinkFn;
-    onDestroy($scope: IScope, controllerInstance?: any): void;
-    prepareTransclusion(): ILinkFn | undefined;
-    resolveAndBindRequiredControllers(controllerInstance: IControllerInstance | null): SingleOrListOrMap<IControllerInstance> | null;
-    private compileHtml;
-    private extractChildNodes;
-    private getDirectiveRequire;
-    private resolveRequire;
-}
-
-type upgrade_helper_d_IBindingDestination = IBindingDestination;
-type upgrade_helper_d_IControllerInstance = IControllerInstance;
-type upgrade_helper_d_UpgradeHelper = UpgradeHelper;
-declare const upgrade_helper_d_UpgradeHelper: typeof UpgradeHelper;
-declare namespace upgrade_helper_d {
-  export { upgrade_helper_d_UpgradeHelper as UpgradeHelper };
-  export type { upgrade_helper_d_IBindingDestination as IBindingDestination, upgrade_helper_d_IControllerInstance as IControllerInstance };
-}
-
-declare function onError(e: any): void;
-/**
- * Clean the jqLite/jQuery data on the element and all its descendants.
- * Equivalent to how jqLite/jQuery invoke `cleanData()` on an Element when removed:
- *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/jqLite.js#L349-L355
- *   https://github.com/jquery/jquery/blob/6984d1747623dbc5e87fd6c261a5b6b1628c107c/src/manipulation.js#L182
- *
- * NOTE:
- * `cleanData()` will also invoke the AngularJS `$destroy` DOM event on the element:
- *   https://github.com/angular/angular.js/blob/2e72ea13fa98bebf6ed4b5e3c45eaf5f990ed16f/src/Angular.js#L1932-L1945
- *
- * @param node The DOM node whose data needs to be cleaned.
- */
-declare function cleanData(node: Node): void;
-declare function controllerKey(name: string): string;
-/**
- * Destroy an AngularJS app given the app `$injector`.
- *
- * NOTE: Destroying an app is not officially supported by AngularJS, but try to do our best by
- *       destroying `$rootScope` and clean the jqLite/jQuery data on `$rootElement` and all
- *       descendants.
- *
- * @param $injector The `$injector` of the AngularJS app to destroy.
- */
-declare function destroyApp($injector: IInjectorService): void;
-declare function directiveNormalize(name: string): string;
-declare function getTypeName(type: Type<any>): string;
-declare function getDowngradedModuleCount($injector: IInjectorService): number;
-declare function getUpgradeAppType($injector: IInjectorService): UpgradeAppType;
-declare function isFunction(value: any): value is Function;
-declare function isNgModuleType(value: any): value is Type<unknown>;
-declare function validateInjectionKey($injector: IInjectorService, downgradedModule: string, injectionKey: string, attemptedAction: string): void;
-declare class Deferred<R> {
-    promise: Promise<R>;
-    resolve: (value: R | PromiseLike<R>) => void;
-    reject: (error?: any) => void;
-    constructor();
-}
-interface LazyModuleRef {
-    injector?: Injector;
-    promise?: Promise<Injector>;
-}
-declare const enum UpgradeAppType {
-    None = 0,
-    Dynamic = 1,
-    Static = 2,
-    Lite = 3
-}
-/**
- * Glue the AngularJS `NgModelController` (if it exists) to the component
- * (if it implements the needed subset of the `ControlValueAccessor` interface).
- */
-declare function hookupNgModel(ngModel: INgModelController, component: any): void;
-/**
- * Test two values for strict equality, accounting for the fact that `NaN !== NaN`.
- */
-declare function strictEquals(val1: any, val2: any): boolean;
-
-type util_d_Deferred<R> = Deferred<R>;
-declare const util_d_Deferred: typeof Deferred;
-type util_d_LazyModuleRef = LazyModuleRef;
-type util_d_UpgradeAppType = UpgradeAppType;
-declare const util_d_UpgradeAppType: typeof UpgradeAppType;
-declare const util_d_cleanData: typeof cleanData;
-declare const util_d_controllerKey: typeof controllerKey;
-declare const util_d_destroyApp: typeof destroyApp;
-declare const util_d_directiveNormalize: typeof directiveNormalize;
-declare const util_d_getDowngradedModuleCount: typeof getDowngradedModuleCount;
-declare const util_d_getTypeName: typeof getTypeName;
-declare const util_d_getUpgradeAppType: typeof getUpgradeAppType;
-declare const util_d_hookupNgModel: typeof hookupNgModel;
-declare const util_d_isFunction: typeof isFunction;
-declare const util_d_isNgModuleType: typeof isNgModuleType;
-declare const util_d_onError: typeof onError;
-declare const util_d_strictEquals: typeof strictEquals;
-declare const util_d_validateInjectionKey: typeof validateInjectionKey;
-declare namespace util_d {
-  export { util_d_Deferred as Deferred, util_d_UpgradeAppType as UpgradeAppType, util_d_cleanData as cleanData, util_d_controllerKey as controllerKey, util_d_destroyApp as destroyApp, util_d_directiveNormalize as directiveNormalize, util_d_getDowngradedModuleCount as getDowngradedModuleCount, util_d_getTypeName as getTypeName, util_d_getUpgradeAppType as getUpgradeAppType, util_d_hookupNgModel as hookupNgModel, util_d_isFunction as isFunction, util_d_isNgModuleType as isNgModuleType, util_d_onError as onError, util_d_strictEquals as strictEquals, util_d_validateInjectionKey as validateInjectionKey };
-  export type { util_d_LazyModuleRef as LazyModuleRef };
-}
-
-export { UpgradeComponent, UpgradeModule, downgradeComponent, downgradeInjectable, downgradeModule, getAngularJSGlobal, getAngularLib, setAngularJSGlobal, setAngularLib, angular1_d as ɵangular1, constants_d as ɵconstants, upgrade_helper_d as ɵupgradeHelper, util_d as ɵutil };
+export { UpgradeComponent, UpgradeModule, downgradeComponent, downgradeInjectable, downgradeModule, getAngularJSGlobal, setAngularJSGlobal, angular1_d as ɵangular1, constants_d as ɵconstants, upgrade_helper_d as ɵupgradeHelper, util_d as ɵutil };
