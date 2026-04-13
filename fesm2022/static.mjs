@@ -1,11 +1,11 @@
 /**
- * @license Angular v22.0.0-next.7+sha-43ba6b6
+ * @license Angular v22.0.0-next.7+sha-39e382a
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
 
 import * as i0 from '@angular/core';
-import { ɵNG_MOD_DEF as _NG_MOD_DEF, Injector, ChangeDetectorRef, Testability, TestabilityRegistry, ApplicationRef, SimpleChange, ɵSIGNAL as _SIGNAL, NgZone, ɵComponentFactoryResolver as _ComponentFactoryResolver, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR as _NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, ɵinternalProvideZoneChangeDetection as _internalProvideZoneChangeDetection, EventEmitter, Directive, ɵNoopNgZone as _NoopNgZone, NgModule } from '@angular/core';
+import { ɵNG_MOD_DEF as _NG_MOD_DEF, Injector, createComponent, ChangeDetectorRef, Testability, TestabilityRegistry, reflectComponentType, ApplicationRef, SimpleChange, ɵSIGNAL as _SIGNAL, NgZone, EnvironmentInjector, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR as _NOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR, PlatformRef, ɵinternalProvideZoneChangeDetection as _internalProvideZoneChangeDetection, EventEmitter, Directive, ɵNoopNgZone as _NoopNgZone, NgModule } from '@angular/core';
 import { element, $ROOT_ELEMENT, $ROOT_SCOPE, DOWNGRADED_MODULE_COUNT_KEY, UPGRADE_APP_TYPE_KEY, $SCOPE, $COMPILE, $INJECTOR, $PARSE, REQUIRE_INJECTOR, REQUIRE_NG_MODEL, LAZY_MODULE_REF, INJECTOR_KEY, $CONTROLLER, $TEMPLATE_CACHE, $HTTP_BACKEND, module_, UPGRADE_MODULE_NAME, $PROVIDE, $$TESTABILITY, $DELEGATE, $INTERVAL, bootstrap } from './_constants-chunk.mjs';
 export { getAngularJSGlobal, setAngularJSGlobal, angular1 as ɵangular1, constants as ɵconstants } from './_constants-chunk.mjs';
 export { VERSION } from './upgrade.mjs';
@@ -152,25 +152,27 @@ class DowngradeComponentAdapter {
   attrs;
   scope;
   ngModel;
+  environmentInjector;
   parentInjector;
   $compile;
   $parse;
-  componentFactory;
+  component;
   wrapCallback;
   unsafelyOverwriteSignalInputs;
   implementsOnChanges = false;
   inputChangeCount = 0;
   inputChanges = {};
   componentScope;
-  constructor(element, attrs, scope, ngModel, parentInjector, $compile, $parse, componentFactory, wrapCallback, unsafelyOverwriteSignalInputs) {
+  constructor(element, attrs, scope, ngModel, environmentInjector, parentInjector, $compile, $parse, component, wrapCallback, unsafelyOverwriteSignalInputs) {
     this.element = element;
     this.attrs = attrs;
     this.scope = scope;
     this.ngModel = ngModel;
+    this.environmentInjector = environmentInjector;
     this.parentInjector = parentInjector;
     this.$compile = $compile;
     this.$parse = $parse;
-    this.componentFactory = componentFactory;
+    this.component = component;
     this.wrapCallback = wrapCallback;
     this.unsafelyOverwriteSignalInputs = unsafelyOverwriteSignalInputs;
     this.componentScope = scope.$new();
@@ -205,7 +207,12 @@ class DowngradeComponentAdapter {
       parent: this.parentInjector,
       name: 'DowngradeComponentAdapter'
     });
-    const componentRef = this.componentFactory.create(childInjector, projectableNodes, this.element[0]);
+    const componentRef = createComponent(this.component, {
+      elementInjector: childInjector,
+      environmentInjector: this.environmentInjector,
+      projectableNodes,
+      hostElement: this.element[0]
+    });
     const viewChangeDetector = componentRef.injector.get(ChangeDetectorRef);
     const changeDetector = componentRef.changeDetectorRef;
     const testability = componentRef.injector.get(Testability, null);
@@ -225,7 +232,7 @@ class DowngradeComponentAdapter {
     viewChangeDetector
   }) {
     const attrs = this.attrs;
-    const inputs = this.componentFactory.inputs || [];
+    const inputs = reflectComponentType(this.component)?.inputs ?? [];
     for (const input of inputs) {
       const inputBinding = new PropertyBinding(input.propName, input.templateName);
       let expr = null;
@@ -263,7 +270,7 @@ class DowngradeComponentAdapter {
       }
     }
     const detectChanges = () => changeDetector.detectChanges();
-    const prototype = this.componentFactory.componentType.prototype;
+    const prototype = this.component.prototype;
     this.implementsOnChanges = !!(prototype && prototype.ngOnChanges);
     this.componentScope.$watch(() => this.inputChangeCount, this.wrapCallback(() => {
       if (this.implementsOnChanges) {
@@ -290,7 +297,7 @@ class DowngradeComponentAdapter {
   }
   setupOutputs(componentRef) {
     const attrs = this.attrs;
-    const outputs = this.componentFactory.outputs || [];
+    const outputs = reflectComponentType(this.component)?.outputs ?? [];
     for (const output of outputs) {
       const outputBindings = new PropertyBinding(output.propName, output.templateName);
       const bindonAttr = outputBindings.bindonAttr.substring(0, outputBindings.bindonAttr.length - 6);
@@ -322,7 +329,7 @@ class DowngradeComponentAdapter {
       }));
       componentRef.onDestroy(() => subscription.unsubscribe());
     } else {
-      throw new Error(`Missing emitter '${output.prop}' on component '${getTypeName(this.componentFactory.componentType)}'!`);
+      throw new Error(`Missing emitter '${output.prop}' on component '${getTypeName(this.component)}'!`);
     }
   }
   registerCleanup(componentRef) {
@@ -354,7 +361,7 @@ class DowngradeComponentAdapter {
     }
   }
   groupProjectableNodes() {
-    let ngContentSelectors = this.componentFactory.ngContentSelectors;
+    let ngContentSelectors = reflectComponentType(this.component)?.ngContentSelectors ?? [];
     return groupNodesBySelector(ngContentSelectors, this.element.contents());
   }
 }
@@ -464,13 +471,8 @@ function downgradeComponent(info) {
         const finalParentInjector = parentInjector || moduleInjector;
         const finalModuleInjector = moduleInjector || parentInjector;
         const doDowngrade = (injector, moduleInjector) => {
-          const componentFactoryResolver = moduleInjector.get(_ComponentFactoryResolver);
-          const componentFactory = componentFactoryResolver.resolveComponentFactory(info.component);
-          if (!componentFactory) {
-            throw new Error(`Expecting ComponentFactory for: ${getTypeName(info.component)}`);
-          }
           const injectorPromise = new ParentInjectorPromise(element);
-          const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $compile, $parse, componentFactory, wrapCallback, unsafelyOverwriteSignalInputs);
+          const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, moduleInjector.get(EnvironmentInjector), injector, $compile, $parse, info.component, wrapCallback, unsafelyOverwriteSignalInputs);
           const projectableNodes = facade.compileContents();
           const componentRef = facade.createComponentAndSetup(projectableNodes, isNgUpgradeLite, info.propagateDigest);
           injectorPromise.resolve(componentRef.injector);
@@ -1008,7 +1010,7 @@ class UpgradeComponent {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "22.0.0-next.7+sha-43ba6b6",
+    version: "22.0.0-next.7+sha-39e382a",
     ngImport: i0,
     type: UpgradeComponent,
     deps: "invalid",
@@ -1016,7 +1018,7 @@ class UpgradeComponent {
   });
   static ɵdir = i0.ɵɵngDeclareDirective({
     minVersion: "14.0.0",
-    version: "22.0.0-next.7+sha-43ba6b6",
+    version: "22.0.0-next.7+sha-39e382a",
     type: UpgradeComponent,
     isStandalone: true,
     usesOnChanges: true,
@@ -1025,7 +1027,7 @@ class UpgradeComponent {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "22.0.0-next.7+sha-43ba6b6",
+  version: "22.0.0-next.7+sha-39e382a",
   ngImport: i0,
   type: UpgradeComponent,
   decorators: [{
@@ -1139,7 +1141,7 @@ class UpgradeModule {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "22.0.0-next.7+sha-43ba6b6",
+    version: "22.0.0-next.7+sha-39e382a",
     ngImport: i0,
     type: UpgradeModule,
     deps: [{
@@ -1153,13 +1155,13 @@ class UpgradeModule {
   });
   static ɵmod = i0.ɵɵngDeclareNgModule({
     minVersion: "14.0.0",
-    version: "22.0.0-next.7+sha-43ba6b6",
+    version: "22.0.0-next.7+sha-39e382a",
     ngImport: i0,
     type: UpgradeModule
   });
   static ɵinj = i0.ɵɵngDeclareInjector({
     minVersion: "12.0.0",
-    version: "22.0.0-next.7+sha-43ba6b6",
+    version: "22.0.0-next.7+sha-39e382a",
     ngImport: i0,
     type: UpgradeModule,
     providers: [angular1Providers, _internalProvideZoneChangeDetection({})]
@@ -1167,7 +1169,7 @@ class UpgradeModule {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "22.0.0-next.7+sha-43ba6b6",
+  version: "22.0.0-next.7+sha-39e382a",
   ngImport: i0,
   type: UpgradeModule,
   decorators: [{
