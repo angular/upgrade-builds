@@ -1,5 +1,5 @@
 /**
- * @license Angular v22.0.2+sha-9d1d1de
+ * @license Angular v22.0.2+sha-f4f7f37
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -353,8 +353,10 @@ class DowngradeComponentAdapter {
       this.inputChanges[prop] = new SimpleChange(prevValue, currValue, prevValue === currValue);
     }
     this.inputChangeCount++;
-    if (isSignal && !this.unsafelyOverwriteSignalInputs) {
-      const node = componentRef.instance[prop][_SIGNAL];
+    const instanceProp = componentRef.instance[prop];
+    const node = instanceProp?.[_SIGNAL];
+    const isModelSignal = node != null && typeof instanceProp.set === 'function' && typeof node.applyValueToInputSignal === 'function';
+    if (isModelSignal || isSignal && !this.unsafelyOverwriteSignalInputs) {
       node.applyValueToInputSignal(node, currValue);
     } else {
       componentRef.instance[prop] = currValue;
@@ -1010,7 +1012,7 @@ class UpgradeComponent {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "22.0.2+sha-9d1d1de",
+    version: "22.0.2+sha-f4f7f37",
     ngImport: i0,
     type: UpgradeComponent,
     deps: "invalid",
@@ -1018,7 +1020,7 @@ class UpgradeComponent {
   });
   static ɵdir = i0.ɵɵngDeclareDirective({
     minVersion: "14.0.0",
-    version: "22.0.2+sha-9d1d1de",
+    version: "22.0.2+sha-f4f7f37",
     type: UpgradeComponent,
     isStandalone: true,
     usesOnChanges: true,
@@ -1027,7 +1029,7 @@ class UpgradeComponent {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "22.0.2+sha-9d1d1de",
+  version: "22.0.2+sha-f4f7f37",
   ngImport: i0,
   type: UpgradeComponent,
   decorators: [{
@@ -1141,7 +1143,7 @@ class UpgradeModule {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "22.0.2+sha-9d1d1de",
+    version: "22.0.2+sha-f4f7f37",
     ngImport: i0,
     type: UpgradeModule,
     deps: [{
@@ -1155,13 +1157,13 @@ class UpgradeModule {
   });
   static ɵmod = i0.ɵɵngDeclareNgModule({
     minVersion: "14.0.0",
-    version: "22.0.2+sha-9d1d1de",
+    version: "22.0.2+sha-f4f7f37",
     ngImport: i0,
     type: UpgradeModule
   });
   static ɵinj = i0.ɵɵngDeclareInjector({
     minVersion: "12.0.0",
-    version: "22.0.2+sha-9d1d1de",
+    version: "22.0.2+sha-f4f7f37",
     ngImport: i0,
     type: UpgradeModule,
     providers: [angular1Providers, _internalProvideZoneChangeDetection({})]
@@ -1169,7 +1171,7 @@ class UpgradeModule {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "22.0.2+sha-9d1d1de",
+  version: "22.0.2+sha-f4f7f37",
   ngImport: i0,
   type: UpgradeModule,
   decorators: [{
