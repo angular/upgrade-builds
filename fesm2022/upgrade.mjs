@@ -1,12 +1,12 @@
 /**
- * @license Angular v22.1.0-next.4+sha-eb2a8ff
+ * @license Angular v22.1.0-next.4+sha-95b7385
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
 
 import { Version } from '@angular/core';
 
-const VERSION = /* @__PURE__ */new Version('22.1.0-next.4+sha-eb2a8ff');
+const VERSION = /* @__PURE__ */new Version('22.1.0-next.4+sha-95b7385');
 
 export { VERSION };
 //# sourceMappingURL=upgrade.mjs.map
