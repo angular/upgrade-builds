@@ -1,5 +1,5 @@
 /**
- * @license Angular v22.1.2+sha-85f12a5
+ * @license Angular v22.1.2+sha-4413711
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -236,7 +236,7 @@ class DowngradeComponentAdapter {
     for (const input of inputs) {
       const inputBinding = new PropertyBinding(input.propName, input.templateName);
       let expr = null;
-      if (attrs.hasOwnProperty(inputBinding.attr)) {
+      if (Object.hasOwn(attrs, inputBinding.attr)) {
         const observeFn = ((prop, isSignal) => {
           let prevValue = INITIAL_VALUE$1;
           return currValue => {
@@ -255,13 +255,13 @@ class DowngradeComponentAdapter {
           unwatch = null;
           observeFn(attrs[inputBinding.attr]);
         });
-      } else if (attrs.hasOwnProperty(inputBinding.bindAttr)) {
+      } else if (Object.hasOwn(attrs, inputBinding.bindAttr)) {
         expr = attrs[inputBinding.bindAttr];
-      } else if (attrs.hasOwnProperty(inputBinding.bracketAttr)) {
+      } else if (Object.hasOwn(attrs, inputBinding.bracketAttr)) {
         expr = attrs[inputBinding.bracketAttr];
-      } else if (attrs.hasOwnProperty(inputBinding.bindonAttr)) {
+      } else if (Object.hasOwn(attrs, inputBinding.bindonAttr)) {
         expr = attrs[inputBinding.bindonAttr];
-      } else if (attrs.hasOwnProperty(inputBinding.bracketParenAttr)) {
+      } else if (Object.hasOwn(attrs, inputBinding.bracketParenAttr)) {
         expr = attrs[inputBinding.bracketParenAttr];
       }
       if (expr != null) {
@@ -302,16 +302,16 @@ class DowngradeComponentAdapter {
       const outputBindings = new PropertyBinding(output.propName, output.templateName);
       const bindonAttr = outputBindings.bindonAttr.substring(0, outputBindings.bindonAttr.length - 6);
       const bracketParenAttr = `[(${outputBindings.bracketParenAttr.substring(2, outputBindings.bracketParenAttr.length - 8)})]`;
-      if (attrs.hasOwnProperty(bindonAttr)) {
+      if (Object.hasOwn(attrs, bindonAttr)) {
         this.subscribeToOutput(componentRef, outputBindings, attrs[bindonAttr], true);
       }
-      if (attrs.hasOwnProperty(bracketParenAttr)) {
+      if (Object.hasOwn(attrs, bracketParenAttr)) {
         this.subscribeToOutput(componentRef, outputBindings, attrs[bracketParenAttr], true);
       }
-      if (attrs.hasOwnProperty(outputBindings.onAttr)) {
+      if (Object.hasOwn(attrs, outputBindings.onAttr)) {
         this.subscribeToOutput(componentRef, outputBindings, attrs[outputBindings.onAttr]);
       }
-      if (attrs.hasOwnProperty(outputBindings.parenAttr)) {
+      if (Object.hasOwn(attrs, outputBindings.parenAttr)) {
         this.subscribeToOutput(componentRef, outputBindings, attrs[outputBindings.parenAttr]);
       }
     }
@@ -1012,7 +1012,7 @@ class UpgradeComponent {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "22.1.2+sha-85f12a5",
+    version: "22.1.2+sha-4413711",
     ngImport: i0,
     type: UpgradeComponent,
     deps: "invalid",
@@ -1020,7 +1020,7 @@ class UpgradeComponent {
   });
   static ɵdir = i0.ɵɵngDeclareDirective({
     minVersion: "14.0.0",
-    version: "22.1.2+sha-85f12a5",
+    version: "22.1.2+sha-4413711",
     type: UpgradeComponent,
     isStandalone: true,
     usesOnChanges: true,
@@ -1029,7 +1029,7 @@ class UpgradeComponent {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "22.1.2+sha-85f12a5",
+  version: "22.1.2+sha-4413711",
   ngImport: i0,
   type: UpgradeComponent,
   decorators: [{
@@ -1091,7 +1091,7 @@ class UpgradeModule {
             });
           };
           Object.keys(intervalDelegate).forEach(prop => wrappedInterval[prop] = intervalDelegate[prop]);
-          if (intervalDelegate.hasOwnProperty('flush')) {
+          if (Object.hasOwn(intervalDelegate, 'flush')) {
             wrappedInterval['flush'] = () => {
               intervalDelegate['flush']();
               return wrappedInterval;
@@ -1143,7 +1143,7 @@ class UpgradeModule {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "22.1.2+sha-85f12a5",
+    version: "22.1.2+sha-4413711",
     ngImport: i0,
     type: UpgradeModule,
     deps: [{
@@ -1157,13 +1157,13 @@ class UpgradeModule {
   });
   static ɵmod = i0.ɵɵngDeclareNgModule({
     minVersion: "14.0.0",
-    version: "22.1.2+sha-85f12a5",
+    version: "22.1.2+sha-4413711",
     ngImport: i0,
     type: UpgradeModule
   });
   static ɵinj = i0.ɵɵngDeclareInjector({
     minVersion: "12.0.0",
-    version: "22.1.2+sha-85f12a5",
+    version: "22.1.2+sha-4413711",
     ngImport: i0,
     type: UpgradeModule,
     providers: [angular1Providers, _internalProvideZoneChangeDetection({})]
@@ -1171,7 +1171,7 @@ class UpgradeModule {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "22.1.2+sha-85f12a5",
+  version: "22.1.2+sha-4413711",
   ngImport: i0,
   type: UpgradeModule,
   decorators: [{

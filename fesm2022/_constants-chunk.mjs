@@ -1,5 +1,5 @@
 /**
- * @license Angular v22.1.2+sha-85f12a5
+ * @license Angular v22.1.2+sha-4413711
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -19,7 +19,7 @@ let angular = {
   getTestability: noNg
 };
 try {
-  if (window.hasOwnProperty('angular')) {
+  if (Object.hasOwn(window, 'angular')) {
     angular = window.angular;
   }
 } catch {}
