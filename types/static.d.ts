@@ -1,5 +1,5 @@
 /**
- * @license Angular v22.1.6+sha-24ca9d4
+ * @license Angular v22.1.6+sha-f73f059
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -772,8 +772,8 @@ declare namespace util_d {
  *   `StaticProvider`s, when creating the `PlatformRef` (e.g. via `platformBrowser` or
  *   `platformBrowserDynamic`).
  *
- * - When using {@link PlatformRef#bootstrapmodule `bootstrapModule()`} or
- *   {@link PlatformRef#bootstrapmodulefactory `bootstrapModuleFactory()`} to bootstrap the
+ * - When using {@link PlatformRef#bootstrapModule `bootstrapModule()`} or
+ *   {@link PlatformRef#bootstrapModuleFactory `bootstrapModuleFactory()`} to bootstrap the
  *   downgraded modules, each one is considered a "root" module. As a consequence, a new instance
  *   will be created for every injectable provided in `"root"` (via
  *   {@link /api/core/Injectable#providedIn providedIn}
@@ -886,8 +886,8 @@ declare function downgradeModule<T>(moduleOrBootstrapFn: Type<T> | ((extraProvid
  *   `StaticProvider`s, when creating the `PlatformRef` (e.g. via `platformBrowser` or
  *   `platformBrowserDynamic`).
  *
- * - When using {@link PlatformRef#bootstrapmodule `bootstrapModule()`} or
- *   {@link PlatformRef#bootstrapmodulefactory `bootstrapModuleFactory()`} to bootstrap the
+ * - When using {@link PlatformRef#bootstrapModule `bootstrapModule()`} or
+ *   {@link PlatformRef#bootstrapModuleFactory `bootstrapModuleFactory()`} to bootstrap the
  *   downgraded modules, each one is considered a "root" module. As a consequence, a new instance
  *   will be created for every injectable provided in `"root"` (via
  *   {@link /api/core/Injectable#providedIn providedIn}
@@ -1001,7 +1001,7 @@ declare class UpgradeComponent implements OnInit, OnChanges, DoCheck, OnDestroy 
  *    that it can be used in an AngularJS template. See `downgradeComponent`.
  * 3. Creation of an Angular root injector provider that wraps and exposes an AngularJS
  *    service so that it can be injected into an Angular context. See
- *    {@link UpgradeModule#upgrading-an-angular-1-service Upgrading an AngularJS service} below.
+ *    {@link UpgradeModule#upgrading-an-angularjs-service Upgrading an AngularJS service} below.
  * 4. Creation of an AngularJS service that wraps and exposes an Angular injectable
  *    so that it can be injected into an AngularJS context. See `downgradeInjectable`.
  * 5. Bootstrapping of a hybrid Angular application which contains both of the frameworks
