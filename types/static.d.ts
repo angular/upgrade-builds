@@ -1,5 +1,5 @@
 /**
- * @license Angular v22.3.0-next.0+sha-742fd44
+ * @license Angular v22.3.0-next.0+sha-5b52d19
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -776,7 +776,7 @@ declare namespace util_d {
  *   {@link PlatformRef#bootstrapModuleFactory `bootstrapModuleFactory()`} to bootstrap the
  *   downgraded modules, each one is considered a "root" module. As a consequence, a new instance
  *   will be created for every injectable provided in `"root"` (via
- *   {@link /api/core/Injectable#providedIn providedIn}
+ *   {@link /api/core/Injectable providedIn}
  *   If this is not your intention, you can have a shared module (that will act as act as the "root"
  *   module) and create all downgraded modules using that module's injector:
  *
@@ -890,7 +890,7 @@ declare function downgradeModule<T>(moduleOrBootstrapFn: Type<T> | ((extraProvid
  *   {@link PlatformRef#bootstrapModuleFactory `bootstrapModuleFactory()`} to bootstrap the
  *   downgraded modules, each one is considered a "root" module. As a consequence, a new instance
  *   will be created for every injectable provided in `"root"` (via
- *   {@link /api/core/Injectable#providedIn providedIn}
+ *   {@link /api/core/Injectable providedIn}
  *   If this is not your intention, you can have a shared module (that will act as act as the "root"
  *   module) and create all downgraded modules using that module's injector:
  *
