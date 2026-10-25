@@ -1,5 +1,5 @@
 /**
- * @license Angular v22.3.0-next.2+sha-bd4e781
+ * @license Angular v22.3.0-next.2+sha-5244ea7
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -177,9 +177,15 @@ class DowngradeComponentAdapter {
     this.unsafelyOverwriteSignalInputs = unsafelyOverwriteSignalInputs;
     this.componentScope = scope.$new();
   }
-  compileContents() {
+  compileContents(template) {
+    if (!template.length) {
+      const projectableNodes = this.groupProjectableNodes(this.element.contents());
+      projectableNodes.forEach(nodes => nodes.forEach(node => this.element[0].removeChild(node)));
+      this.element.empty();
+      return projectableNodes;
+    }
     const compiledProjectableNodes = [];
-    const projectableNodes = this.groupProjectableNodes();
+    const projectableNodes = this.groupProjectableNodes(template);
     const linkFns = projectableNodes.map(nodes => this.$compile(nodes));
     this.element.empty();
     linkFns.forEach(linkFn => {
@@ -362,9 +368,9 @@ class DowngradeComponentAdapter {
       componentRef.instance[prop] = currValue;
     }
   }
-  groupProjectableNodes() {
+  groupProjectableNodes(nodes) {
     let ngContentSelectors = reflectComponentType(this.component)?.ngContentSelectors ?? [];
-    return groupNodesBySelector(ngContentSelectors, this.element.contents());
+    return groupNodesBySelector(ngContentSelectors, nodes);
   }
 }
 function groupNodesBySelector(ngContentSelectors, nodes) {
@@ -452,12 +458,19 @@ function downgradeComponent(info) {
     const wrapCallback = !isNgUpgradeLite ? cb => cb : cb => () => NgZone.isInAngularZone() ? cb() : ngZone.run(cb);
     let ngZone;
     const hasMultipleDowngradedModules = isNgUpgradeLite && getDowngradedModuleCount($injector) > 1;
+    const templates = new WeakMap();
     return {
       restrict: 'E',
       terminal: true,
       require: [REQUIRE_INJECTOR, REQUIRE_NG_MODEL],
-      controller: function () {},
+      controller: ['$element', function (element) {
+        const fragment = document.createDocumentFragment();
+        element[0].childNodes.forEach(node => fragment.appendChild(node.cloneNode(true)));
+        templates.set(element[0], Array.from(fragment.childNodes));
+      }],
       link: (scope, element, attrs, required) => {
+        const template = templates.get(element[0]) ?? [];
+        templates.delete(element[0]);
         const ngModel = required[1];
         const parentInjector = required[0];
         let moduleInjector = undefined;
@@ -475,7 +488,7 @@ function downgradeComponent(info) {
         const doDowngrade = (injector, moduleInjector) => {
           const injectorPromise = new ParentInjectorPromise(element);
           const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, moduleInjector.get(EnvironmentInjector), injector, $compile, $parse, info.component, wrapCallback, unsafelyOverwriteSignalInputs);
-          const projectableNodes = facade.compileContents();
+          const projectableNodes = facade.compileContents(template);
           const componentRef = facade.createComponentAndSetup(projectableNodes, isNgUpgradeLite, info.propagateDigest);
           injectorPromise.resolve(componentRef.injector);
           if (ranAsync) {
@@ -1012,7 +1025,7 @@ class UpgradeComponent {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "22.3.0-next.2+sha-bd4e781",
+    version: "22.3.0-next.2+sha-5244ea7",
     ngImport: i0,
     type: UpgradeComponent,
     deps: "invalid",
@@ -1020,7 +1033,7 @@ class UpgradeComponent {
   });
   static ɵdir = i0.ɵɵngDeclareDirective({
     minVersion: "14.0.0",
-    version: "22.3.0-next.2+sha-bd4e781",
+    version: "22.3.0-next.2+sha-5244ea7",
     type: UpgradeComponent,
     isStandalone: true,
     usesOnChanges: true,
@@ -1029,7 +1042,7 @@ class UpgradeComponent {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "22.3.0-next.2+sha-bd4e781",
+  version: "22.3.0-next.2+sha-5244ea7",
   ngImport: i0,
   type: UpgradeComponent,
   decorators: [{
@@ -1143,7 +1156,7 @@ class UpgradeModule {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "22.3.0-next.2+sha-bd4e781",
+    version: "22.3.0-next.2+sha-5244ea7",
     ngImport: i0,
     type: UpgradeModule,
     deps: [{
@@ -1157,13 +1170,13 @@ class UpgradeModule {
   });
   static ɵmod = i0.ɵɵngDeclareNgModule({
     minVersion: "14.0.0",
-    version: "22.3.0-next.2+sha-bd4e781",
+    version: "22.3.0-next.2+sha-5244ea7",
     ngImport: i0,
     type: UpgradeModule
   });
   static ɵinj = i0.ɵɵngDeclareInjector({
     minVersion: "12.0.0",
-    version: "22.3.0-next.2+sha-bd4e781",
+    version: "22.3.0-next.2+sha-5244ea7",
     ngImport: i0,
     type: UpgradeModule,
     providers: [angular1Providers, _internalProvideZoneChangeDetection({})]
@@ -1171,7 +1184,7 @@ class UpgradeModule {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "22.3.0-next.2+sha-bd4e781",
+  version: "22.3.0-next.2+sha-5244ea7",
   ngImport: i0,
   type: UpgradeModule,
   decorators: [{
