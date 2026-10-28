@@ -1,5 +1,5 @@
 /**
- * @license Angular v20.3.34+sha-3291728
+ * @license Angular v20.3.34+sha-59ee277
  * (c) 2010-2025 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -15,7 +15,7 @@ import { element, $ROOT_ELEMENT, $ROOT_SCOPE, DOWNGRADED_MODULE_COUNT_KEY, UPGRA
 /**
  * @publicApi
  */
-const VERSION = /* @__PURE__ */ new Version('20.3.34+sha-3291728');
+const VERSION = /* @__PURE__ */ new Version('20.3.34+sha-59ee277');
 
 /**
  * A `PropertyBinding` represents a mapping between a property name
@@ -238,9 +238,17 @@ class DowngradeComponentAdapter {
         this.unsafelyOverwriteSignalInputs = unsafelyOverwriteSignalInputs;
         this.componentScope = scope.$new();
     }
-    compileContents() {
+    compileContents(template) {
+        if (!template.length) {
+            // There is no template to compile, so whatever is in the element was put there by AngularJS
+            // (e.g. through `ng-transclude`): project it as it is.
+            const projectableNodes = this.groupProjectableNodes(this.element.contents());
+            projectableNodes.forEach((nodes) => nodes.forEach((node) => this.element[0].removeChild(node)));
+            this.element.empty();
+            return projectableNodes;
+        }
         const compiledProjectableNodes = [];
-        const projectableNodes = this.groupProjectableNodes();
+        const projectableNodes = this.groupProjectableNodes(template);
         const linkFns = projectableNodes.map((nodes) => this.$compile(nodes));
         this.element.empty();
         linkFns.forEach((linkFn) => {
@@ -446,9 +454,9 @@ class DowngradeComponentAdapter {
             componentRef.instance[prop] = currValue;
         }
     }
-    groupProjectableNodes() {
+    groupProjectableNodes(nodes) {
         let ngContentSelectors = this.componentFactory.ngContentSelectors;
-        return groupNodesBySelector(ngContentSelectors, this.element.contents());
+        return groupNodesBySelector(ngContentSelectors, nodes);
     }
 }
 /**
@@ -611,6 +619,8 @@ function downgradeComponent(info) {
         let ngZone;
         // When downgrading multiple modules, special handling is needed wrt injectors.
         const hasMultipleDowngradedModules = isNgUpgradeLite && getDowngradedModuleCount($injector) > 1;
+        // A copy of the contents of each element, taken before anything on the element is linked.
+        const templates = new WeakMap();
         return {
             restrict: 'E',
             terminal: true,
@@ -619,8 +629,20 @@ function downgradeComponent(info) {
             // configuration properties can be made available. See:
             // See G3: javascript/angular2/angular1_router_lib.js
             // https://github.com/angular/angular.js/blob/47bf11ee94664367a26ed8c91b9b586d3dd420f5/src/ng/compile.js#L1670-L1691.
-            controller: function () { },
+            controller: [
+                '$element',
+                function (element) {
+                    // Controllers are instantiated before anything on the element is linked, so the contents
+                    // are still the template. A fragment keeps the copies as siblings, as multi-element
+                    // directives (e.g. `ng-repeat-start`) need.
+                    const fragment = document.createDocumentFragment();
+                    element[0].childNodes.forEach((node) => fragment.appendChild(node.cloneNode(true)));
+                    templates.set(element[0], Array.from(fragment.childNodes));
+                },
+            ],
             link: (scope, element, attrs, required) => {
+                const template = templates.get(element[0]) ?? [];
+                templates.delete(element[0]);
                 // We might have to compile the contents asynchronously, because this might have been
                 // triggered by `UpgradeNg1ComponentAdapterBuilder`, before the Angular templates have
                 // been compiled.
@@ -684,7 +706,7 @@ function downgradeComponent(info) {
                     }
                     const injectorPromise = new ParentInjectorPromise(element);
                     const facade = new DowngradeComponentAdapter(element, attrs, scope, ngModel, injector, $compile, $parse, componentFactory, wrapCallback, unsafelyOverwriteSignalInputs);
-                    const projectableNodes = facade.compileContents();
+                    const projectableNodes = facade.compileContents(template);
                     const componentRef = facade.createComponentAndSetup(projectableNodes, isNgUpgradeLite, info.propagateDigest);
                     injectorPromise.resolve(componentRef.injector);
                     if (ranAsync) {
