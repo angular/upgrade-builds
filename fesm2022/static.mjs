@@ -1,5 +1,5 @@
 /**
- * @license Angular v21.2.25+sha-bc74d72
+ * @license Angular v21.2.25+sha-9c43207
  * (c) 2010-2026 Google LLC. https://angular.dev/
  * License: MIT
  */
@@ -1021,7 +1021,7 @@ class UpgradeComponent {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "21.2.25+sha-bc74d72",
+    version: "21.2.25+sha-9c43207",
     ngImport: i0,
     type: UpgradeComponent,
     deps: "invalid",
@@ -1029,7 +1029,7 @@ class UpgradeComponent {
   });
   static ɵdir = i0.ɵɵngDeclareDirective({
     minVersion: "14.0.0",
-    version: "21.2.25+sha-bc74d72",
+    version: "21.2.25+sha-9c43207",
     type: UpgradeComponent,
     isStandalone: true,
     usesOnChanges: true,
@@ -1038,7 +1038,7 @@ class UpgradeComponent {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "21.2.25+sha-bc74d72",
+  version: "21.2.25+sha-9c43207",
   ngImport: i0,
   type: UpgradeComponent,
   decorators: [{
@@ -1152,7 +1152,7 @@ class UpgradeModule {
   }
   static ɵfac = i0.ɵɵngDeclareFactory({
     minVersion: "12.0.0",
-    version: "21.2.25+sha-bc74d72",
+    version: "21.2.25+sha-9c43207",
     ngImport: i0,
     type: UpgradeModule,
     deps: [{
@@ -1166,13 +1166,13 @@ class UpgradeModule {
   });
   static ɵmod = i0.ɵɵngDeclareNgModule({
     minVersion: "14.0.0",
-    version: "21.2.25+sha-bc74d72",
+    version: "21.2.25+sha-9c43207",
     ngImport: i0,
     type: UpgradeModule
   });
   static ɵinj = i0.ɵɵngDeclareInjector({
     minVersion: "12.0.0",
-    version: "21.2.25+sha-bc74d72",
+    version: "21.2.25+sha-9c43207",
     ngImport: i0,
     type: UpgradeModule,
     providers: [angular1Providers, _internalProvideZoneChangeDetection({})]
@@ -1180,7 +1180,7 @@ class UpgradeModule {
 }
 i0.ɵɵngDeclareClassMetadata({
   minVersion: "12.0.0",
-  version: "21.2.25+sha-bc74d72",
+  version: "21.2.25+sha-9c43207",
   ngImport: i0,
   type: UpgradeModule,
   decorators: [{
